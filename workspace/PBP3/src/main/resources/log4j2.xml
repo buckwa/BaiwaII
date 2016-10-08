@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="INFO">
+
+    <Properties>
+<!-- 		<Property name="log-path">E:/workspace_tmb/logs</Property> -->
+        <Property name="log-path">${sys:user.home}/nonsll_log</Property>
+        <Property name="debug-pattern">%d{yyyy-MM-dd HH:mm:ss.SSS} [%-5level] - %msg%n</Property>
+        <Property name="tx-pattern">%d{yyyy-MM-dd HH:mm:ss.SSS}|%msg%n</Property>
+        <Property name="archive-pattern">%d{yyyyMMdd}</Property>
+    </Properties>
+    
+	<Appenders>
+		<Console name="Console" target="SYSTEM_OUT">
+			<PatternLayout pattern="%d{DEFAULT} %-5level (%file:%line) - %msg%n%throwable" />
+		</Console>
+		
+<!-- 		SearchBasicInfoService_DEBUG -->
+        <RollingFile name="SearchBasicInfoService_DEBUG" fileName="${log-path}/SearchBasicInfoService_DEBUG.log" 
+            filePattern="${log-path}/SearchBasicInfoService_DEBUG.log.${archive-pattern}">
+            <PatternLayout>
+                <pattern>${tx-pattern}</pattern>
+            </PatternLayout>
+            <Policies>
+                <TimeBasedTriggeringPolicy /><!-- Rotated everyday -->
+                <!-- <SizeBasedTriggeringPolicy size="100 MB"/> --> <!-- Or every 100 MB -->
+            </Policies>
+        </RollingFile>
+<!-- 		SearchBasicInfoService_DEBUG -->
+        <RollingFile name="GetNameListCSIService_DEBUG" fileName="${log-path}/GetNameListCSIService_DEBUG.log" 
+            filePattern="${log-path}/GetNameListCSIService_DEBUG.log.${archive-pattern}">
+            <PatternLayout>
+                <pattern>${tx-pattern}</pattern>
+            </PatternLayout>
+            <Policies>
+                <TimeBasedTriggeringPolicy /><!-- Rotated everyday -->
+                <!-- <SizeBasedTriggeringPolicy size="100 MB"/> --> <!-- Or every 100 MB -->
+            </Policies>
+        </RollingFile>
+<!-- 		GetDetailCSIService_DEBUG -->
+        <RollingFile name="GetDetailCSIService_DEBUG" fileName="${log-path}/GetDetailCSIService_DEBUG.log" 
+            filePattern="${log-path}/GetDetailCSIService_DEBUG.log.${archive-pattern}">
+            <PatternLayout>
+                <pattern>${tx-pattern}</pattern>
+            </PatternLayout>
+            <Policies>
+                <TimeBasedTriggeringPolicy /><!-- Rotated everyday -->
+                <!-- <SizeBasedTriggeringPolicy size="100 MB"/> --> <!-- Or every 100 MB -->
+            </Policies>
+        </RollingFile>
+<!-- 		GetApplicationListSELOSService_DEBUG -->
+        <RollingFile name="GetApplicationListSELOSService_DEBUG" fileName="${log-path}/GetApplicationListSELOSService_DEBUG.log" 
+            filePattern="${log-path}/GetApplicationListSELOSService_DEBUG.log.${archive-pattern}">
+            <PatternLayout>
+                <pattern>${tx-pattern}</pattern>
+            </PatternLayout>
+            <Policies>
+                <TimeBasedTriggeringPolicy /><!-- Rotated everyday -->
+                <!-- <SizeBasedTriggeringPolicy size="100 MB"/> --> <!-- Or every 100 MB -->
+            </Policies>
+        </RollingFile>
+<!-- 		GetApplicationListRSLService_DEBUG -->
+        <RollingFile name="GetApplicationListRSLService_DEBUG" fileName="${log-path}/GetApplicationListRSLService_DEBUG.log" 
+            filePattern="${log-path}/GetApplicationListRSLService_DEBUG.log.${archive-pattern}">
+            <PatternLayout>
+                <pattern>${tx-pattern}</pattern>
+            </PatternLayout>
+            <Policies>
+                <TimeBasedTriggeringPolicy /><!-- Rotated everyday -->
+                <!-- <SizeBasedTriggeringPolicy size="100 MB"/> --> <!-- Or every 100 MB -->
+            </Policies>
+        </RollingFile>
+<!-- 		GetApplicationListFDRService_DEBUG -->
+        <RollingFile name="GetApplicationListFDRService_DEBUG" fileName="${log-path}/GetApplicationListFDRService_DEBUG.log" 
+            filePattern="${log-path}/GetApplicationListFDRService_DEBUG.log.${archive-pattern}">
+            <PatternLayout>
+                <pattern>${tx-pattern}</pattern>
+            </PatternLayout>
+            <Policies>
+                <TimeBasedTriggeringPolicy /><!-- Rotated everyday -->
+                <!-- <SizeBasedTriggeringPolicy size="100 MB"/> --> <!-- Or every 100 MB -->
+            </Policies>
+        </RollingFile>
+ <!-- 		NonSLL_DEBUG -->
+        <RollingFile name="NonSLL_DEBUG" fileName="${log-path}/NonSLL_DEBUG.log" 
+            filePattern="${log-path}/NonSLL_DEBUG.log.${archive-pattern}">
+            <PatternLayout>
+                <pattern>${tx-pattern}</pattern>
+            </PatternLayout>
+            <Policies>
+                <TimeBasedTriggeringPolicy /><!-- Rotated everyday -->
+                <!-- <SizeBasedTriggeringPolicy size="100 MB"/> --> <!-- Or every 100 MB -->
+            </Policies>
+        </RollingFile>       
+	</Appenders>
+
+	<Loggers>
+		
+
+<!-- 		Nonsll Service Log -->
+<!-- 		<Logger name="SearchBasicInfoService_DEBUG" level="trace"  additivity="false"> -->
+<!-- 	      <AppenderRef  level="trace" ref="SearchBasicInfoService_DEBUG"/> -->
+<!-- 	    </Logger> -->
+<!-- 		<Logger name="GetNameListCSIService_DEBUG" level="trace"  additivity="false"> -->
+<!-- 	      <AppenderRef  level="trace" ref="GetNameListCSIService_DEBUG"/> -->
+<!-- 	    </Logger> -->
+<!-- 		<Logger name="GetDetailCSIService_DEBUG" level="trace"  additivity="false"> -->
+<!-- 	      <AppenderRef  level="trace" ref="GetDetailCSIService_DEBUG"/> -->
+<!-- 	    </Logger> -->
+<!-- 		<Logger name="GetApplicationListSELOSService_DEBUG" level="trace"  additivity="false"> -->
+<!-- 	      <AppenderRef  level="trace" ref="GetApplicationListSELOSService_DEBUG"/> -->
+<!-- 	    </Logger> -->
+<!-- 		<Logger name="GetApplicationListRSLService_DEBUG" level="trace"  additivity="false"> -->
+<!-- 	      <AppenderRef  level="trace" ref="GetApplicationListRSLService_DEBUG"/> -->
+<!-- 	    </Logger> -->
+<!-- 		<Logger name="GetApplicationListFDRService_DEBUG" level="trace"  additivity="false"> -->
+<!-- 	      <AppenderRef  level="trace" ref="GetApplicationListFDRService_DEBUG"/> -->
+<!-- 	    </Logger> -->
+	    
+	    
+<!-- 	    other log -->
+		<Logger name="th.co.baiwa" level="debug" additivity="false">
+			<AppenderRef ref="Console" />
+<!-- 			<AppenderRef ref="NonSLL_DEBUG" /> -->
+		</Logger>
+		
+		<Root level="INFO">
+			<AppenderRef ref="Console" />
+<!-- 			<AppenderRef ref="NonSLL_DEBUG" /> -->
+		</Root>
+
+	</Loggers>
+
+</Configuration>

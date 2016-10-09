@@ -70,6 +70,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
  				"/",
  				BaiwaConstants.LOGIN_URL,
  				"/resources/**",
+ 				"/theme/**",
  				"/tmb/**",
  				"/rest/**"
  			).permitAll()

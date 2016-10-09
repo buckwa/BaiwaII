@@ -39,6 +39,8 @@ public class MvcConfig extends WebMvcConfigurerAdapter{
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
     	logger.info("######################");
         registry.addResourceHandler("/theme/**").addResourceLocations("/theme/");
+        registry.addResourceHandler("/img/**").addResourceLocations("/img/");
+	 
   
         
     }

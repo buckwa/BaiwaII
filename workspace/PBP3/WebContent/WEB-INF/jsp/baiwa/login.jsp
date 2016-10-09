@@ -39,6 +39,13 @@
                     <div class="sign-avatar">
                         <img src="<c:url value='/theme/img/kmitl_logo.png' />" alt="">
                     </div>
+                    								<c:if test="${not empty error}">
+									<div class="alert alert-danger alert-no-border alert-close alert-dismissible fade in" role="alert">
+						 
+										${error}
+									</div>
+									<!--  <div class="error-signin">${error}</div> -->
+								</c:if>
                     <header class="sign-title">Sign In</header>
                     <div class="form-group">
                         <input type="text" name="username" class="form-control" placeholder="E-Mail or Phone"/>

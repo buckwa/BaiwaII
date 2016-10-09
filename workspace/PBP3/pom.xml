@@ -21,7 +21,7 @@
 		<!-- Library -->
 		<slf4j.version>1.7.21</slf4j.version>
 		<log4j.version>2.5</log4j.version>
-		<spring.version>5.0.0.M2</spring.version>
+		<spring.version>4.2.5.RELEASE</spring.version>
 		<spring.security.version>4.1.0.RELEASE</spring.security.version>
 		<spring.ldap.version>2.1.0.RELEASE</spring.ldap.version>
 		<jsch.version>0.1.54</jsch.version>

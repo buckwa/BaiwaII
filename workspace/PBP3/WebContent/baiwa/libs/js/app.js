@@ -845,12 +845,4 @@ $(document).ready(function(){
 			content.addClass('open');
 		}
 	});
-
-
-	//active menu
-	jQuery(".main-nav a").click(function(){
-		// console.log("click", jQuery(this).parent());
-		jQuery(".main-nav a").removeClass("active");
-		jQuery(this).addClass("active");
-	});
 });

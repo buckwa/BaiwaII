@@ -478,8 +478,7 @@ var openModal = function openModal(callback) {
 
   window.previousActiveElement = document.activeElement;
   var $okButton = $modal.querySelector('button.confirm');
-  var $swalDiv = $modal.querySelector('div');
-  $swalDiv.focus();
+  $okButton.focus();
 
   setTimeout(function () {
     (0, _handleDom.addClass)($modal, 'visible');

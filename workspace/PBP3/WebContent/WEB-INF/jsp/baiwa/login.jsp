@@ -39,19 +39,12 @@
                     <div class="sign-avatar">
                         <img src="<c:url value='/theme/img/kmitl_logo.png' />" alt="">
                     </div>
-                    								<c:if test="${not empty error}">
-									<div class="alert alert-danger alert-no-border alert-close alert-dismissible fade in" role="alert">
-						 
-										${error}
-									</div>
-									<!--  <div class="error-signin">${error}</div> -->
-								</c:if>
                     <header class="sign-title">Sign In</header>
                     <div class="form-group">
-                        <input type="text" name="username" class="form-control" placeholder="E-Mail or Phone"/>
+                        <input type="text" name="username" class="form-control" placeholder="Username"/ value="user">
                     </div>
                     <div class="form-group">
-                        <input type="password"  name="password" class="form-control" placeholder="Password"/>
+                        <input type="password"  name="password" class="form-control" placeholder="Password" value="password" />
                     </div>
                     <div class="form-group">
                         <div class="checkbox float-left">

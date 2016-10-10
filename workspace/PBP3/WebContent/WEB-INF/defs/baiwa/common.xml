@@ -5,24 +5,14 @@
 
 <tiles-definitions>
 
-
-   <!-- Base Definition -->
-   <definition name="baseLayout"  template="/WEB-INF/jsp/tiles/baseLayout/layout.jsp">     
-       <put-attribute name="header" value="/WEB-INF/jsp/tiles/baseLayout/header.jsp" />   
-       <put-attribute name="body" value="" />  
-       <put-attribute name="footer" value="/WEB-INF/jsp/tiles/baseLayout/footer.jsp" />  
-   </definition>  
   
 	
 	<!-- Login Page -->
 	<definition name="login" template="/WEB-INF/jsp/baiwa/login.jsp" />
 	
 	<!-- Home Page, After login success -->
-	<definition name="home" template="/index.jsp" />
+	<definition name="home" template="/WEB-INF/jsp/baiwa/home.jsp" />
 	
 
- <definition name="home" extends="baseLayout">        
-       <put-attribute name="body" value="/WEB-INF/jsp/baiwa/home.jsp" />  
-   </definition>  
- 
+
 </tiles-definitions>

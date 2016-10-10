@@ -11,11 +11,11 @@
 	<meta http-equiv="x-ua-compatible" content="ie=edge">
 	<title>BaiWa Template</title>
 
-	<link href="<c:url value='/theme/img/favicon.114x114.png' />" rel="apple-touch-icon" type="image/png" sizes="114x114"> 
-	<link href="<c:url value='/theme/img/favicon.72x72.png' />" rel="apple-touch-icon" type="image/png" sizes="72x72"> 
-	<link href="<c:url value='/theme/img/favicon.57x57.png' />" rel="apple-touch-icon" type="image/png"> 
-	<link href="<c:url value='/theme/img/favicon.png' />" rel="icon" type="image/png"> 
-	<link href="<c:url value='/theme/img/favicon.ico' />" rel="shortcut icon"> 
+	<link href="<c:url value='/baiwa/libs/img/favicon.114x114.png' />" rel="apple-touch-icon" type="image/png" sizes="114x114"> 
+	<link href="<c:url value='/baiwa/libs/img/favicon.72x72.png' />" rel="apple-touch-icon" type="image/png" sizes="72x72"> 
+	<link href="<c:url value='/baiwa/libs/img/favicon.57x57.png' />" rel="apple-touch-icon" type="image/png"> 
+	<link href="<c:url value='/baiwa/libs/img/favicon.png' />" rel="icon" type="image/png"> 
+	<link href="<c:url value='/baiwa/libs/img/favicon.ico' />" rel="shortcut icon"> 
 
 
 	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -24,8 +24,8 @@
 	<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 	<![endif]-->
 
-	<link rel="stylesheet" href="<c:url value='/theme/css/lib/font-awesome/font-awesome.min.css' />">
-	<link rel="stylesheet" href="<c:url value='/theme/css/main.css' />">
+	<link rel="stylesheet" href="<c:url value='/baiwa/libs/css/lib/font-awesome/font-awesome.min.css' />">
+	<link rel="stylesheet" href="<c:url value='/baiwa/libs/css/main.css' />">
 
 </head>
 <body>
@@ -37,7 +37,7 @@
             <div class="container-fluid">
 				<form class="sign-box" action="<c:url value='/login.htm' />" method="POST">               
                     <div class="sign-avatar">
-                        <img src="<c:url value='/theme/img/kmitl_logo.png' />" alt="">
+                        <img src="<c:url value='/baiwa/libs/img/kmitl_logo.png' />" alt="">
                     </div>
                     <header class="sign-title">Sign In</header>
                     <div class="form-group">
@@ -66,11 +66,11 @@
     </div><!--.page-center-->
 
 
-<script src="<c:url value='/theme/js/lib/jquery/jquery.min.js' />"></script>
-<script src="<c:url value='/theme/js/lib/tether/tether.min.js' />"></script>
-<script src="<c:url value='/theme/js/lib/bootstrap/bootstrap.min.js' />"></script>
-<script src="<c:url value='/theme/js/plugins.js' />"></script>
-<script src="<c:url value='/theme/js/app.js' />"></script>
+<script src="<c:url value='/baiwa/libs/js/lib/jquery/jquery.min.js' />"></script>
+<script src="<c:url value='/baiwa/libs/js/lib/tether/tether.min.js' />"></script>
+<script src="<c:url value='/baiwa/libs/js/lib/bootstrap/bootstrap.min.js' />"></script>
+<script src="<c:url value='/baiwa/libs/js/plugins.js' />"></script>
+<script src="<c:url value='/baiwa/libs/js/app.js' />"></script>
 
 
 

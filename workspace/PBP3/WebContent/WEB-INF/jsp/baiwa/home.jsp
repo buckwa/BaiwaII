@@ -1,4 +1,4 @@
-Test
+<%@ page pageEncoding="UTF-8"%>
 
 <div class="page-content">
 		<div class="container-fluid">
@@ -248,7 +248,7 @@ Test
 									<div class="tbl">
 										<div class="tbl-row">
 											<div class="tbl-cell">
-												<div class="exp-timeline-range">1992–1999</div>
+												<div class="exp-timeline-range">1992â1999</div>
 												<div class="exp-timeline-status">Senior Developer</div>
 												<div class="exp-timeline-location"><a href="#">YouTube</a></div>
 											</div>
@@ -287,7 +287,7 @@ Test
 									<div class="tbl">
 										<div class="tbl-row">
 											<div class="tbl-cell">
-												<div class="exp-timeline-range">1973 – 1975</div>
+												<div class="exp-timeline-range">1973 â 1975</div>
 												<div class="exp-timeline-status">Harvard University</div>
 												<div class="exp-timeline-location"><a href="#">BS Computer Science</a></div>
 											</div>
@@ -302,7 +302,7 @@ Test
 									<div class="tbl">
 										<div class="tbl-row">
 											<div class="tbl-cell">
-												<div class="exp-timeline-range">1960 – 1973</div>
+												<div class="exp-timeline-range">1960 â 1973</div>
 												<div class="exp-timeline-status">Lakeside Scool, Seattle</div>
 											</div>
 											<div class="tbl-cell tbl-cell-logo">
@@ -616,11 +616,19 @@ Test
 					<section class="box-typical">
 						<div class="profile-card">
 							<div class="profile-card-photo">
-								<img src="img/photo-220-1.jpg" alt=""/>
+								<img src="img/ktpitak.jpg" alt=""/>
 							</div>
-							<div class="profile-card-name">Sarah Sanchez</div>
-							<div class="profile-card-status">Company Founder</div>
-							<div class="profile-card-location">Greater Seattle Area</div>
+							<div class="profile-card-name">พิทักษ์ ธรรมวาริน </div>
+							<div class="profile-card-status">ป.เอก</div>
+							<div class="profile-card-status">ผู้ช่วยศาสตราจารย์</div>
+							<div class="profile-card-status">วิศวกรรมคอมพิวเตอร์</div>
+<div class="profile-card-status"> วิศวกรรมศาสตร์</div>
+
+<div class="profile-card-status">พนง.เปลี่ยนสถานภาพ</div>
+
+
+<div class="profile-card-status">ktpitak@kmitl.ac.th</div>
+ 
 							<button type="button" class="btn btn-rounded">Follow</button>
 							<div class="btn-group">
 								<button type="button"
@@ -926,7 +934,7 @@ Test
 								<li><a href="#"><img src="img/avatar-1-128.png" alt=""></a></li>
 								<li><a href="#"><img src="img/photo-92-2.jpg" alt=""></a></li>
 								<li><a href="#"><img src="img/avatar-2-128.png" alt=""></a></li>
-								<li><a href="#"><img src="img/photo-92-1.jpg" alt=""></a></li>
+								<li><a href="#"><img src="img/ktpitak.jpg" alt=""></a></li>
 								<li><a href="#"><img src="img/avatar-3-128.png" alt=""></a></li>
 								<li><a href="#"><img src="img/photo-92-3.jpg" alt=""></a></li>
 								<li><a href="#"><img src="img/photo-92-1.jpg" alt=""></a></li>
@@ -934,7 +942,7 @@ Test
 								<li><a href="#"><img src="img/photo-92-3.jpg" alt=""></a></li>
 								<li><a href="#"><img src="img/photo-92-1.jpg" alt=""></a></li>
 								<li><a href="#"><img src="img/photo-92-2.jpg" alt=""></a></li>
-								<li><a href="#"><img src="img/photo-92-3.jpg" alt=""></a></li>
+								<li><a href="#"><img src="img/NoPicture.jpg" alt=""></a></li>
 								<li><a href="#"><img src="img/photo-92-1.jpg" alt=""></a></li>
 							</ul>
 							<form class="site-header-search">

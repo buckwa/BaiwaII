@@ -50,6 +50,7 @@ public class CommonController {
 	public ModelAndView home() {
 		
 		ModelAndView mav = new ModelAndView();
+		logger.info("home");
 //		
 //		// check if user is login
 //		Authentication auth = SecurityContextHolder.getContext().getAuthentication();

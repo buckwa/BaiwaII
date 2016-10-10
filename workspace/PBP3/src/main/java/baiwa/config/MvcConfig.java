@@ -38,10 +38,22 @@ public class MvcConfig extends WebMvcConfigurerAdapter{
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
     	logger.info("######################");
+//        registry.addResourceHandler("/theme/**").addResourceLocations("/theme/");
+//        registry.addResourceHandler("/img/**").addResourceLocations("/img/");
+//        registry.addResourceHandler("/baiwa/**").addResourceLocations("/baiwa/");
+//        registry.addResourceHandler("/app/**").addResourceLocations("/app/");
+//        registry.addResourceHandler("/baiwa/*.js").addResourceLocations("/baiwa/");
+//        registry.addResourceHandler("/baiwa/*.css").addResourceLocations("/baiwa/");
+        
         registry.addResourceHandler("/theme/**").addResourceLocations("/theme/");
         registry.addResourceHandler("/img/**").addResourceLocations("/img/");
-	 
-  
+        registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
+        registry.addResourceHandler("/baiwa/app/**").addResourceLocations("/baiwa/app/");
+        registry.addResourceHandler("/baiwa/libs/**").addResourceLocations("/baiwa/libs/");
+        registry.addResourceHandler("/baiwa/node_modules/**").addResourceLocations("/baiwa/node_modules/");
+        registry.addResourceHandler("/baiwa/*.js").addResourceLocations("/baiwa/");
+        registry.addResourceHandler("/baiwa/*.css").addResourceLocations("/baiwa/");
+        registry.addResourceHandler("/baiwa/dist/**").addResourceLocations("/baiwa/dist/");
         
     }
 }

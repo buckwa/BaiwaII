@@ -72,7 +72,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
  				"/resources/**",
  				"/theme/**",
  				"/img/**",
- 				"/tmb/**",
+ 				"/baiwa/**",
+ 				"/app/**",
  				"/rest/**"
  			).permitAll()
  			//.antMatchers("/admin/**").hasRole("ADMIN")

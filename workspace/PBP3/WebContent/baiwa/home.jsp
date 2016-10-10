@@ -9,6 +9,7 @@
 
 
 
+
 <c:url var="contextLibs" value="/baiwa/"/>
 <c:url var="contextPath" value="/"/>
 
@@ -159,47 +160,50 @@
 	                        
 	                        
 	                        <div class="dropdown dropdown-typical">
-	                            <a class="dropdown-toggle" id="dd-header-marketing" data-target="#" href="http://example.com" >
-	                                <span class="font-icon font-icon-cogwheel"> Marketing automation </span>
+	                            <a class="dropdown-toggle no-arr" id="dd-header-marketing" data-target="#/home" href="#/home" >
+	                                <span class="font-icon font-icon-cogwheel">หน้าแรก</span>
 	                               
 	                            </a>
 	                        </div>
 	                        
 	                        
+	                      
 	                        <div class="dropdown dropdown-typical">
-	                            <a class="dropdown-toggle" id="dd-header-social" data-target="#" href="http://example.com" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-	                                <span class="font-icon font-icon-share"></span>
-	                                <span class="lbl">Social media</span>
-	                            </a>
-	
-	                            <div class="dropdown-menu" aria-labelledby="dd-header-social">
-	                                <a class="dropdown-item" href="#"><span class="font-icon font-icon-home"></span>Quant and Verbal</a>
-	                                <a class="dropdown-item" href="#"><span class="font-icon font-icon-cart"></span>Real Gmat Test</a>
-	                                <a class="dropdown-item" href="#"><span class="font-icon font-icon-speed"></span>Prep Official App</a>
-	                                <a class="dropdown-item" href="#"><span class="font-icon font-icon-users"></span>CATprer Test</a>
-	                                <a class="dropdown-item" href="#"><span class="font-icon font-icon-comments"></span>Third Party Test</a>
-	                            </div>
-	                        </div>
-	                        <div class="dropdown dropdown-typical">
-	                            <a href="#" class="dropdown-toggle no-arr">
-	                                <span class="font-icon font-icon-page"></span>
-	                                <span class="lbl">Projects</span>
-	                                <span class="label label-pill label-danger">35</span>
+	                            <a href="#/ListByWorkType" class="dropdown-toggle no-arr">
+	                                <span class="font-icon font-icon-page">นำเข้าผลงาน</span>
 	                            </a>
 	                        </div>
 	                        <div class="dropdown dropdown-typical">
-	                            <a class="dropdown-toggle" id="dd-header-form-builder" data-target="#" href="http://example.com" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-	                                <span class="font-icon font-icon-pencil">Form builder</span>
-	                                <span class="lbl">Form builder</span>
+	                            <a class="dropdown-toggle no-arr" id="dd-header-form-builder" data-target="#" href="http://example.com" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	                                <span class="font-icon font-icon-pencil">ผลงานประจำปี</span>
 	                            </a>
-	
-	                            <div class="dropdown-menu" aria-labelledby="dd-header-form-builder">
-	                                <a class="dropdown-item" href="#"><span class="font-icon font-icon-home"></span>Quant and Verbal</a>
-	                                <a class="dropdown-item" href="#"><span class="font-icon font-icon-cart"></span>Real Gmat Test</a>
-	                                <a class="dropdown-item" href="#"><span class="font-icon font-icon-speed"></span>Prep Official App</a>
-	                                <a class="dropdown-item" href="#"><span class="font-icon font-icon-users"></span>CATprer Test</a>
-	                                <a class="dropdown-item" href="#"><span class="font-icon font-icon-comments"></span>Third Party Test</a>
-	                            </div>
+	                        </div>
+	                        
+	                        <div class="dropdown dropdown-typical">
+	                            <a class="dropdown-toggle no-arr"  id="dd-header-form-builder" data-target="#" href="http://example.com" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	                                <span class="font-icon font-icon-pencil">กฎระเบียบ</span>
+	                            </a>
+	                        </div>
+	                        
+	                        <div class="dropdown dropdown-typical">
+	                            <a class="dropdown-toggle no-arr" id="dd-header-form-builder" data-target="#" href="http://example.com" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	                                <span class="font-icon font-icon-pencil">รายงานคะแนน</span>
+	                            </a>
+	                        </div>
+	                        <div class="dropdown dropdown-typical">
+	                            <a class="dropdown-toggle no-arr" id="dd-header-form-builder" data-target="#" href="http://example.com" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	                                <span class="font-icon font-icon-pencil">ตารางสอน</span>
+	                            </a>
+	                        </div>
+	                        <div class="dropdown dropdown-typical">
+	                            <a class="dropdown-toggle no-arr" id="dd-header-form-builder" data-target="#" href="http://example.com" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	                                <span class="font-icon font-icon-pencil">แก้ไขผลงาน</span>
+	                            </a>
+	                        </div>
+	                        <div class="dropdown dropdown-typical">
+	                            <a class="dropdown-toggle no-arr" id="dd-header-form-builder" data-target="#" href="http://example.com" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	                                <span class="font-icon font-icon-pencil">คู่มือ</span>
+	                            </a>
 	                        </div>
 
 

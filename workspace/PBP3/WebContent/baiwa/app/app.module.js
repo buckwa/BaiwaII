@@ -14,10 +14,14 @@ var forms_1 = require('@angular/forms');
 var router_1 = require('@angular/router');
 var app_component_1 = require('./app.component');
 var http_1 = require('@angular/http');
+var importwork_component_1 = require('./baiwa/importwork.component');
 var home_component_1 = require('./baiwa/home.component');
+var listworktype_component_1 = require('./baiwa/listworktype.component');
 var routes = [
     { path: 'home', component: home_component_1.home },
-    { path: '', component: home_component_1.home },
+    { path: 'importwork', component: importwork_component_1.importwork },
+    { path: 'ListByWorkType', component: listworktype_component_1.listworktype },
+    { path: '', component: home_component_1.home }
 ];
 var AppModule = (function () {
     function AppModule() {
@@ -32,7 +36,9 @@ var AppModule = (function () {
             ],
             declarations: [
                 app_component_1.AppComponent,
-                home_component_1.home
+                home_component_1.home,
+                importwork_component_1.importwork,
+                listworktype_component_1.listworktype
             ],
             bootstrap: [app_component_1.AppComponent]
         }), 

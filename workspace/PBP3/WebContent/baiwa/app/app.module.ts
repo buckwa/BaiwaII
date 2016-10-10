@@ -6,30 +6,32 @@ import { AppComponent }   from './app.component';
 import { HttpModule } from '@angular/http';
 
 
-
+import {importwork} from './baiwa/importwork.component';
 import {home} from './baiwa/home.component';
+import {listworktype} from './baiwa/listworktype.component';
 
 const routes: Routes = [
 
     { path: 'home', component: home },
-    { path: '', component: home },
+    { path: 'importwork', component: importwork },
+    { path: 'ListByWorkType', component: listworktype },
+    { path: '', component: home }
 
 ];
 
 @NgModule({
-  imports:      [ 
-    	HttpModule,
+    imports: [
+        HttpModule,
         BrowserModule,
         FormsModule,
         RouterModule.forRoot(routes, { useHash: true })
-   ],
-  declarations: [ 
-  AppComponent,
-
-        home
-       
-  
-  ],
-  bootstrap:    [ AppComponent ]
+    ],
+    declarations: [
+        AppComponent,
+        home,
+        importwork,
+        listworktype
+    ],
+    bootstrap: [AppComponent]
 })
 export class AppModule { }

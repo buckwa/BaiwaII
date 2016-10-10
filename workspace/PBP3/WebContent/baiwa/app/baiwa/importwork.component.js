@@ -9,17 +9,16 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
-var AppComponent = (function () {
-    function AppComponent() {
+var importwork = (function () {
+    function importwork() {
     }
-    AppComponent = __decorate([
+    importwork = __decorate([
         core_1.Component({
-            selector: 'my-app',
-            template: "<router-outlet></router-outlet>"
+            templateUrl: 'app/baiwa/html/importwork.component.html'
         }), 
         __metadata('design:paramtypes', [])
-    ], AppComponent);
-    return AppComponent;
+    ], importwork);
+    return importwork;
 }());
-exports.AppComponent = AppComponent;
-//# sourceMappingURL=app.component.js.map
+exports.importwork = importwork;
+//# sourceMappingURL=importwork.component.js.map

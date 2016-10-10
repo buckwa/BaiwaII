@@ -2,9 +2,9 @@ import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 
 
 @Component({
-    templateUrl: 'app/baiwa/html/home.component.html'
+    templateUrl: 'app/baiwa/html/listworktype.component.html'
 })
-export class home {
+export class listworktype {
 
 
     constructor() {

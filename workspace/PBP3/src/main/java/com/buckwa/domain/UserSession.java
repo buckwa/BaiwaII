@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.buckwa.domain.BaseDomain;
 
-public class UserSession extends BaseDomain{
+public class UserSession  {
 	
  private String userName;
  private String firstName;

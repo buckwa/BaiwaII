@@ -52,10 +52,13 @@
 							<div class="profile-card-photo">
 								<img src="{{libPath}}img/profile.jpg" alt="" style="-webkit-border-radius: 5%; height: 100%;" />
 							</div>
-							<div class="profile-card-name">{{profile.thaiName}}  {{profile.thaiSurname}}</div>
-							<div class="profile-card-status">สังกัด: {{profile.facultyDesc}}</div>
-							<div class="profile-card-location">ส่วนงาน: {{profile.departmentDesc}}</div>
-							<button type="button" class="btn btn-rounded" style="    max-width: 155px; ">แก้ไขรูปประจำตัว</button>
+							<div class="profile-card-name">นาย พิทักษ์ ธรรมวาริน</div>
+							<div class="profile-card-status">สังกัด: วิศวกรรมศาสตร์</div>
+							<div class="profile-card-location">ส่วนงาน:วิศวกรรมคอมพิวเตอร์</div>
+							<button type="button" data-toggle="modal" 
+							href="#" data-toggle="modal"
+							data-target="#myModal"
+	                         data-backdrop="static" data-keyboard="false" class="btn btn-rounded" style="    max-width: 155px; ">แก้ไขรูปประจำตัว</button>
 							
 						</div><!--.profile-card-->
 
@@ -72,7 +75,7 @@
 									<b>คะแนนรวมอนุมัติ</b>
 								</div>
 								<div class="tbl-cell">
-									<b>{{sumasix}}</b>
+									<b>455.00</b>
 									
 								</div>
 							</div>
@@ -81,23 +84,23 @@
 						<ul class="profile-links-list">
 							<li class="nowrap">
 								<i class="font-icon font-icon-user"></i>
-								<b>ประเภท:</b> {{profile.employeeType}}
+								<b>ประเภท:</b> พนง.เปลี่ยนสถานภาพ
 							</li>
 							<li class="nowrap">
 								<i class="font-icon font-icon-chart-2"></i>
-								<b>เลขที่อัตรา:</b> {{profile.rateNo}}
+								<b>เลขที่อัตรา:</b> 627(พ)
 							</li>
 							<li class="nowrap">
 								<i class="font-icon font-icon-award"></i>
-								<b>ตำแหน่งงาน:</b> {{profile.academicRank}}
+								<b>ตำแหน่งงาน:</b> ผู้ช่วยศาสตราจารย์
 							</li>
 							<li class="nowrap">
 								<i class="font-icon font-icon-learn"></i>
-								<b>วุฒิการศึกษา:</b> {{profile.maxEducation}}
+								<b>วุฒิการศึกษา:</b> ป.เอก
 							</li>
 							<li class="nowrap">
 								<i class="font-icon font-icon-mail"></i>
-								<b>Email:</b>{{profile.email}}
+								<b>Email:</b>ktpitak@kmitl.ac.th
 							</li>
 							<li class="divider"></li>
 							  <li>
@@ -201,31 +204,75 @@
 										</tr>
 									</thead>
 									<tbody>
-										<tr *ngFor="let item of work; let i = index ">
+										<tr>
 										
 											<td>
-											{{item.axisName}}
+											1 งานวิชาการ
 											</td>
 											<td class="text-center">
-											{{item.axisValue}}
+											405.00
 											</td>
 											<td class="text-center">
-											{{item.axisValue2}}
+											405.00
 											</td>
 		
 										</tr>
-										
+										<tr>
+											<td>
+											2 งานพัฒนาวิชาการ
+											</td>
+											<td class="text-center">
+											405.00
+											</td >
+											<td class="text-center">
+											405.00
+											</td>
+											
+										</tr>
+										<tr>
+											<td>
+											3 งานวิจัย หรือ สร้างสรรค์
+											</td>
+											<td class="text-center">
+											405.00
+											</td>
+											<td class="text-center">
+											405.00
+											</td>
+										</tr>
+										<tr>
+											<td>
+											4 งานบริการวิชาการ
+											</td>
+											<td class="text-center">
+											0.00
+											</td>
+											<td class="text-center">
+											0.00
+											</td>
+										</tr>
+										<tr>
+											<td>
+											5 งานทำนุบำรุงศิลป วัฒนธรรมและสร้างชื่อเสียงให้กับสถาบันฯ
+											</td>
+											<td class="text-center">
+											0.00
+											</td>
+											<td class="text-center">
+											0.00
+											</td>
+										</tr>
 										
 										<tr>
 											<td class="text-right" >
 											<h5><b>รวม</b></h5>
 											</td>
 											<td class="text-center">
-											<h5><b>{{sumasix}}</b></h5>
+											<h5><b>455.00</b></h5>
 											
 											</td>
 											<td class="text-center">
-											<h5><b>{{sumasix2}}</b></h5>
+											<h5><b>455.00</b></h5>
 										
 											</td>
 										</tr>
@@ -236,4 +283,120 @@
 					</section><!--.box-typical-->
 		</div>
 	</div>
+	
+	
+	
+	<!-- 	//แยก -->
+	
+	
+
+  <!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog " >
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">แนบเอกสารประกอบการพิจารณา :</h4>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+
+	          <div class="col-md-12">
+		   
+		       <div class="modal-upload-body scrollable-block">
+                                        <div class="uploading-container">
+                                            <div class="uploading-container-left">
+                                                <div class="drop-zone">
+                                                    <!--
+                                                    при перетаскиваении добавляем класс .dragover
+                                                    <div class="drop-zone dragover">
+                                                    -->
+                                                    <i class="font-icon font-icon-cloud-upload-2"></i>
+                                                    <div class="drop-zone-caption">Drag file to upload</div>
+                                                    <span class="btn btn-rounded btn-file">
+                                                        <span>Choose file</span>
+                                                        <input type="file" name="files[]" multiple>
+                                                    </span>
+                                                </div>
+                                            </div><!--.uploading-container-left-->
+                                            <div class="uploading-container-right">
+                                                <div class="uploading-container-right-in">
+                                                    <h6 class="uploading-list-title">Uploading</h6>
+                                                    <ul class="uploading-list">
+                                                        <li class="uploading-list-item">
+                                                            <div class="uploading-list-item-wrapper">
+                                                                <div class="uploading-list-item-name">
+                                                                    <i class="font-icon font-icon-cam-photo"></i>
+                                                                    photo.png
+                                                                </div>
+                                                                <div class="uploading-list-item-size">7,5 mb</div>
+                                                                <button type="button" class="uploading-list-item-close">
+                                                                    <i class="font-icon-close-2"></i>
+                                                                </button>
+                                                            </div>
+                                                            <progress class="progress" value="25" max="100">
+                                                                <div class="progress">
+                                                                    <span class="progress-bar" style="width: 25%;">25%</span>
+                                                                </div>
+                                                            </progress>
+                                                            <div class="uploading-list-item-progress">37% done</div>
+                                                            <div class="uploading-list-item-speed">90KB/sec</div>
+                                                        </li>
+                                                        <li class="uploading-list-item">
+                                                            <div class="uploading-list-item-wrapper">
+                                                                <div class="uploading-list-item-name">
+                                                                    <i class="font-icon font-icon-page"></i>
+                                                                    task.doc
+                                                                </div>
+                                                                <div class="uploading-list-item-size">7,5 mb</div>
+                                                                <button type="button" class="uploading-list-item-close">
+                                                                    <i class="font-icon-close-2"></i>
+                                                                </button>
+                                                            </div>
+                                                            <progress class="progress" value="50" max="100">
+                                                                <div class="progress">
+                                                                    <span class="progress-bar" style="width: 50%;">50%</span>
+                                                                </div>
+                                                            </progress>
+                                                            <div class="uploading-list-item-progress">37% done</div>
+                                                            <div class="uploading-list-item-speed">90KB/sec</div>
+                                                        </li>
+                                                        <li class="uploading-list-item">
+                                                            <div class="uploading-list-item-wrapper">
+                                                                <div class="uploading-list-item-name">
+                                                                    <i class="font-icon font-icon-cam-photo"></i>
+                                                                    dashboard.png
+                                                                </div>
+                                                                <div class="uploading-list-item-size">7,5 mb</div>
+                                                                <button type="button" class="uploading-list-item-close">
+                                                                    <i class="font-icon-close-2"></i>
+                                                                </button>
+                                                            </div>
+                                                            <progress class="progress" value="100" max="100">
+                                                                <div class="progress">
+                                                                    <span class="progress-bar" style="width: 100%;">100%</span>
+                                                                </div>
+                                                            </progress>
+                                                            <div class="uploading-list-item-progress">Completed</div>
+                                                            <div class="uploading-list-item-speed">90KB/sec</div>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div><!--.uploading-container-right-->
+                                        </div><!--.uploading-container-->
+                                    </div><!--.modal-upload-body-->
+		        
+		   
+	          </div>
+          </div>
+        </div>
+        <div class="modal-upload-bottom">
+          <button type="button" class="btn btn-rounded btn-default" data-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-rounded">Done</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
 	

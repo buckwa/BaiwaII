@@ -9,6 +9,7 @@ public class UserSession  {
  private String userName;
  private String firstName;
  private String lastName;
+ private String currentAcademicYear;
  
  
 public String getUserName() {
@@ -28,6 +29,12 @@ public String getLastName() {
 }
 public void setLastName(String lastName) {
 	this.lastName = lastName;
+}
+public String getCurrentAcademicYear() {
+	return currentAcademicYear;
+}
+public void setCurrentAcademicYear(String currentAcademicYear) {
+	this.currentAcademicYear = currentAcademicYear;
 }
  
  

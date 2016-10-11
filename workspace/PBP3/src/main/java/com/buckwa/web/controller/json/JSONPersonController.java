@@ -615,6 +615,7 @@ public class JSONPersonController {
 			userreturn.setUserName("ktpitak@kmitl.ac.th");
 			userreturn.setFirstName("พิทักษ์ ");
 			userreturn.setLastName("ธรรมวาริน");
+			userreturn.setCurrentAcademicYear("2558");
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			 

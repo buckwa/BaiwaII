@@ -11,6 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require('@angular/core');
 var home = (function () {
     function home() {
+        this.libPath = "/PBP3/baiwa/libs/";
     }
     home = __decorate([
         core_1.Component({

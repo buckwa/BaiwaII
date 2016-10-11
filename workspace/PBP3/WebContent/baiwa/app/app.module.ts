@@ -4,6 +4,7 @@ import { FormsModule }    from '@angular/forms';
 import { Routes, RouterModule }   from '@angular/router';
 import { AppComponent }   from './app.component';
 import { HttpModule } from '@angular/http';
+import {CommonService} from'./service/Common.service';
 
 
 import {importwork} from './baiwa/importwork.component';
@@ -31,6 +32,9 @@ const routes: Routes = [
         home,
         importwork,
         listworktype
+    ],
+    providers: [
+        CommonService
     ],
     bootstrap: [AppComponent]
 })

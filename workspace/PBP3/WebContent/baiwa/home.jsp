@@ -219,6 +219,7 @@
 	
 	<div class="page-content">
 		<div class="container-fluid">
+
     		<my-app>Loading...</my-app>
      	</div>
     </div>
@@ -236,7 +237,7 @@
     background: #fff;
     color: #fff;
     font-family: THSarabun, 'Thai Sans Lite', sans-serif;
-    position: fixed;
+
     bottom: 0px;
     font-size: 13px;
     width: 100%;

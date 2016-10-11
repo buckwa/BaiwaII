@@ -6,8 +6,10 @@ import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 })
 export class home {
 
+public libPath :string ;
 
     constructor() {
-	
+        this.libPath ="/PBP3/baiwa/libs/";
+        
     }
 }

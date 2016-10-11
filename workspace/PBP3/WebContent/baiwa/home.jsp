@@ -145,7 +145,7 @@
 	
 	                <div class="mobile-menu-right-overlay"></div>
 	                <div class="site-header-collapsed">
-	                    <div class="site-header-collapsed-in">
+	                    <div class="site-header-collapsed-in" style=" width: 100%;">
 	                    
 	                        <div class="dropdown dropdown-typical">
 	                            <div class="dropdown-menu" aria-labelledby="dd-header-sales">

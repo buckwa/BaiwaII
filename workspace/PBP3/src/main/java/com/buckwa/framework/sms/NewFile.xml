@@ -1,0 +1,8 @@
+<service generator="zend" version="1.0">
+	<send>
+		<message>OK</message>
+		<uuid>0430-1b370ef9-4fcdcc13-ac93-d72b806b</uuid>
+		<credit>2</credit>
+		<status>success</status>
+	</send>
+</service>

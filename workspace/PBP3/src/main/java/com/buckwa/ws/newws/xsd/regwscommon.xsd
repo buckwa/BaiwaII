@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema targetNamespace="http://www1.reg.kmitl.ac.th/service/"
+           xmlns="http://www.w3.org/2001/XMLSchema"
+           xmlns:tns="http://www1.reg.kmitl.ac.th/service/"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           elementFormDefault="qualified">
+           
+           
+        <xs:element name="getTeachTableResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="teachTable" type="tns:teachTable" minOccurs="0" maxOccurs="unbounded"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>     
+      
+        <xs:element name="getSubjectResponse">
+        <xs:complexType>
+          <xs:sequence>
+          	<xs:element name="subject" type="tns:subject" minOccurs="1" maxOccurs="unbounded" />
+          	<xs:element name="debug" type="xs:string" minOccurs="0"></xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      
+      <!--  Faculty  -->
+
+ 
+     <xs:element name="getFacultyListResponse">
+        <xs:complexType>
+          <xs:sequence>
+          	<xs:element name="faculty" type="tns:faculty" minOccurs="0" maxOccurs="unbounded" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+            
+           
+     <xs:element name="getFacultyList">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="faculty_id" minOccurs="0"
+            	maxOccurs="1" nillable="false">
+            	<xs:simpleType>
+            		<xs:restriction base="xs:string">
+            			<xs:maxLength value="2"></xs:maxLength>
+            		</xs:restriction>
+            	</xs:simpleType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      
+ <xs:complexType name="academicYear">
+    <xs:sequence>
+      <xs:element name="year" type="xs:int" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="semesters" type="tns:semesters" minOccurs="0" maxOccurs="1" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="semesters">
+    <xs:sequence>
+      <xs:element name="semester" type="int" minOccurs="0" maxOccurs="unbounded" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="faculty">
+    <xs:sequence>
+      <xs:element name="faculty_id" type="xs:string" maxOccurs="1" minOccurs="0"/>
+      <xs:element name="faculty_tname" type="xs:string" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="faculty_ename" type="xs:string" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="icl_faculty_id" type="xs:string" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="brief" type="xs:string" minOccurs="0" maxOccurs="1"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="department">
+    <xs:sequence>
+      <xs:element name="faculty_id" type="xs:string" maxOccurs="1" minOccurs="0"/>
+      <xs:element name="department_id" type="xs:string" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="department_name" type="xs:string" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="department_ename" type="xs:string" minOccurs="0" maxOccurs="1"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="teacher">
+    <xs:sequence>
+      <xs:element name="teacher_id" type="xs:string" maxOccurs="1" minOccurs="0"/>
+      <xs:element name="user_id" type="xs:string" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="faculty_id" type="xs:string" maxOccurs="1" minOccurs="0"/>
+      <xs:element name="department_id" type="xs:string" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="prename" type="xs:string" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="t_prename" type="xs:string" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="teacher_tname" type="xs:string" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="e_prename" type="xs:string" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="teacher_ename" type="xs:string" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="degree" type="xs:string" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="position" type="xs:string" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="type" type="xs:string" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="person_id" type="xs:string" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="level" type="xs:string" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="citizen_id" type="xs:string" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="advise_status" type="xs:string" minOccurs="0" maxOccurs="1" />
+      <xs:element name="alive" type="xs:string" minOccurs="0" maxOccurs="1" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="teacherList">
+    <xs:sequence>
+      <xs:element name="faculty_id" type="xs:string" maxOccurs="1" minOccurs="0"/>
+      <xs:element name="department_id" type="xs:string" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="teacher_id" type="xs:string" maxOccurs="1" minOccurs="0"/>
+      <xs:element name="prename" type="xs:string" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="t_prename" type="xs:string" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="teacher_tname" type="xs:string" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="e_prename" type="xs:string" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="teacher_ename" type="xs:string" minOccurs="0" maxOccurs="1"/>
+    </xs:sequence>
+  </xs:complexType>
+  
+  
+  
+  <xs:complexType name="subject">
+    <xs:sequence>
+      <xs:element name="subject_id" type="xs:string" maxOccurs="1" minOccurs="0"></xs:element>
+      <xs:element name="subject_tname" type="xs:string" maxOccurs="1" minOccurs="0"></xs:element>
+      <xs:element name="subject_ename" type="xs:string" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="credit" type="xs:string" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="lect_hr" type="xs:string" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="prac_hr" type="xs:string" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="self_hr" type="xs:string" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="prerequisite" type="xs:string" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="detail" type="xs:string" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="lock_ed" type="xs:string" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="precondition" type="xs:string" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="status" type="xs:string" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="subject_type" type="xs:string" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="credit_cal" type="xs:string" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="last_thesis" type="xs:string" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="degree" type="xs:int" minOccurs="0" maxOccurs="1"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="teachTable">
+    <xs:sequence>
+      <xs:element name="faculty_id" type="xs:string" maxOccurs="1" minOccurs="0"/>
+      <xs:element name="department_id" type="xs:string" maxOccurs="1" minOccurs="0"/>
+      <xs:element name="curr_id" type="xs:string" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="program" type="xs:string" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="subject_id" type="xs:string" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="semester" type="xs:string" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="year" type="xs:string" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="class" type="xs:string" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="section" type="xs:string" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="teacher_id" type="xs:string" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="lect_or_prac" type="xs:string" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="teach_day" type="xs:string" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="teach_time" type="xs:string" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="teach_time2" type="xs:string" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="subj_type" type="xs:string" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="sect" type="xs:string" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="closed" type="xs:string" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="branch_id" type="xs:string" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="admis_type" type="xs:string" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="term_admis" type="xs:string" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="student_total" type="xs:int" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="degree" type="xs:int" minOccurs="0" maxOccurs="1"/>
+    </xs:sequence>
+  </xs:complexType>
+  
+  <xs:complexType name="advisorStudent">
+    <xs:sequence>
+      <xs:element name="teacher_id" type="xs:string" maxOccurs="1" minOccurs="0"/>
+      <xs:element name="subject_id" type="xs:string" maxOccurs="1" minOccurs="0"/>
+      <xs:element name="year" type="xs:string" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="semester" type="xs:string" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="student_total" type="xs:string" minOccurs="0" maxOccurs="1"/>
+    </xs:sequence>
+  </xs:complexType>
+  
+  
+</xs:schema>

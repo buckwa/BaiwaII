@@ -1,0 +1,6 @@
+<service generator="zend" version="1.0">
+	<send>
+		<status>fail</status>
+		<message>Credit is not enough</message>
+	</send>
+</service>

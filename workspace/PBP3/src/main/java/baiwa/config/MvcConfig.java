@@ -12,7 +12,7 @@ import org.springframework.web.servlet.view.tiles3.TilesConfigurer;
 
 
 @EnableWebMvc
-@ComponentScan("baiwa.controller")
+@ComponentScan("baiwa.controller,com.buckwa")
 public class MvcConfig extends WebMvcConfigurerAdapter{
 	
 	Logger logger = LoggerFactory.getLogger(SecurityConfig.class);

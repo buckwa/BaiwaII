@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"
+ xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://reg.kmitl.ac.th" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" targetNamespace="http://reg.kmitl.ac.th">
+   
+    <element name="getListTeachers" >
+     <complexType >
+    	<sequence>
+     		<element name="faculty_id" type="string"></element>
+    		<element name="year" type="string"></element>
+    		<element name="semester" type="string"></element>    	
+    		</sequence>
+     </complexType>   
+    </element>
+    
+    <element name="getListTeachersResponse" >
+     <complexType >
+    	<sequence>
+			<element name="return" type="string"></element>
+		</sequence>
+     </complexType>   
+    </element> 
+    
+     <element name="WrapperText" >
+     <complexType >
+    	<sequence>
+			<element name="get_date" type="string"></element>
+			<element name="amount" type="string"></element>
+			<element name="teachers" type="tns:Teacher" minOccurs="0" maxOccurs="unbounded"></element>
+		</sequence>
+     </complexType>   
+    </element>    
+    
+    
+      <complexType name="Teacher">
+    	<sequence>
+			<element name="teacher_id" type="string"></element>
+			<element name="name" type="string"></element>
+			<element name="ename" type="string"></element>
+			<element name="registrar_id" type="string"></element>
+			<element name="email" type="string"></element>
+		</sequence>
+     </complexType>   
+     
+     
+     
+     
+     
+    
+ 
+   
+</schema>

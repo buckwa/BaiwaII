@@ -52,9 +52,9 @@
 							<div class="profile-card-photo">
 								<img src="{{libPath}}img/profile.jpg" alt="" style="-webkit-border-radius: 5%; height: 100%;" />
 							</div>
-							<div class="profile-card-name">นาย พิทักษ์ ธรรมวาริน</div>
-							<div class="profile-card-status">สังกัด: วิศวกรรมศาสตร์</div>
-							<div class="profile-card-location">ส่วนงาน:วิศวกรรมคอมพิวเตอร์</div>
+							<div class="profile-card-name">{{profile.thaiName}}  {{profile.thaiSurname}}</div>
+							<div class="profile-card-status">สังกัด: {{profile.facultyDesc}}</div>
+							<div class="profile-card-location">ส่วนงาน: {{profile.departmentDesc}}</div>
 							<button type="button" class="btn btn-rounded" style="    max-width: 155px; ">แก้ไขรูปประจำตัว</button>
 							
 						</div><!--.profile-card-->
@@ -72,7 +72,7 @@
 									<b>คะแนนรวมอนุมัติ</b>
 								</div>
 								<div class="tbl-cell">
-									<b>455.00</b>
+									<b>{{sumasix}}</b>
 									
 								</div>
 							</div>
@@ -81,23 +81,23 @@
 						<ul class="profile-links-list">
 							<li class="nowrap">
 								<i class="font-icon font-icon-user"></i>
-								<b>ประเภท:</b> พนง.เปลี่ยนสถานภาพ
+								<b>ประเภท:</b> {{profile.employeeType}}
 							</li>
 							<li class="nowrap">
 								<i class="font-icon font-icon-chart-2"></i>
-								<b>เลขที่อัตรา:</b> 627(พ)
+								<b>เลขที่อัตรา:</b> {{profile.rateNo}}
 							</li>
 							<li class="nowrap">
 								<i class="font-icon font-icon-award"></i>
-								<b>ตำแหน่งงาน:</b> ผู้ช่วยศาสตราจารย์
+								<b>ตำแหน่งงาน:</b> {{profile.academicRank}}
 							</li>
 							<li class="nowrap">
 								<i class="font-icon font-icon-learn"></i>
-								<b>วุฒิการศึกษา:</b> ป.เอก
+								<b>วุฒิการศึกษา:</b> {{profile.maxEducation}}
 							</li>
 							<li class="nowrap">
 								<i class="font-icon font-icon-mail"></i>
-								<b>Email:</b>ktpitak@kmitl.ac.th
+								<b>Email:</b>{{profile.email}}
 							</li>
 							<li class="divider"></li>
 							  <li>
@@ -201,75 +201,31 @@
 										</tr>
 									</thead>
 									<tbody>
-										<tr>
+										<tr *ngFor="let item of work; let i = index ">
 										
 											<td>
-											1 งานวิชาการ
+											{{item.axisName}}
 											</td>
 											<td class="text-center">
-											405.00
+											{{item.axisValue}}
 											</td>
 											<td class="text-center">
-											405.00
+											{{item.axisValue2}}
 											</td>
 		
 										</tr>
-										<tr>
-											<td>
-											2 งานพัฒนาวิชาการ
-											</td>
-											<td class="text-center">
-											405.00
-											</td >
-											<td class="text-center">
-											405.00
-											</td>
-											
-										</tr>
-										<tr>
-											<td>
-											3 งานวิจัย หรือ สร้างสรรค์
-											</td>
-											<td class="text-center">
-											405.00
-											</td>
-											<td class="text-center">
-											405.00
-											</td>
-										</tr>
-										<tr>
-											<td>
-											4 งานบริการวิชาการ
-											</td>
-											<td class="text-center">
-											0.00
-											</td>
-											<td class="text-center">
-											0.00
-											</td>
-										</tr>
-										<tr>
-											<td>
-											5 งานทำนุบำรุงศิลป วัฒนธรรมและสร้างชื่อเสียงให้กับสถาบันฯ
-											</td>
-											<td class="text-center">
-											0.00
-											</td>
-											<td class="text-center">
-											0.00
-											</td>
-										</tr>
+										
 										
 										<tr>
 											<td class="text-right" >
 											<h5><b>รวม</b></h5>
 											</td>
 											<td class="text-center">
-											<h5><b>455.00</b></h5>
+											<h5><b>{{sumasix}}</b></h5>
 											
 											</td>
 											<td class="text-center">
-											<h5><b>455.00</b></h5>
+											<h5><b>{{sumasix2}}</b></h5>
 										
 											</td>
 										</tr>

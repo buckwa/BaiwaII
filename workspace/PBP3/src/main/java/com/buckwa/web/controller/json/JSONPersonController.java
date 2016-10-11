@@ -7,7 +7,8 @@ import java.util.StringTokenizer;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.slf4j.Logger;import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.buckwa.domain.BuckWaUser;
+import com.buckwa.domain.UserSession;
 import com.buckwa.domain.common.BuckWaRequest;
 import com.buckwa.domain.common.BuckWaResponse;
 import com.buckwa.domain.pam.Person;
@@ -602,4 +604,22 @@ public class JSONPersonController {
 		return returnList;
 	}
 
+	
+	@RequestMapping(value = "/getUserSession", method = RequestMethod.GET, headers = "Accept=application/json")
+	public UserSession  getUserSession(HttpServletRequest httpRequest) {
+		UserSession userreturn =new UserSession();
+		try {
+			logger.info(" getUserSession ");
+	 
+			//userreturn = BuckWaUtils.getUserFromContext();
+			userreturn.setUserName("ktpitak@kmitl.ac.th");
+			userreturn.setFirstName("พิทักษ์ ");
+			userreturn.setLastName("ธรรมวาริน");
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			 
+		}
+
+		 return userreturn;
+	}
 }

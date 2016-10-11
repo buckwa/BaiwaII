@@ -78,8 +78,8 @@ public class JSONPersonController {
 
 		return person;
 	}	
-	@RequestMapping(value = "/getRadarPlotNew/{round}", method = RequestMethod.GET, headers = "Accept=application/json")
-	public List<RadarPlotReport> radarPlotNew(HttpServletRequest httpRequest,@PathVariable String round) {
+	@RequestMapping(value = "/getRadarPlotNew/{userName}/{year}/{round}", method = RequestMethod.GET, headers = "Accept=application/json")
+	public List<RadarPlotReport> radarPlotNew(HttpServletRequest httpRequest,@PathVariable String userName,@PathVariable String year,@PathVariable String round) {
 	 
 		List<RadarPlotReport> returnList = new ArrayList<RadarPlotReport>();
 		ModelAndView mav = new ModelAndView();
@@ -87,35 +87,34 @@ public class JSONPersonController {
 		 
 		try {
 
-			String academicYear = schoolUtil.getCurrentAcademicYear();
-			logger.info(" Start  academicYear:" + academicYear);
-			BuckWaUser user = BuckWaUtils.getUserFromContext();
-			logger.info("radarPlotNew  username :" + user.getUsername()+ " academicYear:"+academicYear+" round :"+round);
+			String academicYear = year;
+		 
+			logger.info("radarPlotNew  username :" + userName+ " academicYear:"+academicYear+" round :"+round);
 
 			BuckWaRequest request = new BuckWaRequest();
-			request.put("username", user.getUsername());
+			request.put("username", userName);
 			request.put("academicYear", academicYear);
 			
 			BuckWaResponse response = new BuckWaResponse();
-//			Person person = (Person) httpRequest.getSession().getAttribute("personProFileSession");
+ 
 			Person person = new Person();
  
 				response = personProfileService.getByUsername(request);
 				if (response.getStatus() == BuckWaConstants.SUCCESS) {
 					person = (Person) response.getResObj("person");
 
-					user.setFirstLastName(person.getThaiName() + " " + person.getThaiSurname());
+					//user.setFirstLastName(person.getThaiName() + " " + person.getThaiSurname());
 	 
 					person.setAcademicYear(academicYear);
 					person.setAcademicYearList(academicYearUtil.getAcademicYearList());
 					person.setEvaluateRound(round);
-					user.setPersonProfile(person);
+					//user.setPersonProfile(person);
 					mav.addObject("person", person);
 					 
 					String facultyCode = person.getFacultyCode();
 	
 					request.put("academicYear", academicYear);
-					request.put("userName", BuckWaUtils.getUserNameFromContext());
+					request.put("userName", userName);
 					request.put("round", person.getEvaluateRound());
 					request.put("employeeType", person.getEmployeeType());
 					request.put("facultyCode", facultyCode);

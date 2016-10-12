@@ -27,6 +27,7 @@ import com.buckwa.domain.pbp.PBPWorkType;
 import com.buckwa.domain.pbp.PBPWorkTypeWrapper;
 import com.buckwa.domain.pbp.report.DepartmentWorkTypeReport;
 import com.buckwa.domain.pbp.report.RadarPlotReport;
+import com.buckwa.domain.pbp3.WorkSummary;
 import com.buckwa.domain.pbp3.WorkType;
 import com.buckwa.service.intf.pam.PersonProfileService;
 import com.buckwa.service.intf.pbp.AcademicKPIService;
@@ -634,8 +635,7 @@ public class JSONPersonController {
 	}
 	
 	
-	//@RequestMapping(value="initWorkImport.htm", method = RequestMethod.GET)
-	//public ModelAndView initWorkImport(HttpServletRequest httpRequest ) {
+ 
 	@RequestMapping(value = "/getAllWorkList/{academicYear}/{facultyCode}", method = RequestMethod.GET, headers = "Accept=application/json")
 	public List<WorkType> getAllWorkList(@PathVariable String academicYear,@PathVariable String facultyCode) {		
 		logger.info(" Start ");
@@ -652,10 +652,7 @@ public class JSONPersonController {
 				PBPWorkTypeWrapper pBPWorkTypeWrapper = (PBPWorkTypeWrapper)response.getResObj("pBPWorkTypeWrapper");
 				List<PBPWorkType> workTypeListx = pBPWorkTypeWrapper.getpBPWorkTypeList(); 				
 				List<PBPWorkType> workTypeList =workTypeListx;
-				if(workTypeList!=null&&workTypeList.size()>0){
-					
-					PBPWorkType workType0 =	 workTypeList.get(0) ;
-					request.put("workTypeCode",workType0.getCode());
+				if(workTypeList!=null&&workTypeList.size()>0){ 
 					
 					for(PBPWorkType workTmp:workTypeList){
 						String workTypeCodeTmp = workTmp.getCode();
@@ -665,6 +662,7 @@ public class JSONPersonController {
 						WorkType newWork = new WorkType();
 						newWork.setWorkTypeName(workTypeNameTmp);
 						
+						request.put("workTypeCode",workTypeCodeTmp);
 						response = academicKPIService.getByAcademicYearWorkTypeCodeFacultyCode(request);
 						if(response.getStatus()==BuckWaConstants.SUCCESS){	
 							AcademicKPIWrapper academicKPIWrapper = (AcademicKPIWrapper)response.getResObj("academicKPIWrapper");			 
@@ -686,4 +684,56 @@ public class JSONPersonController {
 		}
 		return returnList;
 	}	
+	
+	
+	
+	//@RequestMapping(value="getAcademicWork.htm", method = RequestMethod.GET)
+	//public ModelAndView initAcademicWorkGET(HttpServletRequest httpRequest  ) {
+	@RequestMapping(value = "/getAcademicWork/{userName}/{academicYear}/{round}", method = RequestMethod.GET, headers = "Accept=application/json")
+	public WorkSummary getAllWorkList(@PathVariable String userName,@PathVariable String academicYear,@PathVariable String round) {			
+		
+		logger.info(" Start "); 
+		WorkSummary workSummary = new WorkSummary();
+		workSummary.setAcademicYear(academicYear);
+		try {  
+
+			BuckWaRequest request = new BuckWaRequest(); 
+			request.put("username", userName);
+			request.put("academicYear",academicYear );
+
+			BuckWaResponse  response = personProfileService.getByUsername(request);
+
+			if (response.getStatus() == BuckWaConstants.SUCCESS) {
+				Person person = (Person) response.getResObj("person");
+				person.setAcademicYear(academicYear);
+				person.setEvaluateRound(round);
+ 
+				//String academicYear =schoolUtil.getCurrentAcademicYear();
+				String facultyCode = person.getFacultyCode();
+				request.put("academicYear",academicYear);
+				request.put("userName",userName);
+				request.put("round",round);
+				request.put("employeeType",person.getEmployeeTypeNo());
+				request.put("facultyCode",facultyCode);
+				
+				response = pBPWorkTypeService.getCalculateByAcademicYear(request);
+				
+				if(response.getStatus()==BuckWaConstants.SUCCESS){	
+					PBPWorkTypeWrapper pBPWorkTypeWrapper = (PBPWorkTypeWrapper)response.getResObj("pBPWorkTypeWrapper"); 
+					pBPWorkTypeWrapper.setAcademicYear(academicYear);
+					person.setpBPWorkTypeWrapper(pBPWorkTypeWrapper);
+
+					workSummary.setTotalMark(pBPWorkTypeWrapper.getTotalMark()+"");
+					workSummary.setpBPWorkTypeList(pBPWorkTypeWrapper.getpBPWorkTypeList());
+				}					
+				 
+			} 
+		} catch(Exception ex) {
+			ex.printStackTrace();
+			 
+		}
+
+		return workSummary;
+	}
+	
 }

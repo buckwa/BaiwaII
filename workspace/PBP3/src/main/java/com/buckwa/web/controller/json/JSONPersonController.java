@@ -21,7 +21,10 @@ import com.buckwa.domain.UserSession;
 import com.buckwa.domain.common.BuckWaRequest;
 import com.buckwa.domain.common.BuckWaResponse;
 import com.buckwa.domain.pam.Person;
+import com.buckwa.domain.pbp.AcademicKPI;
+import com.buckwa.domain.pbp.AcademicKPIAttribute;
 import com.buckwa.domain.pbp.AcademicKPIWrapper;
+import com.buckwa.domain.pbp.AcademicUnitWrapper;
 import com.buckwa.domain.pbp.Department;
 import com.buckwa.domain.pbp.PBPWorkType;
 import com.buckwa.domain.pbp.PBPWorkTypeWrapper;
@@ -31,6 +34,7 @@ import com.buckwa.domain.pbp3.WorkSummary;
 import com.buckwa.domain.pbp3.WorkType;
 import com.buckwa.service.intf.pam.PersonProfileService;
 import com.buckwa.service.intf.pbp.AcademicKPIService;
+import com.buckwa.service.intf.pbp.AcademicUnitService;
 import com.buckwa.service.intf.pbp.FacultyService;
 import com.buckwa.service.intf.pbp.HeadService;
 import com.buckwa.service.intf.pbp.PBPWorkTypeService;
@@ -63,6 +67,8 @@ public class JSONPersonController {
 	@Autowired
 	private HeadService headService;
 	
+	@Autowired
+	private AcademicUnitService academicUnitService;	
 	
 	@Autowired
 	private AcademicKPIService academicKPIService;	
@@ -736,4 +742,57 @@ public class JSONPersonController {
 		return workSummary;
 	}
 	
+	
+	
+	@RequestMapping(value = "/getAcademicKPI/{academicKPICode}/{facultyCode}/{academicYear}", method = RequestMethod.GET, headers = "Accept=application/json")
+	public AcademicKPI getAcademicKPI(@PathVariable String academicKPICode,@PathVariable String facultyCode,@PathVariable String academicYear) {			
+		
+ 		logger.info(" Start  academicKPICode:"+academicKPICode+" academicYear:"+academicYear);
+ 		AcademicKPI academicKPI  = new AcademicKPI();
+		try{
+			BuckWaRequest request = new BuckWaRequest();
+			
+			request.put("academicYear",academicYear);
+			request.put("academicKPICode",academicKPICode);
+			request.put("facultyCode",facultyCode);
+			BuckWaResponse response = academicKPIService.getByCodeAcademicYear(request);
+			 
+			if(response.getStatus()==BuckWaConstants.SUCCESS){	
+				 academicKPI = (AcademicKPI)response.getResObj("academicKPI");	
+			 
+				request.put("academicYear",academicYear);
+				 response = academicUnitService.getByAcademicYear(request);
+				if(response.getStatus()==BuckWaConstants.SUCCESS){	
+					AcademicUnitWrapper academicUnitWrapper = (AcademicUnitWrapper)response.getResObj("academicUnitWrapper");
+					academicKPI.setAcademicUnitList(academicUnitWrapper.getAcademicUnitList());
+					academicKPI.setRatio(new Integer(100));
+					
+					List<AcademicKPIAttribute> ratioList =academicKPI.getAcademicKPIAttributeList();
+					for(AcademicKPIAttribute tmp:ratioList){
+						String attributeName =tmp.getName();
+//						logger.info(" Attribute Name:"+attributeName+" index of สัดส่วน:"+attributeName.indexOf("สัดส่วน"));
+						
+						if(attributeName.indexOf("สัดส่วน")!=-1){
+							tmp.setValue("100");
+						}
+						
+					}
+				}	 
+				//academicKPI.setIndex(index);
+				//mav.addObject("academicKPI", academicKPI);
+				
+				// Delete Temp File
+//				File uploadPath = new File(pathUtil.getPBPAttatchFilePath() + "temp/" + BuckWaUtils.getUserIdFromContext());
+//				if (uploadPath.exists() && uploadPath.isDirectory()) {
+//					FileUtils.deleteDirectory(uploadPath);
+//				}
+				
+			}
+			
+		}catch(Exception ex){
+			ex.printStackTrace();
+			 
+		}
+		return academicKPI;
+	}
 }

@@ -10,7 +10,9 @@ import javax.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,6 +25,7 @@ import com.buckwa.domain.common.BuckWaResponse;
 import com.buckwa.domain.pam.Person;
 import com.buckwa.domain.pbp.AcademicKPI;
 import com.buckwa.domain.pbp.AcademicKPIAttribute;
+import com.buckwa.domain.pbp.AcademicKPIAttributeValue;
 import com.buckwa.domain.pbp.AcademicKPIUserMapping;
 import com.buckwa.domain.pbp.AcademicKPIUserMappingWrapper;
 import com.buckwa.domain.pbp.AcademicKPIWrapper;
@@ -32,6 +35,7 @@ import com.buckwa.domain.pbp.PBPWorkType;
 import com.buckwa.domain.pbp.PBPWorkTypeWrapper;
 import com.buckwa.domain.pbp.report.DepartmentWorkTypeReport;
 import com.buckwa.domain.pbp.report.RadarPlotReport;
+import com.buckwa.domain.pbp3.ResponseObj;
 import com.buckwa.domain.pbp3.WorkSummary;
 import com.buckwa.domain.pbp3.WorkType;
 import com.buckwa.service.intf.pam.PersonProfileService;
@@ -826,5 +830,68 @@ public class JSONPersonController {
 		}
 		return kpiUserMapping;
 	}
+		
+
+		@RequestMapping(value = "/importwork")
+		public ResponseObj jsonImportworkPOST(@RequestBody  AcademicKPI academicKPI) { 
+			logger.info(" Start  ");
+			ResponseObj resp = new ResponseObj();
+			resp.setStatus("0");
+			try{
+
+		 
+					String userName = BuckWaUtils.getUserNameFromContext();
+					String academicYear = schoolUtil.getCurrentAcademicYear();
+					
+					AcademicKPIUserMapping academicKPIUserMapping = new AcademicKPIUserMapping();
+					academicKPIUserMapping.setUserName(userName);
+					academicKPIUserMapping.setAcademicYear(academicYear);
+					academicKPIUserMapping.setAcademicKPICode(academicKPI.getCode());
+					academicKPIUserMapping.setAcademicKPIId(academicKPI.getAcademicKPIId());
+					academicKPIUserMapping.setWorkTypeCode(academicKPI.getWorkTypeCode());
+					academicKPIUserMapping.setName(academicKPI.getName());
+					academicKPIUserMapping.setRatio(academicKPI.getRatio());
+					
+					List<AcademicKPIAttribute> academicKPIAttributeList =academicKPI.getAcademicKPIAttributeList();
+					
+					List<AcademicKPIAttributeValue> academicKPIAttributeValueList = new ArrayList<AcademicKPIAttributeValue>();
+					for(AcademicKPIAttribute tmp:academicKPIAttributeList){
+						AcademicKPIAttributeValue valueTmp = new AcademicKPIAttributeValue();
+						valueTmp.setAcademicKPICode(academicKPI.getCode());
+						valueTmp.setAcademicYear(academicYear);
+						valueTmp.setValue(tmp.getValue());
+						valueTmp.setName(tmp.getName());
+						//valueTmp.(tmp.getRownum());
+						valueTmp.setRatio(tmp.getRatio());
+					//	logger.info(" Controller attribute name:"+tmp.getName()+"  value:"+tmp.getValue());
+						academicKPIAttributeValueList.add(valueTmp);
+					} 
+					
+					academicKPIUserMapping.setAcademicKPIAttributeValueList(academicKPIAttributeValueList);
+					
+					academicKPIUserMapping.setStatus("CREATE");
+					// Save
+					BuckWaRequest request = new BuckWaRequest(); 
+					request.put("academicKPIUserMapping",academicKPIUserMapping);
+					request.put("tmpFileNameList", academicKPI.getTmpFileNameList());
+					BuckWaResponse response = academicKPIService.importwork(request); 
+					
+					if(response.getStatus()==BuckWaConstants.SUCCESS){	
+						Long academicKPIId = (Long)response.getResObj("academicKPIId");	
+						academicKPI.setAcademicKPIUserMappingId(academicKPIId); 
+ 
+					}  			
+				 
+ 
+			 			
+			}catch(Exception ex){
+				ex.printStackTrace();
+				resp.setStatus("0");
+				resp.setDescription(ex.getMessage());
+			}
+			logger.info(" End  ");
+			return resp;
+		}
+	 
 	
 }

@@ -18,10 +18,12 @@ var Common_service_1 = require('./service/Common.service');
 var importwork_component_1 = require('./baiwa/importwork.component');
 var home_component_1 = require('./baiwa/home.component');
 var listworktype_component_1 = require('./baiwa/listworktype.component');
+var AcademicWork_component_1 = require('./baiwa/AcademicWork.component');
 var routes = [
     { path: 'home', component: home_component_1.home },
     { path: 'importwork', component: importwork_component_1.importwork },
     { path: 'ListByWorkType', component: listworktype_component_1.listworktype },
+    { path: 'AcademicWork', component: AcademicWork_component_1.AcademicWork },
     { path: '', component: home_component_1.home }
 ];
 var AppModule = (function () {
@@ -39,7 +41,8 @@ var AppModule = (function () {
                 app_component_1.AppComponent,
                 home_component_1.home,
                 importwork_component_1.importwork,
-                listworktype_component_1.listworktype
+                listworktype_component_1.listworktype,
+                AcademicWork_component_1.AcademicWork
             ],
             providers: [
                 Common_service_1.CommonService

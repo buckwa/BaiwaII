@@ -10,12 +10,15 @@ import {CommonService} from'./service/Common.service';
 import {importwork} from './baiwa/importwork.component';
 import {home} from './baiwa/home.component';
 import {listworktype} from './baiwa/listworktype.component';
+import {AcademicWork} from './baiwa/AcademicWork.component';
 
 const routes: Routes = [
 
     { path: 'home', component: home },
     { path: 'importwork', component: importwork },
     { path: 'ListByWorkType', component: listworktype },
+    { path: 'AcademicWork', component: AcademicWork },
+
     { path: '', component: home }
 
 ];
@@ -31,7 +34,8 @@ const routes: Routes = [
         AppComponent,
         home,
         importwork,
-        listworktype
+        listworktype,
+        AcademicWork
     ],
     providers: [
         CommonService

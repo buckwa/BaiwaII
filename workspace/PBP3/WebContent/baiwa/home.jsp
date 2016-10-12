@@ -174,7 +174,7 @@
 	                            </a>
 	                        </div>
 	                        <div class="dropdown dropdown-typical">
-	                            <a class="dropdown-toggle no-arr" id="dd-header-form-builder" data-target="#" href="http://example.com" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	                            <a class="dropdown-toggle no-arr" id="dd-header-form-builder"  href="#/AcademicWork" >
 	                                <span class="font-icon font-icon-pencil">ผลงานประจำปี</span>
 	                            </a>
 	                        </div>

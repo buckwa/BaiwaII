@@ -12,9 +12,9 @@ export class listworktype implements OnInit, AfterViewInit {
     public libPath: string;
     public Inport: any;
 
-    public inport0: any[];
-    public inport1: any[];
-    public inport2: any[];
+    public inport0: any;
+    public inport1: any;
+    public inport2: any;
     public inport3: any[];
     public inport4: any[];
 
@@ -22,6 +22,7 @@ export class listworktype implements OnInit, AfterViewInit {
     constructor(private commonService: CommonService, private http: Http) {
         this.libPath = "/PBP3/baiwa/libs/";
         this.Inport = this.defaultInport();
+        //this.inport0 = this.jsondefualt();
 
     }
     ngOnInit() {
@@ -104,11 +105,7 @@ export class listworktype implements OnInit, AfterViewInit {
 
         this.Inport = response.json(JSON.stringify(response._body));
 
-        this.inport0  =this.Inport[0];
-        this.inport1  =this.Inport[1];
-        this.inport2  =this.Inport[3];
-        this.inport3  =this.Inport[3];
-        this.inport4  =this.Inport[4];
+        this.inport0  =this.Inport[0].academicKPIList;
 
 
     }

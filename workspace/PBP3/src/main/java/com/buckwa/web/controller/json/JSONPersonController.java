@@ -23,6 +23,8 @@ import com.buckwa.domain.common.BuckWaResponse;
 import com.buckwa.domain.pam.Person;
 import com.buckwa.domain.pbp.AcademicKPI;
 import com.buckwa.domain.pbp.AcademicKPIAttribute;
+import com.buckwa.domain.pbp.AcademicKPIUserMapping;
+import com.buckwa.domain.pbp.AcademicKPIUserMappingWrapper;
 import com.buckwa.domain.pbp.AcademicKPIWrapper;
 import com.buckwa.domain.pbp.AcademicUnitWrapper;
 import com.buckwa.domain.pbp.Department;
@@ -34,6 +36,7 @@ import com.buckwa.domain.pbp3.WorkSummary;
 import com.buckwa.domain.pbp3.WorkType;
 import com.buckwa.service.intf.pam.PersonProfileService;
 import com.buckwa.service.intf.pbp.AcademicKPIService;
+import com.buckwa.service.intf.pbp.AcademicKPIUserMappingService;
 import com.buckwa.service.intf.pbp.AcademicUnitService;
 import com.buckwa.service.intf.pbp.FacultyService;
 import com.buckwa.service.intf.pbp.HeadService;
@@ -72,6 +75,9 @@ public class JSONPersonController {
 	
 	@Autowired
 	private AcademicKPIService academicKPIService;	
+	
+	@Autowired
+	private AcademicKPIUserMappingService  academicKPIUserMappingService;
 	
 	@RequestMapping(value = "/getPersonByAcademicYear/{userName}/{year}", method = RequestMethod.GET, headers = "Accept=application/json")
 	public Person getPersonByAcademicYear(HttpServletRequest httpRequest,@PathVariable String userName,@PathVariable String year) {
@@ -795,4 +801,30 @@ public class JSONPersonController {
 		}
 		return academicKPI;
 	}
+	
+ 
+		
+		@RequestMapping(value = "/getImportWork/{kpiUserMappingId}", method = RequestMethod.GET, headers = "Accept=application/json")
+		public AcademicKPIUserMapping getImportWork(@PathVariable String kpiUserMappingId) {			
+					
+		
+		logger.info(" Start  kpiUserMappingId:"+kpiUserMappingId);
+		AcademicKPIUserMapping kpiUserMapping = new AcademicKPIUserMapping();
+		try{
+			BuckWaRequest request = new BuckWaRequest(); 
+			request.put("kpiUserMappingId",kpiUserMappingId);
+			BuckWaResponse response = academicKPIUserMappingService.getById(request);
+			if(response.getStatus()==BuckWaConstants.SUCCESS){	
+				AcademicKPIUserMappingWrapper academicKPIUserMappingWrapper = (AcademicKPIUserMappingWrapper)response.getResObj("academicKPIUserMappingWrapper");	 
+ 
+				
+				kpiUserMapping = academicKPIUserMappingWrapper.getAcademicKPIUserMapping();
+			}  
+		}catch(Exception ex){
+			ex.printStackTrace();
+			 
+		}
+		return kpiUserMapping;
+	}
+	
 }

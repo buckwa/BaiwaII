@@ -86,13 +86,13 @@
 	                                <div class="tbl-row">
 	                                    <div class="tbl-cell">
 	                                        <span class="user-card-row-name">
-	                                        <a href="#" data-toggle="modal" data-target="#myModal" 
+	                                        <a href="#" data-toggle="modal" (click)="clickedAddImport(item.code)" data-target="#myModal" 
 	                                        data-backdrop="static" data-keyboard="false"
 	                                        >{{item.name}}</a>
 	                                        </span>
 	                                    </div>
 	                                    <div class="tbl-cell tbl-cell-date">
-	                                        <span class="semibold"> </span>
+	                                        <span class="semibold">{{item.mark}} คะแนน/ {{item.unitDesc}} </span>
 	                                        
 	                                    </div>
 	                                </div>
@@ -121,34 +121,27 @@
 	                            <span class="semibold">คะแนน</span>	                                        
 	                        </div>
 	                    </header>
-	                    
-          
-
 	                    <div class="box-typical-body panel-body " style="overflow: hidden; height: 100%; ">
-	                       
-	                        	
-							<article class="comment-item"   >
+					<article class="comment-item" *ngFor="let item of inport1; let i = index ">
 	                            <div class="user-card-row">
 	                                <div class="tbl-row">
 	                                    <div class="tbl-cell">
 	                                        <span class="user-card-row-name">
-	                                        <a href="#" data-toggle="modal" data-target="#myModal" 
+	                                        <a href="#" data-toggle="modal" (click)="clickedAddImport(item.code)" data-target="#myModal" 
 	                                        data-backdrop="static" data-keyboard="false"
-	                                        ></a>
+	                                        >{{item.name}}</a>
 	                                        </span>
 	                                    </div>
 	                                    <div class="tbl-cell tbl-cell-date">
-	                                        <span class="semibold"></span>
+	                                        <span class="semibold">{{item.mark}} คะแนน/ {{item.unitDesc}} </span>
 	                                        
 	                                    </div>
 	                                </div>
 	                            </div>
-	                            <div class="comment-item-txt">
-	                          
+	                            <div class="comment-item-txt">           
 	                               <p>
 	                               <!--*	ตารางสอนอัตโนมัติจาก สำนักทะเบียน-->
-	                                </p>
-	                                
+	                                </p> 
 	                            </div>
 
 	                        </article>
@@ -159,10 +152,125 @@
 					
 					
 					</div><!--.tab-pane-->
-					<div role="tabpanel" class="tab-pane fade" id="tabs-2-tab-3">Tab 3</div><!--.tab-pane-->
-					<div role="tabpanel" class="tab-pane fade" id="tabs-2-tab-4">Tab 4</div><!--.tab-pane-->
-					<div role="tabpanel" class="tab-pane fade" id="tabs-2-tab-5">Tab 5</div><!--.tab-pane-->
-					<div role="tabpanel" class="tab-pane fade" id="tabs-2-tab-6">Tab 6</div><!--.tab-pane-->
+					<div role="tabpanel" class="tab-pane fade" id="tabs-2-tab-3">
+						
+										<section class="box-typical box-typical-dashboard panel panel-default" style=" border: 0px;">
+	                    <header class="box-typical-header panel-heading">
+	                        <h3 class="panel-title">ภาระงาน</h3>
+	                        <div class="tbl-cell tbl-cell-date" style="text-align: right;">
+	                            <span class="semibold">คะแนน</span>	                                        
+	                        </div>
+	                    </header>
+	                    <div class="box-typical-body panel-body " style="overflow: hidden; height: 100%; ">
+					<article class="comment-item" *ngFor="let item of inport2; let i = index ">
+	                            <div class="user-card-row">
+	                                <div class="tbl-row">
+	                                    <div class="tbl-cell">
+	                                        <span class="user-card-row-name">
+	                                        <a href="#" data-toggle="modal" (click)="clickedAddImport(item.code)" data-target="#myModal" 
+	                                        data-backdrop="static" data-keyboard="false"
+	                                        >{{item.name}}</a>
+	                                        </span>
+	                                    </div>
+	                                    <div class="tbl-cell tbl-cell-date">
+	                                        <span class="semibold">{{item.mark}} คะแนน/ {{item.unitDesc}} </span>
+	                                        
+	                                    </div>
+	                                </div>
+	                            </div>
+	                            <div class="comment-item-txt">           
+	                               <p>
+	                               <!--*	ตารางสอนอัตโนมัติจาก สำนักทะเบียน-->
+	                                </p> 
+	                            </div>
+
+	                        </article>
+	                        
+	                    </div><!--.box-typical-body-->
+	                </section>
+						
+						
+						</div><!--.tab-pane-->
+					<div role="tabpanel" class="tab-pane fade" id="tabs-2-tab-4">
+						
+											<section class="box-typical box-typical-dashboard panel panel-default" style=" border: 0px;">
+	                    <header class="box-typical-header panel-heading">
+	                        <h3 class="panel-title">ภาระงาน</h3>
+	                        <div class="tbl-cell tbl-cell-date" style="text-align: right;">
+	                            <span class="semibold">คะแนน</span>	                                        
+	                        </div>
+	                    </header>
+	                    <div class="box-typical-body panel-body " style="overflow: hidden; height: 100%; ">
+					<article class="comment-item" *ngFor="let item of inport3; let i = index ">
+	                            <div class="user-card-row">
+	                                <div class="tbl-row">
+	                                    <div class="tbl-cell">
+	                                        <span class="user-card-row-name">
+	                                        <a href="#"  (click)="clickedAddImport(item.code)" data-toggle="modal" data-target="#myModal" 
+	                                        data-backdrop="static" data-keyboard="false"
+	                                        >{{item.name}}</a>
+	                                        </span>
+	                                    </div>
+	                                    <div class="tbl-cell tbl-cell-date">
+	                                        <span class="semibold">{{item.mark}} คะแนน/ {{item.unitDesc}} </span>
+	                                        
+	                                    </div>
+	                                </div>
+	                            </div>
+	                            <div class="comment-item-txt">           
+	                               <p>
+	                               <!--*	ตารางสอนอัตโนมัติจาก สำนักทะเบียน-->
+	                                </p> 
+	                            </div>
+
+	                        </article>
+	                        
+	                    </div><!--.box-typical-body-->
+	                </section>
+						
+						
+						</div><!--.tab-pane-->
+					<div role="tabpanel" class="tab-pane fade" id="tabs-2-tab-5">
+						
+						
+											<section class="box-typical box-typical-dashboard panel panel-default" style=" border: 0px;">
+	                    <header class="box-typical-header panel-heading">
+	                        <h3 class="panel-title">ภาระงาน</h3>
+	                        <div class="tbl-cell tbl-cell-date" style="text-align: right;">
+	                            <span class="semibold">คะแนน</span>	                                        
+	                        </div>
+	                    </header>
+	                    <div class="box-typical-body panel-body " style="overflow: hidden; height: 100%; ">
+					<article class="comment-item" *ngFor="let item of inport4; let i = index ">
+	                            <div class="user-card-row">
+	                                <div class="tbl-row">
+	                                    <div class="tbl-cell">
+	                                        <span class="user-card-row-name">
+	                                        <a href="#" (click)="clickedAddImport(item.code)" data-target="#myModal" 
+	                                        data-backdrop="static" data-keyboard="false"
+	                                        >{{item.name}}</a>
+	                                        </span>
+	                                    </div>
+	                                    <div class="tbl-cell tbl-cell-date">
+	                                        <span class="semibold">{{item.mark}} คะแนน/ {{item.unitDesc}} </span>
+	                                        
+	                                    </div>
+	                                </div>
+	                            </div>
+	                            <div class="comment-item-txt">           
+	                               <p>
+	                               <!--*	ตารางสอนอัตโนมัติจาก สำนักทะเบียน-->
+	                                </p> 
+	                            </div>
+
+	                        </article>
+	                        
+	                    </div><!--.box-typical-body-->
+	                </section>
+						
+						
+						</div><!--.tab-pane-->
+				
 				</div><!--.tab-content-->
 			</section><!--.tabs-section-->
 
@@ -185,20 +293,25 @@
   <div class="modal fade" id="myModal" role="dialog">
     <div class="modal-dialog " style=" width: 80%;">
       <div class="modal-content">
+       <form >
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
           <h4 class="modal-title">นำเข้าภาระงานด้าน งานวิชาการ</h4>
         </div>
         <div class="modal-body">
           <div class="row">
+          
 	          <div class="col-lg-6  col-md-12">
 	         
 	          
-	          <form style="margin-bottom: 2px;">
+	         
 					<div class="form-group row" style="margin-bottom: 2px;">
 						<label class="col-sm-3 form-control-label">ชื่อภาระงาน:</label>
 						<div class="col-sm-9">
-							<p class="form-control-static"><input type="text" readonly class="form-control" id="inputPassword" placeholder="Text"></p>
+							<p class="form-control-static">
+							<textarea rows="4" readonly class="form-control" placeholder="Textarea">{{inport5.name}}</textarea>
+							
+							</p>
 						</div>
 					</div>
 
@@ -212,35 +325,25 @@
 					<div class="form-group row" style="margin-bottom: 2px;">
 						<label class="col-sm-3 form-control-label">คะแนน:</label>
 						<div class="col-sm-9">
-							<p class="form-control-static"><input type="text" readonly class="form-control" id="inputPassword" placeholder="Text"></p>
+							<p class="form-control-static"><input type="text" readonly class="form-control" id="inputPassword"  value="{{inport5.mark}} คะแนน/ {{inport5.unitDesc}}"></p>
 						</div>
 					</div>
-					<div class="form-group row" style="margin-bottom: 2px;">
-						<label class="col-sm-3 form-control-label">ชื่อวิชา</label>
+					<div class="form-group row" style="margin-bottom: 2px;"  *ngFor="let item of FormAddInput; let i = index ">
+						<label class="col-sm-3 form-control-label">{{item.name}}{{item.value}}</label>
 						<div class="col-sm-9">
-							<p class="form-control-static"><input type="text"  class="form-control" id="inputPassword" placeholder="Text"></p>
-						</div>
-					</div>
-					<div class="form-group row" style="margin-bottom: 2px;">
-						<label class="col-sm-3 form-control-label">หน่วยกิต</label>
-						<div class="col-sm-9">
-							<p class="form-control-static"><input type="text"  class="form-control" id="inputPassword" placeholder="Text"></p>
-						</div>
-					</div>
-					<div class="form-group row" style="margin-bottom: 2px;">
-						<label class="col-sm-3 form-control-label">สัดส่วน(%)</label>
-						<div class="col-sm-9">
-							<p class="form-control-static"><input type="text"  class="form-control" id="inputPassword" placeholder="Text"></p>
-						</div>
-					</div>
-					<div class="form-group row" style="margin-bottom: 2px;">
-						<label class="col-sm-3 form-control-label">จำนวนชั่วโมง</label>
-						<div class="col-sm-9">
-							<p class="form-control-static"><input type="text"  class="form-control" id="inputPassword" placeholder="Text"></p>
+							<p class="form-control-static"><input type="text" name="{{item.name}}" [(ngModel)]="item.value" class="form-control" id="inputPassword" value="{{item.value}}" placeholder="{{item.name}}" required="required" ></p>
+						
 						</div>
 					</div>
 					
-			</form>
+					<!--<div class="form-group row" style="margin-bottom: 2px;" >
+						<label class="col-sm-3 form-control-label">หน่วยกิต</label>
+						<div class="col-sm-9">
+							<p class="form-control-static"><input type="number"  class="form-control" id="inputPassword" placeholder="Text"></p>
+						</div>
+					</div>-->
+					
+			
 			
 	          
 	          </div>
@@ -329,14 +432,16 @@
                                         </div><!--.uploading-container-->
                                     </div><!--.modal-upload-body-->
 		        
-		   
+	
 	          </div>
+	         
           </div>
         </div>
         <div class="modal-upload-bottom">
           <button type="button" class="btn btn-rounded btn-default" data-dismiss="modal">Cancel</button>
-          <button type="button" class="btn btn-rounded">Done</button>
+          <button type="submit" class="btn btn-rounded" (click)="clickedSaveImport()" >Done</button>
         </div>
+        </form>
       </div>
     </div>
   </div>

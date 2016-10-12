@@ -6,16 +6,16 @@ import { Http, Headers, Response } from '@angular/http';
 @Component({
     templateUrl: 'app/baiwa/html/home.component.html'
 })
-export class home implements OnInit,AfterViewInit {
+export class home implements OnInit, AfterViewInit {
 
     public libPath: string;
     public profile: any;
     public work: any[];
-    public sumasix :any;
-    public sumasix2 :any;
-    public user:any;
+    public sumasix: any;
+    public sumasix2: any;
+    public user: any;
 
-    constructor(private commonService: CommonService,private http :Http) {
+    constructor(private commonService: CommonService, private http: Http) {
         this.libPath = "/PBP3/baiwa/libs/";
         this.profile = this.defaultProfile();
         this.work = this.defaultWork();
@@ -24,9 +24,9 @@ export class home implements OnInit,AfterViewInit {
     ngOnInit() {
 
         this.GetUserSession();
- 
+
     }
-    ngAfterViewInit(){
+    ngAfterViewInit() {
     }
 
     public defaultProfile() {
@@ -53,52 +53,55 @@ export class home implements OnInit,AfterViewInit {
             "mean": ""
         }];
     }
-    public sumaryAsix(){
-        this.sumasix = 0 ;
+
+
+
+    public sumaryAsix() {
+        this.sumasix = 0;
         this.sumasix2 = 0;
 
-        for(var i =0; i< this.work.length;i++ ){
+        for (var i = 0; i < this.work.length; i++) {
             this.sumasix = parseFloat(this.sumasix) + parseFloat(this.work[i].axisValue);
             this.sumasix2 = parseFloat(this.sumasix2) + parseFloat(this.work[i].axisValue2);
         }
     }
-    public GetPersonByAcadamy(user:String ){
-        var url ="../person/getPersonByAcademicYear/"+user+"/2558"
+    public GetPersonByAcadamy(user: String) {
+        var url = "../person/getPersonByAcademicYear/" + user + "/2558"
         this.http.get(url).subscribe(response => this.GetPersonSucess(response),
-      error => this.GetPersonError(error), () => console.log("editdone !")
-    );
+            error => this.GetPersonError(error), () => console.log("editdone !")
+        );
     }
 
-    public GetPersonSucess (response :any){
+    public GetPersonSucess(response: any) {
         this.profile = response.json(JSON.stringify(response._body));
 
     }
-    public GetPersonError (error :String){
+    public GetPersonError(error: String) {
         console.log("GetPersonError.")
 
     }
 
-    public GetRadarPlotNew (user:String,year:String,num:String){ 
-        var url ="../person/getRadarPlotNew/"+user+"/"+year+"/"+num;
+    public GetRadarPlotNew(user: String, year: String, num: String) {
+        var url = "../person/getRadarPlotNew/" + user + "/" + year + "/" + num;
         this.http.get(url).subscribe(response => this.GetRadarPlotSucess(response),
-        error => this.GetPersonError(error), () => console.log("editdone !")
-    );
+            error => this.GetPersonError(error), () => console.log("editdone !")
+        );
     }
-    public GetRadarPlotSucess(response:any){
+    public GetRadarPlotSucess(response: any) {
         this.work = response.json(JSON.stringify(response._body));
         this.sumaryAsix();
     }
 
-    public GetUserSession(){
-        var url ="../person/getUserSession";
+    public GetUserSession() {
+        var url = "../person/getUserSession";
         return this.http.get(url).subscribe(response => this.GetuserSucess(response),
-        error => this.GetPersonError(error), () => console.log("editdone !"));
+            error => this.GetPersonError(error), () => console.log("editdone !"));
     }
-    public GetuserSucess(response:any){
-        this.user =response.json(JSON.stringify(response._body));
+    public GetuserSucess(response: any) {
+        this.user = response.json(JSON.stringify(response._body));
         this.GetPersonByAcadamy(this.user.userName);
-        this.GetRadarPlotNew(this.user.userName,this.user.currentAcademicYear,"1");
-        
+        this.GetRadarPlotNew(this.user.userName, this.user.currentAcademicYear, "1");
+
 
     }
 

@@ -18,12 +18,15 @@ export class listworktype implements OnInit, AfterViewInit {
     public inport3: any[];
     public inport4: any[];
 
+    public inport5: any;
+    public FormAddInput: any;
+    public inport_sento: any;
 
     constructor(private commonService: CommonService, private http: Http) {
         this.libPath = "/PBP3/baiwa/libs/";
         this.Inport = this.defaultInport();
-        //this.inport0 = this.jsondefualt();
-
+        this.inport5 = this.defaultImport();
+        this.FormAddInput =this.defaultFormAddInput();
     }
     ngOnInit() {
 
@@ -84,16 +87,57 @@ export class listworktype implements OnInit, AfterViewInit {
         };
     }
 
+        
+
+   public defaultImport() {
+        return {       
+            "name": "",
+            "code": "",
+            "mark": "",
+            "unitDesc": "",          
+        };
+    }
+
+   public defaultFormAddInput() {
+        return [{       
+            "name": "",
+            "code": "",
+            "description": "",
+            "academicKPIAtributeId": "",    
+            "academicKPIId": "",   
+            "academicKPICode": "",  
+            "value": "",   
+            "isCalculate": "",   
+            "academicYear": "",   
+            "ratio": "",   
+            "isValidateNumber": ""  
+        },{       
+            "name": "",
+            "code": "",
+            "description": "",
+            "academicKPIAtributeId": "",    
+            "academicKPIId": "",   
+            "academicKPICode": "",  
+            "value": "",   
+            "isCalculate": "",   
+            "academicYear": "",   
+            "ratio": "",   
+            "isValidateNumber": ""  
+        }];
+    }
+
+
     public jsondefualt(){
         return {
             "workTypeName":"",
-            "academicKPIList":{}
+            "academicKPIList":"",
     }
     }
 
   
 
     public GetDataInport(facultyCode: String , currentAcademicYear:String) {
+        
         var url = "../person/getAllWorkList/" + currentAcademicYear + "/"+facultyCode
         this.http.get(url).subscribe(response => this.GetSucess(response),
             error => this.GetError(error), () => console.log("editdoneInportt !")
@@ -101,11 +145,21 @@ export class listworktype implements OnInit, AfterViewInit {
 
     }
 
+
+
+
+
     public GetSucess(response: any) {
 
         this.Inport = response.json(JSON.stringify(response._body));
 
         this.inport0  =this.Inport[0].academicKPIList;
+        this.inport1  =this.Inport[1].academicKPIList;
+        this.inport2  =this.Inport[2].academicKPIList;
+        this.inport3  =this.Inport[3].academicKPIList;
+        this.inport4  =this.Inport[4].academicKPIList;
+
+
 
 
     }
@@ -131,5 +185,44 @@ export class listworktype implements OnInit, AfterViewInit {
         console.log("GetPersonError.")
 
     }
+
+    public clickedAddImport(academicKPICode: String){
+
+
+        var url = "../person/getAcademicKPI/" + academicKPICode + "/"+this.user.facultyCode+ "/"+this.user.currentAcademicYear
+        this.http.get(url).subscribe(response => this.GetImportSucess(response),
+            error => this.GetError(error), () => console.log("editdoneImportt2 !")
+        );
+
+        
+    }
+
+    public GetImportSucess (response:any){
+
+        this.inport5  =response.json(JSON.stringify(response._body));
+        this.FormAddInput = this.inport5.academicKPIAttributeList;
+
+
+
+    }
+
+    public clickedSaveImport(){
+            var url = "../person/importwork"
+            this.http.post(url,this.inport5).subscribe(response => this.savesucess(response),
+            error => this.GetError(error), () => console.log("save sucess na !")
+    );
+
+    }
+
+    public savesucess (response :any){
+
+        alert("save Sucess....")
+    }
+
+ 
+
+
+
+    
 
 }

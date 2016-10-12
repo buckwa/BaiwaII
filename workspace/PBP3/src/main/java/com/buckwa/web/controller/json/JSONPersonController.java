@@ -840,11 +840,11 @@ public class JSONPersonController {
 			try{
 
 		 
-					String userName = BuckWaUtils.getUserNameFromContext();
+					//String userName = BuckWaUtils.getUserNameFromContext();
 					String academicYear = schoolUtil.getCurrentAcademicYear();
 					
 					AcademicKPIUserMapping academicKPIUserMapping = new AcademicKPIUserMapping();
-					academicKPIUserMapping.setUserName(userName);
+					academicKPIUserMapping.setUserName("ktpitak@kmitl.ac.th");
 					academicKPIUserMapping.setAcademicYear(academicYear);
 					academicKPIUserMapping.setAcademicKPICode(academicKPI.getCode());
 					academicKPIUserMapping.setAcademicKPIId(academicKPI.getAcademicKPIId());
@@ -886,7 +886,7 @@ public class JSONPersonController {
 			 			
 			}catch(Exception ex){
 				ex.printStackTrace();
-				resp.setStatus("0");
+				resp.setStatus("1");
 				resp.setDescription(ex.getMessage());
 			}
 			logger.info(" End  ");

@@ -21,12 +21,16 @@ import com.buckwa.domain.UserSession;
 import com.buckwa.domain.common.BuckWaRequest;
 import com.buckwa.domain.common.BuckWaResponse;
 import com.buckwa.domain.pam.Person;
+import com.buckwa.domain.pbp.AcademicKPIWrapper;
 import com.buckwa.domain.pbp.Department;
 import com.buckwa.domain.pbp.PBPWorkType;
 import com.buckwa.domain.pbp.PBPWorkTypeWrapper;
 import com.buckwa.domain.pbp.report.DepartmentWorkTypeReport;
 import com.buckwa.domain.pbp.report.RadarPlotReport;
+import com.buckwa.domain.pbp3.WorkSummary;
+import com.buckwa.domain.pbp3.WorkType;
 import com.buckwa.service.intf.pam.PersonProfileService;
+import com.buckwa.service.intf.pbp.AcademicKPIService;
 import com.buckwa.service.intf.pbp.FacultyService;
 import com.buckwa.service.intf.pbp.HeadService;
 import com.buckwa.service.intf.pbp.PBPWorkTypeService;
@@ -58,6 +62,10 @@ public class JSONPersonController {
 
 	@Autowired
 	private HeadService headService;
+	
+	
+	@Autowired
+	private AcademicKPIService academicKPIService;	
 	
 	@RequestMapping(value = "/getPersonByAcademicYear/{userName}/{year}", method = RequestMethod.GET, headers = "Accept=application/json")
 	public Person getPersonByAcademicYear(HttpServletRequest httpRequest,@PathVariable String userName,@PathVariable String year) {
@@ -616,6 +624,8 @@ public class JSONPersonController {
 			userreturn.setFirstName("พิทักษ์ ");
 			userreturn.setLastName("ธรรมวาริน");
 			userreturn.setCurrentAcademicYear("2558");
+			userreturn.setFacultyCode("01");
+			userreturn.setDepartmentCode("05");
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			 
@@ -623,4 +633,107 @@ public class JSONPersonController {
 
 		 return userreturn;
 	}
+	
+	
+ 
+	@RequestMapping(value = "/getAllWorkList/{academicYear}/{facultyCode}", method = RequestMethod.GET, headers = "Accept=application/json")
+	public List<WorkType> getAllWorkList(@PathVariable String academicYear,@PathVariable String facultyCode) {		
+		logger.info(" Start ");
+ 
+		
+		 List<WorkType>  returnList = new ArrayList();
+		try {
+			BuckWaRequest request = new BuckWaRequest(); 
+			
+			request.put("academicYear",academicYear); 
+			request.put("facultyCode",facultyCode); 
+			BuckWaResponse  response = pBPWorkTypeService.getByAcademicYearFacultyCode(request);
+			if(response.getStatus()==BuckWaConstants.SUCCESS){	
+				PBPWorkTypeWrapper pBPWorkTypeWrapper = (PBPWorkTypeWrapper)response.getResObj("pBPWorkTypeWrapper");
+				List<PBPWorkType> workTypeListx = pBPWorkTypeWrapper.getpBPWorkTypeList(); 				
+				List<PBPWorkType> workTypeList =workTypeListx;
+				if(workTypeList!=null&&workTypeList.size()>0){ 
+					
+					for(PBPWorkType workTmp:workTypeList){
+						String workTypeCodeTmp = workTmp.getCode();
+						String workTypeNameTmp = workTmp.getName();
+						logger.info(" WorkType: "+workTypeCodeTmp+":"+workTypeNameTmp);
+						
+						WorkType newWork = new WorkType();
+						newWork.setWorkTypeName(workTypeNameTmp);
+						
+						request.put("workTypeCode",workTypeCodeTmp);
+						response = academicKPIService.getByAcademicYearWorkTypeCodeFacultyCode(request);
+						if(response.getStatus()==BuckWaConstants.SUCCESS){	
+							AcademicKPIWrapper academicKPIWrapper = (AcademicKPIWrapper)response.getResObj("academicKPIWrapper");			 
+				 
+							newWork.setAcademicKPIList(academicKPIWrapper.getAcademicKPIList());
+						}
+						
+						returnList.add(newWork);
+						
+					}
+					
+				} 
+
+			}	 
+
+		}catch(Exception ex){
+			ex.printStackTrace();
+			 
+		}
+		return returnList;
+	}	
+	
+	
+	
+	//@RequestMapping(value="getAcademicWork.htm", method = RequestMethod.GET)
+	//public ModelAndView initAcademicWorkGET(HttpServletRequest httpRequest  ) {
+	@RequestMapping(value = "/getAcademicWork/{userName}/{academicYear}/{round}", method = RequestMethod.GET, headers = "Accept=application/json")
+	public WorkSummary getAllWorkList(@PathVariable String userName,@PathVariable String academicYear,@PathVariable String round) {			
+		
+		logger.info(" Start "); 
+		WorkSummary workSummary = new WorkSummary();
+		workSummary.setAcademicYear(academicYear);
+		try {  
+
+			BuckWaRequest request = new BuckWaRequest(); 
+			request.put("username", userName);
+			request.put("academicYear",academicYear );
+
+			BuckWaResponse  response = personProfileService.getByUsername(request);
+
+			if (response.getStatus() == BuckWaConstants.SUCCESS) {
+				Person person = (Person) response.getResObj("person");
+				person.setAcademicYear(academicYear);
+				person.setEvaluateRound(round);
+ 
+				//String academicYear =schoolUtil.getCurrentAcademicYear();
+				String facultyCode = person.getFacultyCode();
+				request.put("academicYear",academicYear);
+				request.put("userName",userName);
+				request.put("round",round);
+				request.put("employeeType",person.getEmployeeTypeNo());
+				request.put("facultyCode",facultyCode);
+				
+				response = pBPWorkTypeService.getCalculateByAcademicYear(request);
+				
+				if(response.getStatus()==BuckWaConstants.SUCCESS){	
+					PBPWorkTypeWrapper pBPWorkTypeWrapper = (PBPWorkTypeWrapper)response.getResObj("pBPWorkTypeWrapper"); 
+					pBPWorkTypeWrapper.setAcademicYear(academicYear);
+					person.setpBPWorkTypeWrapper(pBPWorkTypeWrapper);
+
+					workSummary.setTotalMark(pBPWorkTypeWrapper.getTotalMark()+"");
+					workSummary.setpBPWorkTypeList(pBPWorkTypeWrapper.getpBPWorkTypeList());
+				}					
+				 
+			} 
+		} catch(Exception ex) {
+			ex.printStackTrace();
+			 
+		}
+
+		return workSummary;
+	}
+	
 }

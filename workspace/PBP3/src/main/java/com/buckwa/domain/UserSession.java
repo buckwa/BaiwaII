@@ -11,6 +11,9 @@ public class UserSession  {
  private String lastName;
  private String currentAcademicYear;
  
+ private String facultyCode;
+ private String departmentCode;
+ 
  
 public String getUserName() {
 	return userName;
@@ -35,6 +38,18 @@ public String getCurrentAcademicYear() {
 }
 public void setCurrentAcademicYear(String currentAcademicYear) {
 	this.currentAcademicYear = currentAcademicYear;
+}
+public String getFacultyCode() {
+	return facultyCode;
+}
+public void setFacultyCode(String facultyCode) {
+	this.facultyCode = facultyCode;
+}
+public String getDepartmentCode() {
+	return departmentCode;
+}
+public void setDepartmentCode(String departmentCode) {
+	this.departmentCode = departmentCode;
 }
  
  

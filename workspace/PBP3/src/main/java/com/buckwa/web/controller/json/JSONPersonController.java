@@ -879,10 +879,10 @@ public class JSONPersonController {
 					if(response.getStatus()==BuckWaConstants.SUCCESS){	
 						Long academicKPIId = (Long)response.getResObj("academicKPIId");	
 						academicKPI.setAcademicKPIUserMappingId(academicKPIId); 
- 
+						logger.info("  Save Success academicKPIId: "+academicKPIId);
 					}  			
 				 
- 
+			
 			 			
 			}catch(Exception ex){
 				ex.printStackTrace();

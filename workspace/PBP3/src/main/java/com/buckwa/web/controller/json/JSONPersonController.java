@@ -832,7 +832,7 @@ public class JSONPersonController {
 	}
 		
 
-		@RequestMapping(value = "/importwork")
+		@RequestMapping(value = "/importwork", method = RequestMethod.POST)
 		public ResponseObj jsonImportworkPOST(@RequestBody  AcademicKPI academicKPI) { 
 			logger.info(" Start  ");
 			ResponseObj resp = new ResponseObj();

@@ -856,6 +856,8 @@ public class JSONPersonController {
 					
 					List<AcademicKPIAttributeValue> academicKPIAttributeValueList = new ArrayList<AcademicKPIAttributeValue>();
 					for(AcademicKPIAttribute tmp:academicKPIAttributeList){
+						
+						logger.info("  Name: "+tmp.getName()+" value:"+tmp.getValue());
 						AcademicKPIAttributeValue valueTmp = new AcademicKPIAttributeValue();
 						valueTmp.setAcademicKPICode(academicKPI.getCode());
 						valueTmp.setAcademicYear(academicYear);

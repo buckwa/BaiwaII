@@ -328,11 +328,13 @@
 							<p class="form-control-static"><input type="text" readonly class="form-control" id="inputPassword"  value="{{inport5.mark}} คะแนน/ {{inport5.unitDesc}}"></p>
 						</div>
 					</div>
-					<div class="form-group row" style="margin-bottom: 2px;"  *ngFor="let item of FormAddInput; let i = index ">
-						<label class="col-sm-3 form-control-label">{{item.name}}{{item.value}}</label>
+
+					
+					<div class="form-group row" style="margin-bottom: 2px;"  *ngFor="let a of FormAddInput ">
+						<label class="col-sm-3 form-control-label">{{a.name}}</label>
 						<div class="col-sm-9">
-							<p class="form-control-static"><input type="text" name="{{item.name}}" [(ngModel)]="item.value" class="form-control" id="inputPassword" value="{{item.value}}" placeholder="{{item.name}}" required="required" ></p>
-						
+							<p class="form-control-static"><input type="text" [ngModelOptions]="{standalone: true}" name="{{a.name}}" [(ngModel)]="a.value" class="form-control" id="inputPassword" value="{{a.value}}" placeholder="{{a.name}}" required="required" ></p>
+						<!--{{item.name}}-->
 						</div>
 					</div>
 					

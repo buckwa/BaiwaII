@@ -9,12 +9,26 @@ import { Http, Headers, Response } from '@angular/http';
 export class AcademicWork implements OnInit, AfterViewInit{
     public user:any;
     public academy:any;
-    public academyList:any;
-    public kpiuserList:any[];
+    public academyList:any[];
+    public kpiuserList:any[]=[];
 
     constructor(private commonService: CommonService, private http: Http) {
+        this.academy = this.setdefualtkpi();
+        this.kpiuserList=[];
 
 
+    }
+    setdefualtkpi(){
+        return {
+            "academicYear":"",
+            "totalInMapping":"",
+            "calResultStr":"",
+            "pBPWorkTypeList":[{
+                "name":"",
+                "totalInWorkType":"",
+                "academicKPIUserMappingList":[{}]
+            }]
+        }
     }
 
      ngOnInit() {
@@ -49,7 +63,11 @@ export class AcademicWork implements OnInit, AfterViewInit{
     public GetUserAcademicSucess (response:any){
         this.academy =response.json(JSON.stringify(response._body));
         this.academyList = this.academy.pBPWorkTypeList;
-        this.kpiuserList = this.academyList[0].academicKPIUserMappingList;
+        //this.kpiuserList =this.academy.pBPWorkTypeList.academicKPIUserMappingList;
+        for(var i=0;i<this.academy.pBPWorkTypeList.length;i++){
+            this.kpiuserList.push(this.academy.pBPWorkTypeList[i].academicKPIUserMappingList)
+        }
+        
 
     }
 

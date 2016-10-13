@@ -15,7 +15,22 @@ var AcademicWork = (function () {
     function AcademicWork(commonService, http) {
         this.commonService = commonService;
         this.http = http;
+        this.kpiuserList = [];
+        this.academy = this.setdefualtkpi();
+        this.kpiuserList = [];
     }
+    AcademicWork.prototype.setdefualtkpi = function () {
+        return {
+            "academicYear": "",
+            "totalInMapping": "",
+            "calResultStr": "",
+            "pBPWorkTypeList": [{
+                    "name": "",
+                    "totalInWorkType": "",
+                    "academicKPIUserMappingList": [{}]
+                }]
+        };
+    };
     AcademicWork.prototype.ngOnInit = function () {
         this.GetUserSession();
     };
@@ -41,7 +56,10 @@ var AcademicWork = (function () {
     AcademicWork.prototype.GetUserAcademicSucess = function (response) {
         this.academy = response.json(JSON.stringify(response._body));
         this.academyList = this.academy.pBPWorkTypeList;
-        this.kpiuserList = this.academyList[0].academicKPIUserMappingList;
+        //this.kpiuserList =this.academy.pBPWorkTypeList.academicKPIUserMappingList;
+        for (var i = 0; i < this.academy.pBPWorkTypeList.length; i++) {
+            this.kpiuserList.push(this.academy.pBPWorkTypeList[i].academicKPIUserMappingList);
+        }
     };
     AcademicWork = __decorate([
         core_1.Component({

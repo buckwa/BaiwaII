@@ -91,18 +91,6 @@ var listworktype = (function () {
                 "academicYear": "",
                 "ratio": "",
                 "isValidateNumber": ""
-            }, {
-                "name": "",
-                "code": "",
-                "description": "",
-                "academicKPIAtributeId": "",
-                "academicKPIId": "",
-                "academicKPICode": "",
-                "value": "",
-                "isCalculate": "",
-                "academicYear": "",
-                "ratio": "",
-                "isValidateNumber": ""
             }];
     };
     listworktype.prototype.jsondefualt = function () {

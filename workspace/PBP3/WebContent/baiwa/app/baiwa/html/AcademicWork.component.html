@@ -10,6 +10,10 @@
 			        <option value="2558" selected="selected">2558</option>
 			            </select>
                     </div>
+
+					<div class="col-sm-4">สถานะ : รออนุมัติ    รออนุมัติสอนร่วม    อนุมัติ </div>
+					<div class="col-sm-5">ช่องทาง :   A: นำเข้าอัตโนมัติจากสำนักทะเบียน   M: นำเข้าเอง</div>
+
                 </div>
 
 
@@ -37,8 +41,8 @@
 					<th width="30%"> <div class="text-center">ภาระงาน/คะแนน</div></th>
 					<th width="10%"> <div class="text-center">ช่องทาง|สถานะ</div></th>
 					<th width="5%"> <div class="text-center"> สัดส่วน</div></th>
-					<th width="15%"> <div class="text-center">คะแนน <br>ก่อนอนุมัติ | หลังอนุมัติ </div></th>
-					<th width="5%"><div class="text-center">รวม</div></th>
+					<th width="12%"> <div class="text-center">คะแนน <br>ก่อนอนุมัติ | หลังอนุมัติ </div></th>
+					<th width="8%"><div class="text-center">รวม</div></th>
 				</tr>
 				</thead>
                 <tbody>
@@ -48,18 +52,22 @@
 							<td colspan="5">
 								<table>
 									<tbody>
-										<tr width="100%"    *ngFor="let item of kpiuserList; ">
-											<td>{{item.name}}</td>
-											<td>{{item.name}}</td>
-											<td>{{item.totalInMapping}}</td>
-											<td>h</td>
-											<td>j</td>
+										<tr width="100%"    *ngFor="let item of kpiuserList[i]; ">
+											<td width="22%"><a>{{item.academicKPIAttributeValueList[0].value}}</a></td>
+											<td width="34%">{{item.name}} {{item.academicKPI.mark}} คะแนน / ชั่วโมงปฎิบัติการ</td>
+											<td width="11%">{{item.status}}</td>
+											<td width="5%">{{item.academicKPIAttributeValueList[1].value}}</td>
+											<td width="19%"><div class="text-center">{{item.totalInMapping}}|{{item.totalInMapping}}</div></td>
 										</tr>
 									<tbody>
 								</table>
 							</td>
 						
 						<td >{{item.totalInWorkType}}</td>
+					</tr>
+					<tr>
+						<td colspan="6">คะแนนรวม</td>
+						<td ></td>
 					</tr>
 
                 </tbody>

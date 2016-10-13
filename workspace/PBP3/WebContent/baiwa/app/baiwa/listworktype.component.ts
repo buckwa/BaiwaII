@@ -111,18 +111,6 @@ export class listworktype implements OnInit, AfterViewInit {
             "academicYear": "",   
             "ratio": "",   
             "isValidateNumber": ""  
-        },{       
-            "name": "",
-            "code": "",
-            "description": "",
-            "academicKPIAtributeId": "",    
-            "academicKPIId": "",   
-            "academicKPICode": "",  
-            "value": "",   
-            "isCalculate": "",   
-            "academicYear": "",   
-            "ratio": "",   
-            "isValidateNumber": ""  
         }];
     }
 
@@ -158,10 +146,6 @@ export class listworktype implements OnInit, AfterViewInit {
         this.inport2  =this.Inport[2].academicKPIList;
         this.inport3  =this.Inport[3].academicKPIList;
         this.inport4  =this.Inport[4].academicKPIList;
-
-
-
-
     }
 
     public GetError(error: String) {

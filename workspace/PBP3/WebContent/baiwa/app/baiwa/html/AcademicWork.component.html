@@ -24,32 +24,42 @@
             <table id="table-edit" class="table table-bordered table-hover">
 				<thead>
 				<tr>
-					<th width="1">
-						#
+					<th colspan="7">
+						<div class="text-center">ผลงานประจำปี</div>
 					</th>
-					<th>Name</th>
-					<th>Description</th>
-					<th class="table-icon-cell">
-						<i class="font-icon font-icon-heart"></i>
+					
+				</tr>
+				<tr>
+					<th width="15%">
+						<div class="text-center">ประเภทภาระงาน</div>
 					</th>
-					<th class="table-icon-cell">
-						<i class="font-icon font-icon-comment"></i>
-					</th>
-					<th width="120">Date Created</th>
-					<th></th>
+					<th width="20%"> <div class="text-center">งาน</div></th>
+					<th width="30%"> <div class="text-center">ภาระงาน/คะแนน</div></th>
+					<th width="10%"> <div class="text-center">ช่องทาง|สถานะ</div></th>
+					<th width="5%"> <div class="text-center"> สัดส่วน</div></th>
+					<th width="15%"> <div class="text-center">คะแนน <br>ก่อนอนุมัติ | หลังอนุมัติ </div></th>
+					<th width="5%"><div class="text-center">รวม</div></th>
 				</tr>
 				</thead>
                 <tbody>
-                    <tr>
-						<td>1</td>
-						<td>Last quarter revene</td>
-						<td class="color-blue-grey-lighter">Revene for last quarter in state America for year 2013, whith...</td>
-						<td class="table-icon-cell">5</td>
-						<td class="table-icon-cell">24</td>
-						<td class="table-date">6 minets ago</td>
-						<td class="table-photo">
-							<img src="img/photo-64-1.jpg" alt="" data-toggle="tooltip" data-placement="bottom" title="Nicholas<br/>Barrett">
-						</td>
+                    <tr *ngFor="let item of academyList; let i = index">
+						<td>{{item.name}}</td>
+					
+							<td colspan="5">
+								<table>
+									<tbody>
+										<tr width="100%"    *ngFor="let item of kpiuserList; ">
+											<td>{{item.name}}</td>
+											<td>{{item.name}}</td>
+											<td>{{item.totalInMapping}}</td>
+											<td>h</td>
+											<td>j</td>
+										</tr>
+									<tbody>
+								</table>
+							</td>
+						
+						<td >{{item.totalInWorkType}}</td>
 					</tr>
 
                 </tbody>

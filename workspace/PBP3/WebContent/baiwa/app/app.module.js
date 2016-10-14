@@ -15,6 +15,7 @@ var router_1 = require('@angular/router');
 var app_component_1 = require('./app.component');
 var http_1 = require('@angular/http');
 var Common_service_1 = require('./service/Common.service');
+var ng2_file_upload_1 = require('ng2-file-upload/ng2-file-upload');
 var importwork_component_1 = require('./baiwa/importwork.component');
 var home_component_1 = require('./baiwa/home.component');
 var listworktype_component_1 = require('./baiwa/listworktype.component');
@@ -42,7 +43,9 @@ var AppModule = (function () {
                 home_component_1.home,
                 importwork_component_1.importwork,
                 listworktype_component_1.listworktype,
-                AcademicWork_component_1.AcademicWork
+                AcademicWork_component_1.AcademicWork,
+                ng2_file_upload_1.FileSelectDirective,
+                ng2_file_upload_1.FileDropDirective
             ],
             providers: [
                 Common_service_1.CommonService

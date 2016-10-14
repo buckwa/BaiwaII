@@ -2,20 +2,23 @@ package com.buckwa.web.controller.json;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.StringTokenizer;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.buckwa.domain.BuckWaUser;
@@ -895,5 +898,18 @@ public class JSONPersonController {
 			return resp;
 		}
 	 
-	
+ 
+
+		    @RequestMapping(value="/uploadMultiFile", headers = "'Content-Type': 'multipart/form-data'", method = RequestMethod.POST)
+		    public void UploadFile(MultipartHttpServletRequest request, HttpServletResponse response) {
+
+		        Iterator<String> itr=request.getFileNames();
+
+		        MultipartFile file=request.getFile(itr.next());
+
+		        String fileName=file.getOriginalFilename();
+		        System.out.println(fileName);
+		        logger.info("  File Name: "+fileName);
+		    }
+	 
 }

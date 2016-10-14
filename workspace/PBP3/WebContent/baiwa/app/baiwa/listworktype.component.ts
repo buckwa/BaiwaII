@@ -1,7 +1,9 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import {CommonService} from './../service/Common.service';
 import { Http, Headers, Response } from '@angular/http';
+import { FileSelectDirective, FileDropDirective, FileUploader } from 'ng2-file-upload';
 
+const URL = 'http://localhost:8080/PBP3/person/uploadMultiFile';
 
 @Component({
     templateUrl: 'app/baiwa/html/listworktype.component.html'
@@ -22,6 +24,10 @@ export class listworktype implements OnInit, AfterViewInit {
     public FormAddInput: any;
     public inport_sento: any;
 
+    public uploader:FileUploader = new FileUploader({url: URL});
+    public hasBaseDropZoneOver:boolean = false;
+    public hasAnotherDropZoneOver:boolean = false;
+
     constructor(private commonService: CommonService, private http: Http) {
         this.libPath = "/PBP3/baiwa/libs/";
         this.Inport = this.defaultInport();
@@ -32,7 +38,12 @@ export class listworktype implements OnInit, AfterViewInit {
 
        this.GetUserSession();
 
+        this.uploader.onBuildItemForm = (fileItem: any, form: any) => {
 
+
+        form.append(  'data', '2'  );
+
+        };
 
     }
     ngAfterViewInit() {

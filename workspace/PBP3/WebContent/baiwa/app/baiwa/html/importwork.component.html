@@ -15,35 +15,16 @@
 
     <div class="row">
 
-        <div class="col-md-3">
+        <div class="col-md-9" >
+        <div class="row">
+        
+            <div class="col-md-3">
 
-            <h3>Select files</h3>
+                <h3>Select files</h3>
 
-            <div ng2FileDrop
-                 [ngClass]="{'nv-file-over': hasBaseDropZoneOver}"
-                 (fileOver)="fileOverBase($event)"
-                 [uploader]="uploader"
-                 class="well my-drop-zone">
-                Base drop zone
+                <input type="file" ng2FileSelect [uploader]="uploader" multiple  /><br/> 
             </div>
-
-            <div ng2FileDrop
-                 [ngClass]="{'another-file-over-class': hasAnotherDropZoneOver}"
-                 (fileOver)="fileOverAnother($event)"
-                 [uploader]="uploader"
-                 class="well my-drop-zone">
-                Another drop zone
-            </div>
-
-            Multiple
-            <input type="file" ng2FileSelect [uploader]="uploader" multiple  /><br/>
-
-            Single
-            <input type="file" ng2FileSelect [uploader]="uploader" />
-        </div>
-
-        <div class="col-md-9" style="margin-bottom: 40px">
-
+        </div>  
             <h3>Upload queue</h3>
             <p>Queue length: {{ uploader?.queue?.length }}</p>
 
@@ -51,9 +32,9 @@
                 <thead>
                 <tr>
                     <th width="50%">Name</th>
-                    <th>Size</th>
-                    <th>Progress</th>
                     <th>Status</th>
+                    <th>Progress</th>
+                    <th></th>
                     <th>Actions</th>
                 </tr>
                 </thead>

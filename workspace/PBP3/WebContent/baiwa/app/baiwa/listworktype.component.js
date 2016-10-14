@@ -11,10 +11,15 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require('@angular/core');
 var Common_service_1 = require('./../service/Common.service');
 var http_1 = require('@angular/http');
+var ng2_file_upload_1 = require('ng2-file-upload');
+var URL = 'http://localhost:8080/PBP3/person/uploadMultiFile';
 var listworktype = (function () {
     function listworktype(commonService, http) {
         this.commonService = commonService;
         this.http = http;
+        this.uploader = new ng2_file_upload_1.FileUploader({ url: URL });
+        this.hasBaseDropZoneOver = false;
+        this.hasAnotherDropZoneOver = false;
         this.libPath = "/PBP3/baiwa/libs/";
         this.Inport = this.defaultInport();
         this.inport5 = this.defaultImport();
@@ -22,6 +27,9 @@ var listworktype = (function () {
     }
     listworktype.prototype.ngOnInit = function () {
         this.GetUserSession();
+        this.uploader.onBuildItemForm = function (fileItem, form) {
+            form.append('data', '2');
+        };
     };
     listworktype.prototype.ngAfterViewInit = function () {
     };

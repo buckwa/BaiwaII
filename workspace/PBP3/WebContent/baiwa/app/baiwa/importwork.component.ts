@@ -20,27 +20,42 @@ const URL = 'http://localhost:8080/PBP3/person/uploadMultiFile';
 
 
 
-export class importwork  {
+export class importwork implements OnInit {
 
      
     public uploader:FileUploader = new FileUploader({url: URL});
-
+  public hasBaseDropZoneOver:boolean = false;
+  public hasAnotherDropZoneOver:boolean = false;
 
     // 555+
     constructor() {
-
-    console.log('55+');
-    //this.uploader.kpiUserMappingId='3333';
 
     }
 
     ngOnInit() {
 
+        console.log(this.uploader); 
         this.uploader.onBeforeUploadItem = (fileItem: any) => {
-        fileItem.formData.push( { kpiUserMappingId: '33' } );
+        // fileItem.formData.push(  'data', '33'  );
+        console.log(this.uploader.onBeforeUploadItem);
+
+        // this.uploader.onBuildItemForm = (fileItem: any, form: any) => {
 
 
-    }}
+        // form.append(  'data2', '2'  );
+        // form.append( { 'data3': '3' } );
+        // };
+        }
+        this.uploader.onBuildItemForm = (fileItem: any, form: any) => {
+
+
+        form.append(  'data', '2'  );
+
+        };
+
+           
+           
+}
 
     ngAfterViewInit() {
 

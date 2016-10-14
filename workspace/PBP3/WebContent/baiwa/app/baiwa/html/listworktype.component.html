@@ -351,89 +351,86 @@
 	          </div>
 	          <div class="col-lg-6  col-md-12">
 		        <h5 class="m-t-lg with-border"> แนบเอกสารประกอบการพิจารณา :</h5>
-		       <div class="modal-upload-body scrollable-block">
-                                        <div class="uploading-container">
-                                            <div class="uploading-container-left">
-                                                <div class="drop-zone">
-                                                    <!--
-                                                    при перетаскиваении добавляем класс .dragover
-                                                    <div class="drop-zone dragover">
-                                                    -->
-                                                    <i class="font-icon font-icon-cloud-upload-2"></i>
-                                                    <div class="drop-zone-caption">Drag file to upload</div>
-                                                    <span class="btn btn-rounded btn-file">
-                                                        <span>Choose file</span>
-                                                        <input type="file" name="files[]" multiple>
-                                                    </span>
-                                                </div>
-                                            </div><!--.uploading-container-left-->
-                                            <div class="uploading-container-right">
-                                                <div class="uploading-container-right-in">
-                                                    <h6 class="uploading-list-title">Uploading</h6>
-                                                    <ul class="uploading-list">
-                                                        <li class="uploading-list-item">
-                                                            <div class="uploading-list-item-wrapper">
-                                                                <div class="uploading-list-item-name">
-                                                                    <i class="font-icon font-icon-cam-photo"></i>
-                                                                    photo.png
-                                                                </div>
-                                                                <div class="uploading-list-item-size">7,5 mb</div>
-                                                                <button type="button" class="uploading-list-item-close">
-                                                                    <i class="font-icon-close-2"></i>
-                                                                </button>
-                                                            </div>
-                                                            <progress class="progress" value="25" max="100">
-                                                                <div class="progress">
-                                                                    <span class="progress-bar" style="width: 25%;">25%</span>
-                                                                </div>
-                                                            </progress>
-                                                            <div class="uploading-list-item-progress">37% done</div>
-                                                            <div class="uploading-list-item-speed">90KB/sec</div>
-                                                        </li>
-                                                        <li class="uploading-list-item">
-                                                            <div class="uploading-list-item-wrapper">
-                                                                <div class="uploading-list-item-name">
-                                                                    <i class="font-icon font-icon-page"></i>
-                                                                    task.doc
-                                                                </div>
-                                                                <div class="uploading-list-item-size">7,5 mb</div>
-                                                                <button type="button" class="uploading-list-item-close">
-                                                                    <i class="font-icon-close-2"></i>
-                                                                </button>
-                                                            </div>
-                                                            <progress class="progress" value="50" max="100">
-                                                                <div class="progress">
-                                                                    <span class="progress-bar" style="width: 50%;">50%</span>
-                                                                </div>
-                                                            </progress>
-                                                            <div class="uploading-list-item-progress">37% done</div>
-                                                            <div class="uploading-list-item-speed">90KB/sec</div>
-                                                        </li>
-                                                        <li class="uploading-list-item">
-                                                            <div class="uploading-list-item-wrapper">
-                                                                <div class="uploading-list-item-name">
-                                                                    <i class="font-icon font-icon-cam-photo"></i>
-                                                                    dashboard.png
-                                                                </div>
-                                                                <div class="uploading-list-item-size">7,5 mb</div>
-                                                                <button type="button" class="uploading-list-item-close">
-                                                                    <i class="font-icon-close-2"></i>
-                                                                </button>
-                                                            </div>
-                                                            <progress class="progress" value="100" max="100">
-                                                                <div class="progress">
-                                                                    <span class="progress-bar" style="width: 100%;">100%</span>
-                                                                </div>
-                                                            </progress>
-                                                            <div class="uploading-list-item-progress">Completed</div>
-                                                            <div class="uploading-list-item-speed">90KB/sec</div>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </div><!--.uploading-container-right-->
-                                        </div><!--.uploading-container-->
-                                    </div><!--.modal-upload-body-->
-		        
+	
+		            <div class="row">
+
+        <div class="col-md-12" >
+        <div class="row">
+        
+            <div class="col-md-8">
+
+                <h3>Select files</h3>
+
+                <input type="file" class="form-control" ng2FileSelect [uploader]="uploader" multiple  /><br/> 
+            </div>
+        </div>  
+        
+
+            <table class="table">
+                <thead>
+                <tr>
+                    <th width="50%">Name</th>
+                    <th>Status</th>
+                    <th>Progress</th>
+
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let item of uploader.queue">
+                    <td><strong>{{ item?.file?.name }}</strong></td>
+                    <td *ngIf="uploader.isHTML5" nowrap>{{ item?.file?.size/1024/1024 | number:'.2' }} MB</td>
+                    <td *ngIf="uploader.isHTML5">
+                        <div class="progress" style="margin-bottom: 0;">
+                            <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': item.progress + '%' }"></div>
+                        </div>
+                    </td>
+                    <td class="text-center">
+                        <span *ngIf="item.isSuccess"><i class="glyphicon glyphicon-ok"></i></span>
+                        <span *ngIf="item.isCancel"><i class="glyphicon glyphicon-ban-circle"></i></span>
+                        <span *ngIf="item.isError"><i class="glyphicon glyphicon-remove"></i></span>
+                    </td>
+                    <td nowrap>
+                        <button type="button" class="btn btn-success btn-xs"
+                                (click)="item.upload()" [disabled]="item.isReady || item.isUploading || item.isSuccess">
+                            <span class="glyphicon glyphicon-upload"></span> 
+                        </button>
+                        <button type="button" class="btn btn-warning btn-xs"
+                                (click)="item.cancel()" [disabled]="!item.isUploading">
+                            <span class="glyphicon glyphicon-ban-circle"></span> 
+                        </button>
+                        <button type="button" class="btn btn-danger btn-xs"
+                                (click)="item.remove()">
+                            <span class="glyphicon glyphicon-trash"></span> 
+                        </button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+            <div>
+                <div>
+                    Progress:
+                    <div class="progress" style="">
+                        <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': uploader.progress + '%' }"></div>
+                    </div>
+                </div>
+                <button type="button" class="btn btn-success btn-s"
+                        (click)="uploader.uploadAll()" [disabled]="!uploader.getNotUploadedItems().length">
+                    <span class="glyphicon glyphicon-upload"></span> Upload all
+                </button>
+                <button type="button" class="btn btn-warning btn-s"
+                        (click)="uploader.cancelAll()" [disabled]="!uploader.isUploading">
+                    <span class="glyphicon glyphicon-ban-circle"></span> Cancel all
+                </button>
+                <button type="button" class="btn btn-danger btn-s"
+                        (click)="uploader.clearQueue()" [disabled]="!uploader.queue.length">
+                    <span class="glyphicon glyphicon-trash"></span> Remove all
+                </button>
+            </div>
+
+        </div>
+
+    </div>
 	
 	          </div>
 	         

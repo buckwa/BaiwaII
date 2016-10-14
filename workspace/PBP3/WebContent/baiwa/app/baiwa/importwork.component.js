@@ -16,12 +16,22 @@ var importwork = (function () {
     // 555+
     function importwork() {
         this.uploader = new ng2_file_upload_1.FileUploader({ url: URL });
-        console.log('55+');
-        //this.uploader.kpiUserMappingId='3333';
+        this.hasBaseDropZoneOver = false;
+        this.hasAnotherDropZoneOver = false;
     }
     importwork.prototype.ngOnInit = function () {
+        var _this = this;
+        console.log(this.uploader);
         this.uploader.onBeforeUploadItem = function (fileItem) {
-            fileItem.formData.push({ kpiUserMappingId: '33' });
+            // fileItem.formData.push(  'data', '33'  );
+            console.log(_this.uploader.onBeforeUploadItem);
+            // this.uploader.onBuildItemForm = (fileItem: any, form: any) => {
+            // form.append(  'data2', '2'  );
+            // form.append( { 'data3': '3' } );
+            // };
+        };
+        this.uploader.onBuildItemForm = function (fileItem, form) {
+            form.append('data', '2');
         };
     };
     importwork.prototype.ngAfterViewInit = function () {

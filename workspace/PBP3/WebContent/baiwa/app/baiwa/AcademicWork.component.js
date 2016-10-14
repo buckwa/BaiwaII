@@ -11,13 +11,17 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require('@angular/core');
 var Common_service_1 = require('./../service/Common.service');
 var http_1 = require('@angular/http');
+var ng2_file_upload_1 = require('ng2-file-upload');
+var URL = 'http://localhost:8080/PBP3/person/uploadMultiFile';
 var AcademicWork = (function () {
     function AcademicWork(commonService, http) {
         this.commonService = commonService;
         this.http = http;
         this.kpiuserList = [];
+        this.uploader = new ng2_file_upload_1.FileUploader({ url: URL });
         this.academy = this.setdefualtkpi();
         this.kpiuserList = [];
+        this.pointKPI = this.setdefualtpoitkpi();
     }
     AcademicWork.prototype.setdefualtkpi = function () {
         return {
@@ -31,8 +35,19 @@ var AcademicWork = (function () {
                 }]
         };
     };
+    AcademicWork.prototype.setdefualtpoitkpi = function () {
+        return {
+            "name": "",
+            "kpiUserMappingId": "",
+            "calResultStr": "",
+            "academicKPIAttributeValueList": [{}]
+        };
+    };
     AcademicWork.prototype.ngOnInit = function () {
         this.GetUserSession();
+        this.uploader.onBuildItemForm = function (fileItem, form) {
+            form.append('data', '2');
+        };
     };
     AcademicWork.prototype.ngAfterViewInit = function () {
     };
@@ -60,6 +75,16 @@ var AcademicWork = (function () {
         for (var i = 0; i < this.academy.pBPWorkTypeList.length; i++) {
             this.kpiuserList.push(this.academy.pBPWorkTypeList[i].academicKPIUserMappingList);
         }
+    };
+    AcademicWork.prototype.ClickGetPointKPI = function (Code, mark) {
+        var _this = this;
+        this.mark = mark;
+        var url = "../person/getImportWork/" + Code;
+        return this.http.get(url).subscribe(function (response) { return _this.GetKPISucess(response); }, function (error) { return _this.GetUserSessionError(error); }, function () { return console.log("editdoneUser !"); });
+    };
+    AcademicWork.prototype.GetKPISucess = function (response) {
+        this.pointKPI = response.json(JSON.stringify(response._body));
+        this.pointLPIList = this.pointKPI.academicKPIAttributeValueList;
     };
     AcademicWork = __decorate([
         core_1.Component({

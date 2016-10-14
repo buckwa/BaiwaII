@@ -47,23 +47,28 @@
 				</thead>
                 <tbody>
                     <tr *ngFor="let item of academyList; let i = index">
-						<td>{{item.name}}</td>
+						<td style="vertical-align:top" >{{item.name}}</td>
 					
-							<td colspan="5">
+							<td colspan="5"  style="padding:0px ;">
 								<table>
 									<tbody>
 										<tr width="100%"    *ngFor="let item of kpiuserList[i]; ">
-											<td width="22%"><a>{{item.academicKPIAttributeValueList[0].value}}</a></td>
-											<td width="34%">{{item.name}} {{item.academicKPI.mark}} คะแนน / ชั่วโมงปฎิบัติการ</td>
-											<td width="11%">{{item.status}}</td>
-											<td width="5%">{{item.academicKPIAttributeValueList[1].value}}</td>
-											<td width="19%"><div class="text-center">{{item.totalInMapping}}|{{item.totalInMapping}}</div></td>
+											
+											<td width="23%">
+												<a href="#" data-toggle="modal" (click)="ClickGetPointKPI(item.academicKPIAttributeValueList[0].academicKPIMappingId,item.academicKPI.mark)" data-target="#myModal" 
+	                                        data-backdrop="static" data-keyboard="false"
+	                                        >{{item.academicKPIAttributeValueList[0].value}}</a>
+											</td>
+											<td width="35%">{{item.name}} {{item.academicKPI.mark}} คะแนน / ชั่วโมงปฎิบัติการ</td>
+											<td width="12%">{{item.status}}</td>
+											<td width="6%">{{item.academicKPIAttributeValueList[1].value}}</td>
+											<td width="14%"><div class="text-center">{{item.totalInMapping}}|{{item.totalInMapping}}</div></td>
 										</tr>
 									<tbody>
 								</table>
 							</td>
 						
-						<td >{{item.totalInWorkType}}</td>
+						<td style="vertical-align:top">{{item.totalInWorkType}}</td>
 					</tr>
 					<tr>
 						<td colspan="6">คะแนนรวม</td>
@@ -76,3 +81,151 @@
         </section>
     </div>
 </div>
+
+
+  <!-- Modal -->
+   <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog " style=" width: 80%;">
+      <div class="modal-content">
+       <form >
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">รายละเอียดการคำนวณภาระงานด้าน งานวิชาการ</h4>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+          
+	          <div class="col-lg-6  col-md-12">
+	         
+	          
+	         
+					<div class="form-group row" style="margin-bottom: 2px;">
+						<label class="col-sm-3 form-control-label">ชื่อภาระงาน:</label>
+						<div class="col-sm-9">
+							<label class="col-sm-12 form-control-label">{{pointKPI.name}}</label>
+						</div>
+					</div>
+					
+					<div class="form-group row" style="margin-bottom: 2px;">
+						<label class="col-sm-3 form-control-label">คะแนน KPI:</label>
+						<div class="col-sm-9">
+							<p class="form-control-static">{{mark}} คะแนน/ ชั่วโมงปฎิบัติการ"</p>
+						</div>
+					</div>
+
+					
+					<div class="form-group row" style="margin-bottom: 2px;"  *ngFor="let a of pointLPIList ">
+						<label class="col-sm-3 form-control-label">{{a.name}}</label>
+						<div class="col-sm-9">
+							<p class="form-control-static"><input type="text" [ngModelOptions]="{standalone: true}" name="{{a.name}}" [(ngModel)]="a.value" class="form-control" id="inputPassword" value="{{a.value}}" placeholder="{{a.name}}" required="required" ></p>
+						<!--{{item.name}}-->
+						</div>
+					</div>
+					
+					<div class="form-group row" style="margin-bottom: 2px;" >
+						<label class="col-sm-3 form-control-label">ตัวคูณ</label>
+						<div class="col-sm-9">
+							<p class="form-control-static">{{pointKPI.calResultStr}}</p>
+						</div>
+					</div>
+					
+			
+			
+	          
+	          </div>
+	          <div class="col-lg-6  col-md-12">
+		        <h5 class="m-t-lg with-border"> แนบเอกสารประกอบการพิจารณา :</h5>
+	
+		            <div class="row">
+
+        <div class="col-md-12" >
+        <div class="row">
+        
+            <div class="col-md-8">
+
+                <h3>Select files</h3>
+
+                <input type="file" class="form-control" ng2FileSelect [uploader]="uploader" multiple  /><br/> 
+            </div>
+        </div>  
+        
+
+            <table class="table">
+                <thead>
+                <tr>
+                    <th width="50%">Name</th>
+                    <th>Status</th>
+                    <th>Progress</th>
+
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let item of uploader.queue">
+                    <td><strong>{{ item?.file?.name }}</strong></td>
+                    <td *ngIf="uploader.isHTML5" nowrap>{{ item?.file?.size/1024/1024 | number:'.2' }} MB</td>
+                    <td *ngIf="uploader.isHTML5">
+                        <div class="progress" style="margin-bottom: 0;">
+                            <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': item.progress + '%' }"></div>
+                        </div>
+                    </td>
+                    <td class="text-center">
+                        <span *ngIf="item.isSuccess"><i class="glyphicon glyphicon-ok"></i></span>
+                        <span *ngIf="item.isCancel"><i class="glyphicon glyphicon-ban-circle"></i></span>
+                        <span *ngIf="item.isError"><i class="glyphicon glyphicon-remove"></i></span>
+                    </td>
+                    <td nowrap>
+                        <button type="button" class="btn btn-success btn-xs"
+                                (click)="item.upload()" [disabled]="item.isReady || item.isUploading || item.isSuccess">
+                            <span class="glyphicon glyphicon-upload"></span> 
+                        </button>
+                        <button type="button" class="btn btn-warning btn-xs"
+                                (click)="item.cancel()" [disabled]="!item.isUploading">
+                            <span class="glyphicon glyphicon-ban-circle"></span> 
+                        </button>
+                        <button type="button" class="btn btn-danger btn-xs"
+                                (click)="item.remove()">
+                            <span class="glyphicon glyphicon-trash"></span> 
+                        </button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+            <div>
+                <div>
+                    Progress:
+                    <div class="progress" style="">
+                        <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': uploader.progress + '%' }"></div>
+                    </div>
+                </div>
+                <button type="button" class="btn btn-success btn-s"
+                        (click)="uploader.uploadAll()" [disabled]="!uploader.getNotUploadedItems().length">
+                    <span class="glyphicon glyphicon-upload"></span> Upload all
+                </button>
+                <button type="button" class="btn btn-warning btn-s"
+                        (click)="uploader.cancelAll()" [disabled]="!uploader.isUploading">
+                    <span class="glyphicon glyphicon-ban-circle"></span> Cancel all
+                </button>
+                <button type="button" class="btn btn-danger btn-s"
+                        (click)="uploader.clearQueue()" [disabled]="!uploader.queue.length">
+                    <span class="glyphicon glyphicon-trash"></span> Remove all
+                </button>
+            </div>
+
+        </div>
+
+    </div>
+	
+	          </div>
+	         
+          </div>
+        </div>
+        <div class="modal-upload-bottom">
+          <button type="button" class="btn btn-rounded btn-default" data-dismiss="modal">Cancel</button>
+          <button type="submit" class="btn btn-rounded" (click)="clickedSaveImport()" >Done</button>
+        </div>
+        </form>
+      </div>
+    </div>
+  </div>
+

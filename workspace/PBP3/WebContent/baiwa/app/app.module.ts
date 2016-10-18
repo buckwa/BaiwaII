@@ -17,6 +17,16 @@ import {anonymous} from './baiwa/anonymous.component';
 import {listKPIByWorktype} from './baiwa/listPIByWorktype.component';
 import {personTimeTable} from './baiwa/personTimeTable.component';
 import {userManual} from './baiwa/userManual.component';
+
+import {personYearReport} from './baiwa/personYearReport.component';//ยุง
+import {personReportInit} from './baiwa/personReportInit.component';//ยุง
+import {personReport}     from './baiwa/personReport.component';//ยุง
+import {workTypeBarChart} from './baiwa/workTypeBarChart.component';//ยุง
+import {work} from './baiwa/work.component';//ยุง
+import {userCreate} from './baiwa/userCreate.component';//ยุง
+import { notificationsList} from './baiwa/notificationsList.component';//ยุง
+import { notificationsDetail} from './baiwa/notificationsDetail.component';//ยุง
+
 import { FileSelectDirective } from 'ng2-file-upload';
 import { FileDropDirective } from 'ng2-file-upload';
 
@@ -31,7 +41,15 @@ const routes: Routes = [
     { path: 'listPIByWorktype',component:listKPIByWorktype},
     { path: 'personTimeTable',component:personTimeTable},
     { path: 'userManual',component:userManual},
-    
+
+    { path: 'personYearReport', component: personYearReport },//ยุง
+    { path: 'personReportInit', component: personReportInit },//ยุง
+    { path: 'workTypeBarChart', component: workTypeBarChart },//ยุง
+    { path: 'personReport', component: personReport },//ยุง
+    { path: 'work', component: work },//ยุง
+    { path: 'userCreate', component: userCreate },//ยุง
+    { path: 'notificationsList', component: notificationsList },//ยุง
+    { path: 'notificationsDetail', component: notificationsDetail },//ยุง
     { path: '', component: home }
 
 ];
@@ -53,6 +71,14 @@ const routes: Routes = [
         listKPIByWorktype,
         personTimeTable,
         userManual,
+        personYearReport,//ยุง
+        personReportInit,//ยุง
+        workTypeBarChart,//ยุง
+        personReport,//ยุง
+        work,//ยุง
+        notificationsList,//ยุง
+        notificationsDetail,//ยุง
+        userCreate,//ยุง
         FileSelectDirective,
         FileDropDirective
     ],

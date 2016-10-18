@@ -187,18 +187,28 @@
 	                            </a>
 	                        </div>
 	                        
-	                        <div class="dropdown dropdown-typical">
-	                            <a class="dropdown-toggle no-arr" id="dd-header-form-builder" data-target="#" href="http://example.com" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	                       	<div class="dropdown dropdown-typical">
+	                            <a class="dropdown-toggle no-arr" id="dd-header-form-builder" data-target="#" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 	                                <span class="font-icon font-icon-pencil">รายงานคะแนน</span>
 	                            </a>
+									<div class="dropdown-menu" aria-labelledby="dd-header-form-builder">
+
+	                                <a class="dropdown-item" href="#/personReportInit"><span class="font-icon font-icon-home"></span>คะแนนประจำปี</a>
+	                                <a class="dropdown-item" href="#/personReport"><span class="font-icon font-icon-cart"></span>ระดับคะแนนในภาควิชา</a>
+	                                <a class="dropdown-item" href="#/workTypeBarChart"><span class="font-icon font-icon-speed"></span>ระดับคะแนนแต่ละด้านในภาควิชา</a>
+	                                <a class="dropdown-item" href="#/personYearReport"><span class="font-icon font-icon-users"></span>Download รายงานประจำปี</a>
+	                            
+
+	                            </div>
 	                        </div>
+
 	                        <div class="dropdown dropdown-typical">
 	                            <a class="dropdown-toggle no-arr" id="dd-header-form-builder" href="#/personTimeTable" >
 	                                <span class="font-icon font-icon-pencil">ตารางสอน</span>
 	                            </a>
 	                        </div>
-	                        <div class="dropdown dropdown-typical">
-	                            <a class="dropdown-toggle no-arr" id="dd-header-form-builder" data-target="#" href="http://example.com" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+ 							<div class="dropdown dropdown-typical">
+	                            <a class="dropdown-toggle no-arr" id="dd-header-form-builder"  href="#/work"  >
 	                                <span class="font-icon font-icon-pencil">แก้ไขผลงาน</span>
 	                            </a>
 	                        </div>

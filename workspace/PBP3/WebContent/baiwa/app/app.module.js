@@ -24,6 +24,14 @@ var anonymous_component_1 = require('./baiwa/anonymous.component');
 var listPIByWorktype_component_1 = require('./baiwa/listPIByWorktype.component');
 var personTimeTable_component_1 = require('./baiwa/personTimeTable.component');
 var userManual_component_1 = require('./baiwa/userManual.component');
+var personYearReport_component_1 = require('./baiwa/personYearReport.component'); //ยุง
+var personReportInit_component_1 = require('./baiwa/personReportInit.component'); //ยุง
+var personReport_component_1 = require('./baiwa/personReport.component'); //ยุง
+var workTypeBarChart_component_1 = require('./baiwa/workTypeBarChart.component'); //ยุง
+var work_component_1 = require('./baiwa/work.component'); //ยุง
+var userCreate_component_1 = require('./baiwa/userCreate.component'); //ยุง
+var notificationsList_component_1 = require('./baiwa/notificationsList.component'); //ยุง
+var notificationsDetail_component_1 = require('./baiwa/notificationsDetail.component'); //ยุง
 var routes = [
     { path: 'home', component: home_component_1.home },
     { path: 'importwork', component: importwork_component_1.importwork },
@@ -33,6 +41,14 @@ var routes = [
     { path: 'listPIByWorktype', component: listPIByWorktype_component_1.listKPIByWorktype },
     { path: 'personTimeTable', component: personTimeTable_component_1.personTimeTable },
     { path: 'userManual', component: userManual_component_1.userManual },
+    { path: 'personYearReport', component: personYearReport_component_1.personYearReport },
+    { path: 'personReportInit', component: personReportInit_component_1.personReportInit },
+    { path: 'workTypeBarChart', component: workTypeBarChart_component_1.workTypeBarChart },
+    { path: 'personReport', component: personReport_component_1.personReport },
+    { path: 'work', component: work_component_1.work },
+    { path: 'userCreate', component: userCreate_component_1.userCreate },
+    { path: 'notificationsList', component: notificationsList_component_1.notificationsList },
+    { path: 'notificationsDetail', component: notificationsDetail_component_1.notificationsDetail },
     { path: '', component: home_component_1.home }
 ];
 var AppModule = (function () {
@@ -56,6 +72,14 @@ var AppModule = (function () {
                 listPIByWorktype_component_1.listKPIByWorktype,
                 personTimeTable_component_1.personTimeTable,
                 userManual_component_1.userManual,
+                personYearReport_component_1.personYearReport,
+                personReportInit_component_1.personReportInit,
+                workTypeBarChart_component_1.workTypeBarChart,
+                personReport_component_1.personReport,
+                work_component_1.work,
+                notificationsList_component_1.notificationsList,
+                notificationsDetail_component_1.notificationsDetail,
+                userCreate_component_1.userCreate,
                 ng2_file_upload_1.FileSelectDirective,
                 ng2_file_upload_1.FileDropDirective
             ],

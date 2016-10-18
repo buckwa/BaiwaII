@@ -33,6 +33,8 @@
 
     <!-- 1. Load libraries -->
     <!-- Polyfill(s) for older browsers -->
+    <link rel="stylesheet" type="text/css" href="${contextLibs}libs/editor1.5.6/css/editor.dataTables.css">
+        <link rel="stylesheet" href="${contextLibs}libs/css/lib/datatables-net/datatables.min.css">
     <script src="${contextLibs}node_modules/core-js/client/shim.min.js"></script>
     <script src="${contextLibs}node_modules/zone.js/dist/zone.js"></script>
     <script src="${contextLibs}node_modules/reflect-metadata/Reflect.js"></script>
@@ -180,7 +182,7 @@
 	                        </div>
 	                        
 	                        <div class="dropdown dropdown-typical">
-	                            <a class="dropdown-toggle no-arr"  id="dd-header-form-builder" data-target="#" href="http://example.com" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	                            <a class="dropdown-toggle no-arr"  id="dd-header-form-builder" href="#/anonymous" >
 	                                <span class="font-icon font-icon-pencil">กฎระเบียบ</span>
 	                            </a>
 	                        </div>
@@ -191,7 +193,7 @@
 	                            </a>
 	                        </div>
 	                        <div class="dropdown dropdown-typical">
-	                            <a class="dropdown-toggle no-arr" id="dd-header-form-builder" data-target="#" href="http://example.com" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	                            <a class="dropdown-toggle no-arr" id="dd-header-form-builder" href="#/personTimeTable" >
 	                                <span class="font-icon font-icon-pencil">ตารางสอน</span>
 	                            </a>
 	                        </div>
@@ -201,7 +203,7 @@
 	                            </a>
 	                        </div>
 	                        <div class="dropdown dropdown-typical">
-	                            <a class="dropdown-toggle no-arr" id="dd-header-form-builder" data-target="#" href="http://example.com" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	                            <a class="dropdown-toggle no-arr" id="dd-header-form-builder" href="#/userManual">
 	                                <span class="font-icon font-icon-pencil">คู่มือ</span>
 	                            </a>
 	                        </div>
@@ -254,6 +256,9 @@
 	 <script src="${contextLibs}libs/js/lib/bootstrap/bootstrap.min.js"></script>
 	 <script src="${contextLibs}libs/js/plugins.js"></script>
 	 <script src="${contextLibs}libs/js/app.js"></script>
+	 <script src="${contextLibs}libs/js/lib/datatables-net/datatables.min.js"></script>
+      <script src="${contextLibs}libs/js/lib/bootstrap-sweetalert/sweetalert.js"></script>
+      <script type="text/javascript" src="${contextLibs}libs/editor1.5.6/js/dataTables.editor.js"></script>
    
    
   </body>

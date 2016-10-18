@@ -20,11 +20,19 @@ var importwork_component_1 = require('./baiwa/importwork.component');
 var home_component_1 = require('./baiwa/home.component');
 var listworktype_component_1 = require('./baiwa/listworktype.component');
 var AcademicWork_component_1 = require('./baiwa/AcademicWork.component');
+var anonymous_component_1 = require('./baiwa/anonymous.component');
+var listPIByWorktype_component_1 = require('./baiwa/listPIByWorktype.component');
+var personTimeTable_component_1 = require('./baiwa/personTimeTable.component');
+var userManual_component_1 = require('./baiwa/userManual.component');
 var routes = [
     { path: 'home', component: home_component_1.home },
     { path: 'importwork', component: importwork_component_1.importwork },
     { path: 'ListByWorkType', component: listworktype_component_1.listworktype },
     { path: 'AcademicWork', component: AcademicWork_component_1.AcademicWork },
+    { path: 'anonymous', component: anonymous_component_1.anonymous },
+    { path: 'listPIByWorktype', component: listPIByWorktype_component_1.listKPIByWorktype },
+    { path: 'personTimeTable', component: personTimeTable_component_1.personTimeTable },
+    { path: 'userManual', component: userManual_component_1.userManual },
     { path: '', component: home_component_1.home }
 ];
 var AppModule = (function () {
@@ -44,6 +52,10 @@ var AppModule = (function () {
                 importwork_component_1.importwork,
                 listworktype_component_1.listworktype,
                 AcademicWork_component_1.AcademicWork,
+                anonymous_component_1.anonymous,
+                listPIByWorktype_component_1.listKPIByWorktype,
+                personTimeTable_component_1.personTimeTable,
+                userManual_component_1.userManual,
                 ng2_file_upload_1.FileSelectDirective,
                 ng2_file_upload_1.FileDropDirective
             ],

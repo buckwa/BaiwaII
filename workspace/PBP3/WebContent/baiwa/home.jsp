@@ -163,7 +163,7 @@
 	                        
 	                        <div class="dropdown dropdown-typical">
 	                            <a class="dropdown-toggle no-arr" id="dd-header-marketing" data-target="#/home" href="#/home" >
-	                                <span class="font-icon font-icon-cogwheel">หน้าแรก</span>
+	                                <span class="font-icon font-icon-home"> &nbsp; หน้าแรก</span>
 	                               
 	                            </a>
 	                        </div>
@@ -172,24 +172,24 @@
 	                      
 	                        <div class="dropdown dropdown-typical">
 	                            <a href="#/ListByWorkType" class="dropdown-toggle no-arr">
-	                                <span class="font-icon font-icon-page">นำเข้าผลงาน</span>
+	                                <span class="font-icon font-icon-widget"> &nbsp;นำเข้าผลงาน</span>
 	                            </a>
 	                        </div>
 	                        <div class="dropdown dropdown-typical">
 	                            <a class="dropdown-toggle no-arr" id="dd-header-form-builder"  href="#/AcademicWork" >
-	                                <span class="font-icon font-icon-pencil">ผลงานประจำปี</span>
+	                                <span class="font-icon font-icon-widget"> &nbsp;ผลงานประจำปี</span>
 	                            </a>
 	                        </div>
 	                        
 	                        <div class="dropdown dropdown-typical">
 	                            <a class="dropdown-toggle no-arr"  id="dd-header-form-builder" href="#/anonymous" >
-	                                <span class="font-icon font-icon-pencil">กฎระเบียบ</span>
+	                                <span class="font-icon font-icon-widget"> &nbsp;กฎระเบียบ</span>
 	                            </a>
 	                        </div>
 	                        
 	                       	<div class="dropdown dropdown-typical">
 	                            <a class="dropdown-toggle no-arr" id="dd-header-form-builder" data-target="#" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-	                                <span class="font-icon font-icon-pencil">รายงานคะแนน</span>
+	                                <span class="font-icon font-icon-widget"> &nbsp;รายงานคะแนน</span>
 	                            </a>
 									<div class="dropdown-menu" aria-labelledby="dd-header-form-builder">
 
@@ -204,17 +204,17 @@
 
 	                        <div class="dropdown dropdown-typical">
 	                            <a class="dropdown-toggle no-arr" id="dd-header-form-builder" href="#/personTimeTable" >
-	                                <span class="font-icon font-icon-pencil">ตารางสอน</span>
+	                                <span class="font-icon font-icon-widget"> &nbsp;ตารางสอน</span>
 	                            </a>
 	                        </div>
  							<div class="dropdown dropdown-typical">
 	                            <a class="dropdown-toggle no-arr" id="dd-header-form-builder"  href="#/work"  >
-	                                <span class="font-icon font-icon-pencil">แก้ไขผลงาน</span>
+	                                <span class="font-icon font-icon-widget"> &nbsp;แก้ไขผลงาน</span>
 	                            </a>
 	                        </div>
 	                        <div class="dropdown dropdown-typical">
 	                            <a class="dropdown-toggle no-arr" id="dd-header-form-builder" href="#/userManual">
-	                                <span class="font-icon font-icon-pencil">คู่มือ</span>
+	                                <span class="font-icon font-icon-widget"> &nbsp;คู่มือ</span>
 	                            </a>
 	                        </div>
 

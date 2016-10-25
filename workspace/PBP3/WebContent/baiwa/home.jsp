@@ -42,6 +42,13 @@
     <!-- 2. Configure SystemJS -->
     <script src="${contextLibs}systemjs.config.js"></script>
     
+    
+        <link rel="stylesheet" type="text/css" href="${contextLibs}libs/editor1.5.6/css/editor.dataTables.css">
+    <link rel="stylesheet" href="${contextLibs}libs/css/lib/font-awesome/font-awesome.min.css">
+    <link rel="stylesheet" href="${contextLibs}libs/css/main.css">
+    <link rel="stylesheet" href="${contextLibs}libs/css/lib/bootstrap-sweetalert/sweetalert.css"/>
+    <link rel="stylesheet" href="${contextLibs}styles.css">
+    
     <script>
     "use strict";
     
@@ -264,6 +271,7 @@
      <script src="${contextLibs}libs/js/lib/jquery/jquery.min.js"></script>
 	 <script src="${contextLibs}libs/js/lib/tether/tether.min.js"></script>
 	 <script src="${contextLibs}libs/js/lib/bootstrap/bootstrap.min.js"></script>
+	       <script type="text/javascript" src="${contextLibs}libs/js/lib/blockUI/jquery.blockUI.js"></script>
 	 <script src="${contextLibs}libs/js/plugins.js"></script>
 	 <script src="${contextLibs}libs/js/app.js"></script>
 	 <script src="${contextLibs}libs/js/lib/datatables-net/datatables.min.js"></script>

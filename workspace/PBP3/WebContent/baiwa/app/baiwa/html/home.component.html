@@ -1,358 +1,348 @@
+<div class="row">
+	<div class="col-lg-6 col-lg-push-3 col-md-12">
+		<section class="box-typical">
 
-			<div class="row">
-				<div class="col-lg-6 col-lg-push-3 col-md-12">
-				<section class="box-typical">
-					
-							<header class="box-typical-header-sm">
-							
-							
-							
-							<div class="form-group row">
-								<label for="exampleSelect" class="col-sm-3 form-control-label">ปีการศึกษา</label>
-								<div class="col-sm-5">
-									<select id="exampleSelect" class="form-control">
+			<header class="box-typical-header-sm">
+
+
+
+				<div class="form-group row">
+					<label for="exampleSelect" class="col-sm-3 form-control-label">ปีการศึกษา</label>
+					<div class="col-sm-5">
+						<select id="exampleSelect" class="form-control">
 										<option value="2558" selected="selected">2558</option>
 									</select>
-								</div>
-							</div>
-							
-							
-							</header>
-						
-						
-					
-				</section><!--.box-typical-->
-					<section class="box-typical">
-						<header class="box-typical-header-sm">
-							คะแนนประจำปี
-							
-						</header>
-						<div class="posts-slider">
-							<div class="slide">
-								<article class="post-announce">
-									<div class="post-announce-pic">
-										<a href="#">
-											<img src="{{libPath}}img/profile-1.jpg" alt="">
-										</a>
-									</div>
-								
-									<div class="post-announce-date"></div>
+					</div>
+				</div>
 
-								</article>
-							</div><!--.slide-->
-							
-						</div><!--.posts-slider-->
-					</section><!--.box-typical-->
 
-				</div><!--.col- -->
+			</header>
 
-				<div class="col-lg-3 col-lg-pull-6 col-md-6 col-sm-6">
-					<section class="box-typical">
-						<div class="profile-card">
-							<div class="profile-card-photo">
-								<img src="{{libPath}}img/profile.jpg" alt="" style="-webkit-border-radius: 5%; height: 100%;" />
-							</div>
-							<div class="profile-card-name">{{profile.thaiName}}  {{profile.thaiSurname}}</div>
-							<div class="profile-card-status">สังกัด:{{profile.facultyDesc}}</div>
-							<div class="profile-card-location">ส่วนงาน:{{profile.departmentDesc}}</div>
-							<button type="button" data-toggle="modal" 
-							href="#" data-toggle="modal"
-							data-target="#myModal"
-	                         data-backdrop="static" data-keyboard="false" class="btn btn-rounded" style="    max-width: 155px; ">แก้ไขรูปประจำตัว</button>
-							
-						</div><!--.profile-card-->
 
-						<div class="profile-statistic tbl">
-							<div class="tbl-row">
-								<button type="submit" class="btn btn-inline btn-success" style="margin-right:0px">คำนวณคะแนนให้เป็นปัจจุบัน</button>
-							</div>
-						</div>
-						
-						<div class="profile-statistic tbl">
-							<div class="tbl-row">
-								<div class="tbl-cell">
-									
-									<b>คะแนนรวมอนุมัติ</b>
-								</div>
-								<div class="tbl-cell">
-									<b>{{sumasix}}</b>
-									
-								</div>
-							</div>
+
+		</section>
+		<!--.box-typical-->
+		<section class="box-typical">
+			<header class="box-typical-header-sm">
+				คะแนนประจำปี
+
+			</header>
+			<div class="posts-slider">
+				<div class="slide">
+					<article class="post-announce">
+						<div class="post-announce-pic">
+							<a href="#">
+								<img src="{{libPath}}img/profile-1.jpg" alt="">
+							</a>
 						</div>
 
-						<ul class="profile-links-list">
-							<li class="nowrap">
-								<i class="font-icon font-icon-user"></i>
-								<b>ประเภท:</b> {{profile.employeeType}}
-							</li>
-							<li class="nowrap">
-								<i class="font-icon font-icon-chart-2"></i>
-								<b>เลขที่อัตรา:</b> {{profile.rateNo}}
-							</li>
-							<li class="nowrap">
-								<i class="font-icon font-icon-award"></i>
-								<b>ตำแหน่งงาน:</b> {{profile.academicRank}}
-							</li>
-							<li class="nowrap">
-								<i class="font-icon font-icon-learn"></i>
-								<b>วุฒิการศึกษา:</b> {{profile.maxEducation}}
-							</li>
-							<li class="nowrap">
-								<i class="font-icon font-icon-mail"></i>
-								<b>Email:</b>{{profile.email}}
-							</li>
-							<li class="divider"></li>
-							  <li>
-								
-							</li>
-						</ul>
-					</section><!--.box-typical-->
+						<div class="post-announce-date"></div>
+
+					</article>
+				</div>
+				<!--.slide-->
+
+			</div>
+			<!--.posts-slider-->
+		</section>
+		<!--.box-typical-->
+
+	</div>
+	<!--.col- -->
+
+	<div class="col-lg-3 col-lg-pull-6 col-md-6 col-sm-6">
+		<section class="box-typical">
+			<div class="profile-card">
+				<div class="profile-card-photo">
+					<img src="{{libPath}}img/profile.jpg" alt="" style="-webkit-border-radius: 5%; height: 100%;" />
+				</div>
+				<div class="profile-card-name">{{profile.thaiName}} {{profile.thaiSurname}}</div>
+				<div class="profile-card-status">สังกัด:{{profile.facultyDesc}}</div>
+				<div class="profile-card-location">ส่วนงาน:{{profile.departmentDesc}}</div>
+				<button type="button" data-toggle="modal" href="#" data-toggle="modal" data-target="#myModal" data-backdrop="static" data-keyboard="false"
+					class="btn btn-rounded" style="    max-width: 155px; ">แก้ไขรูปประจำตัว</button>
+
+			</div>
+			<!--.profile-card-->
+
+			<div class="profile-statistic tbl">
+				<div class="tbl-row">
+					<button type="submit" class="btn btn-inline btn-success" style="margin-right:0px">คำนวณคะแนนให้เป็นปัจจุบัน</button>
+				</div>
+			</div>
+
+			<div class="profile-statistic tbl">
+				<div class="tbl-row">
+					<div class="tbl-cell">
+
+						<b>คะแนนรวมอนุมัติ</b>
+					</div>
+					<div class="tbl-cell">
+						<b>{{sumasix}}</b>
+
+					</div>
+				</div>
+			</div>
+
+			<ul class="profile-links-list">
+				<li class="nowrap">
+					<i class="font-icon font-icon-user"></i>
+					<b>ประเภท:</b> {{profile.employeeType}}
+				</li>
+				<li class="nowrap">
+					<i class="font-icon font-icon-chart-2"></i>
+					<b>เลขที่อัตรา:</b> {{profile.rateNo}}
+				</li>
+				<li class="nowrap">
+					<i class="font-icon font-icon-award"></i>
+					<b>ตำแหน่งงาน:</b> {{profile.academicRank}}
+				</li>
+				<li class="nowrap">
+					<i class="font-icon font-icon-learn"></i>
+					<b>วุฒิการศึกษา:</b> {{profile.maxEducation}}
+				</li>
+				<li class="nowrap">
+					<i class="font-icon font-icon-mail"></i>
+					<b>Email:</b>{{profile.email}}
+				</li>
+				<li class="divider"></li>
+				<li>
+
+				</li>
+			</ul>
+		</section>
+		<!--.box-typical-->
 
 
-				</div><!--.col- -->
+	</div>
+	<!--.col- -->
 
 
-				<div class="col-lg-3 col-md-6 col-sm-6">
-				
-					<section class="box-typical box-typical-dashboard panel panel-default">
-						<header class="box-typical-header-sm">Notifications</header>
-						
-						
-						<div class="friends-list stripped">
-							<article class="friends-list-item">
-								<div class="user-card-row">
-									<div class="tbl-row">
+	<div class="col-lg-3 col-md-6 col-sm-6">
 
-										<div class="tbl-cell">
-											<p class="user-card-row-name "><a href="#/notificationsDetail">พิทักษ์ ธรรมวาริน</a></p>
-											<p class="user-card-row-status"><a href="#/notificationsDetail">ทดสอบ</a></p>
-										</div>
-
-									</div>
-								</div>
-							</article>
-							
-							<article class="friends-list-item">
-								<div class="user-card-row">
-									<div class="tbl-row">
-
-										<div class="tbl-cell">
-											<p class="user-card-row-name"><a href="#/notificationsDetail">พิทักษ์ ธรรมวาริน</a></p>
-											<p class="user-card-row-status"><a href="#/notificationsDetail">ทดสอบ</a></p>
-										</div>
-										
-									</div>
-								</div>
-							</article>
-							<article class="friends-list-item">
-								<div class="user-card-row">
-									<div class="tbl-row">
-										<div class="tbl-cell">
-											<p class="user-card-row-name"><a href="#/notificationsDetail">พิทักษ์ ธรรมวาริน</a></p>
-											<p class="user-card-row-status"><a href="#/notificationsDetail">ทดสอบ</a></p>
-										</div>
-									
-									</div>
-								</div>
-							</article>
-							<article class="friends-list-item">
-								<div class="user-card-row">
-									<div class="tbl-row">
-										<div class="tbl-cell">
-											<p class="user-card-row-name"><a href="#/notificationsDetail">พิทักษ์ ธรรมวาริน</a></p>
-											<p class="user-card-row-status"><a href="#/notificationsDetail">ทดสอบ</a></p>
-										</div>
-										
-									</div>
-								</div>
-							</article>
-							<article class="friends-list-item">
-								<div class="user-card-row">
-									<div class="tbl-row">
-
-										<div class="tbl-cell">
-											<p class="user-card-row-name"><a href="#/notificationsDetail">พิทักษ์ ธรรมวาริน</a></p>
-											<p class="user-card-row-status"><a href="#/notificationsDetail">ทดสอบ</a></p>
-										</div>
-										
-									</div>
-								</div>
-							</article>
-						</div>
-
-						<div class="see-all">
-							<a href="#/notificationsList">See All (300)</a>
-						</div>
-
-					</section><!--.box-typical-->
+		<section class="box-typical box-typical-dashboard panel panel-default">
+			<header class="box-typical-header-sm">Notifications</header>
 
 
-				</div><!--.col- -->
-			
-				<div class="col-xs-12">
-					<section class="box-typical">
-						<header class="box-typical-header"></header>
-						<div class="box-typical-body">
-							<div class="table-responsive">
-								<table class="table table-hover">
-									<thead>
-										<tr>
-											<th>ประเภทภาระงาน</th>
-											<th class="text-center">คะแนนรวมรออนุมัติ (คะแนน)</th>
-											<th class="text-center" >คะแนนรวมอนุมัติ(คะแนน)</th>									
-										</tr>
-									</thead>
-									<tbody>
-										<tr *ngFor="let item of work; let i = index ">
-										
-											<td>
-											{{item.axisName}}
-											</td>
-											<td class="text-center">
-											{{item.axisValue}}
-											</td>
-											<td class="text-center">
-											{{item.axisValue2}}
-											</td>
-		
-										</tr>
-										
-										
-										<tr>
-											<td class="text-right" >
-											<h5><b>รวม</b></h5>
-											</td>
-											<td class="text-center">
-											<h5><b>{{sumasix}}</b></h5>
-											
-											</td>
-											<td class="text-center">
-											<h5><b>{{sumasix2}}</b></h5>
-										
-											</td>
-										</tr>
-									</tbody>
-								</table>
+			<div class="friends-list stripped">
+				<article class="friends-list-item">
+					<div class="user-card-row">
+						<div class="tbl-row">
+
+							<div class="tbl-cell">
+								<p class="user-card-row-name "><a href="#/notificationsDetail">พิทักษ์ ธรรมวาริน</a></p>
+								<p class="user-card-row-status"><a href="#/notificationsDetail">ทดสอบ</a></p>
 							</div>
-						</div><!--.box-typical-body-->
-					</section><!--.box-typical-->
+
+						</div>
+					</div>
+				</article>
+
+				<article class="friends-list-item">
+					<div class="user-card-row">
+						<div class="tbl-row">
+
+							<div class="tbl-cell">
+								<p class="user-card-row-name"><a href="#/notificationsDetail">พิทักษ์ ธรรมวาริน</a></p>
+								<p class="user-card-row-status"><a href="#/notificationsDetail">ทดสอบ</a></p>
+							</div>
+
+						</div>
+					</div>
+				</article>
+				<article class="friends-list-item">
+					<div class="user-card-row">
+						<div class="tbl-row">
+							<div class="tbl-cell">
+								<p class="user-card-row-name"><a href="#/notificationsDetail">พิทักษ์ ธรรมวาริน</a></p>
+								<p class="user-card-row-status"><a href="#/notificationsDetail">ทดสอบ</a></p>
+							</div>
+
+						</div>
+					</div>
+				</article>
+				<article class="friends-list-item">
+					<div class="user-card-row">
+						<div class="tbl-row">
+							<div class="tbl-cell">
+								<p class="user-card-row-name"><a href="#/notificationsDetail">พิทักษ์ ธรรมวาริน</a></p>
+								<p class="user-card-row-status"><a href="#/notificationsDetail">ทดสอบ</a></p>
+							</div>
+
+						</div>
+					</div>
+				</article>
+				<article class="friends-list-item">
+					<div class="user-card-row">
+						<div class="tbl-row">
+
+							<div class="tbl-cell">
+								<p class="user-card-row-name"><a href="#/notificationsDetail">พิทักษ์ ธรรมวาริน</a></p>
+								<p class="user-card-row-status"><a href="#/notificationsDetail">ทดสอบ</a></p>
+							</div>
+
+						</div>
+					</div>
+				</article>
+			</div>
+
+			<div class="see-all">
+				<a href="#/notificationsList">See All (300)</a>
+			</div>
+
+		</section>
+		<!--.box-typical-->
+
+
+	</div>
+	<!--.col- -->
+
+	<div class="col-xs-12">
+		<section class="box-typical">
+			<header class="box-typical-header"></header>
+			<div class="box-typical-body">
+				<div class="table-responsive">
+					<table class="table table-bordered table-hover">
+						<thead>
+							<tr>
+								<th class="text-center">ประเภทภาระงาน</th>
+								<th class="text-center">คะแนนรวมรออนุมัติ (คะแนน)</th>
+								<th class="text-center">คะแนนรวมอนุมัติ(คะแนน)</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr *ngFor="let item of work; let i = index ">
+
+								<td>
+									{{i+1}}&nbsp;{{item.axisName}}
+								</td>
+								<td class="text-center">
+									{{item.axisValue}}
+								</td>
+								<td class="text-center">
+									{{item.axisValue2}}
+								</td>
+
+							</tr>
+
+
+							<tr>
+								<td class="text-right">
+									<h5><b>รวม</b></h5>
+								</td>
+								<td class="text-center">
+									<h5><b>{{sumasix}}</b></h5>
+
+								</td>
+								<td class="text-center">
+									<h5><b>{{sumasix2}}</b></h5>
+
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<!--.box-typical-body-->
+		</section>
+		<!--.box-typical-->
+	</div>
+</div>
+
+
+
+<!-- 	//แยก -->
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" role="dialog">
+	<div class="modal-dialog ">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">แก้ไขภาพประจำตัว</h4>
+			</div>
+			<div class="modal-body">
+				<div class="row">
+
+					<div class="col-md-12">
+						<div class="row">
+
+							<div class="col-md-8">
+
+								<h3>เลือกไฟล์</h3>
+
+								<input type="file" class="form-control" ng2FileSelect [uploader]="uploader" multiple /><br/>
+							</div>
+						</div>
+
+
+						<table class="table">
+							<thead>
+								<tr>
+									<th width="50%">ชื่อ</th>
+									<th>สถานะ</th>
+									<th>Progress</th>
+
+								</tr>
+							</thead>
+							<tbody>
+								<tr *ngFor="let item of uploader.queue">
+									<td><strong>{{ item?.file?.name }}</strong></td>
+									<td *ngIf="uploader.isHTML5" nowrap>{{ item?.file?.size/1024/1024 | number:'.2' }} MB</td>
+									<td *ngIf="uploader.isHTML5">
+										<div class="progress" style="margin-bottom: 0;">
+											<div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': item.progress + '%' }"></div>
+										</div>
+									</td>
+									<td class="text-center">
+										<span *ngIf="item.isSuccess"><i class="glyphicon glyphicon-ok"></i></span>
+										<span *ngIf="item.isCancel"><i class="glyphicon glyphicon-ban-circle"></i></span>
+										<span *ngIf="item.isError"><i class="glyphicon glyphicon-remove"></i></span>
+									</td>
+									<td nowrap>
+										<button type="button" class="btn btn-success btn-xs" (click)="item.upload()" [disabled]="item.isReady || item.isUploading || item.isSuccess">
+                            <span class="glyphicon glyphicon-upload"></span> 
+                        </button>
+										<button type="button" class="btn btn-warning btn-xs" (click)="item.cancel()" [disabled]="!item.isUploading">
+                            <span class="glyphicon glyphicon-ban-circle"></span> 
+                        </button>
+										<button type="button" class="btn btn-danger btn-xs" (click)="item.remove()">
+                            <span class="glyphicon glyphicon-trash"></span> 
+                        </button>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+
+						<div>
+							<div>
+								Progress:
+								<div class="progress" style="">
+									<div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': uploader.progress + '%' }"></div>
+								</div>
+							</div>
+							<button type="button" class="btn btn-success btn-s" (click)="uploader.uploadAll()" [disabled]="!uploader.getNotUploadedItems().length">
+                    <span class="glyphicon glyphicon-upload"></span> Upload all
+                </button>
+							<button type="button" class="btn btn-warning btn-s" (click)="uploader.cancelAll()" [disabled]="!uploader.isUploading">
+                    <span class="glyphicon glyphicon-ban-circle"></span> Cancel all
+                </button>
+							<button type="button" class="btn btn-danger btn-s" (click)="uploader.clearQueue()" [disabled]="!uploader.queue.length">
+                    <span class="glyphicon glyphicon-trash"></span> Remove all
+                </button>
+						</div>
+
+					</div>
+
+				</div>
+
+			</div>
+			<div class="modal-upload-bottom">
+				<button type="button" class="btn btn-rounded btn-default" data-dismiss="modal">Cancel</button>
+				<button type="button" class="btn btn-rounded">Done</button>
+			</div>
 		</div>
 	</div>
-	
-	
-	
-	<!-- 	//แยก -->
-	
-	
-
-  <!-- Modal -->
-  <div class="modal fade" id="myModal" role="dialog">
-    <div class="modal-dialog " >
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">แนบเอกสารประกอบการพิจารณา :</h4>
-        </div>
-        <div class="modal-body">
-          <div class="row">
-
-	          <div class="col-md-12">
-		   
-		       <div class="modal-upload-body scrollable-block">
-                                        <div class="uploading-container">
-                                            <div class="uploading-container-left">
-                                                <div class="drop-zone">
-                                                    <!--
-                                                    при перетаскиваении добавляем класс .dragover
-                                                    <div class="drop-zone dragover">
-                                                    -->
-                                                    <i class="font-icon font-icon-cloud-upload-2"></i>
-                                                    <div class="drop-zone-caption">Drag file to upload</div>
-                                                    <span class="btn btn-rounded btn-file">
-                                                        <span>Choose file</span>
-                                                        <input type="file" name="files[]" multiple>
-                                                    </span>
-                                                </div>
-                                            </div><!--.uploading-container-left-->
-                                            <div class="uploading-container-right">
-                                                <div class="uploading-container-right-in">
-                                                    <h6 class="uploading-list-title">Uploading</h6>
-                                                    <ul class="uploading-list">
-                                                        <li class="uploading-list-item">
-                                                            <div class="uploading-list-item-wrapper">
-                                                                <div class="uploading-list-item-name">
-                                                                    <i class="font-icon font-icon-cam-photo"></i>
-                                                                    photo.png
-                                                                </div>
-                                                                <div class="uploading-list-item-size">7,5 mb</div>
-                                                                <button type="button" class="uploading-list-item-close">
-                                                                    <i class="font-icon-close-2"></i>
-                                                                </button>
-                                                            </div>
-                                                            <progress class="progress" value="25" max="100">
-                                                                <div class="progress">
-                                                                    <span class="progress-bar" style="width: 25%;">25%</span>
-                                                                </div>
-                                                            </progress>
-                                                            <div class="uploading-list-item-progress">37% done</div>
-                                                            <div class="uploading-list-item-speed">90KB/sec</div>
-                                                        </li>
-                                                        <li class="uploading-list-item">
-                                                            <div class="uploading-list-item-wrapper">
-                                                                <div class="uploading-list-item-name">
-                                                                    <i class="font-icon font-icon-page"></i>
-                                                                    task.doc
-                                                                </div>
-                                                                <div class="uploading-list-item-size">7,5 mb</div>
-                                                                <button type="button" class="uploading-list-item-close">
-                                                                    <i class="font-icon-close-2"></i>
-                                                                </button>
-                                                            </div>
-                                                            <progress class="progress" value="50" max="100">
-                                                                <div class="progress">
-                                                                    <span class="progress-bar" style="width: 50%;">50%</span>
-                                                                </div>
-                                                            </progress>
-                                                            <div class="uploading-list-item-progress">37% done</div>
-                                                            <div class="uploading-list-item-speed">90KB/sec</div>
-                                                        </li>
-                                                        <li class="uploading-list-item">
-                                                            <div class="uploading-list-item-wrapper">
-                                                                <div class="uploading-list-item-name">
-                                                                    <i class="font-icon font-icon-cam-photo"></i>
-                                                                    dashboard.png
-                                                                </div>
-                                                                <div class="uploading-list-item-size">7,5 mb</div>
-                                                                <button type="button" class="uploading-list-item-close">
-                                                                    <i class="font-icon-close-2"></i>
-                                                                </button>
-                                                            </div>
-                                                            <progress class="progress" value="100" max="100">
-                                                                <div class="progress">
-                                                                    <span class="progress-bar" style="width: 100%;">100%</span>
-                                                                </div>
-                                                            </progress>
-                                                            <div class="uploading-list-item-progress">Completed</div>
-                                                            <div class="uploading-list-item-speed">90KB/sec</div>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </div><!--.uploading-container-right-->
-                                        </div><!--.uploading-container-->
-                                    </div><!--.modal-upload-body-->
-		        
-		   
-	          </div>
-          </div>
-        </div>
-        <div class="modal-upload-bottom">
-          <button type="button" class="btn btn-rounded btn-default" data-dismiss="modal">Cancel</button>
-          <button type="button" class="btn btn-rounded">Done</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-
-	
+</div>

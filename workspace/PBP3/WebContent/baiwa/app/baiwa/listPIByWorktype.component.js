@@ -12,6 +12,9 @@ var core_1 = require('@angular/core');
 var listKPIByWorktype = (function () {
     function listKPIByWorktype() {
     }
+    listKPIByWorktype.prototype.blackpage = function () {
+        window.location.href = "#/anonymous";
+    };
     listKPIByWorktype = __decorate([
         core_1.Component({
             templateUrl: 'app/baiwa/html/listKPIByWorktype.component.html'

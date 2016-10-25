@@ -1,6 +1,9 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import {CommonService} from './../service/Common.service';
 import { Http, Headers, Response } from '@angular/http';
+import { FileSelectDirective, FileDropDirective, FileUploader } from 'ng2-file-upload';
+
+const URL = 'http://localhost:8080/PBP3/person/uploadMultiFile';
 
 
 @Component({
@@ -15,6 +18,7 @@ export class home implements OnInit, AfterViewInit {
     public sumasix2: any;
     public user: any;
 
+    public uploader: FileUploader = new FileUploader({ url: URL });
     constructor(private commonService: CommonService, private http: Http) {
         this.libPath = "/PBP3/baiwa/libs/";
         this.profile = this.defaultProfile();
@@ -103,6 +107,9 @@ export class home implements OnInit, AfterViewInit {
         this.GetRadarPlotNew(this.user.userName, this.user.currentAcademicYear, "1");
 
 
+    }
+    public addToQueue (files: File[]){
+        
     }
 
 

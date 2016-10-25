@@ -21,6 +21,7 @@ var AcademicWork = (function () {
         this.uploader = new ng2_file_upload_1.FileUploader({ url: URL });
         this.academy = this.setdefualtkpi();
         this.kpiuserList = [];
+        this.kpival = [];
         this.pointKPI = this.setdefualtpoitkpi();
     }
     AcademicWork.prototype.setdefualtkpi = function () {
@@ -65,6 +66,7 @@ var AcademicWork = (function () {
     };
     AcademicWork.prototype.GetAcademicWork = function (user, year, round) {
         var _this = this;
+        this.commonService.loading();
         var url = "../person/getAcademicWork/" + user + "/" + year + "/" + round;
         return this.http.get(url).subscribe(function (response) { return _this.GetUserAcademicSucess(response); }, function (error) { return _this.GetUserSessionError(error); }, function () { return console.log("editdoneUser !"); });
     };
@@ -75,6 +77,8 @@ var AcademicWork = (function () {
         for (var i = 0; i < this.academy.pBPWorkTypeList.length; i++) {
             this.kpiuserList.push(this.academy.pBPWorkTypeList[i].academicKPIUserMappingList);
         }
+        this.commonService.unLoading();
+        this.mapKpi();
     };
     AcademicWork.prototype.ClickGetPointKPI = function (Code, mark) {
         var _this = this;
@@ -85,6 +89,27 @@ var AcademicWork = (function () {
     AcademicWork.prototype.GetKPISucess = function (response) {
         this.pointKPI = response.json(JSON.stringify(response._body));
         this.pointLPIList = this.pointKPI.academicKPIAttributeValueList;
+    };
+    AcademicWork.prototype.mapKpi = function () {
+        for (var i = 0; i < this.kpiuserList.length; i++) {
+            this.kpival[i] = [];
+            for (var j = 0; j < this.kpiuserList[i].length; j++) {
+                if (this.kpiuserList[i][j].academicKPIAttributeValueList.length == 2) {
+                    var temp = this.kpiuserList[i][j].academicKPIAttributeValueList[1].value;
+                    this.kpival[i][j] = temp + "%";
+                }
+                else if (this.kpiuserList[i][j].academicKPIAttributeValueList.length == 3) {
+                    this.kpival[i][j] = "";
+                }
+                else if (this.kpiuserList[i][j].academicKPIAttributeValueList.length == 4) {
+                    var temp = this.kpiuserList[i][j].academicKPIAttributeValueList[2].value;
+                    this.kpival[i][j] = temp + "%";
+                }
+                else {
+                    this.kpival[i][j] = "";
+                }
+            }
+        }
     };
     AcademicWork = __decorate([
         core_1.Component({

@@ -11,10 +11,13 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require('@angular/core');
 var Common_service_1 = require('./../service/Common.service');
 var http_1 = require('@angular/http');
+var ng2_file_upload_1 = require('ng2-file-upload');
+var URL = 'http://localhost:8080/PBP3/person/uploadMultiFile';
 var home = (function () {
     function home(commonService, http) {
         this.commonService = commonService;
         this.http = http;
+        this.uploader = new ng2_file_upload_1.FileUploader({ url: URL });
         this.libPath = "/PBP3/baiwa/libs/";
         this.profile = this.defaultProfile();
         this.work = this.defaultWork();
@@ -84,6 +87,8 @@ var home = (function () {
         this.user = response.json(JSON.stringify(response._body));
         this.GetPersonByAcadamy(this.user.userName);
         this.GetRadarPlotNew(this.user.userName, this.user.currentAcademicYear, "1");
+    };
+    home.prototype.addToQueue = function (files) {
     };
     home = __decorate([
         core_1.Component({

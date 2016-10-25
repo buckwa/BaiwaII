@@ -28,6 +28,7 @@ export class home implements OnInit, AfterViewInit {
     ngOnInit() {
 
         this.GetUserSession();
+        this.uploader.queue;
 
     }
     ngAfterViewInit() {
@@ -107,9 +108,6 @@ export class home implements OnInit, AfterViewInit {
         this.GetRadarPlotNew(this.user.userName, this.user.currentAcademicYear, "1");
 
 
-    }
-    public addToQueue (files: File[]){
-        
     }
 
 

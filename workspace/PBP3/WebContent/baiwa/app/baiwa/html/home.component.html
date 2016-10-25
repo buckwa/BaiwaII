@@ -273,7 +273,7 @@
 
 								<h3>เลือกไฟล์</h3>
 
-								<input type="file" class="form-control" ng2FileSelect [uploader]="uploader" multiple /><br/>
+								<input type="file" class="form-control" ng2FileSelect [uploader]="uploader" /><br/>
 							</div>
 						</div>
 
@@ -302,7 +302,7 @@
 										<span *ngIf="item.isError"><i class="glyphicon glyphicon-remove"></i></span>
 									</td>
 									<td nowrap>
-										<button type="button" class="btn btn-success btn-xs" (click)="item.upload()" [disabled]="item.isReady || item.isUploading || item.isSuccess">
+										<button type="button" class="btn btn-success btn-xs" (click)="item.upload()" [disabled]="item.isReady || item.isUploading || item.isSuccess || (item.file.type != 'image/png' && item.file.type !='image/jpeg') ">
                             <span class="glyphicon glyphicon-upload"></span> 
                         </button>
 										<button type="button" class="btn btn-warning btn-xs" (click)="item.cancel()" [disabled]="!item.isUploading">

@@ -24,6 +24,7 @@ var home = (function () {
     }
     home.prototype.ngOnInit = function () {
         this.GetUserSession();
+        this.uploader.queue;
     };
     home.prototype.ngAfterViewInit = function () {
     };
@@ -87,8 +88,6 @@ var home = (function () {
         this.user = response.json(JSON.stringify(response._body));
         this.GetPersonByAcadamy(this.user.userName);
         this.GetRadarPlotNew(this.user.userName, this.user.currentAcademicYear, "1");
-    };
-    home.prototype.addToQueue = function (files) {
     };
     home = __decorate([
         core_1.Component({

@@ -48,7 +48,7 @@ export class personTimeTable implements OnInit {
         this.dataTB();
     }
     public datatable(): void {
-        this.a = jQuery("#DTable").DataTable({
+        jQuery("#DTable").DataTable({
 
             "searching": false,
             "bPaginate": false,
@@ -58,16 +58,16 @@ export class personTimeTable implements OnInit {
             "bAutoWidth": false,
             "ajax": "app/baiwa/jsonTimeTable.txt",
             "columns": [
-                { "data": "code" },
-                { "data": "name" },
-                { "data": "sub" },
-                { "data": "hour" },
-                { "data": "point" },
-                { "data": "class" },
-                { "data": "student" },
-                { "data": "section" },
-                { "data": "time" },
-                { "data": "other" }
+                { "data": "subjectCode" },
+                { "data": "subjectName" },
+                { "data": "lecOrPrac" },
+                { "data": "teachHr" },
+                { "data": "pracHr" },
+                { "data": "degreeStr" },
+                { "data": "totalStudent" },
+                { "data": "secNo" },
+                { "data": "teachDayStr" },
+                { "data": "remark" }
             ]
         });
 
@@ -82,18 +82,18 @@ export class personTimeTable implements OnInit {
             "bLengthChange": false,
             "bInfo": false,
             "bAutoWidth": false,
-            "ajax": "app/baiwa/jsonTimeTable.txt",
+            "ajax": "app/baiwa/jsonTimeTable2.txt",
             "columns": [
-                { "data": "code" },
-                { "data": "name" },
-                { "data": "sub" },
-                { "data": "hour" },
-                { "data": "point" },
-                { "data": "class" },
-                { "data": "student" },
-                { "data": "section" },
-                { "data": "time" },
-                { "data": "other" }
+                { "data": "subjectCode" },
+                { "data": "subjectName" },
+                { "data": "lecOrPrac" },
+                { "data": "teachHr" },
+                { "data": "pracHr" },
+                { "data": "degreeStr" },
+                { "data": "totalStudent" },
+                { "data": "secNo" },
+                { "data": "teachDayStr" },
+                { "data": "remark" }
             ]
         });
 

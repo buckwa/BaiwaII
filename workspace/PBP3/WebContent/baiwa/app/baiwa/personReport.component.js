@@ -23,7 +23,7 @@ var personReport = (function () {
             dataSource: {
                 transport: {
                     read: {
-                        url: "../president/getWorkTypeBarchart/1",
+                        url: "app/baiwa/kendoJson.txt",
                         dataType: "json"
                     }
                 }
@@ -44,8 +44,8 @@ var personReport = (function () {
             },
             valueAxis: {
                 min: 0,
-                max: 60,
-                majorUnit: 10
+                max: 7000,
+                majorUnit: 1000
             },
             tooltip: {
                 visible: true,

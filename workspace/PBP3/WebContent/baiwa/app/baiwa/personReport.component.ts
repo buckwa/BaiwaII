@@ -2,7 +2,6 @@ import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import {CommonService} from './../service/Common.service';
 import { Http, Headers, Response } from '@angular/http';
 declare var jQuery: any;
-declare var kendo: any;
 
 @Component({
     templateUrl: 'app/baiwa/html/personReport.component.html'
@@ -28,7 +27,7 @@ public libPath: string;
                  dataSource: {
                      transport: {
                          read: {
-                         	 url: "../president/getWorkTypeBarchart/1",
+                         	 url: "app/baiwa/kendoJson.txt",
                              dataType: "json"
                          }
                      } 
@@ -49,8 +48,8 @@ public libPath: string;
         	        },
         	        valueAxis: {
         	        	min: 0,
-        	        	max: 60,
-        	        	majorUnit: 10
+        	        	max: 7000,
+        	        	majorUnit: 1000
        	        	},
                     tooltip: {
                         visible: true,

@@ -73,11 +73,13 @@ var home = (function () {
     home.prototype.GetRadarPlotNew = function (user, year, num) {
         var _this = this;
         var url = "../person/getRadarPlotNew/" + user + "/" + year + "/" + num;
+        this.url = url;
         this.http.get(url).subscribe(function (response) { return _this.GetRadarPlotSucess(response); }, function (error) { return _this.GetPersonError(error); }, function () { return console.log("editdone !"); });
     };
     home.prototype.GetRadarPlotSucess = function (response) {
         this.work = response.json(JSON.stringify(response._body));
         this.sumaryAsix();
+        this.createChart();
     };
     home.prototype.GetUserSession = function () {
         var _this = this;
@@ -88,6 +90,65 @@ var home = (function () {
         this.user = response.json(JSON.stringify(response._body));
         this.GetPersonByAcadamy(this.user.userName);
         this.GetRadarPlotNew(this.user.userName, this.user.currentAcademicYear, "1");
+    };
+    home.prototype.createChart = function () {
+        jQuery("#KendoChart").kendoChart({
+            title: {
+                text: "คะแนนประจำปี"
+            },
+            dataSource: {
+                transport: {
+                    read: {
+                        url: this.url,
+                        cache: false,
+                        dataType: "json"
+                    }
+                }
+            },
+            seriesDefaults: {
+                type: "radarLine"
+            },
+            series: [{
+                    name: "คะแนนรวมรออนุมัติ",
+                    field: "axisValue2",
+                    color: '#FF8000'
+                },
+                {
+                    name: "คะแนนรวมอนุมัติ",
+                    field: "axisValue",
+                    color: '#138021'
+                }
+            ],
+            categoryAxis: {
+                field: "axisName"
+            },
+            valueAxis: {
+                labels: {
+                    format: "{0}",
+                    visible: true,
+                },
+                min: 0,
+                max: 705.0
+            },
+            tooltip: {
+                visible: true,
+                template: "#= series.name #: #= value #"
+            }
+        });
+        jQuery("#grid").kendoGrid({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/PBP/json/person/getRadarPlot",
+                        dataType: "Json"
+                    }
+                }
+            },
+            columns: [
+                { field: "axisName", title: "ประเภทภาระงาน " },
+                { field: "axisValue", title: "คะแนน" }
+            ]
+        });
     };
     home = __decorate([
         core_1.Component({

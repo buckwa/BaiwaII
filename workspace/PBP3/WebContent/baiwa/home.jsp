@@ -16,7 +16,7 @@
 <html>
   <head>
     <title>Angular QuickStart</title>
-    <base href="${contextLibs}home.htm">
+    <base href="${contextLibs}">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     
@@ -277,7 +277,18 @@
 	 <script src="${contextLibs}libs/js/lib/datatables-net/datatables.min.js"></script>
       <script src="${contextLibs}libs/js/lib/bootstrap-sweetalert/sweetalert.js"></script>
       <script type="text/javascript" src="${contextLibs}libs/editor1.5.6/js/dataTables.editor.js"></script>
-   
+
+
+
+
+	<link rel="stylesheet" href="${contextLibs}libs/kendo/styles/kendo.common.min.css"> 
+	<link rel="stylesheet" href="${contextLibs}libs/kendo/styles/kendo.default.min.css"> 
+	<link rel="stylesheet" href="${contextLibs}libs/kendo/styles/kendo.dataviz.min.css"> 		
+	<link rel="stylesheet" href="${contextLibs}libs/kendo/styles/kendo.dataviz.default.min.css"> 
+ 	<script type="text/javascript" src="${contextLibs}libs/kendo/js/kendo.all.min.js"></script> 	
+	<script type="text/javascript" src="${contextLibs}libs/kendo/js/angular.min.js"></script>
+ 
+
    
   </body>
 </html>

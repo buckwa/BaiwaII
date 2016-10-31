@@ -64,6 +64,19 @@ public class CommonController {
 		return mav;
 	}
 	
+
+	
+	@RequestMapping(value = "/baiwa")
+	public ModelAndView baiwalayout() {
+		
+		ModelAndView mav = new ModelAndView();
+		logger.info("home");
+		mav.setViewName("home");
+		
+		return mav;
+	}
+	
+	
 	
 	@RequestMapping(value = "/403.htm")
 	public ModelAndView accesssDenied() {

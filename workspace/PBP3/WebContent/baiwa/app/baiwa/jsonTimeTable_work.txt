@@ -1,0 +1,7 @@
+{
+            "data": [
+                { "code": "1102001", "name": "Computer Programming", "sub": "T", "hour": "3", "point": "4", "class": "AA", "student": "70", "section": "1", "time": "mon", "other": "-" },
+                { "code": "1102002", "name": "Computer Programming2", "sub": "T", "hour": "2", "point": "2", "class": "AA", "student": "45", "section": "3", "time": "sun", "other": "-" },
+                { "code": "1102003", "name": "Computer Programming3", "sub": "T", "hour": "3", "point": "1", "class": "AA", "student": "23", "section": "1", "time": "wen", "other": "-" }
+            ]
+}

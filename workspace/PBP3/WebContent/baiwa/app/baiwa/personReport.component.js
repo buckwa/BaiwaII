@@ -14,8 +14,44 @@ var personReport = (function () {
         this.libPath = "/PBP3/baiwa/libs/";
     }
     personReport.prototype.ngOnInit = function () {
+        this.kendoChart();
     };
     personReport.prototype.ngAfterViewInit = function () {
+    };
+    personReport.prototype.kendoChart = function () {
+        jQuery("#KendoChart").kendoChart({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "../president/getWorkTypeBarchart/1",
+                        dataType: "json"
+                    }
+                }
+            },
+            title: {
+                text: "ระดับคะแนนระดับสถาบัน ด้านวิชาการ"
+            },
+            series: [{
+                    type: "column",
+                    field: "axisValue",
+                    name: "ระดับคะแนน"
+                }],
+            categoryAxis: {
+                field: "axisName",
+                labels: {
+                    rotation: -90
+                }
+            },
+            valueAxis: {
+                min: 0,
+                max: 60,
+                majorUnit: 10
+            },
+            tooltip: {
+                visible: true,
+                template: "#= series.name #: #= value #"
+            }
+        });
     };
     personReport = __decorate([
         core_1.Component({

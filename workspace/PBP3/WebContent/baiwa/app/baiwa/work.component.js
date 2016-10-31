@@ -13,6 +13,30 @@ var work = (function () {
     function work() {
     }
     work.prototype.ngOnInit = function () {
+        this.datatable();
+    };
+    work.prototype.datatable = function () {
+        jQuery("#DTable").DataTable({
+            "searching": false,
+            "bPaginate": false,
+            "paging": true,
+            "bLengthChange": false,
+            "bInfo": false,
+            "bAutoWidth": false,
+            "ajax": "app/baiwa/jsonTimeTable_work.txt",
+            "columns": [
+                { "data": "code" },
+                { "data": "name" },
+                { "data": "sub" },
+                { "data": "hour" },
+                { "data": "point" },
+                { "data": "class" },
+                { "data": "student" },
+                { "data": "section" },
+                { "data": "time" },
+                { "data": "other" }
+            ]
+        });
     };
     work.prototype.ngAfterViewInit = function () {
     };

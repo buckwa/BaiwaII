@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import {CommonService} from './../service/Common.service';
 import { Http, Headers, Response } from '@angular/http';
+import { RouterModule }   from '@angular/router';
 import { FileSelectDirective, FileDropDirective, FileUploader } from 'ng2-file-upload';
 
 const URL = 'http://localhost:8080/PBP3/person/uploadMultiFile';
@@ -106,8 +107,6 @@ export class home implements OnInit, AfterViewInit {
         this.user = response.json(JSON.stringify(response._body));
         this.GetPersonByAcadamy(this.user.userName);
         this.GetRadarPlotNew(this.user.userName, this.user.currentAcademicYear, "1");
-
-
     }
 
 

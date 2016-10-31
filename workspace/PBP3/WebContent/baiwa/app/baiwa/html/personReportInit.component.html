@@ -4,41 +4,22 @@
                 <img src="{{libPath}}img/kendo_1.png" >
                 	<div class="row table-details">
 						<div class="col-lg-12">
-							<table class="table table-bordered">
+							<table class="table table-bordered" >
 								<thead>
 									<tr>
-										<th >ประเภทภาระงาน</th>
+										<th >ประเภทภาระงาน </th>
 										<th>คะแนน</th>
 									</tr>
 								</thead>
 								<tbody>
-									<tr>
-										<td>งานวิชาการ</td>
-										<td>810.00</td>
-
+									<tr *ngFor="let item of json ; let i = index " >
+										<td>{{item.axisName}}</td>
+										<td>{{item.axisValue}}</td>
 									</tr>
-									<tr>
-										<td>งานพัฒนาวิชาการ</td>
-										<td>810.00</td>
-
-									</tr>
-									<tr>
-										<td>งานวิจัย หรือ สร้างสรรค์</td>
-										<td>810.00</td>
-
-									</tr>
-									<tr>
-										<td>งานบริการวิชาการ</td>
-										<td>810.00</td>
-
-									</tr>
-									<tr>
-										<td>งานทำนุบำรุงศิลป วัฒนธรรมและสร้างชื่อเสียงให้กับสถาบันฯ</td>
-										<td>810.00</td>
-
-									</tr>
+								
 								</tbody>
 							</table>
+							
 						</div>
 					</div>
             </div>

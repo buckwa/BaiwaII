@@ -3,26 +3,34 @@ package baiwa.config;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import baiwa.util.BaiwaConstants;
 import baiwa.util.CustomLogoutHandler;
  
- 
+@Configuration
 @EnableWebSecurity 
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
   Logger logger = LoggerFactory.getLogger(SecurityConfig.class);
  
-//  // In memory authentication, only for prototype or demo
-  @Autowired
-  public void configAuthenticationProvider(AuthenticationManagerBuilder auth) throws Exception {
-    logger.info("hello");
-    auth.inMemoryAuthentication().withUser("user").password("password").roles("USER");
-  }
+
+  	@Autowired
+	@Qualifier("authenticationProvider")
+	private AuthenticationProvider authenticationProvider;
+	
+	@Autowired
+	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+		auth.authenticationProvider(authenticationProvider);
+	}
  
   /**
    * 1. Define a DaoAuthenticationProvider bean. This bean use our own
@@ -69,13 +77,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
  			.antMatchers(
  				"/",
  				BaiwaConstants.LOGIN_URL,
+ 				"/home.htm",
  				"/resources/**",
  				"/theme/**",
  				"/img/**",
  				"/baiwa/**",
  				"/app/**",
  				"/json/**",
- 				"/rest/**"
+ 				"/rest/**",
+ 				"/WEB-INF/jsp/**"
  			).permitAll()
  			//.antMatchers("/admin/**").hasRole("ADMIN")
  			.anyRequest().hasAuthority(BaiwaConstants.ROLE_USER)
@@ -111,4 +121,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
  	public CustomLogoutHandler customLogoutHandler() {
  		return new CustomLogoutHandler();
  	}
+ 	
+ 	@Bean(name = "passwordEncoder")
+	public PasswordEncoder passwordEncoder() {
+		PasswordEncoder encoder = new BCryptPasswordEncoder();
+		return encoder;
+	}
 }

@@ -900,16 +900,22 @@ public class JSONPersonController {
 	 
  
 
-		    @RequestMapping(value="/uploadMultiFile", headers = "'Content-Type': 'multipart/form-data'", method = RequestMethod.POST)
-		    public void UploadFile(MultipartHttpServletRequest request, HttpServletResponse response) {
+		@RequestMapping(value="/uploadMultiFile",  method = RequestMethod.POST)
+	      public void UploadFile(MultipartHttpServletRequest request, HttpServletResponse response) {
 
-		        Iterator<String> itr=request.getFileNames();
+	       String p_text = request.getParameter("p_data");
+	       System.out.println("GetParameter :"+p_text);
+	       System.out.println("555+");
+	          Iterator<String> itr=request.getFileNames();
 
-		        MultipartFile file=request.getFile(itr.next());
-
-		        String fileName=file.getOriginalFilename();
-		        System.out.println(fileName);
-		        logger.info("  File Name: "+fileName);
-		    }
+	          while(itr.hasNext()){
+	           
+	           MultipartFile file=request.getFile(itr.next());
+	           
+	           String fileName=file.getOriginalFilename();
+	           System.out.println(fileName);
+	           logger.info("  File Name: "+fileName);
+	          }
+	      }
 	 
 }

@@ -61,6 +61,7 @@ public class CommonAuthenticationFilter extends
 		String username = obtainUsername(request);
 		String password = obtainPassword(request);
 //		String captcha = obtainCaptcha(request);
+		System.out.println("Username : " + username);
 		if (username == null) {
 			username = "";
 		}else{
@@ -88,6 +89,7 @@ public class CommonAuthenticationFilter extends
 		
 		buckwaRequest.put("userName", username);
 		buckwaRequest.put("clientIP",request.getRemoteAddr());
+
 	 
 		try{
 			authentication = this.getAuthenticationManager().authenticate(authRequest);

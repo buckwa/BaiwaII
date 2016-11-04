@@ -53,11 +53,11 @@ public class CommonController {
 		logger.info("home");
 //		
 //		// check if user is login
-//		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-//		if (!(auth instanceof AnonymousAuthenticationToken)) {
-//			UserDetails userDetail = (UserDetails) auth.getPrincipal();
-//			mav.addObject("username", userDetail.getUsername());
-//		}
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		if (!(auth instanceof AnonymousAuthenticationToken)) {
+			UserDetails userDetail = (UserDetails) auth.getPrincipal();
+			mav.addObject("username", userDetail.getUsername());
+		}
 		
 		mav.setViewName("home");
 		
@@ -84,11 +84,11 @@ public class CommonController {
 		ModelAndView mav = new ModelAndView();
 //		
 //		// check if user is login
-//		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-//		if (!(auth instanceof AnonymousAuthenticationToken)) {
-//			UserDetails userDetail = (UserDetails) auth.getPrincipal();
-//			mav.addObject("username", userDetail.getUsername());
-//		}
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		if (!(auth instanceof AnonymousAuthenticationToken)) {
+			UserDetails userDetail = (UserDetails) auth.getPrincipal();
+			mav.addObject("username", userDetail.getUsername());
+		}
 		
 		mav.setViewName("403");
 		

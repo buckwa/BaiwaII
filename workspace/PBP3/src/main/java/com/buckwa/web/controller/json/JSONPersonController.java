@@ -54,6 +54,8 @@ import com.buckwa.util.BuckWaUtils;
 import com.buckwa.util.school.SchoolUtil;
 import com.buckwa.web.util.AcademicYearUtil;
 
+import baiwa.util.UserLoginUtil;
+
 @RestController
 @RequestMapping("/person")
 public class JSONPersonController {
@@ -637,7 +639,10 @@ public class JSONPersonController {
 		UserSession userreturn =new UserSession();
 		try {
 			logger.info(" getUserSession ");
-	 
+			//getUsername login.
+			String user = UserLoginUtil.getCurrentUserLogin();
+			
+			System.out.println("Current UserLogin :" + user);
 			//userreturn = BuckWaUtils.getUserFromContext();
 			userreturn.setUserName("ktpitak@kmitl.ac.th");
 			userreturn.setFirstName("พิทักษ์ ");

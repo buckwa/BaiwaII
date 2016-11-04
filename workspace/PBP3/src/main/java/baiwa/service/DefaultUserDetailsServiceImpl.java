@@ -30,6 +30,7 @@ public class DefaultUserDetailsServiceImpl implements UserDetailsService{
 		logger.info("loadUserByUsername username=" + username);
 		UserAttempt user = userAttemptDao.findByUsername(username);
 		List<GrantedAuthority> grantedAuthorityList = new ArrayList<GrantedAuthority>();
+		grantedAuthorityList = userAttemptDao.findGrantedRoleByUserId(user.getUser_id());
 		
 		UserDetails userDeail = new UserDetails(
 				user.getUsername(),

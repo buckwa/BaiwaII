@@ -571,8 +571,12 @@ public class JSONPersonController {
 		try {
 			BuckWaRequest request = new BuckWaRequest();
 
-			String userName = BuckWaUtils.getUserNameFromContext();
-			String academicYear = schoolUtil.getCurrentAcademicYear();
+//			String userName = BuckWaUtils.getUserNameFromContext();
+//			String academicYear = schoolUtil.getCurrentAcademicYear();
+			
+
+			String userName = UserLoginUtil.getCurrentUserLogin();
+			String academicYear = "2558";
 
 			request.put("username", userName);
 			request.put("academicYear", academicYear);

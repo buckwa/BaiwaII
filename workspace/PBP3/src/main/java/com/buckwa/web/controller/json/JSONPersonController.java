@@ -41,6 +41,7 @@ import com.buckwa.domain.pbp.report.RadarPlotReport;
 import com.buckwa.domain.pbp3.ResponseObj;
 import com.buckwa.domain.pbp3.WorkSummary;
 import com.buckwa.domain.pbp3.WorkType;
+import com.buckwa.service.impl.PersonDetailService;
 import com.buckwa.service.intf.pam.PersonProfileService;
 import com.buckwa.service.intf.pbp.AcademicKPIService;
 import com.buckwa.service.intf.pbp.AcademicKPIUserMappingService;
@@ -87,6 +88,9 @@ public class JSONPersonController {
 	
 	@Autowired
 	private AcademicKPIUserMappingService  academicKPIUserMappingService;
+	
+	@Autowired
+	private PersonDetailService  personDetailService;
 	
 	@RequestMapping(value = "/getPersonByAcademicYear/{userName}/{year}", method = RequestMethod.GET, headers = "Accept=application/json")
 	public Person getPersonByAcademicYear(HttpServletRequest httpRequest,@PathVariable String userName,@PathVariable String year) {
@@ -644,9 +648,15 @@ public class JSONPersonController {
 			
 			System.out.println("Current UserLogin :" + user);
 			//userreturn = BuckWaUtils.getUserFromContext();
-			userreturn.setUserName("ktpitak@kmitl.ac.th");
-			userreturn.setFirstName("พิทักษ์ ");
-			userreturn.setLastName("ธรรมวาริน");
+			
+			
+			userreturn = personDetailService.GetUserSession(user);
+			
+			
+			
+//			userreturn.setUserName(user);
+//			userreturn.setFirstName("พิทักษ์ ");
+//			userreturn.setLastName("ธรรมวาริน");
 			userreturn.setCurrentAcademicYear("2558");
 			userreturn.setFacultyCode("01");
 			userreturn.setDepartmentCode("05");

@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 
 import baiwa.dao.UserAttemptDao;
+import baiwa.entity.UserAttempt;
 
 
 @Component("authenticationProvider")
@@ -33,6 +34,9 @@ public class DefaultAuthenticationProvider extends DaoAuthenticationProvider {
 	@Autowired
 	private UserAttemptDao userAttemptDao;
 	
+//	@Autowired
+//	private UserAttemptServiceImpl userAttemptService;
+	
 	@Override
 	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
 		logger.info("authenticate");
@@ -40,7 +44,7 @@ public class DefaultAuthenticationProvider extends DaoAuthenticationProvider {
 		try {
 
 			Authentication auth = super.authenticate(authentication);
-
+			
 			// if reach here, means login success, else exception will be thrown
 			// reset the ADM_USER_ATTEMPT.ATTEMPTS
 			//userAttemptService.resetFailAttempt(authentication.getName());
@@ -59,14 +63,14 @@ public class DefaultAuthenticationProvider extends DaoAuthenticationProvider {
 
 			// this user is locked!
 			String error = "";
-//			UserAttempt userAttempt = userAttemptDao.findByUsername(authentication.getName());
+			//UserAttempt userAttempt = userAttemptDao.findByUsername(authentication.getName());
 //			if (userAttempt != null) {
 //				Date lastAttempts = userAttempt.getLastModified();
 //				error = "User account is locked! <br><br>Username : " + authentication.getName() + "<br>Last Attempts : " + lastAttempts;
 //			} else {
 //				error = e.getMessage();
 //			}
-//			
+			
 			logger.error(e.getMessage(), e);
 			throw new LockedException(error);
 		}

@@ -14,16 +14,18 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import baiwa.entity.UserAttempt;
 
 @Repository("userAttemptDao")
+@Transactional(readOnly = true)
 public class UserAttemptDao {
 	
 	@Autowired JdbcTemplate jdbcTemplate;
 	
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
-
+	
 	public UserAttempt findByUsername (String username){
 		username = username+"@kmitl.ac.th";
 		StringBuilder sql = new StringBuilder();

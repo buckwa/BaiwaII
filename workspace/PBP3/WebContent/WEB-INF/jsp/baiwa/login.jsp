@@ -40,6 +40,9 @@
                         <img src="<c:url value='/baiwa/libs/img/kmitl_logo.png' />" alt="">
                     </div>
                     <header class="sign-title">Sign In</header>
+                    <c:if test="${not empty error}">
+										<div class="error-signin">${error}</div>
+					</c:if>
                     <div class="form-group">
                         <input type="text" name="username" class="form-control" placeholder="Username"/ value="user">
                     </div>

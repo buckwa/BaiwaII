@@ -22,6 +22,7 @@ public class DefaultUserDetailsServiceImpl implements UserDetailsService{
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	@Autowired 
+	
 	private UserAttemptDao userAttemptDao;
 
 	@Override
@@ -31,7 +32,7 @@ public class DefaultUserDetailsServiceImpl implements UserDetailsService{
 		UserAttempt user = userAttemptDao.findByUsername(username);
 		List<GrantedAuthority> grantedAuthorityList = new ArrayList<GrantedAuthority>();
 		grantedAuthorityList = userAttemptDao.findGrantedRoleByUserId(user.getUser_id());
-		
+
 		UserDetails userDeail = new UserDetails(
 				user.getUsername(),
 				user.getPassword(),

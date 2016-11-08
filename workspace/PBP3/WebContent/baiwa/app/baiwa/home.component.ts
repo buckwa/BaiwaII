@@ -20,12 +20,15 @@ export class home implements OnInit, AfterViewInit {
     public sumasix2: any;
     public user: any;
     public url:string;
+    public imgUpload:boolean;
+    public updateImg:boolean;
 
     public uploader: FileUploader = new FileUploader({ url: URL });
     constructor(private commonService: CommonService, private http: Http) {
         this.libPath = "/PBP3/baiwa/libs/";
         this.profile = this.defaultProfile();
         this.work = this.defaultWork();
+        this.imgUpload = true;
 
     }
     ngOnInit() {
@@ -83,6 +86,7 @@ export class home implements OnInit, AfterViewInit {
 
     public GetPersonSucess(response: any) {
         this.profile = response.json(JSON.stringify(response._body));
+        this.imgUpload = this.profile.picture;
 
     }
     public GetPersonError(error: String) {
@@ -177,6 +181,28 @@ export class home implements OnInit, AfterViewInit {
                 { field: "axisValue", title: "คะแนน" }
             ]
         });
+
+    }
+    public changeUpload(){
+        console.log("imageChange");
+        this.imgUpload = false;
+        this.updateImg = false;
+        
+  
+    }
+    public cancleUpload(item:any){
+        item.remove();
+
+        //this.uploader.clearQueue()
+        console.log("cancleUpload");
+        this.imgUpload = true;
+        this.updateImg = true;
+    }
+    public UpdateImage(){
+        this.updateImg = true;
+        this.imgUpload = true;
+        this.uploader.clearQueue();
+
 
     }
 

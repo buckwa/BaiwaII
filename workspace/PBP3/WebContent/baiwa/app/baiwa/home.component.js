@@ -21,6 +21,7 @@ var home = (function () {
         this.libPath = "/PBP3/baiwa/libs/";
         this.profile = this.defaultProfile();
         this.work = this.defaultWork();
+        this.imgUpload = true;
     }
     home.prototype.ngOnInit = function () {
         this.GetUserSession();
@@ -66,6 +67,7 @@ var home = (function () {
     };
     home.prototype.GetPersonSucess = function (response) {
         this.profile = response.json(JSON.stringify(response._body));
+        this.imgUpload = this.profile.picture;
     };
     home.prototype.GetPersonError = function (error) {
         console.log("GetPersonError.");
@@ -149,6 +151,23 @@ var home = (function () {
                 { field: "axisValue", title: "คะแนน" }
             ]
         });
+    };
+    home.prototype.changeUpload = function () {
+        console.log("imageChange");
+        this.imgUpload = false;
+        this.updateImg = false;
+    };
+    home.prototype.cancleUpload = function (item) {
+        item.remove();
+        //this.uploader.clearQueue()
+        console.log("cancleUpload");
+        this.imgUpload = true;
+        this.updateImg = true;
+    };
+    home.prototype.UpdateImage = function () {
+        this.updateImg = true;
+        this.imgUpload = true;
+        this.uploader.clearQueue();
     };
     home = __decorate([
         core_1.Component({

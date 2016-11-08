@@ -70,7 +70,7 @@ public class DefaultAuthenticationProvider extends DaoAuthenticationProvider {
 //			} else {
 //				error = e.getMessage();
 //			}
-			
+			System.out.println();
 			logger.error(e.getMessage(), e);
 			throw new LockedException(error);
 		}

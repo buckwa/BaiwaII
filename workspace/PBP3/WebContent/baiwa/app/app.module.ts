@@ -29,6 +29,7 @@ import { notificationsDetail} from './baiwa/notificationsDetail.component';//ย
 
 import { FileSelectDirective } from 'ng2-file-upload';
 import { FileDropDirective } from 'ng2-file-upload';
+import { ImagePreview} from './service/image_preview.directive';
 
 
 const routes: Routes = [
@@ -80,7 +81,8 @@ const routes: Routes = [
         notificationsDetail,//ยุง
         userCreate,//ยุง
         FileSelectDirective,
-        FileDropDirective
+        FileDropDirective,
+        ImagePreview
     ],
     providers: [
         CommonService

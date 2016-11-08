@@ -32,6 +32,7 @@ var work_component_1 = require('./baiwa/work.component'); //ยุง
 var userCreate_component_1 = require('./baiwa/userCreate.component'); //ยุง
 var notificationsList_component_1 = require('./baiwa/notificationsList.component'); //ยุง
 var notificationsDetail_component_1 = require('./baiwa/notificationsDetail.component'); //ยุง
+var image_preview_directive_1 = require('./service/image_preview.directive');
 var routes = [
     { path: 'home', component: home_component_1.home },
     { path: 'importwork', component: importwork_component_1.importwork },
@@ -81,7 +82,8 @@ var AppModule = (function () {
                 notificationsDetail_component_1.notificationsDetail,
                 userCreate_component_1.userCreate,
                 ng2_file_upload_1.FileSelectDirective,
-                ng2_file_upload_1.FileDropDirective
+                ng2_file_upload_1.FileDropDirective,
+                image_preview_directive_1.ImagePreview
             ],
             providers: [
                 Common_service_1.CommonService

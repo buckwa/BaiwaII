@@ -5,7 +5,7 @@ import { RouterModule }   from '@angular/router';
 import { FileSelectDirective, FileDropDirective, FileUploader } from 'ng2-file-upload';
 declare var jQuery: any;
 
-const URL = 'http://localhost:8080/PBP3/person/uploadMultiFile';
+const URL = 'http://localhost:8080/PBP3/pam/person/uploadPersonProfilePicture2';
 
 
 @Component({
@@ -20,6 +20,7 @@ export class home implements OnInit, AfterViewInit {
     public sumasix2: any;
     public user: any;
     public url:string;
+    public personId:string;
     public imgUpload:boolean;
     public updateImg:boolean;
 
@@ -36,6 +37,12 @@ export class home implements OnInit, AfterViewInit {
         this.GetUserSession();
         this.uploader.queue;
         
+        this.uploader.onBuildItemForm = (fileItem: any, form: any) => {
+
+        console.log("PersonId :"+this.personId);
+        form.append(  'PersonId', this.personId  );
+
+        };
 
     }
     ngAfterViewInit() {
@@ -51,7 +58,8 @@ export class home implements OnInit, AfterViewInit {
             "rateNo": "",
             "academicRank": "",
             "maxEducation": "",
-            "email": ""
+            "email": "",
+            "personId": "",
         };
     }
 
@@ -87,13 +95,19 @@ export class home implements OnInit, AfterViewInit {
     public GetPersonSucess(response: any) {
         this.profile = response.json(JSON.stringify(response._body));
         this.imgUpload = this.profile.picture;
+        this.personId = this.profile.personId;
 
     }
     public GetPersonError(error: String) {
         console.log("GetPersonError.")
 
     }
-
+    public GetRadarPlotNewSearch( year: String) {
+        this.GetRadarPlotNew(this.user.userName, year , "1");
+    }
+    public GetRadarPlot() {
+        this.GetRadarPlotNew(this.user.userName, this.user.currentAcademicYear , "1");
+    }
     public GetRadarPlotNew(user: String, year: String, num: String) {
         var url = "../person/getRadarPlotNew/" + user + "/" + year + "/" + num;
         this.url = url;
@@ -114,6 +128,7 @@ export class home implements OnInit, AfterViewInit {
     }
     public GetuserSucess(response: any) {
         this.user = response.json(JSON.stringify(response._body));
+        
         this.GetPersonByAcadamy(this.user.userName);
         this.GetRadarPlotNew(this.user.userName, this.user.currentAcademicYear, "1");
     }

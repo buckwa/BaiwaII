@@ -12,7 +12,7 @@ var core_1 = require('@angular/core');
 var Common_service_1 = require('./../service/Common.service');
 var http_1 = require('@angular/http');
 var ng2_file_upload_1 = require('ng2-file-upload');
-var URL = 'http://localhost:8080/PBP3/person/uploadMultiFile';
+var URL = 'http://localhost:8080/PBP3/pam/person/uploadPersonProfilePicture2';
 var home = (function () {
     function home(commonService, http) {
         this.commonService = commonService;
@@ -24,8 +24,13 @@ var home = (function () {
         this.imgUpload = true;
     }
     home.prototype.ngOnInit = function () {
+        var _this = this;
         this.GetUserSession();
         this.uploader.queue;
+        this.uploader.onBuildItemForm = function (fileItem, form) {
+            console.log("PersonId :" + _this.personId);
+            form.append('PersonId', _this.personId);
+        };
     };
     home.prototype.ngAfterViewInit = function () {
     };
@@ -39,7 +44,8 @@ var home = (function () {
             "rateNo": "",
             "academicRank": "",
             "maxEducation": "",
-            "email": ""
+            "email": "",
+            "personId": "",
         };
     };
     home.prototype.defaultWork = function () {
@@ -68,9 +74,16 @@ var home = (function () {
     home.prototype.GetPersonSucess = function (response) {
         this.profile = response.json(JSON.stringify(response._body));
         this.imgUpload = this.profile.picture;
+        this.personId = this.profile.personId;
     };
     home.prototype.GetPersonError = function (error) {
         console.log("GetPersonError.");
+    };
+    home.prototype.GetRadarPlotNewSearch = function (year) {
+        this.GetRadarPlotNew(this.user.userName, year, "1");
+    };
+    home.prototype.GetRadarPlot = function () {
+        this.GetRadarPlotNew(this.user.userName, this.user.currentAcademicYear, "1");
     };
     home.prototype.GetRadarPlotNew = function (user, year, num) {
         var _this = this;

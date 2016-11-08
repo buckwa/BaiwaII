@@ -9,9 +9,9 @@
 				<div class="form-group row">
 					<label for="exampleSelect" class="col-sm-3 form-control-label">ปีการศึกษา</label>
 					<div class="col-sm-5">
-						<select id="exampleSelect" class="form-control">
-										<option value="2558" selected="selected">2558</option>
-									</select>
+						<select  id="SelectYearList" (change)="GetRadarPlotNewSearch($event.target.value)"  class="form-control"  >
+							<option *ngFor="let a of profile.academicYearList " >{{a.name}}</option>
+						</select>
 					</div>
 				</div>
 
@@ -52,7 +52,7 @@
 		<section class="box-typical">
 			<div class="profile-card">
 				<div class="profile-card-photo">
-					<img src="{{profile.picture}}" alt="" style="-webkit-border-radius: 5%; height: 100%;" />
+					<img src="/PBP3/servlet/Image?{{profile.picture}}" alt="" style="-webkit-border-radius: 5%; height: 100%;" />
 				</div>
 				<div class="profile-card-name">{{profile.thaiName}} {{profile.thaiSurname}}</div>
 				<div class="profile-card-status">สังกัด:{{profile.facultyDesc}}</div>
@@ -65,7 +65,7 @@
 
 			<div class="profile-statistic tbl">
 				<div class="tbl-row">
-					<button type="submit" class="btn btn-inline btn-success" style="margin-right:0px">คำนวณคะแนนให้เป็นปัจจุบัน</button>
+					<button type="submit" (click)="GetRadarPlot()" class="btn btn-inline btn-success" style="margin-right:0px">คำนวณคะแนนให้เป็นปัจจุบัน</button>
 				</div>
 			</div>
 
@@ -351,8 +351,8 @@
 
 			</div>
 			<div class="modal-upload-bottom">
-				<button type="button" class="btn btn-rounded btn-default" data-dismiss="modal">Cancel</button>
-				<button type="button" class="btn btn-rounded">Done</button>
+				<!--<button type="button" class="btn btn-rounded btn-default" data-dismiss="modal">Cancel</button>-->
+				<button type="button" class="btn btn-rounded" data-dismiss="modal">Done</button>
 			</div>
 		</div>
 	</div>

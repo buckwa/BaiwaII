@@ -38,7 +38,7 @@ export class listworktype implements OnInit, AfterViewInit {
 
        this.GetUserSession();
 
-        this.uploader.onBuildItemForm = (fileItem: any, form: any) => {
+       this.uploader.onBuildItemForm = (fileItem: any, form: any) => {
 
 
         form.append(  'data', '2'  );

@@ -8,6 +8,7 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.mail.internet.MimeUtility;
@@ -25,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
@@ -2071,6 +2073,107 @@ public class PersonProfileController {
 	 
 		
 		return mav;
+	}	
+	
+	
+	@RequestMapping(value="uploadPersonProfilePicture2")
+	public void uploadPersonProfilePicture2(MultipartHttpServletRequest request, HttpServletResponse response) {
+																	//MultipartHttpServletRequest request, HttpServletResponse response
+		logger.info("---- Wait For Uploading File ----");
+		
+		
+		String PersonId = request.getParameter("PersonId");
+		
+		logger.info("---- PersonId : ---- :"+PersonId );
+		
+		logger.info("---- PersonId : ---- :"+request.getContextPath() );
+		//ModelAndView mav = new ModelAndView();
+		//mav.addObject(BuckWaConstants.PAGE_SELECT, BuckWaConstants.ADMIN_INIT);
+		//mav.setViewName("editPersonProfile");
+		try {			 			 
+			Iterator<String> itr=request.getFileNames();
+			MultipartFile originalfile =request.getFile(itr.next());
+			
+			//MultipartFile originalfile = person.getFileData();
+			
+//	          Iterator<String> itr=request.getFileNames();
+//
+//	          while(itr.hasNext()){
+//	           
+//	           MultipartFile file=request.getFile(itr.next());
+			
+			if (originalfile!=null&&originalfile.getSize() > 0) {
+				logger.info(" originalfile size:"+originalfile.getSize()+" File Name:"+ originalfile.getOriginalFilename() );
+				
+					
+					//  For Upload File >>>>
+					String uploadPath = PAMConstants.rbApp.getString("profile.picture.dir");
+					logger.info("## File Size :" + originalfile.getSize());
+					logger.info("## File Name Original :" + originalfile.getOriginalFilename());
+					logger.info("## Upload Path :" + uploadPath);
+					
+					String fileUpload = uploadPath + PersonId+".jpg";
+					
+					logger.info("## File Name + Path :" + fileUpload);
+					
+					int step = 1 ; 
+					boolean isnext = true;
+					
+					while(isnext){
+						switch (step) {
+						case 1 :
+							logger.info("Step : "+step+" >>  Create New Upload Path");
+							isnext = FileUtils.createDirectoryIfNotExist(uploadPath);
+							if(isnext){
+								step++; 
+								continue;
+							}else{
+								isnext = false;
+							}
+						case 2 :
+							logger.info("Step : "+step+" >> Save File To Server directory path");
+							
+							//boolean isFileNameExist = fileLocationService.checkFileNameServerExist(fileName,BuckWaConstants.WORKPERSON_TABLE);
+							//if(!isFileNameExist){
+								isnext = FileUtils.saveFileToDirectory(originalfile, fileUpload);
+								if(isnext){
+									step++; 
+									continue;
+								}else{
+									isnext = false;
+								}
+							//}else{
+							//	isnext = false;
+							//	mav.addObject("errorCode", BuckWaConstants.MSGCODE_FILE_NAME_EXIST); 
+							//}
+						case 3 :
+							logger.info(" Step : "+step+" >> Insert into File createPBPAttachFile Database (table : academic_kpi_attach_file) For File Upload History");
+							isnext =  fileLocationService.updatePBPPersonPicture(PersonId+"",fileUpload);
+							if(isnext  ){
+								step++; 
+								continue;
+							}else{
+								isnext = false;
+							} 		
+						case 4 :
+							//person.setPicture(fileUpload);
+						default:
+							isnext = false;
+						}
+					}
+				
+			}
+			else {
+				//mav.addObject("errorCode", BuckWaConstants.MSGCODE_SELECT_FILE); 
+			}			 			
+		}catch(Exception ex){
+			ex.printStackTrace();
+			//mav.addObject("errorCode", BuckWaConstants.ERROR_E001); 
+		}
+		
+	 
+		
+		//return mav;
 	}	
 
 	public ModelAndView viewWorkCreateTemp() {

@@ -12,12 +12,15 @@ var core_1 = require('@angular/core');
 var Common_service_1 = require('./../service/Common.service');
 var http_1 = require('@angular/http');
 var ng2_file_upload_1 = require('ng2-file-upload');
-var URL = 'http://localhost:8080/PBP3/pam/person/uploadPersonProfilePicture2';
+var platform_browser_1 = require('@angular/platform-browser');
+var Rx_1 = require('rxjs/Rx');
+var URL1 = 'http://localhost:8080/PBP3/pam/person/uploadPersonProfilePicture2';
 var home = (function () {
-    function home(commonService, http) {
+    function home(commonService, http, sanitizer) {
         this.commonService = commonService;
         this.http = http;
-        this.uploader = new ng2_file_upload_1.FileUploader({ url: URL });
+        this.sanitizer = sanitizer;
+        this.uploader = new ng2_file_upload_1.FileUploader({ url: URL1 });
         this.libPath = "/PBP3/baiwa/libs/";
         this.profile = this.defaultProfile();
         this.work = this.defaultWork();
@@ -73,8 +76,10 @@ var home = (function () {
     };
     home.prototype.GetPersonSucess = function (response) {
         this.profile = response.json(JSON.stringify(response._body));
+        //this.imageProfilePath = this.sanitize(this.profile.picture)
         this.imgUpload = this.profile.picture;
         this.personId = this.profile.personId;
+        this.getImageLocal(this.personId);
     };
     home.prototype.GetPersonError = function (error) {
         console.log("GetPersonError.");
@@ -170,6 +175,16 @@ var home = (function () {
         this.imgUpload = false;
         this.updateImg = false;
     };
+    home.prototype.UploadPicture = function (item) {
+        item.upload();
+        if (!item.isSuccess) {
+            jQuery("#myModal").modal('hide');
+            //this.getImageLocal(this.personId);
+            window.location.reload();
+        }
+        //this.uploader.clearQueue()
+        console.log("uploadsucess");
+    };
     home.prototype.cancleUpload = function (item) {
         item.remove();
         //this.uploader.clearQueue()
@@ -182,11 +197,43 @@ var home = (function () {
         this.imgUpload = true;
         this.uploader.clearQueue();
     };
+    home.prototype.sanitize = function (url) {
+        return this.sanitizer.bypassSecurityTrustUrl(url);
+    };
+    home.prototype.getImage = function (url) {
+        return Rx_1.Observable.create(function (observer) {
+            var req = new XMLHttpRequest();
+            req.open('get', url);
+            req.responseType = "arraybuffer";
+            req.onreadystatechange = function () {
+                if (req.readyState == 4 && req.status == 200) {
+                    observer.next(req.response);
+                    observer.complete();
+                }
+            };
+            req.send();
+        });
+    };
+    home.prototype.getImageLocal = function (personID) {
+        var _this = this;
+        // var data = {'profileImg' : profileImg}
+        var url = "../person/getImageFile/" + personID;
+        this.getImage(url).subscribe(function (imageData) {
+            console.log("imageReturn :" + imageData.image);
+            _this.tmpUrl = URL.createObjectURL(new Blob([imageData]));
+            _this.imageProfilePath = _this.sanitize(_this.tmpUrl);
+        });
+        // the below will throw not implemented error
+        this.http.get(url).subscribe(function (image) {
+            console.log("imageUrl :" + image.url);
+            console.log(image.arrayBuffer());
+        });
+    };
     home = __decorate([
         core_1.Component({
             templateUrl: 'app/baiwa/html/home.component.html'
         }), 
-        __metadata('design:paramtypes', [Common_service_1.CommonService, http_1.Http])
+        __metadata('design:paramtypes', [Common_service_1.CommonService, http_1.Http, platform_browser_1.DomSanitizer])
     ], home);
     return home;
 }());

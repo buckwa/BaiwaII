@@ -52,7 +52,7 @@
 		<section class="box-typical">
 			<div class="profile-card">
 				<div class="profile-card-photo">
-					<img src="/PBP3/servlet/Image?{{profile.picture}}" alt="" style="-webkit-border-radius: 5%; height: 100%;" />
+					<img [src]="imageProfilePath" alt="" style="-webkit-border-radius: 5%; height: 100%;" />
 				</div>
 				<div class="profile-card-name">{{profile.thaiName}} {{profile.thaiSurname}}</div>
 				<div class="profile-card-status">สังกัด:{{profile.facultyDesc}}</div>
@@ -268,7 +268,7 @@
 						
 						<div *ngIf="updateImg" class="row">
 							<div class="text-center">
-							<img src="{{profile.picture}}" alt="" style="width:400px;padding:10px;" />
+							<img [src]="imageProfilePath" alt="" style="width:400px;padding:10px;" />
 							</div>
 						</div>
 						<div ng-if="!updateImg" class="row" *ngFor="let item of uploader.queue; let i = index ">
@@ -328,7 +328,7 @@
                 </button>
 						</div> -->
 						<div class="text-center">
-						<button type="button" class="btn btn-success btn-xs" (click)="item.upload()" [disabled]="item.isReady || item.isUploading || item.isSuccess || (item.file.type != 'image/png' && item.file.type !='image/jpeg') ">
+						<button type="button" class="btn btn-success btn-xs" (click)="UploadPicture(item)" [disabled]="item.isReady || item.isUploading || item.isSuccess || (item.file.type != 'image/png' && item.file.type !='image/jpeg') ">
                             <span class="glyphicon glyphicon-upload"></span> Upload
                         </button>
 						<button type="button" class="btn btn-danger btn-xs" (click)="cancleUpload(item)" (change)="cancleUpload()">

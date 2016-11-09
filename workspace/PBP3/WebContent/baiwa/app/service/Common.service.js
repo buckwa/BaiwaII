@@ -197,6 +197,9 @@ var CommonService = (function () {
         // console.log("body", body);
         return body || null;
     };
+    CommonService.prototype.imageLocalPath = function () {
+        var localpath = "D:/";
+    };
     CommonService = __decorate([
         core_1.Injectable(), 
         __metadata('design:paramtypes', [http_1.Http])

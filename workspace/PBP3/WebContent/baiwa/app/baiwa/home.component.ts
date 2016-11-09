@@ -3,9 +3,11 @@ import {CommonService} from './../service/Common.service';
 import { Http, Headers, Response } from '@angular/http';
 import { RouterModule }   from '@angular/router';
 import { FileSelectDirective, FileDropDirective, FileUploader } from 'ng2-file-upload';
+import {DomSanitizer} from '@angular/platform-browser';
+import {Observable} from 'rxjs/Rx';
 declare var jQuery: any;
 
-const URL = 'http://localhost:8080/PBP3/pam/person/uploadPersonProfilePicture2';
+const URL1 = 'http://localhost:8080/PBP3/pam/person/uploadPersonProfilePicture2';
 
 
 @Component({
@@ -19,13 +21,15 @@ export class home implements OnInit, AfterViewInit {
     public sumasix: any;
     public sumasix2: any;
     public user: any;
-    public url:string;
-    public personId:string;
-    public imgUpload:boolean;
-    public updateImg:boolean;
-
-    public uploader: FileUploader = new FileUploader({ url: URL });
-    constructor(private commonService: CommonService, private http: Http) {
+    public url: string;
+    public personId: string;
+    public imgUpload: boolean;
+    public updateImg: boolean;
+    public imageProfilePath: any;
+    sanitizedUrl;
+    tmpUrl;
+    public uploader: FileUploader = new FileUploader({ url: URL1 });
+    constructor(private commonService: CommonService, private http: Http, private sanitizer: DomSanitizer) {
         this.libPath = "/PBP3/baiwa/libs/";
         this.profile = this.defaultProfile();
         this.work = this.defaultWork();
@@ -36,11 +40,11 @@ export class home implements OnInit, AfterViewInit {
 
         this.GetUserSession();
         this.uploader.queue;
-        
+
         this.uploader.onBuildItemForm = (fileItem: any, form: any) => {
 
-        console.log("PersonId :"+this.personId);
-        form.append(  'PersonId', this.personId  );
+            console.log("PersonId :" + this.personId);
+            form.append('PersonId', this.personId);
 
         };
 
@@ -94,19 +98,21 @@ export class home implements OnInit, AfterViewInit {
 
     public GetPersonSucess(response: any) {
         this.profile = response.json(JSON.stringify(response._body));
+        //this.imageProfilePath = this.sanitize(this.profile.picture)
         this.imgUpload = this.profile.picture;
         this.personId = this.profile.personId;
+        this.getImageLocal(this.personId);
 
     }
     public GetPersonError(error: String) {
         console.log("GetPersonError.")
 
     }
-    public GetRadarPlotNewSearch( year: String) {
-        this.GetRadarPlotNew(this.user.userName, year , "1");
+    public GetRadarPlotNewSearch(year: String) {
+        this.GetRadarPlotNew(this.user.userName, year, "1");
     }
     public GetRadarPlot() {
-        this.GetRadarPlotNew(this.user.userName, this.user.currentAcademicYear , "1");
+        this.GetRadarPlotNew(this.user.userName, this.user.currentAcademicYear, "1");
     }
     public GetRadarPlotNew(user: String, year: String, num: String) {
         var url = "../person/getRadarPlotNew/" + user + "/" + year + "/" + num;
@@ -128,13 +134,13 @@ export class home implements OnInit, AfterViewInit {
     }
     public GetuserSucess(response: any) {
         this.user = response.json(JSON.stringify(response._body));
-        
+
         this.GetPersonByAcadamy(this.user.userName);
         this.GetRadarPlotNew(this.user.userName, this.user.currentAcademicYear, "1");
     }
 
     public createChart(): void {
-        
+
 
         jQuery("#KendoChart").kendoChart({
             title: {
@@ -198,14 +204,27 @@ export class home implements OnInit, AfterViewInit {
         });
 
     }
-    public changeUpload(){
+    public changeUpload() {
         console.log("imageChange");
         this.imgUpload = false;
         this.updateImg = false;
-        
-  
+
+
     }
-    public cancleUpload(item:any){
+
+    public UploadPicture(item: any) {
+        item.upload();
+        if (!item.isSuccess){
+            jQuery("#myModal").modal('hide');
+            //this.getImageLocal(this.personId);
+            window.location.reload();
+        }
+        //this.uploader.clearQueue()
+        console.log("uploadsucess");
+    }
+
+
+    public cancleUpload(item: any) {
         item.remove();
 
         //this.uploader.clearQueue()
@@ -213,12 +232,48 @@ export class home implements OnInit, AfterViewInit {
         this.imgUpload = true;
         this.updateImg = true;
     }
-    public UpdateImage(){
+    public UpdateImage() {
         this.updateImg = true;
         this.imgUpload = true;
         this.uploader.clearQueue();
 
 
+    }
+    public sanitize(url: string) {
+        return this.sanitizer.bypassSecurityTrustUrl(url);
+    }
+
+    getImage(url: string) {
+        return Observable.create(observer => {
+            let req = new XMLHttpRequest();
+            req.open('get', url);
+            req.responseType = "arraybuffer";
+            req.onreadystatechange = function () {
+                if (req.readyState == 4 && req.status == 200) {
+                    observer.next(req.response);
+                    observer.complete();
+                }
+            };
+            req.send();
+        });
+    }
+
+    public getImageLocal(personID:String){
+       // var data = {'profileImg' : profileImg}
+        let url = "../person/getImageFile/"+personID;
+
+        this.getImage(url).subscribe(imageData => {
+            console.log("imageReturn :" + imageData.image);
+            this.tmpUrl = URL.createObjectURL(new Blob([imageData]));
+            this.imageProfilePath = this.sanitize(this.tmpUrl);
+        });
+
+
+        // the below will throw not implemented error
+        this.http.get(url).subscribe(image => {
+            console.log("imageUrl :"+image.url);
+            console.log(image.arrayBuffer());
+        });
     }
 
 

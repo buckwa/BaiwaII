@@ -225,4 +225,8 @@ export class CommonService {
 		return body || null;
 	}
 
+	public imageLocalPath(){
+		let localpath = "D:/";
+	}
+
 }

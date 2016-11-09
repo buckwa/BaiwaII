@@ -43,6 +43,7 @@
         main: './index.js',
         defaultExtension: 'js'
       }
-    }
+    },
+	 typescriptOptions: { emitDecoratorMetadata: true }
   });
 })(this);

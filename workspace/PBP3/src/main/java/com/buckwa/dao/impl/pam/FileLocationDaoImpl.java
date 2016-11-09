@@ -181,6 +181,49 @@ public class FileLocationDaoImpl implements FileLocationDao {
 	}
 	
 	
+	public boolean createPBPAttachFileNew(final AcademicKPIAttachFile  academicKPIAttachFile) {
+		/*
+		DROP TABLE IF EXISTS `pbp`.`academic_kpi_attach_file`;
+		CREATE TABLE  `pbp`.`academic_kpi_attach_file` (
+		  `attach_file_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+		  `file_name` varchar(200) DEFAULT NULL,
+		  `file_path` varchar(450) DEFAULT NULL,
+		  `academic_kpi_user_id` int(10) unsigned DEFAULT NULL,
+		  `kpi_user_mapping_id` int(10) unsigned DEFAULT NULL,
+		  PRIMARY KEY (`attach_file_id`)
+		) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+		*/
+		final StringBuilder sb = new StringBuilder();
+			sb.append( " INSERT INTO academic_kpi_attach_file  ");
+			sb.append( " 	(full_path_name,                   ");
+		 
+			sb.append( " 	kpi_user_mapping_id ,file_name ,create_date,create_by         )        ");
+			 
+		 
+			sb.append( " VALUES (  ?, ?,?, CURRENT_TIMESTAMP,?  ) " );
+			
+		 
+			logger.info("sql : "+sb.toString());
+			
+			PreparedStatementCreator preparedStatementCreator = new PreparedStatementCreator() {
+				public PreparedStatement createPreparedStatement(Connection connection)throws SQLException {
+					PreparedStatement ps = connection.prepareStatement(	sb.toString() , Statement.RETURN_GENERATED_KEYS);   
+					ps.setString( 1 ,academicKPIAttachFile.getFullFilePathName());
+					ps.setString( 2 , academicKPIAttachFile.getKpiUserMappingId());
+					ps.setString( 3 , academicKPIAttachFile.getFileName());
+					ps.setString( 4 , academicKPIAttachFile.getCreateBy()); 
+				 
+					return ps;  
+				}
+			};
+		
+		KeyHolder keyHolder = new GeneratedKeyHolder();
+		this.jdbcTemplate.update(preparedStatementCreator, keyHolder);
+		Long key = keyHolder.getKey().longValue();
+		
+		return true;
+	}
+	
 	public boolean updatePBPPersonPicture(String personId,String picturePath) {
  
 		String sql = " update person_pbp set picture = '"+picturePath+"' where person_id = "+personId+" ";
@@ -299,7 +342,9 @@ public class FileLocationDaoImpl implements FileLocationDao {
 			return fileLocation;
 		}
 	}
-	
+
+
+
 	
 	
 }

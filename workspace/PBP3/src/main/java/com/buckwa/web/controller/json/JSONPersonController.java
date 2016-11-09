@@ -27,6 +27,7 @@ import com.buckwa.domain.common.BuckWaRequest;
 import com.buckwa.domain.common.BuckWaResponse;
 import com.buckwa.domain.pam.Person;
 import com.buckwa.domain.pbp.AcademicKPI;
+import com.buckwa.domain.pbp.AcademicKPIAttachFile;
 import com.buckwa.domain.pbp.AcademicKPIAttribute;
 import com.buckwa.domain.pbp.AcademicKPIAttributeValue;
 import com.buckwa.domain.pbp.AcademicKPIUserMapping;
@@ -42,6 +43,7 @@ import com.buckwa.domain.pbp3.ResponseObj;
 import com.buckwa.domain.pbp3.WorkSummary;
 import com.buckwa.domain.pbp3.WorkType;
 import com.buckwa.service.impl.PersonDetailService;
+import com.buckwa.service.intf.pam.FileLocationService;
 import com.buckwa.service.intf.pam.PersonProfileService;
 import com.buckwa.service.intf.pbp.AcademicKPIService;
 import com.buckwa.service.intf.pbp.AcademicKPIUserMappingService;
@@ -52,6 +54,8 @@ import com.buckwa.service.intf.pbp.PBPWorkTypeService;
 import com.buckwa.util.BeanUtils;
 import com.buckwa.util.BuckWaConstants;
 import com.buckwa.util.BuckWaUtils;
+import com.buckwa.util.FileUtils;
+import com.buckwa.util.PAMConstants;
 import com.buckwa.util.school.SchoolUtil;
 import com.buckwa.web.util.AcademicYearUtil;
 
@@ -91,6 +95,9 @@ public class JSONPersonController {
 	
 	@Autowired
 	private PersonDetailService  personDetailService;
+	
+	@Autowired
+	private FileLocationService fileLocationService;
 	
 	@RequestMapping(value = "/getPersonByAcademicYear/{userName}/{year}", method = RequestMethod.GET, headers = "Accept=application/json")
 	public Person getPersonByAcademicYear(HttpServletRequest httpRequest,@PathVariable String userName,@PathVariable String year) {
@@ -866,7 +873,7 @@ public class JSONPersonController {
 					String academicYear = schoolUtil.getCurrentAcademicYear();
 					
 					AcademicKPIUserMapping academicKPIUserMapping = new AcademicKPIUserMapping();
-					academicKPIUserMapping.setUserName("ktpitak@kmitl.ac.th");
+					academicKPIUserMapping.setUserName(UserLoginUtil.getCurrentUserLogin());
 					academicKPIUserMapping.setAcademicYear(academicYear);
 					academicKPIUserMapping.setAcademicKPICode(academicKPI.getCode());
 					academicKPIUserMapping.setAcademicKPIId(academicKPI.getAcademicKPIId());
@@ -898,11 +905,12 @@ public class JSONPersonController {
 					BuckWaRequest request = new BuckWaRequest(); 
 					request.put("academicKPIUserMapping",academicKPIUserMapping);
 					request.put("tmpFileNameList", academicKPI.getTmpFileNameList());
-					BuckWaResponse response = academicKPIService.importwork(request); 
+					BuckWaResponse response = academicKPIService.importwork(request);//ทำตรงนี้ 
 					
 					if(response.getStatus()==BuckWaConstants.SUCCESS){	
 						Long academicKPIId = (Long)response.getResObj("academicKPIId");	
 						academicKPI.setAcademicKPIUserMappingId(academicKPIId); 
+						resp.setResObj(academicKPIId);
 						logger.info("  Save Success academicKPIId: "+academicKPIId);
 					}  			
 				 
@@ -917,6 +925,107 @@ public class JSONPersonController {
 			return resp;
 		}
 	 
+		@RequestMapping(value = "/importwork_file", method = RequestMethod.POST)
+		public ResponseObj jsonImportwork_filePOST(MultipartHttpServletRequest request, HttpServletResponse response) { 
+			logger.info(" Start  ");
+			ResponseObj resp = new ResponseObj();
+			resp.setStatus("0");
+
+			try{
+
+				logger.info("---- Wait For Uploading File ----");
+				String academicKPIId = request.getParameter("academicKPIId");
+				logger.info("---- PersonId : ----"+academicKPIId);
+				
+				Iterator<String> itr=request.getFileNames();
+				MultipartFile originalfile =request.getFile(itr.next());
+				
+				if (originalfile!=null&&originalfile.getSize() > 0) {
+					logger.info(" originalfile size:"+originalfile.getSize()+" File Name:"+ originalfile.getOriginalFilename() );
+					
+						
+						//  For Upload File >>>>
+						String uploadPath = PAMConstants.rbApp.getString("project.root.dir")+"attatchfile/"+ academicKPIId+"/";
+						logger.info("## File Size :" + originalfile.getSize());
+						logger.info("## File Name Original :" + originalfile.getOriginalFilename());
+						logger.info("## Upload Path :" + uploadPath);
+						
+						String fileUpload = uploadPath + originalfile.getOriginalFilename();
+						
+						logger.info("## File Name + Path :" + fileUpload);
+						
+						int step = 1 ; 
+						boolean isnext = true;
+						
+						while(isnext){
+							switch (step) {
+							case 1 :
+								logger.info("Step : "+step+" >>  Create New Upload Path");
+								isnext = FileUtils.createDirectoryIfNotExist(uploadPath);
+								if(isnext){
+									step++; 
+									continue;
+								}else{
+									isnext = false;
+								}
+							case 2 :
+								logger.info("Step : "+step+" >> Save File To Server directory path");
+								
+//								boolean isFileNameExist = fileLocationService.checkFileNameServerExist(fileName,BuckWaConstants.WORKPERSON_TABLE);
+//								if(!isFileNameExist){
+									isnext = FileUtils.saveFileToDirectory(originalfile, fileUpload);
+									if(isnext){
+										step++; 
+										continue;
+									}else{
+										isnext = false;
+									}
+//								}else{
+//									isnext = false;
+//									mav.addObject("errorCode", BuckWaConstants.MSGCODE_FILE_NAME_EXIST); 
+//								}
+							case 3 :
+								logger.info(" Step : "+step+" >> Insert into File createPBPAttachFile Database (table : academic_kpi_attach_file) For File Upload History");
+								
+								AcademicKPIAttachFile academicKPIAttachFile = null;
+
+								
+								
+									
+								academicKPIAttachFile = new AcademicKPIAttachFile();
+								academicKPIAttachFile.setKpiUserMappingId(String.valueOf(academicKPIId));
+								academicKPIAttachFile.setFullFilePathName(uploadPath + originalfile.getOriginalFilename());
+								academicKPIAttachFile.setFileName(originalfile.getOriginalFilename());
+								academicKPIAttachFile.setCreateBy(UserLoginUtil.getCurrentUserLogin());
+								fileLocationService.createPBPAttachFile(academicKPIAttachFile);
+									
+								
+								
+							case 4 :
+								//person.setPicture(fileUpload);
+							default:
+								isnext = false;
+							}
+						}
+					
+				}
+				else {
+					//mav.addObject("errorCode", BuckWaConstants.MSGCODE_SELECT_FILE); 
+				}	
+				
+				
+
+			
+			 			
+			}catch(Exception ex){
+				ex.printStackTrace();
+				resp.setStatus("1");
+				resp.setDescription(ex.getMessage());
+			}
+			logger.info(" End  ");
+			return resp;
+		}
+		
  
 
 		@RequestMapping(value="/uploadMultiFile",  method = RequestMethod.POST)

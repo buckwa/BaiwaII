@@ -67,6 +67,19 @@ public class FileLocationServiceImpl implements FileLocationService{
 		}
 		return key;
 	}
+	
+	@Override
+	public boolean createPBPAttachFileNew(AcademicKPIAttachFile  academicKPIAttachFile) {
+		try{
+			
+			 fileLocationDao.createPBPAttachFileNew(academicKPIAttachFile);
+		}catch(Exception ex){
+			ex.printStackTrace();
+		}
+		return true;
+	}
+	
+	
 	@Override
 	public boolean updatePBPPersonPicture(String personId,String picturePath) {
 		 

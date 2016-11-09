@@ -19,10 +19,11 @@ public interface AcademicKPIService {
 	
 	public BuckWaResponse getByCodeAcademicYear(BuckWaRequest request);
 	public BuckWaResponse importwork(BuckWaRequest request);
-
+	public BuckWaResponse importwork_file(BuckWaRequest request);
 	
 	public BuckWaResponse getAllByAcademicYear(BuckWaRequest request);
 	public BuckWaResponse getAllByAcademicYearFacultyCode(BuckWaRequest request);
+
 	
 	
 }

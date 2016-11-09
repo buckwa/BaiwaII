@@ -262,33 +262,33 @@ public class AcademicKPIServiceImpl implements AcademicKPIService {
 			response.setSuccessCode(BuckWaConstants.MSGCODE_IMPORT_SUCESS);
 
 			
-			String tempPath = pathUtil.getPBPAttatchFilePath() + "temp/" + BuckWaUtils.getUserIdFromContext() + "/";
-			String uploadPath = pathUtil.getPBPAttatchFilePath() + academicKPIId + "/";
-			if (FileUtils.createDirectoryIfNotExist(uploadPath)) {
-				logger.info(" create folder " + uploadPath + " success");
-			}
-			
-			List<String> tmpFileNameList = (List<String>) request.get("tmpFileNameList");
-			AcademicKPIAttachFile academicKPIAttachFile = null;
-			if(tmpFileNameList!=null){
-				for (String tmpFileName : tmpFileNameList) {
-					FileUtils.copyTempImageToRealPath(tempPath, uploadPath, tmpFileName);
-					
-					academicKPIAttachFile = new AcademicKPIAttachFile();
-					academicKPIAttachFile.setKpiUserMappingId(String.valueOf(academicKPIId));
-					academicKPIAttachFile.setFullFilePathName(uploadPath + tmpFileName);
-					academicKPIAttachFile.setFileName(tmpFileName);
-					academicKPIAttachFile.setCreateBy(BuckWaUtils.getUserNameFromContext());
-					fileLocationService.createPBPAttachFile(academicKPIAttachFile);
-				}				
-			}
-
-			
-			// Delete Temp File
-			File tempDir = new File(tempPath);
-			if (tempDir.exists() && tempDir.isDirectory()) {
-				FileUtils.deleteDirectory(tempDir);
-			}
+//			String tempPath = pathUtil.getPBPAttatchFilePath() + "temp/" + BuckWaUtils.getUserIdFromContext() + "/";
+//			String uploadPath = pathUtil.getPBPAttatchFilePath() + academicKPIId + "/";
+//			if (FileUtils.createDirectoryIfNotExist(uploadPath)) {
+//				logger.info(" create folder " + uploadPath + " success");
+//			}
+//			
+//			List<String> tmpFileNameList = (List<String>) request.get("tmpFileNameList");
+//			AcademicKPIAttachFile academicKPIAttachFile = null;
+//			if(tmpFileNameList!=null){
+//				for (String tmpFileName : tmpFileNameList) {
+//					FileUtils.copyTempImageToRealPath(tempPath, uploadPath, tmpFileName);
+//					
+//					academicKPIAttachFile = new AcademicKPIAttachFile();
+//					academicKPIAttachFile.setKpiUserMappingId(String.valueOf(academicKPIId));
+//					academicKPIAttachFile.setFullFilePathName(uploadPath + tmpFileName);
+//					academicKPIAttachFile.setFileName(tmpFileName);
+//					academicKPIAttachFile.setCreateBy(BuckWaUtils.getUserNameFromContext());
+//					fileLocationService.createPBPAttachFile(academicKPIAttachFile);
+//				}				
+//			}
+//
+//			
+//			// Delete Temp File
+//			File tempDir = new File(tempPath);
+//			if (tempDir.exists() && tempDir.isDirectory()) {
+//				FileUtils.deleteDirectory(tempDir);
+//			}
 
 		}catch(DuplicateKeyException dx){			
 			response.setStatus(BuckWaConstants.FAIL);
@@ -302,6 +302,58 @@ public class AcademicKPIServiceImpl implements AcademicKPIService {
 		return response;
 	}
  
+	
+	@Override
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW)
+	public BuckWaResponse importwork_file(BuckWaRequest request) {
+		BuckWaResponse response = new BuckWaResponse();
+		try {
+//			AcademicKPIUserMapping academicKPIUserMapping = (AcademicKPIUserMapping) request.get("academicKPIUserMapping");
+//
+//			Long academicKPIId = academicKPIDao.importwork(academicKPIUserMapping);
+//			response.addResponse("academicKPIId", academicKPIId);
+//			response.setSuccessCode(BuckWaConstants.MSGCODE_IMPORT_SUCESS);
+
+			
+//			String tempPath = pathUtil.getPBPAttatchFilePath() + "temp/" + BuckWaUtils.getUserIdFromContext() + "/";
+//			String uploadPath = pathUtil.getPBPAttatchFilePath() + academicKPIId + "/";
+//			if (FileUtils.createDirectoryIfNotExist(uploadPath)) {
+//				logger.info(" create folder " + uploadPath + " success");
+//			}
+//			
+//			List<String> tmpFileNameList = (List<String>) request.get("tmpFileNameList");
+//			AcademicKPIAttachFile academicKPIAttachFile = null;
+//			if(tmpFileNameList!=null){
+//				for (String tmpFileName : tmpFileNameList) {
+//					FileUtils.copyTempImageToRealPath(tempPath, uploadPath, tmpFileName);
+//					
+//					academicKPIAttachFile = new AcademicKPIAttachFile();
+//					academicKPIAttachFile.setKpiUserMappingId(String.valueOf(academicKPIId));
+//					academicKPIAttachFile.setFullFilePathName(uploadPath + tmpFileName);
+//					academicKPIAttachFile.setFileName(tmpFileName);
+//					academicKPIAttachFile.setCreateBy(BuckWaUtils.getUserNameFromContext());
+//					fileLocationService.createPBPAttachFile(academicKPIAttachFile);
+//				}				
+//			}
+//
+//			
+//			// Delete Temp File
+//			File tempDir = new File(tempPath);
+//			if (tempDir.exists() && tempDir.isDirectory()) {
+//				FileUtils.deleteDirectory(tempDir);
+//			}
+
+		}catch(DuplicateKeyException dx){			
+			response.setStatus(BuckWaConstants.FAIL);
+			response.setErrorCode("E002");			
+		}catch(Exception ex){
+			ex.printStackTrace();
+			response.setStatus(BuckWaConstants.FAIL);
+			response.setErrorCode("E001");			
+		}
+	 
+		return response;
+	}
 	
 	
 	@Override

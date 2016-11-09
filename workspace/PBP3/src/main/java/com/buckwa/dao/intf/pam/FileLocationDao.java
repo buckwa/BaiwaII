@@ -26,6 +26,8 @@ public interface FileLocationDao {
 	public AcademicKPIAttachFile findPBPAttachFile(String fileCode);
 	
 	public boolean updatePBPPersonPicture(String personId,String picturePath);
+	public boolean createPBPAttachFileNew(AcademicKPIAttachFile  academicKPIAttachFile) ;
+
 	
 	
 }

@@ -27,6 +27,7 @@ public interface FileLocationService {
 	public AcademicKPIAttachFile   findPBPAttachFile(String id);
 	
 	public boolean updatePBPPersonPicture(String personId,String picturePath);
+	public boolean createPBPAttachFileNew(AcademicKPIAttachFile academicKPIAttachFile);
 	
 	 
 }

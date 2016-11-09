@@ -1,11 +1,18 @@
 package com.buckwa.web.controller.json;
 
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
 import java.math.BigDecimal;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.StringTokenizer;
 
+import javax.imageio.ImageIO;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -1045,5 +1052,42 @@ public class JSONPersonController {
 	           logger.info("  File Name: "+fileName);
 	          }
 	      }
+		@RequestMapping(value = "/getImageFile/{personId}", method = RequestMethod.GET)
+		public void getImageFile(@PathVariable String personId,HttpServletResponse response) throws IOException, URISyntaxException {
+			ByteArrayOutputStream jpegOutputStream = new ByteArrayOutputStream();
+			System.out.println("-----getImageFile By personID----"+ personId);
+			try {
+				String path = PAMConstants.rbApp.getString("project.root.dir") + "profile_picture/"+ personId+".jpg";
+				//String path = personId;
+				System.out.println("Path File Image :" + path);
+				try {
+					
+					BufferedImage image = ImageIO.read(new File(path));
+					ImageIO.write(image, "jpeg", jpegOutputStream);
+					
+				}catch (IOException e) {
+					
+					System.out.println("cannot find image :");
+					BufferedImage image2 = ImageIO.read(new File("../WebContent/baiwa/libs/img/default.jpg"));
+					ImageIO.write(image2, "jpeg", jpegOutputStream);
+				}
+
+			} catch (IllegalArgumentException e) {
+				response.sendError(HttpServletResponse.SC_NOT_FOUND);
+			}
+
+			byte[] imgByte = jpegOutputStream.toByteArray();
+
+			//response.setHeader("Cache-Control", "no-store");
+			//response.setHeader("Pragma", "no-cache");
+			//response.setDateHeader("Expires", 0);
+			response.setContentType("image/jpeg");
+			response.setContentLength(imgByte.length);
+			System.out.println("imgByte.length: "+imgByte.length);
+			ServletOutputStream responseOutputStream = response.getOutputStream();
+			responseOutputStream.write(imgByte);
+			responseOutputStream.flush();
+			responseOutputStream.close();
+		}
 	 
 }

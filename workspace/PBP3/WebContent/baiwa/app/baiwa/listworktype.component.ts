@@ -3,7 +3,7 @@ import {CommonService} from './../service/Common.service';
 import { Http, Headers, Response } from '@angular/http';
 import { FileSelectDirective, FileDropDirective, FileUploader } from 'ng2-file-upload';
 
-const URL = 'http://localhost:8080/PBP3/person/uploadMultiFile';
+const URL = 'http://localhost:8080/PBP3/person/importwork_file';
 
 @Component({
     templateUrl: 'app/baiwa/html/listworktype.component.html'
@@ -19,11 +19,12 @@ export class listworktype implements OnInit, AfterViewInit {
     public inport2: any;
     public inport3: any[];
     public inport4: any[];
+   
 
     public inport5: any;
     public FormAddInput: any;
     public inport_sento: any;
-
+    public academicKPIId: any;
     public uploader:FileUploader = new FileUploader({url: URL});
     public hasBaseDropZoneOver:boolean = false;
     public hasAnotherDropZoneOver:boolean = false;
@@ -41,7 +42,7 @@ export class listworktype implements OnInit, AfterViewInit {
        this.uploader.onBuildItemForm = (fileItem: any, form: any) => {
 
 
-        form.append(  'data', '2'  );
+        form.append(  'academicKPIId', this.academicKPIId  );
 
         };
 
@@ -211,7 +212,8 @@ export class listworktype implements OnInit, AfterViewInit {
 
     public savesucess (response :any){
 
-        alert("save Sucess....")
+            this.academicKPIId = response.json(JSON.stringify(response._body));
+            this.academicKPIId = this.academicKPIId.resObj;
     }
 
  

@@ -12,7 +12,7 @@ var core_1 = require('@angular/core');
 var Common_service_1 = require('./../service/Common.service');
 var http_1 = require('@angular/http');
 var ng2_file_upload_1 = require('ng2-file-upload');
-var URL = 'http://localhost:8080/PBP3/person/uploadMultiFile';
+var URL = 'http://localhost:8080/PBP3/person/importwork_file';
 var listworktype = (function () {
     function listworktype(commonService, http) {
         this.commonService = commonService;
@@ -26,9 +26,10 @@ var listworktype = (function () {
         this.FormAddInput = this.defaultFormAddInput();
     }
     listworktype.prototype.ngOnInit = function () {
+        var _this = this;
         this.GetUserSession();
         this.uploader.onBuildItemForm = function (fileItem, form) {
-            form.append('data', '2');
+            form.append('academicKPIId', _this.academicKPIId);
         };
     };
     listworktype.prototype.ngAfterViewInit = function () {
@@ -150,7 +151,8 @@ var listworktype = (function () {
         this.http.post(url, this.inport5).subscribe(function (response) { return _this.savesucess(response); }, function (error) { return _this.GetError(error); }, function () { return console.log("save sucess na !"); });
     };
     listworktype.prototype.savesucess = function (response) {
-        alert("save Sucess....");
+        this.academicKPIId = response.json(JSON.stringify(response._body));
+        this.academicKPIId = this.academicKPIId.resObj;
     };
     listworktype = __decorate([
         core_1.Component({

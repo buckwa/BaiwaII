@@ -29,6 +29,9 @@ export class listworktype implements OnInit, AfterViewInit {
     public hasBaseDropZoneOver:boolean = false;
     public hasAnotherDropZoneOver:boolean = false;
 
+    public statusActiveUpload: boolean = false;
+    public validType:boolean;
+
     constructor(private commonService: CommonService, private http: Http) {
         this.libPath = "/PBP3/baiwa/libs/";
         this.Inport = this.defaultInport();
@@ -200,13 +203,32 @@ export class listworktype implements OnInit, AfterViewInit {
 
 
 
+
     }
 
     public clickedSaveImport(){
-            var url = "../person/importwork"
-            this.http.post(url,this.inport5).subscribe(response => this.savesucess(response),
-            error => this.GetError(error), () => console.log("save sucess na !")
-    );
+
+        var keys = Object.keys(this.FormAddInput);
+        var len = keys.length;
+        var tamp =0;
+            for(var i=0;i<len;i++) {
+                
+                if(this.FormAddInput[i].value == null ){
+                
+                    console.log("Required Na !");
+                    tamp =1;
+                }
+
+            }
+            
+            if(tamp==0){
+                var url = "../person/importwork"
+                this.http.post(url,this.inport5).subscribe(response => this.savesucess(response),
+                error => this.GetError(error), () => console.log("save sucess na !"));
+
+            }
+
+
 
     }
 
@@ -214,9 +236,15 @@ export class listworktype implements OnInit, AfterViewInit {
 
             this.academicKPIId = response.json(JSON.stringify(response._body));
             this.academicKPIId = this.academicKPIId.resObj;
+            this.statusActiveUpload = true;
     }
 
- 
+    public exitModal (){
+
+             this.statusActiveUpload =  false;
+             this.uploader.clearQueue();
+    }
+
 
 
 

@@ -20,6 +20,7 @@ var listworktype = (function () {
         this.uploader = new ng2_file_upload_1.FileUploader({ url: URL });
         this.hasBaseDropZoneOver = false;
         this.hasAnotherDropZoneOver = false;
+        this.statusActiveUpload = false;
         this.libPath = "/PBP3/baiwa/libs/";
         this.Inport = this.defaultInport();
         this.inport5 = this.defaultImport();
@@ -147,12 +148,28 @@ var listworktype = (function () {
     };
     listworktype.prototype.clickedSaveImport = function () {
         var _this = this;
-        var url = "../person/importwork";
-        this.http.post(url, this.inport5).subscribe(function (response) { return _this.savesucess(response); }, function (error) { return _this.GetError(error); }, function () { return console.log("save sucess na !"); });
+        var keys = Object.keys(this.FormAddInput);
+        var len = keys.length;
+        var tamp = 0;
+        for (var i = 0; i < len; i++) {
+            if (this.FormAddInput[i].value == null) {
+                console.log("Required Na !");
+                tamp = 1;
+            }
+        }
+        if (tamp == 0) {
+            var url = "../person/importwork";
+            this.http.post(url, this.inport5).subscribe(function (response) { return _this.savesucess(response); }, function (error) { return _this.GetError(error); }, function () { return console.log("save sucess na !"); });
+        }
     };
     listworktype.prototype.savesucess = function (response) {
         this.academicKPIId = response.json(JSON.stringify(response._body));
         this.academicKPIId = this.academicKPIId.resObj;
+        this.statusActiveUpload = true;
+    };
+    listworktype.prototype.exitModal = function () {
+        this.statusActiveUpload = false;
+        this.uploader.clearQueue();
     };
     listworktype = __decorate([
         core_1.Component({

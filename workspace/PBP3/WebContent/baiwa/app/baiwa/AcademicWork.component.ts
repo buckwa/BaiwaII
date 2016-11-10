@@ -19,6 +19,8 @@ export class AcademicWork implements OnInit, AfterViewInit {
     public pointLPIList: any[];
     public kpival: any[][];
 
+
+
     public uploader: FileUploader = new FileUploader({ url: URL });
 
     constructor(private commonService: CommonService, private http: Http) {

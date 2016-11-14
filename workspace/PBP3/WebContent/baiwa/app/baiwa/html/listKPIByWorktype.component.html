@@ -4,21 +4,17 @@
                    <table  id="table-edit" class="table table-bordered table-hover">
                        <thead>
                            <tr>
-                           <th colspan="2">เกณฑ์ภาระงานด้าน งานวิชาการ ประจำปีการศึกษา 2558</th>
+                           <th colspan="2"><div class="text-center">เกณฑ์ภาระงานด้าน งานวิชาการ ประจำปีการศึกษา 2558</div></th>
                            </tr>
                            <tr>
-                               <th>ภาระงาน</th>
-                               <th>คะแนน</th>
+                               <th><div class="text-center">ภาระงาน</div></th>
+                               <th><div class="text-center">คะแนน</div></th>
                            </tr>
                        </thead>
                        <tbody>
-                           <tr>
-                               <td>1.1.1 ป. ตรี วิชาบรรยาย</td>
-                               <td>3.0 คะแนน/ ชั่วโมงปฎิบัติการ</td>
-                           </tr>
-                           <tr>
-                               <td>1.1.1.1 ป. ตรี วิชาบรรยาย กรณีนักศึกษาจำนวนมากที่ไม่มีผู้ช่วยสอน(TA) โดยสอนนักศึกษาจำนวน 51 ถึง 100 คน</td>
-                               <td >3.6 คะแนน/ ชั่วโมงปฎิบัติการ</td>
+                           <tr *ngFor="let item of academicKPIList">
+                               <td>{{item.name}}</td>
+                               <td>{{item.mark}} คะแนน/ {{item.unitDesc}}</td>
                            </tr>
                        </tbody>
                    </table>

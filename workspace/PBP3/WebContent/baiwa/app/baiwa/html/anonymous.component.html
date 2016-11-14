@@ -1,62 +1,57 @@
 <div class="row">
     <div class="col-lg-12 col-md-12">
-               <div class="col-lg-8 col-md-8">
-                   <table  id="table-edit" class="table table-bordered table-hover">
-                       <thead>
-                           <tr>
-                           <th colspan="3" class="text-center">รอบการประเมิน ประจำปีการศึกษา</th>
-                           </tr>
-                       </thead>
-                       <tbody>
-                           <tr>
-                               <td>ข้าราชการ</td>
-                               <td>รอบ 1   1 ส.ค. 2558   -   31 ธ.ค. 2558</td>
-                               <td>รอบ 2   1 ม.ค. 2559   -   2 ก.ย. 2559</td>
-                           </tr>
-                           <tr>
-                               <td>พนักงาน</td>
-                               <td colspan="2">รอบ 1   1 ส.ค. 2558   -   2 ก.ย. 2559</td>
-                           </tr>
-                       </tbody>
-                   </table>
-               </div>
-               <div  class="col-lg-4 col-md-4" >
-                   <a href="#" class="list-group-item"><span>
+        <div class="col-lg-8 col-md-8">
+            <table id="table-edit" class="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th colspan="3" class="text-center">รอบการประเมิน ประจำปีการศึกษา</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of acadamicRound">
+                        <td [hidden]="item.canEditRound1 =='Y' && item.canEditRound2 ==null ">{{item.evaluateTypeDesc}}</td>
+                        <td [hidden]="item.canEditRound1 =='Y' && item.canEditRound2 ==null">รอบ 1 &nbsp;&nbsp;{{item.round1StartDateShortThaiStr}} - {{item.round1EndDateShortThaiStr}}</td>
+                        <td [hidden]="item.canEditRound1 =='Y' && item.canEditRound2 ==null ">รอบ 2 &nbsp;&nbsp;{{item.round2StartDateShortThaiStr}} - {{item.round2EndDateShortThaiStr}}</td>
+
+                        <td [hidden]="item.canEditRound1 =='Y' && item.canEditRound2 == 'Y' ">{{item.evaluateTypeDesc}}</td>
+                        <td colspan="2" [hidden]="item.canEditRound1 =='Y' && item.canEditRound2 == 'Y' " >รอบ 1 &nbsp;&nbsp; {{item.round1StartDateShortThaiStr}} - {{item.round1EndDateShortThaiStr}}</td>
+
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-lg-4 col-md-4">
+            <a href="#" class="list-group-item"><span>
                        <img src="/PBP3/baiwa/libs/img/pdf_logo.png">
                         &nbsp; ประกาศหลักเกณฑ์วิธีการคิดภาระงาน
                            <br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ทางวิชาการคณาจารย์ 
                        </span>
-                   </a> 
-               </div>
-               <div class="col-lg-12 col-md-12"><br></div>
+                   </a>
+        </div>
+        <div class="col-lg-12 col-md-12"><br></div>
 
-                <div class="col-lg-12 col-md-12">
-                   <table  id="table-edit" class="table table-bordered table-hover">
-                       <thead>
-                           <tr>
-                           <th rowspan="2">รอบการประเมิน ประจำปีการศึกษา</th>
-                           <th colspan="2">ภาระงานคาดหวัง ต่อปี</th>
-                           </tr>
-                           <tr>
-                               <th >ขั้นต่ำ (คะแนน)</th>
-                               <th >ขั้นสูง (คะแนน)</th>
-                           </tr>
+        <div class="col-lg-12 col-md-12">
+            <table id="table-edit" class="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th rowspan="2"><div class="text-center">รอบการประเมิน ประจำปีการศึกษา</div></th>
+                        <th colspan="2">ภาระงานคาดหวัง ต่อปี</th>
+                    </tr>
+                    <tr>
+                        <th>ขั้นต่ำ (คะแนน)</th>
+                        <th>ขั้นสูง (คะแนน)</th>
+                    </tr>
 
-                       </thead>
-                       <tbody>
-                           <tr>
-                               <td><a href="http://localhost:8080/PBP3/baiwa/home.htm#/listPIByWorktype">งานวิชาการ</a></td>
-                               <td>472.50</td>
-                               <td>3000.00</td>
-                           </tr>
-                           <tr>
-                               <td><a href="http://localhost:8080/PBP3/baiwa/home.htm#/listPIByWorktype">งานพัฒนาวิชาการ</a></td>
-                               <td >0.00</td>
-                               <td>1100.00</td>
-                           </tr>
-                       </tbody>
-                   </table>
-               </div>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of pBPWorkTypeList">
+                         <td><a [routerLink]="['/listPIByWorktype', item.code , item.academicYear]" >{{item.name}}</a></td>
+                        <td>{{item.minHour}}</td>
+                        <td>{{item.maxHour}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
 
 
 

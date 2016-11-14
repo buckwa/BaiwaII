@@ -9,17 +9,43 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
+var router_1 = require('@angular/router');
+var http_1 = require('@angular/http');
 var listKPIByWorktype = (function () {
-    function listKPIByWorktype() {
+    function listKPIByWorktype(route, http) {
+        this.route = route;
+        this.http = http;
     }
+    listKPIByWorktype.prototype.ngOnInit = function () {
+        var _this = this;
+        this.sub = this.route.params.subscribe(function (params) {
+            _this.code = +params['code']; // (+) converts string 'id' to a number
+            _this.year = +params['year'];
+            // In a real app: dispatch action to load the details here.
+        });
+        this.getAcademicList();
+    };
     listKPIByWorktype.prototype.blackpage = function () {
         window.location.href = "#/anonymous";
+    };
+    listKPIByWorktype.prototype.getAcademicList = function () {
+        var _this = this;
+        var url = "../person/anonymous/listKPIByWorktype/" + this.code + "/" + this.year;
+        this.http.get(url).subscribe(function (response) { return _this.getlistSucess(response); }, function (error) { return _this.dataError(error); }, function () { return console.log("editdone !"); });
+    };
+    listKPIByWorktype.prototype.getlistSucess = function (response) {
+        this.listacadamicwork = response.json(JSON.stringify(response._body));
+        this.academicKPIList = this.listacadamicwork.academicKPIList;
+        console.log("getlistSucess");
+    };
+    listKPIByWorktype.prototype.dataError = function (error) {
+        console.log("geterror" + error);
     };
     listKPIByWorktype = __decorate([
         core_1.Component({
             templateUrl: 'app/baiwa/html/listKPIByWorktype.component.html'
         }), 
-        __metadata('design:paramtypes', [])
+        __metadata('design:paramtypes', [router_1.ActivatedRoute, http_1.Http])
     ], listKPIByWorktype);
     return listKPIByWorktype;
 }());

@@ -9,14 +9,30 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
+var http_1 = require('@angular/http');
 var anonymous = (function () {
-    function anonymous() {
+    function anonymous(http) {
+        this.http = http;
     }
+    anonymous.prototype.ngOnInit = function () {
+        var _this = this;
+        var url = "../person/anonymous/init";
+        this.http.get(url).subscribe(function (response) { return _this.getjSonSucess(response); }, function (error) { return _this.dataError(error); }, function () { return console.log("editdone !"); });
+    };
+    anonymous.prototype.getjSonSucess = function (response) {
+        this.listKpi = response.json(JSON.stringify(response._body));
+        this.pBPWorkTypeList = this.listKpi.pBPWorkTypeWrapper.pBPWorkTypeList;
+        this.acadamicRound = this.listKpi.academicYearWrapper.academicYearEvaluateRoundList;
+        console.log("getsucess" + response);
+    };
+    anonymous.prototype.dataError = function (error) {
+        console.log("geterror" + error);
+    };
     anonymous = __decorate([
         core_1.Component({
             templateUrl: 'app/baiwa/html/anonymous.component.html'
         }), 
-        __metadata('design:paramtypes', [])
+        __metadata('design:paramtypes', [http_1.Http])
     ], anonymous);
     return anonymous;
 }());

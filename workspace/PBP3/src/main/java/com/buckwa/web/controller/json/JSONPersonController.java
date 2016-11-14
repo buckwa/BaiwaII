@@ -49,8 +49,12 @@ import com.buckwa.domain.pbp.AcademicKPIUserMapping;
 import com.buckwa.domain.pbp.AcademicKPIUserMappingWrapper;
 import com.buckwa.domain.pbp.AcademicKPIWrapper;
 import com.buckwa.domain.pbp.AcademicUnitWrapper;
+import com.buckwa.domain.pbp.AcademicYearWrapper;
+import com.buckwa.domain.pbp.AnonymousWrapper;
 import com.buckwa.domain.pbp.Department;
+import com.buckwa.domain.pbp.MarkRankWrapper;
 import com.buckwa.domain.pbp.PBPWorkType;
+import com.buckwa.domain.pbp.PBPWorkTypeSub;
 import com.buckwa.domain.pbp.PBPWorkTypeWrapper;
 import com.buckwa.domain.pbp.report.DepartmentWorkTypeReport;
 import com.buckwa.domain.pbp.report.RadarPlotReport;
@@ -63,8 +67,10 @@ import com.buckwa.service.intf.pam.PersonProfileService;
 import com.buckwa.service.intf.pbp.AcademicKPIService;
 import com.buckwa.service.intf.pbp.AcademicKPIUserMappingService;
 import com.buckwa.service.intf.pbp.AcademicUnitService;
+import com.buckwa.service.intf.pbp.AcademicYearService;
 import com.buckwa.service.intf.pbp.FacultyService;
 import com.buckwa.service.intf.pbp.HeadService;
+import com.buckwa.service.intf.pbp.MarkRankService;
 import com.buckwa.service.intf.pbp.PBPWorkTypeService;
 import com.buckwa.service.intf.util.PathUtil;
 import com.buckwa.util.BeanUtils;
@@ -117,6 +123,12 @@ public class JSONPersonController {
 	
 	@Autowired
 	private PathUtil pathUtil;
+	
+	@Autowired
+	private AcademicYearService academicYearService;
+	
+	@Autowired
+	private MarkRankService markRankService;	
 
 	@RequestMapping(value = "/getPersonByAcademicYear/{userName}/{year}", method = RequestMethod.GET, headers = "Accept=application/json")
 	public Person getPersonByAcademicYear(HttpServletRequest httpRequest, @PathVariable String userName,
@@ -1240,6 +1252,119 @@ public class JSONPersonController {
 		return null;
 		
 	}	
+	@RequestMapping(value="/anonymous/listKPIByWorktype/{workTypeCode}/{academicYear}", method = RequestMethod.GET ,headers = "Accept=application/json")
+	public AcademicKPIWrapper listByWorktype(@PathVariable String workTypeCode,@PathVariable String academicYear,HttpServletResponse response1) {
+		logger.info(" Start  ");
+		//ModelAndView mav = new ModelAndView();
+		//mav.setViewName("anonymousAcademicKPIList");
+		AcademicKPIWrapper academicKPIWrapper = null ;
+		try{
+			BuckWaRequest request = new BuckWaRequest();
+			//String facultyCode = BuckWaUtils.getFacultyCodeFromUserContext();
+			String facultyCode = "01" ;
+			request.put("academicYear",academicYear);
+			request.put("workTypeCode",workTypeCode);
+			request.put("facultyCode",facultyCode);
+			BuckWaResponse response = academicKPIService.getByAcademicYearWorkTypeCodeFacultyCode(request);
+			if(response.getStatus()==BuckWaConstants.SUCCESS){	
+				academicKPIWrapper = (AcademicKPIWrapper)response.getResObj("academicKPIWrapper");			 
+				academicKPIWrapper.setAcademicYear(academicYear);
+				
+				
+				request.put("academicYear",academicYear);
+				request.put("facultyCode",facultyCode);
+				 response = pBPWorkTypeService.getByAcademicYearFacultyCode(request);
+				if(response.getStatus()==BuckWaConstants.SUCCESS){	
+					PBPWorkTypeWrapper pBPWorkTypeWrapper = (PBPWorkTypeWrapper)response.getResObj("pBPWorkTypeWrapper");
+					academicKPIWrapper.setpBPWorkTypeList(pBPWorkTypeWrapper.getpBPWorkTypeList());
+				} 
+				request.put("workTypeCode",workTypeCode);
+				request.put("facultyCode",facultyCode);
+				 response = pBPWorkTypeService.getByCodeAcademicFacultyCode(request);
+				if(response.getStatus()==BuckWaConstants.SUCCESS){	
+					PBPWorkType pBPWorkType  = (PBPWorkType)response.getResObj("pBPWorkType");
+					 
+					academicKPIWrapper.setpBPWorkType(pBPWorkType);
+					
+					
+					List<PBPWorkTypeSub> workTypeSubList  =pBPWorkType.getpBPWorkTypeSubList();
+					if(workTypeSubList!=null&&workTypeSubList.size()>0){
+						// Set
+					}
+					 
+				}				 
+				//mav.addObject("academicKPIWrapper", academicKPIWrapper);	
+			}	 
+
+		}catch(Exception ex){
+			ex.printStackTrace();
+			//mav.addObject("errorCode", "E001"); 
+		}
+		return academicKPIWrapper;
+	}
+	
+	@RequestMapping(value = "/anonymous/init" , method = RequestMethod.GET ,headers = "Accept=application/json")
+	public AnonymousWrapper anonymouse(HttpServletResponse response1) {
+		logger.info(" # anonymous 0 ");
+		ModelAndView mav = new ModelAndView();
+		String academicYear ="2558";
+		mav.addObject("academicYearStr",academicYear);
+		AnonymousWrapper anonymousWrapper = new AnonymousWrapper();
+		anonymousWrapper.setAcademicYear(academicYear);
+		mav.addObject("anonymousWrapper", anonymousWrapper);	
+		try{
+			logger.info(" # anonymous 1 ");
+			BuckWaRequest request = new BuckWaRequest();	 
+			BuckWaResponse response = academicYearService.getCurrentAcademicYear(request);
+			if(response.getStatus()==BuckWaConstants.SUCCESS){	
+				AcademicYearWrapper academicYearWrapper = (AcademicYearWrapper)response.getResObj("academicYearWrapper"); 
+				anonymousWrapper.setAcademicYearWrapper(academicYearWrapper);
+			}	
+			 
+			logger.info(" # anonymous 2");
+			String facultyCode = "01";
+			logger.info(" # anonymous facultyCode:"+facultyCode);
+			request.put("academicYear",academicYear);
+			request.put("facultyCode",facultyCode);
+			response = pBPWorkTypeService.getByAcademicYearFacultyCode(request);
+			if(response.getStatus()==BuckWaConstants.SUCCESS){	
+				PBPWorkTypeWrapper pBPWorkTypeWrapper = (PBPWorkTypeWrapper)response.getResObj("pBPWorkTypeWrapper"); 
+				pBPWorkTypeWrapper.setAcademicYear(academicYear);
+				anonymousWrapper.setpBPWorkTypeWrapper(pBPWorkTypeWrapper);
+			}		
+			logger.info(" # anonymous 3 ");
+ 
+			response = markRankService.getByRound(request);
+			if(response.getStatus()==BuckWaConstants.SUCCESS){	
+				MarkRankWrapper markRankWrapper = (MarkRankWrapper)response.getResObj("markRankWrapper");
+			 
+				markRankWrapper.setAcademicYear(academicYear);
+				anonymousWrapper.setMarkRankWrapper(markRankWrapper);
+			}	
+			
+			 response = academicYearService.getCurrentAcademicYear(request);
+			if(response.getStatus()==BuckWaConstants.SUCCESS){	
+				AcademicYearWrapper academicYearWrapper = (AcademicYearWrapper)response.getResObj("academicYearWrapper");
+				mav.addObject("academicYearWrapper", academicYearWrapper);	
+				academicYearWrapper.setAcademicYearList(academicYearUtil.getAcademicYearList());
+			}
+			
+			
+			//mav.addObject("academicYearList", academicYearUtil.getAcademicYearList()); 
+			//mav.addObject("facultyCode", facultyCode); 
+			//mav.addObject("facultyDesc", "01"); 
+		 
+			
+		}catch(Exception ex){
+			ex.printStackTrace();
+			//mav.addObject("errorCode", "E001"); 
+		}
+		//mav.setViewName("anonymous");
+		
+		logger.info(" # anonymous success ");
+		return anonymousWrapper;
+ 
+	}
 	
 
 }

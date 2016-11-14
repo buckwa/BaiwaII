@@ -39,7 +39,7 @@ const routes: Routes = [
     { path: 'ListByWorkType', component: listworktype },
     { path: 'AcademicWork', component: AcademicWork },
     { path: 'anonymous',component:anonymous},
-    { path: 'listPIByWorktype',component:listKPIByWorktype},
+    { path: 'listPIByWorktype/:code/:year',component:listKPIByWorktype},
     { path: 'personTimeTable',component:personTimeTable},
     { path: 'userManual',component:userManual},
 
@@ -85,7 +85,8 @@ const routes: Routes = [
         ImagePreview
     ],
     providers: [
-        CommonService
+        CommonService,
+        anonymous
     ],
     bootstrap: [AppComponent]
 })

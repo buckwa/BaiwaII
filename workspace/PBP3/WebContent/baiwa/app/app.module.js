@@ -39,7 +39,7 @@ var routes = [
     { path: 'ListByWorkType', component: listworktype_component_1.listworktype },
     { path: 'AcademicWork', component: AcademicWork_component_1.AcademicWork },
     { path: 'anonymous', component: anonymous_component_1.anonymous },
-    { path: 'listPIByWorktype', component: listPIByWorktype_component_1.listKPIByWorktype },
+    { path: 'listPIByWorktype/:code/:year', component: listPIByWorktype_component_1.listKPIByWorktype },
     { path: 'personTimeTable', component: personTimeTable_component_1.personTimeTable },
     { path: 'userManual', component: userManual_component_1.userManual },
     { path: 'personYearReport', component: personYearReport_component_1.personYearReport },
@@ -86,7 +86,8 @@ var AppModule = (function () {
                 image_preview_directive_1.ImagePreview
             ],
             providers: [
-                Common_service_1.CommonService
+                Common_service_1.CommonService,
+                anonymous_component_1.anonymous
             ],
             bootstrap: [app_component_1.AppComponent]
         }), 

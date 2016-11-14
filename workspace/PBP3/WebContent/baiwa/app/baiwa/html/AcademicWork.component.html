@@ -9,7 +9,8 @@
 			            </select>
         </div>
 
-        <div class="col-sm-4 ">สถานะ :  <img width="25px" src="/PBP3/baiwa/libs/img/wait.png"/>  รออนุมัติ &nbsp;<img width="25px" src="/PBP3/baiwa/libs/img/co_wait.png"/>&nbsp; รออนุมัติสอนร่วม &nbsp; <img width="25px" src="/PBP3/baiwa/libs/img/sucess.png"/>&nbsp;อนุมัติ </div>
+        <div class="col-sm-4 ">สถานะ : <img width="25px" src="/PBP3/baiwa/libs/img/wait.png" /> รออนุมัติ &nbsp;<img width="25px" src="/PBP3/baiwa/libs/img/co_wait.png"
+            />&nbsp; รออนุมัติสอนร่วม &nbsp; <img width="25px" src="/PBP3/baiwa/libs/img/sucess.png" />&nbsp;อนุมัติ </div>
         <div class="col-sm-5 text-center"><b>ช่องทาง</b>: A&nbsp;:นำเข้าอัตโนมัติจากสำนักทะเบียน&nbsp; M:นำเข้าเอง</div>
 
     </div>
@@ -64,11 +65,14 @@
                                                 data-target="#myModal" data-backdrop="static" data-keyboard="false">{{item.academicKPIAttributeValueList[0].value}}</a>
                                         </td>
                                         <td width="35%">{{item.name}} {{item.academicKPI.mark}} คะแนน / ชั่วโมงปฎิบัติการ</td>
-                                        <td width="12%"> <div class="text-center">{{item.fromSourceText}}&nbsp;|
-                                            <img width="25px" [hidden]="item.status !='APPROVED' " src="/PBP3/baiwa/libs/img/sucess.png"/>
+                                        <td width="12%">
+                                            <div class="text-center">{{item.fromSourceText}}&nbsp;|
+                                                <img width="25px" [hidden]="item.status !='APPROVED' " src="/PBP3/baiwa/libs/img/sucess.png" />
                                             </div>
-                                            </td>
-                                        <td width="6%"><div class="text-center">{{kpival[i][j]}}</div></td>
+                                        </td>
+                                        <td width="6%">
+                                            <div class="text-center">{{kpival[i][j]}}</div>
+                                        </td>
                                         <td width="14%">
                                             <div class="text-center">{{item.totalInMapping}}|<b><span style="color:green;">{{item.totalInMapping}}</span></b></div>
                                         </td>
@@ -87,9 +91,11 @@
                     </tbody>
             </table>
             <br>
-                    <div class="col-lg-12 col-md-12 box-typical box-typical-padding">
-                       <div class="text-center"><h5> ระดับคะแนน &nbsp;&nbsp; {{academy.totalMark}}</h5></div>
-                    </div>
+            <div class="col-lg-12 col-md-12 box-typical box-typical-padding">
+                <div class="text-center">
+                    <h5> ระดับคะแนน &nbsp;&nbsp; {{academy.totalMark}}</h5>
+                </div>
+            </div>
 
         </section>
     </div>
@@ -115,7 +121,7 @@
                             <div class="form-group row" style="margin-bottom: 2px;">
                                 <label class="col-sm-3 form-control-label">ชื่อภาระงาน:</label>
                                 <div class="col-sm-9">
-                                   <p class="form-control-static">{{pointKPI.name}}</p>
+                                    <p class="form-control-static">{{pointKPI.name}}</p>
                                 </div>
                             </div>
 
@@ -130,7 +136,7 @@
                             <div class="form-group row" style="margin-bottom: 2px;" *ngFor="let a of pointLPIList ">
                                 <label class="col-sm-3 form-control-label">{{a.name}}</label>
                                 <div class="col-sm-9">
-                                    <p class="form-control-static"><input type="text"  [ngModelOptions]="{standalone: true}" name="{{a.name}}" [(ngModel)]="a.value"
+                                    <p class="form-control-static"><input type="text" [ngModelOptions]="{standalone: true}" name="{{a.name}}" [(ngModel)]="a.value"
                                             class="form-control" id="inputPassword" value="{{a.value}}" placeholder="{{a.name}}"
                                             required="required" readOnly="true"></p>
                                     <!--{{item.name}}-->
@@ -149,81 +155,102 @@
 
                         </div>
                         <div class="col-lg-6  col-md-12">
-                            <h5 class="m-t-lg with-border"> แนบเอกสารประกอบการพิจารณา :</h5>
+                            <!-- <h5 class="m-t-lg with-border"> แนบเอกสารประกอบการพิจารณา :</h5> -->
 
-                            <div class="row">
 
-                                <div class="col-md-12">
-                                    <div class="row">
+                            <div class="col-md-12">
+                                <div class="row">
 
-                                        <div class="col-md-8">
+                                    <div class="col-md-12">
 
-                                            <h3>Select files</h3>
+                                        <h5> แนบเอกสารประกอบการพิจารณา :</h5>
 
-                                            <input type="file" class="form-control" ng2FileSelect [uploader]="uploader" multiple /><br/>
-                                        </div>
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th width="50%"><div class="text-center">Name</div></th>
+                                                    
+                                                    <th><div class="text-center">Delete</div></th>
+
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr [hidden]="chFilework == ture" *ngFor="let item of fileWork">
+                                                
+                                                    <td width="70%" ><strong><a href="../person/downloadAttachFile/{{item.attachFileId}}">{{item.fileName}}</a></strong></td>
+                                                    
+                                                    <td nowrap width="30%">
+                                                       <button type="button" class="btn btn-danger btn-xs" (click)="deleteFile(item.attachFileId,item.fileName)">
+                                                        <span class="glyphicon glyphicon-trash"></span> 
+                                                    </button>
+                                                    </td>
+                                                   
+                                                </tr>
+                                                <tr [hidden]="chFilework == false" >
+                                                    <td colspan="3" class="text-center">ไม่มีเอกสารแนบ</td>
+                                                </tr>
+                                            </tbody>
+
+                                        </table>
+                                        <hr>
+                                        <h5>เพิ่มเอกสารแบบ</h5>
+
+                                        <input type="file" *ngIf="statusKpi  " class="form-control" ng2FileSelect [uploader]="uploader" multiple /><br/>
                                     </div>
+                                </div>
 
 
-                                    <table class="table">
-                                        <thead>
-                                            <tr>
-                                                <th width="50%">Name</th>
-                                                <th>Status</th>
-                                                <th>Progress</th>
 
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr *ngFor="let item of uploader.queue">
-                                                <td><strong>{{ item?.file?.name }}</strong></td>
-                                                <td *ngIf="uploader.isHTML5" nowrap>{{ item?.file?.size/1024/1024 | number:'.2' }} MB</td>
-                                                <td *ngIf="uploader.isHTML5">
-                                                    <div class="progress" style="margin-bottom: 0;">
-                                                        <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': item.progress + '%' }"></div>
-                                                    </div>
-                                                </td>
-                                                <td class="text-center">
-                                                    <span *ngIf="item.isSuccess"><i class="glyphicon glyphicon-ok"></i></span>
-                                                    <span *ngIf="item.isCancel"><i class="glyphicon glyphicon-ban-circle"></i></span>
-                                                    <span *ngIf="item.isError"><i class="glyphicon glyphicon-remove"></i></span>
-                                                </td>
-                                                <td nowrap>
-                                                    <button type="button" class="btn btn-success btn-xs" (click)="item.upload()" [disabled]="item.isReady || item.isUploading || item.isSuccess">
-                            <span class="glyphicon glyphicon-upload"></span> 
-                        </button>
-                                                    <button type="button" class="btn btn-warning btn-xs" (click)="item.cancel()" [disabled]="!item.isUploading">
-                            <span class="glyphicon glyphicon-ban-circle"></span> 
-                        </button>
-                                                    <button type="button" class="btn btn-danger btn-xs" (click)="item.remove()">
-                            <span class="glyphicon glyphicon-trash"></span> 
-                        </button>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
 
-                                    <div>
-                                        <div>
-                                            Progress:
-                                            <div class="progress" style="">
-                                                <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': uploader.progress + '%' }"></div>
-                                            </div>
-                                        </div>
-                                        <button type="button" class="btn btn-success btn-s" (click)="uploader.uploadAll()" [disabled]="!uploader.getNotUploadedItems().length">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th width="50%"><div class="text-center">Name</div></th>
+                                            <th>Status</th>
+                                            <th>Progress</th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let item of uploader.queue">
+                                            <td><strong>{{ item?.file?.name }}</strong></td>
+                                            <td *ngIf="uploader.isHTML5" nowrap>{{ item?.file?.size/1024/1024 | number:'.2' }} MB</td>
+                                            <td *ngIf="uploader.isHTML5">
+                                                <div class="progress" style="margin-bottom: 0;">
+                                                    <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': item.progress + '%' }"></div>
+                                                </div>
+                                            </td>
+                                            <td class="text-center">
+                                                <span *ngIf="item.isSuccess"><i class="glyphicon glyphicon-ok"></i></span>
+                                                <span *ngIf="item.isCancel"><i class="glyphicon glyphicon-ban-circle"></i></span>
+                                                <span *ngIf="item.isError"><i class="glyphicon glyphicon-remove"></i></span>
+                                            </td>
+                                            <td nowrap>
+                                                <button type="button" class="btn btn-success btn-xs" (click)="item.upload()" [disabled]="item.isReady || item.isUploading || item.isSuccess">
+                                                        <span class="glyphicon glyphicon-upload"></span> 
+                                                    </button>
+                                                <button type="button" class="btn btn-danger btn-xs" (click)="item.remove()">
+                                                        <span class="glyphicon glyphicon-trash"></span> 
+                                                    </button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+
+                                </table>
+
+                                <div *ngIf="statusKpi">
+
+                                    <button type="button" class="btn btn-success btn-s" (click)="uploadFileAll()" [disabled]="!uploader.getNotUploadedItems().length">
                     <span class="glyphicon glyphicon-upload"></span> Upload all
                 </button>
-                                        <button type="button" class="btn btn-warning btn-s" (click)="uploader.cancelAll()" [disabled]="!uploader.isUploading">
-                    <span class="glyphicon glyphicon-ban-circle"></span> Cancel all
-                </button>
-                                        <button type="button" class="btn btn-danger btn-s" (click)="uploader.clearQueue()" [disabled]="!uploader.queue.length">
+                                    <button type="button" class="btn btn-danger btn-s" (click)="uploader.clearQueue()" [disabled]="!uploader.queue.length">
                     <span class="glyphicon glyphicon-trash"></span> Remove all
                 </button>
-                                    </div>
-
                                 </div>
 
                             </div>
+
+
 
                         </div>
 

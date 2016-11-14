@@ -1,28 +1,36 @@
 package com.buckwa.web.controller.json;
 
 import java.awt.image.BufferedImage;
+import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.math.BigDecimal;
 import java.net.URISyntaxException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.StringTokenizer;
 
 import javax.imageio.ImageIO;
+import javax.mail.internet.MimeUtility;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -58,6 +66,7 @@ import com.buckwa.service.intf.pbp.AcademicUnitService;
 import com.buckwa.service.intf.pbp.FacultyService;
 import com.buckwa.service.intf.pbp.HeadService;
 import com.buckwa.service.intf.pbp.PBPWorkTypeService;
+import com.buckwa.service.intf.util.PathUtil;
 import com.buckwa.util.BeanUtils;
 import com.buckwa.util.BuckWaConstants;
 import com.buckwa.util.BuckWaUtils;
@@ -90,28 +99,31 @@ public class JSONPersonController {
 
 	@Autowired
 	private HeadService headService;
-	
+
 	@Autowired
-	private AcademicUnitService academicUnitService;	
-	
+	private AcademicUnitService academicUnitService;
+
 	@Autowired
-	private AcademicKPIService academicKPIService;	
-	
+	private AcademicKPIService academicKPIService;
+
 	@Autowired
-	private AcademicKPIUserMappingService  academicKPIUserMappingService;
-	
+	private AcademicKPIUserMappingService academicKPIUserMappingService;
+
 	@Autowired
-	private PersonDetailService  personDetailService;
-	
+	private PersonDetailService personDetailService;
+
 	@Autowired
 	private FileLocationService fileLocationService;
 	
+	@Autowired
+	private PathUtil pathUtil;
+
 	@RequestMapping(value = "/getPersonByAcademicYear/{userName}/{year}", method = RequestMethod.GET, headers = "Accept=application/json")
-	public Person getPersonByAcademicYear(HttpServletRequest httpRequest,@PathVariable String userName,@PathVariable String year) {
-	 
+	public Person getPersonByAcademicYear(HttpServletRequest httpRequest, @PathVariable String userName,
+			@PathVariable String year) {
+
 		Person person = new Person();
- 
-		 
+
 		try {
 
 			BuckWaRequest request = new BuckWaRequest();
@@ -119,66 +131,67 @@ public class JSONPersonController {
 			request.put("academicYear", year);
 			BuckWaResponse response = personProfileService.getByUsername(request);
 			person = (Person) response.getResObj("person");
-			 
+
 		} catch (Exception ex) {
 			ex.printStackTrace();
-			 
+
 		}
 
 		return person;
-	}	
+	}
+
 	@RequestMapping(value = "/getRadarPlotNew/{userName}/{year}/{round}", method = RequestMethod.GET, headers = "Accept=application/json")
-	public List<RadarPlotReport> radarPlotNew(HttpServletRequest httpRequest,@PathVariable String userName,@PathVariable String year,@PathVariable String round) {
-	 
+	public List<RadarPlotReport> radarPlotNew(HttpServletRequest httpRequest, @PathVariable String userName,
+			@PathVariable String year, @PathVariable String round) {
+
 		List<RadarPlotReport> returnList = new ArrayList<RadarPlotReport>();
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("initPerson");
-		 
+
 		try {
 
 			String academicYear = year;
-		 
-			logger.info("radarPlotNew  username :" + userName+ " academicYear:"+academicYear+" round :"+round);
+
+			logger.info("radarPlotNew  username :" + userName + " academicYear:" + academicYear + " round :" + round);
 
 			BuckWaRequest request = new BuckWaRequest();
 			request.put("username", userName);
 			request.put("academicYear", academicYear);
-			
-			BuckWaResponse response = new BuckWaResponse();
- 
-			Person person = new Person();
- 
-				response = personProfileService.getByUsername(request);
-				if (response.getStatus() == BuckWaConstants.SUCCESS) {
-					person = (Person) response.getResObj("person");
 
-					//user.setFirstLastName(person.getThaiName() + " " + person.getThaiSurname());
-	 
-					person.setAcademicYear(academicYear);
-					person.setAcademicYearList(academicYearUtil.getAcademicYearList());
-					person.setEvaluateRound(round);
-					//user.setPersonProfile(person);
-					mav.addObject("person", person);
-					 
-					String facultyCode = person.getFacultyCode();
-	
-					request.put("academicYear", academicYear);
-					request.put("userName", userName);
-					request.put("round", person.getEvaluateRound());
-					request.put("employeeType", person.getEmployeeType());
-					request.put("facultyCode", facultyCode);
-	
-				 
-					response = pBPWorkTypeService.getRadarPlotPersonMark(request);
-	
-					if (response.getStatus() == BuckWaConstants.SUCCESS) {
-						 returnList = (List<RadarPlotReport>) response.getResObj("radarPlotReportList");
-						 
-					}
-				}else{
-					response.setStatus(BuckWaConstants.FAIL);
+			BuckWaResponse response = new BuckWaResponse();
+
+			Person person = new Person();
+
+			response = personProfileService.getByUsername(request);
+			if (response.getStatus() == BuckWaConstants.SUCCESS) {
+				person = (Person) response.getResObj("person");
+
+				// user.setFirstLastName(person.getThaiName() + " " +
+				// person.getThaiSurname());
+
+				person.setAcademicYear(academicYear);
+				person.setAcademicYearList(academicYearUtil.getAcademicYearList());
+				person.setEvaluateRound(round);
+				// user.setPersonProfile(person);
+				mav.addObject("person", person);
+
+				String facultyCode = person.getFacultyCode();
+
+				request.put("academicYear", academicYear);
+				request.put("userName", userName);
+				request.put("round", person.getEvaluateRound());
+				request.put("employeeType", person.getEmployeeType());
+				request.put("facultyCode", facultyCode);
+
+				response = pBPWorkTypeService.getRadarPlotPersonMark(request);
+
+				if (response.getStatus() == BuckWaConstants.SUCCESS) {
+					returnList = (List<RadarPlotReport>) response.getResObj("radarPlotReportList");
+
 				}
- 
+			} else {
+				response.setStatus(BuckWaConstants.FAIL);
+			}
 
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -187,60 +200,58 @@ public class JSONPersonController {
 
 		return returnList;
 	}
-	
+
 	@RequestMapping(value = "/getRadarPlotNewByYear/{academicYear}", method = RequestMethod.GET, headers = "Accept=application/json")
-	public List<RadarPlotReport> radarPlotNewByYear(HttpServletRequest httpRequest,@PathVariable String academicYear) {
-	 
+	public List<RadarPlotReport> radarPlotNewByYear(HttpServletRequest httpRequest, @PathVariable String academicYear) {
+
 		List<RadarPlotReport> returnList = new ArrayList<RadarPlotReport>();
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("initPerson");
-		 
+
 		try {
 
-			//String academicYear = schoolUtil.getCurrentAcademicYear();
-			//logger.info(" Start  academicYear:" + academicYear);
+			// String academicYear = schoolUtil.getCurrentAcademicYear();
+			// logger.info(" Start academicYear:" + academicYear);
 			BuckWaUser user = BuckWaUtils.getUserFromContext();
-			logger.info("radarPlotNew  username :" + user.getUsername()+ " academicYear:"+academicYear);
+			logger.info("radarPlotNew  username :" + user.getUsername() + " academicYear:" + academicYear);
 
 			BuckWaRequest request = new BuckWaRequest();
 			request.put("username", user.getUsername());
 			request.put("academicYear", academicYear);
-			
-			BuckWaResponse response = new BuckWaResponse();
- 
-			Person person = new Person();
- 
-				response = personProfileService.getByUsername(request);
-				if (response.getStatus() == BuckWaConstants.SUCCESS) {
-					person = (Person) response.getResObj("person");
 
-					user.setFirstLastName(person.getThaiName() + " " + person.getThaiSurname());
-	 
-					person.setAcademicYear(academicYear);
-					person.setAcademicYearList(academicYearUtil.getAcademicYearList());
-					 
-					user.setPersonProfile(person);
-					mav.addObject("person", person);
-					 
-					String facultyCode = person.getFacultyCode();
-	
-					request.put("academicYear", academicYear);
-					request.put("userName", BuckWaUtils.getUserNameFromContext());
-					request.put("round", person.getEvaluateRound());
-					request.put("employeeType", person.getEmployeeType());
-					request.put("facultyCode", facultyCode);
-	
-				 
-					response = pBPWorkTypeService.getRadarPlotPersonMarkByYear(request);
-	
-					if (response.getStatus() == BuckWaConstants.SUCCESS) {
-						 returnList = (List<RadarPlotReport>) response.getResObj("radarPlotReportList");
-						 
-					}
-				}else{
-					response.setStatus(BuckWaConstants.FAIL);
+			BuckWaResponse response = new BuckWaResponse();
+
+			Person person = new Person();
+
+			response = personProfileService.getByUsername(request);
+			if (response.getStatus() == BuckWaConstants.SUCCESS) {
+				person = (Person) response.getResObj("person");
+
+				user.setFirstLastName(person.getThaiName() + " " + person.getThaiSurname());
+
+				person.setAcademicYear(academicYear);
+				person.setAcademicYearList(academicYearUtil.getAcademicYearList());
+
+				user.setPersonProfile(person);
+				mav.addObject("person", person);
+
+				String facultyCode = person.getFacultyCode();
+
+				request.put("academicYear", academicYear);
+				request.put("userName", BuckWaUtils.getUserNameFromContext());
+				request.put("round", person.getEvaluateRound());
+				request.put("employeeType", person.getEmployeeType());
+				request.put("facultyCode", facultyCode);
+
+				response = pBPWorkTypeService.getRadarPlotPersonMarkByYear(request);
+
+				if (response.getStatus() == BuckWaConstants.SUCCESS) {
+					returnList = (List<RadarPlotReport>) response.getResObj("radarPlotReportList");
+
 				}
- 
+			} else {
+				response.setStatus(BuckWaConstants.FAIL);
+			}
 
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -249,14 +260,14 @@ public class JSONPersonController {
 
 		return returnList;
 	}
-	
+
 	@RequestMapping(value = "/getRadarPlotNewE", method = RequestMethod.GET, headers = "Accept=application/json")
 	public List<RadarPlotReport> radarPlotNewE(HttpServletRequest httpRequest) {
 
 		List<RadarPlotReport> returnList = new ArrayList<RadarPlotReport>();
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("initPerson");
-		 
+
 		try {
 
 			String academicYear = academicYearUtil.getAcademicYear();
@@ -267,42 +278,41 @@ public class JSONPersonController {
 			BuckWaRequest request = new BuckWaRequest();
 			request.put("username", user.getUsername());
 			request.put("academicYear", academicYear);
-			
-			BuckWaResponse response = new BuckWaResponse();
-//			Person person = (Person) httpRequest.getSession().getAttribute("personProFileSession");
-			Person person = new Person();
- 
-				response = personProfileService.getByUsername(request);
-				if (response.getStatus() == BuckWaConstants.SUCCESS) {
-					person = (Person) response.getResObj("person");
 
-					user.setFirstLastName(person.getThaiName() + " " + person.getThaiSurname());
-	 
-					person.setAcademicYear(academicYear);
-					person.setAcademicYearList(academicYearUtil.getAcademicYearList());
-					person.setEvaluateRound("1");
-					user.setPersonProfile(person);
-					mav.addObject("person", person);
-					 
-					String facultyCode = person.getFacultyCode();
-	
-					request.put("academicYear", academicYear);
-					request.put("userName", BuckWaUtils.getUserNameFromContext());
-					request.put("round", person.getEvaluateRound());
-					request.put("employeeType", person.getEmployeeType());
-					request.put("facultyCode", facultyCode);
-	
-				 
-					response = pBPWorkTypeService.getRadarPlotPersonMarkE(request);
-	
-					if (response.getStatus() == BuckWaConstants.SUCCESS) {
-						 returnList = (List<RadarPlotReport>) response.getResObj("radarPlotReportList");
-						 
-					}
-				}else{
-					response.setStatus(BuckWaConstants.FAIL);
+			BuckWaResponse response = new BuckWaResponse();
+			// Person person = (Person)
+			// httpRequest.getSession().getAttribute("personProFileSession");
+			Person person = new Person();
+
+			response = personProfileService.getByUsername(request);
+			if (response.getStatus() == BuckWaConstants.SUCCESS) {
+				person = (Person) response.getResObj("person");
+
+				user.setFirstLastName(person.getThaiName() + " " + person.getThaiSurname());
+
+				person.setAcademicYear(academicYear);
+				person.setAcademicYearList(academicYearUtil.getAcademicYearList());
+				person.setEvaluateRound("1");
+				user.setPersonProfile(person);
+				mav.addObject("person", person);
+
+				String facultyCode = person.getFacultyCode();
+
+				request.put("academicYear", academicYear);
+				request.put("userName", BuckWaUtils.getUserNameFromContext());
+				request.put("round", person.getEvaluateRound());
+				request.put("employeeType", person.getEmployeeType());
+				request.put("facultyCode", facultyCode);
+
+				response = pBPWorkTypeService.getRadarPlotPersonMarkE(request);
+
+				if (response.getStatus() == BuckWaConstants.SUCCESS) {
+					returnList = (List<RadarPlotReport>) response.getResObj("radarPlotReportList");
+
 				}
- 
+			} else {
+				response.setStatus(BuckWaConstants.FAIL);
+			}
 
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -311,6 +321,7 @@ public class JSONPersonController {
 
 		return returnList;
 	}
+
 	@RequestMapping(value = "/getRadarPlot", method = RequestMethod.GET, headers = "Accept=application/json")
 	public List<RadarPlotReport> radarPlot(HttpServletRequest httpRequest) {
 
@@ -328,46 +339,48 @@ public class JSONPersonController {
 			BuckWaRequest request = new BuckWaRequest();
 			request.put("username", user.getUsername());
 			request.put("academicYear", academicYear);
-			
-			BuckWaResponse response = new BuckWaResponse();
-//			Person person = (Person) httpRequest.getSession().getAttribute("personProFileSession");
-			Person person = new Person();
-//			if(null == person){
-				response = personProfileService.getByUsername(request);
-				if (response.getStatus() == BuckWaConstants.SUCCESS) {
-					person = (Person) response.getResObj("person");
 
-					user.setFirstLastName(person.getThaiName() + " " + person.getThaiSurname());
-	 
-					person.setAcademicYear(academicYear);
-					person.setAcademicYearList(academicYearUtil.getAcademicYearList());
-					person.setEvaluateRound("1");
-					user.setPersonProfile(person);
-					mav.addObject("person", person);
-					 
-					String facultyCode = person.getFacultyCode();
-	
-					request.put("academicYear", academicYear);
-					request.put("userName", BuckWaUtils.getUserNameFromContext());
-					request.put("round", person.getEvaluateRound());
-					request.put("employeeType", person.getEmployeeTypeNo());
-					request.put("facultyCode", facultyCode);
-	
-					// response = pBPWorkTypeService.getByAcademicYear(request);
-					response = pBPWorkTypeService.getCalculateByAcademicYear(request);
-	
-					if (response.getStatus() == BuckWaConstants.SUCCESS) {
-						PBPWorkTypeWrapper pBPWorkTypeWrapper = (PBPWorkTypeWrapper) response.getResObj("pBPWorkTypeWrapper");
-						pBPWorkTypeWrapper.setAcademicYear(academicYear);
-						person.setpBPWorkTypeWrapper(pBPWorkTypeWrapper);
-					}
-					
-				}else{
-					response.setStatus(BuckWaConstants.FAIL);
+			BuckWaResponse response = new BuckWaResponse();
+			// Person person = (Person)
+			// httpRequest.getSession().getAttribute("personProFileSession");
+			Person person = new Person();
+			// if(null == person){
+			response = personProfileService.getByUsername(request);
+			if (response.getStatus() == BuckWaConstants.SUCCESS) {
+				person = (Person) response.getResObj("person");
+
+				user.setFirstLastName(person.getThaiName() + " " + person.getThaiSurname());
+
+				person.setAcademicYear(academicYear);
+				person.setAcademicYearList(academicYearUtil.getAcademicYearList());
+				person.setEvaluateRound("1");
+				user.setPersonProfile(person);
+				mav.addObject("person", person);
+
+				String facultyCode = person.getFacultyCode();
+
+				request.put("academicYear", academicYear);
+				request.put("userName", BuckWaUtils.getUserNameFromContext());
+				request.put("round", person.getEvaluateRound());
+				request.put("employeeType", person.getEmployeeTypeNo());
+				request.put("facultyCode", facultyCode);
+
+				// response = pBPWorkTypeService.getByAcademicYear(request);
+				response = pBPWorkTypeService.getCalculateByAcademicYear(request);
+
+				if (response.getStatus() == BuckWaConstants.SUCCESS) {
+					PBPWorkTypeWrapper pBPWorkTypeWrapper = (PBPWorkTypeWrapper) response
+							.getResObj("pBPWorkTypeWrapper");
+					pBPWorkTypeWrapper.setAcademicYear(academicYear);
+					person.setpBPWorkTypeWrapper(pBPWorkTypeWrapper);
 				}
-//			}else{
-//				response.setStatus(BuckWaConstants.SUCCESS);
-//			}
+
+			} else {
+				response.setStatus(BuckWaConstants.FAIL);
+			}
+			// }else{
+			// response.setStatus(BuckWaConstants.SUCCESS);
+			// }
 
 			if (response.getStatus() == BuckWaConstants.SUCCESS) {
 
@@ -395,7 +408,8 @@ public class JSONPersonController {
 					radartmp.setAxisName(tempLabel);
 
 					loop++;
-				//	radartmp.setAxisValue(typeTmp.getTotalInPercentCompareBaseWorkType().setScale(0, BigDecimal.ROUND_UP) + "");
+					// radartmp.setAxisValue(typeTmp.getTotalInPercentCompareBaseWorkType().setScale(0,
+					// BigDecimal.ROUND_UP) + "");
 					radartmp.setAxisValue(typeTmp.getTotalInWorkType().setScale(0, BigDecimal.ROUND_UP) + "");
 					logger.info(" Label:" + radartmp.getAxisName() + "  Value:" + radartmp.getAxisValue());
 					returnList.add(radartmp);
@@ -430,7 +444,7 @@ public class JSONPersonController {
 
 			if (response.getStatus() == BuckWaConstants.SUCCESS) {
 				Department department = (Department) response.getResObj("department");
-				System.out.println(" department :"+BeanUtils.getBeanString(department));
+				System.out.println(" department :" + BeanUtils.getBeanString(department));
 
 				if (department != null) {
 
@@ -439,7 +453,8 @@ public class JSONPersonController {
 					response = headService.getReportWorkTypeDepartment(request);
 
 					if (response.getStatus() == BuckWaConstants.SUCCESS) {
-						List<DepartmentWorkTypeReport> reportWorkTypeDepartmentList = (List<DepartmentWorkTypeReport>) response.getResObj("departmentWorkTypeReportList");
+						List<DepartmentWorkTypeReport> reportWorkTypeDepartmentList = (List<DepartmentWorkTypeReport>) response
+								.getResObj("departmentWorkTypeReportList");
 
 						request.put("username", userName);
 						request.put("academicYear", academicYear);
@@ -447,13 +462,13 @@ public class JSONPersonController {
 						if (response.getStatus() == BuckWaConstants.SUCCESS) {
 							Person person = (Person) response.getResObj("person");
 							String firstLast = person.getThaiName() + " " + person.getThaiSurname();
-							System.out.println(" firstLast :"+firstLast);
+							System.out.println(" firstLast :" + firstLast);
 
 							int loopx = 1;
 							for (DepartmentWorkTypeReport personTmp : reportWorkTypeDepartmentList) {
 								String personName = personTmp.getPersonName();
 								RadarPlotReport reportTmp = new RadarPlotReport();
-								System.out.println(" firstLast :"+firstLast+"|   personName:"+personName);
+								System.out.println(" firstLast :" + firstLast + "|   personName:" + personName);
 								if (!firstLast.equalsIgnoreCase(personName)) {
 									reportTmp.setAxisName(" ");
 								} else {
@@ -530,8 +545,8 @@ public class JSONPersonController {
 	 * for(PBPWorkType totalMarkTmp:pBPWorkTypeListTotalMark){
 	 * System.out.print(" totalMarkTmp id:"+totalMarkTmp.getWorkTypeId());
 	 * 
-	 * if(typeTmp.getWorkTypeId().intValue()==totalMarkTmp.getWorkTypeId().intValue
-	 * ()){
+	 * if(typeTmp.getWorkTypeId().intValue()==totalMarkTmp.getWorkTypeId().
+	 * intValue ()){
 	 * 
 	 * 
 	 * totalMark =
@@ -585,9 +600,8 @@ public class JSONPersonController {
 		try {
 			BuckWaRequest request = new BuckWaRequest();
 
-//			String userName = BuckWaUtils.getUserNameFromContext();
-//			String academicYear = schoolUtil.getCurrentAcademicYear();
-			
+			// String userName = BuckWaUtils.getUserNameFromContext();
+			// String academicYear = schoolUtil.getCurrentAcademicYear();
 
 			String userName = UserLoginUtil.getCurrentUserLogin();
 			String academicYear = "2558";
@@ -606,7 +620,8 @@ public class JSONPersonController {
 					response = headService.getReportWorkTypeDepartment(request);
 
 					if (response.getStatus() == BuckWaConstants.SUCCESS) {
-						List<DepartmentWorkTypeReport> reportWorkTypeDepartmentList = (List<DepartmentWorkTypeReport>) response.getResObj("departmentWorkTypeReportList");
+						List<DepartmentWorkTypeReport> reportWorkTypeDepartmentList = (List<DepartmentWorkTypeReport>) response
+								.getResObj("departmentWorkTypeReportList");
 
 						request.put("username", userName);
 						request.put("academicYear", academicYear);
@@ -655,439 +670,576 @@ public class JSONPersonController {
 		return returnList;
 	}
 
-	
 	@RequestMapping(value = "/getUserSession", method = RequestMethod.GET, headers = "Accept=application/json")
-	public UserSession  getUserSession(HttpServletRequest httpRequest) {
-		UserSession userreturn =new UserSession();
+	public UserSession getUserSession(HttpServletRequest httpRequest) {
+		UserSession userreturn = new UserSession();
 		try {
 			logger.info(" getUserSession ");
-			//getUsername login.
+			// getUsername login.
 			String user = UserLoginUtil.getCurrentUserLogin();
-			
+
 			System.out.println("Current UserLogin :" + user);
-			//userreturn = BuckWaUtils.getUserFromContext();
-			
-			
+			// userreturn = BuckWaUtils.getUserFromContext();
+
 			userreturn = personDetailService.GetUserSession(user);
-			
-			
-			
-//			userreturn.setUserName(user);
-//			userreturn.setFirstName("พิทักษ์ ");
-//			userreturn.setLastName("ธรรมวาริน");
+
+			// userreturn.setUserName(user);
+			// userreturn.setFirstName("พิทักษ์ ");
+			// userreturn.setLastName("ธรรมวาริน");
 			userreturn.setCurrentAcademicYear("2558");
 			userreturn.setFacultyCode("01");
 			userreturn.setDepartmentCode("05");
 		} catch (Exception ex) {
 			ex.printStackTrace();
-			 
+
 		}
 
-		 return userreturn;
+		return userreturn;
 	}
-	
-	
- 
+
 	@RequestMapping(value = "/getAllWorkList/{academicYear}/{facultyCode}", method = RequestMethod.GET, headers = "Accept=application/json")
-	public List<WorkType> getAllWorkList(@PathVariable String academicYear,@PathVariable String facultyCode) {		
+	public List<WorkType> getAllWorkList(@PathVariable String academicYear, @PathVariable String facultyCode) {
 		logger.info(" Start ");
- 
-		
-		 List<WorkType>  returnList = new ArrayList();
+
+		List<WorkType> returnList = new ArrayList();
 		try {
-			BuckWaRequest request = new BuckWaRequest(); 
-			
-			request.put("academicYear",academicYear); 
-			request.put("facultyCode",facultyCode); 
-			BuckWaResponse  response = pBPWorkTypeService.getByAcademicYearFacultyCode(request);
-			if(response.getStatus()==BuckWaConstants.SUCCESS){	
-				PBPWorkTypeWrapper pBPWorkTypeWrapper = (PBPWorkTypeWrapper)response.getResObj("pBPWorkTypeWrapper");
-				List<PBPWorkType> workTypeListx = pBPWorkTypeWrapper.getpBPWorkTypeList(); 				
-				List<PBPWorkType> workTypeList =workTypeListx;
-				if(workTypeList!=null&&workTypeList.size()>0){ 
-					
-					for(PBPWorkType workTmp:workTypeList){
+			BuckWaRequest request = new BuckWaRequest();
+
+			request.put("academicYear", academicYear);
+			request.put("facultyCode", facultyCode);
+			BuckWaResponse response = pBPWorkTypeService.getByAcademicYearFacultyCode(request);
+			if (response.getStatus() == BuckWaConstants.SUCCESS) {
+				PBPWorkTypeWrapper pBPWorkTypeWrapper = (PBPWorkTypeWrapper) response.getResObj("pBPWorkTypeWrapper");
+				List<PBPWorkType> workTypeListx = pBPWorkTypeWrapper.getpBPWorkTypeList();
+				List<PBPWorkType> workTypeList = workTypeListx;
+				if (workTypeList != null && workTypeList.size() > 0) {
+
+					for (PBPWorkType workTmp : workTypeList) {
 						String workTypeCodeTmp = workTmp.getCode();
 						String workTypeNameTmp = workTmp.getName();
-						logger.info(" WorkType: "+workTypeCodeTmp+":"+workTypeNameTmp);
-						
+						logger.info(" WorkType: " + workTypeCodeTmp + ":" + workTypeNameTmp);
+
 						WorkType newWork = new WorkType();
 						newWork.setWorkTypeName(workTypeNameTmp);
-						
-						request.put("workTypeCode",workTypeCodeTmp);
+
+						request.put("workTypeCode", workTypeCodeTmp);
 						response = academicKPIService.getByAcademicYearWorkTypeCodeFacultyCode(request);
-						if(response.getStatus()==BuckWaConstants.SUCCESS){	
-							AcademicKPIWrapper academicKPIWrapper = (AcademicKPIWrapper)response.getResObj("academicKPIWrapper");			 
-				 
+						if (response.getStatus() == BuckWaConstants.SUCCESS) {
+							AcademicKPIWrapper academicKPIWrapper = (AcademicKPIWrapper) response
+									.getResObj("academicKPIWrapper");
+
 							newWork.setAcademicKPIList(academicKPIWrapper.getAcademicKPIList());
 						}
-						
+
 						returnList.add(newWork);
-						
+
 					}
-					
-				} 
 
-			}	 
+				}
 
-		}catch(Exception ex){
+			}
+
+		} catch (Exception ex) {
 			ex.printStackTrace();
-			 
+
 		}
 		return returnList;
-	}	
-	
-	
-	
-	//@RequestMapping(value="getAcademicWork.htm", method = RequestMethod.GET)
-	//public ModelAndView initAcademicWorkGET(HttpServletRequest httpRequest  ) {
+	}
+
+	// @RequestMapping(value="getAcademicWork.htm", method = RequestMethod.GET)
+	// public ModelAndView initAcademicWorkGET(HttpServletRequest httpRequest )
+	// {
 	@RequestMapping(value = "/getAcademicWork/{userName}/{academicYear}/{round}", method = RequestMethod.GET, headers = "Accept=application/json")
-	public WorkSummary getAllWorkList(@PathVariable String userName,@PathVariable String academicYear,@PathVariable String round) {			
-		
-		logger.info(" Start "); 
+	public WorkSummary getAllWorkList(@PathVariable String userName, @PathVariable String academicYear,
+			@PathVariable String round) {
+
+		logger.info(" Start ");
 		WorkSummary workSummary = new WorkSummary();
 		workSummary.setAcademicYear(academicYear);
-		try {  
+		try {
 
-			BuckWaRequest request = new BuckWaRequest(); 
+			BuckWaRequest request = new BuckWaRequest();
 			request.put("username", userName);
-			request.put("academicYear",academicYear );
+			request.put("academicYear", academicYear);
 
-			BuckWaResponse  response = personProfileService.getByUsername(request);
+			BuckWaResponse response = personProfileService.getByUsername(request);
 
 			if (response.getStatus() == BuckWaConstants.SUCCESS) {
 				Person person = (Person) response.getResObj("person");
 				person.setAcademicYear(academicYear);
 				person.setEvaluateRound(round);
- 
-				//String academicYear =schoolUtil.getCurrentAcademicYear();
+
+				// String academicYear =schoolUtil.getCurrentAcademicYear();
 				String facultyCode = person.getFacultyCode();
-				request.put("academicYear",academicYear);
-				request.put("userName",userName);
-				request.put("round",round);
-				request.put("employeeType",person.getEmployeeTypeNo());
-				request.put("facultyCode",facultyCode);
-				
+				request.put("academicYear", academicYear);
+				request.put("userName", userName);
+				request.put("round", round);
+				request.put("employeeType", person.getEmployeeTypeNo());
+				request.put("facultyCode", facultyCode);
+
 				response = pBPWorkTypeService.getCalculateByAcademicYear(request);
-				
-				if(response.getStatus()==BuckWaConstants.SUCCESS){	
-					PBPWorkTypeWrapper pBPWorkTypeWrapper = (PBPWorkTypeWrapper)response.getResObj("pBPWorkTypeWrapper"); 
+
+				if (response.getStatus() == BuckWaConstants.SUCCESS) {
+					PBPWorkTypeWrapper pBPWorkTypeWrapper = (PBPWorkTypeWrapper) response
+							.getResObj("pBPWorkTypeWrapper");
 					pBPWorkTypeWrapper.setAcademicYear(academicYear);
 					person.setpBPWorkTypeWrapper(pBPWorkTypeWrapper);
 
-					workSummary.setTotalMark(pBPWorkTypeWrapper.getTotalMark()+"");
+					workSummary.setTotalMark(pBPWorkTypeWrapper.getTotalMark() + "");
 					workSummary.setpBPWorkTypeList(pBPWorkTypeWrapper.getpBPWorkTypeList());
-				}					
-				 
-			} 
-		} catch(Exception ex) {
+				}
+
+			}
+		} catch (Exception ex) {
 			ex.printStackTrace();
-			 
+
 		}
 
 		return workSummary;
 	}
-	
-	
-	
+
 	@RequestMapping(value = "/getAcademicKPI/{academicKPICode}/{facultyCode}/{academicYear}", method = RequestMethod.GET, headers = "Accept=application/json")
-	public AcademicKPI getAcademicKPI(@PathVariable String academicKPICode,@PathVariable String facultyCode,@PathVariable String academicYear) {			
-		
- 		logger.info(" Start  academicKPICode:"+academicKPICode+" academicYear:"+academicYear);
- 		AcademicKPI academicKPI  = new AcademicKPI();
-		try{
+	public AcademicKPI getAcademicKPI(@PathVariable String academicKPICode, @PathVariable String facultyCode,
+			@PathVariable String academicYear) {
+
+		logger.info(" Start  academicKPICode:" + academicKPICode + " academicYear:" + academicYear);
+		AcademicKPI academicKPI = new AcademicKPI();
+		try {
 			BuckWaRequest request = new BuckWaRequest();
-			
-			request.put("academicYear",academicYear);
-			request.put("academicKPICode",academicKPICode);
-			request.put("facultyCode",facultyCode);
+
+			request.put("academicYear", academicYear);
+			request.put("academicKPICode", academicKPICode);
+			request.put("facultyCode", facultyCode);
 			BuckWaResponse response = academicKPIService.getByCodeAcademicYear(request);
-			 
-			if(response.getStatus()==BuckWaConstants.SUCCESS){	
-				 academicKPI = (AcademicKPI)response.getResObj("academicKPI");	
-			 
-				request.put("academicYear",academicYear);
-				 response = academicUnitService.getByAcademicYear(request);
-				if(response.getStatus()==BuckWaConstants.SUCCESS){	
-					AcademicUnitWrapper academicUnitWrapper = (AcademicUnitWrapper)response.getResObj("academicUnitWrapper");
+
+			if (response.getStatus() == BuckWaConstants.SUCCESS) {
+				academicKPI = (AcademicKPI) response.getResObj("academicKPI");
+
+				request.put("academicYear", academicYear);
+				response = academicUnitService.getByAcademicYear(request);
+				if (response.getStatus() == BuckWaConstants.SUCCESS) {
+					AcademicUnitWrapper academicUnitWrapper = (AcademicUnitWrapper) response
+							.getResObj("academicUnitWrapper");
 					academicKPI.setAcademicUnitList(academicUnitWrapper.getAcademicUnitList());
 					academicKPI.setRatio(new Integer(100));
-					
-					List<AcademicKPIAttribute> ratioList =academicKPI.getAcademicKPIAttributeList();
-					for(AcademicKPIAttribute tmp:ratioList){
-						String attributeName =tmp.getName();
-//						logger.info(" Attribute Name:"+attributeName+" index of สัดส่วน:"+attributeName.indexOf("สัดส่วน"));
-						
-						if(attributeName.indexOf("สัดส่วน")!=-1){
+
+					List<AcademicKPIAttribute> ratioList = academicKPI.getAcademicKPIAttributeList();
+					for (AcademicKPIAttribute tmp : ratioList) {
+						String attributeName = tmp.getName();
+						// logger.info(" Attribute Name:"+attributeName+" index
+						// of สัดส่วน:"+attributeName.indexOf("สัดส่วน"));
+
+						if (attributeName.indexOf("สัดส่วน") != -1) {
 							tmp.setValue("100");
 						}
-						
+
 					}
-				}	 
-				//academicKPI.setIndex(index);
-				//mav.addObject("academicKPI", academicKPI);
-				
+				}
+				// academicKPI.setIndex(index);
+				// mav.addObject("academicKPI", academicKPI);
+
 				// Delete Temp File
-//				File uploadPath = new File(pathUtil.getPBPAttatchFilePath() + "temp/" + BuckWaUtils.getUserIdFromContext());
-//				if (uploadPath.exists() && uploadPath.isDirectory()) {
-//					FileUtils.deleteDirectory(uploadPath);
-//				}
-				
+				// File uploadPath = new File(pathUtil.getPBPAttatchFilePath() +
+				// "temp/" + BuckWaUtils.getUserIdFromContext());
+				// if (uploadPath.exists() && uploadPath.isDirectory()) {
+				// FileUtils.deleteDirectory(uploadPath);
+				// }
+
 			}
-			
-		}catch(Exception ex){
+
+		} catch (Exception ex) {
 			ex.printStackTrace();
-			 
+
 		}
 		return academicKPI;
 	}
-	
- 
-		
-		@RequestMapping(value = "/getImportWork/{kpiUserMappingId}", method = RequestMethod.GET, headers = "Accept=application/json")
-		public AcademicKPIUserMapping getImportWork(@PathVariable String kpiUserMappingId) {			
-					
-		
-		logger.info(" Start  kpiUserMappingId:"+kpiUserMappingId);
+
+	@RequestMapping(value = "/getImportWork/{kpiUserMappingId}", method = RequestMethod.GET, headers = "Accept=application/json")
+	public AcademicKPIUserMapping getImportWork(@PathVariable String kpiUserMappingId) {
+
+		logger.info(" Start  kpiUserMappingId:" + kpiUserMappingId);
 		AcademicKPIUserMapping kpiUserMapping = new AcademicKPIUserMapping();
-		try{
-			BuckWaRequest request = new BuckWaRequest(); 
-			request.put("kpiUserMappingId",kpiUserMappingId);
+		try {
+			BuckWaRequest request = new BuckWaRequest();
+			request.put("kpiUserMappingId", kpiUserMappingId);
 			BuckWaResponse response = academicKPIUserMappingService.getById(request);
-			if(response.getStatus()==BuckWaConstants.SUCCESS){	
-				AcademicKPIUserMappingWrapper academicKPIUserMappingWrapper = (AcademicKPIUserMappingWrapper)response.getResObj("academicKPIUserMappingWrapper");	 
- 
-				
+			if (response.getStatus() == BuckWaConstants.SUCCESS) {
+				AcademicKPIUserMappingWrapper academicKPIUserMappingWrapper = (AcademicKPIUserMappingWrapper) response
+						.getResObj("academicKPIUserMappingWrapper");
+
 				kpiUserMapping = academicKPIUserMappingWrapper.getAcademicKPIUserMapping();
-			}  
-		}catch(Exception ex){
+			}
+		} catch (Exception ex) {
 			ex.printStackTrace();
-			 
+
 		}
 		return kpiUserMapping;
 	}
-		
 
-		@RequestMapping(value = "/importwork", method = RequestMethod.POST)
-		public ResponseObj jsonImportworkPOST(@RequestBody  AcademicKPI academicKPI) { 
-			logger.info(" Start  ");
-			ResponseObj resp = new ResponseObj();
-			resp.setStatus("0");
-			try{
+	@RequestMapping(value = "/importwork", method = RequestMethod.POST)
+	public ResponseObj jsonImportworkPOST(@RequestBody AcademicKPI academicKPI) {
+		logger.info(" Start  ");
+		ResponseObj resp = new ResponseObj();
+		resp.setStatus("0");
+		try {
 
-		 
-					//String userName = BuckWaUtils.getUserNameFromContext();
-					String academicYear = schoolUtil.getCurrentAcademicYear();
-					
-					AcademicKPIUserMapping academicKPIUserMapping = new AcademicKPIUserMapping();
-					academicKPIUserMapping.setUserName(UserLoginUtil.getCurrentUserLogin());
-					academicKPIUserMapping.setAcademicYear(academicYear);
-					academicKPIUserMapping.setAcademicKPICode(academicKPI.getCode());
-					academicKPIUserMapping.setAcademicKPIId(academicKPI.getAcademicKPIId());
-					academicKPIUserMapping.setWorkTypeCode(academicKPI.getWorkTypeCode());
-					academicKPIUserMapping.setName(academicKPI.getName());
-					academicKPIUserMapping.setRatio(academicKPI.getRatio());
-					
-					List<AcademicKPIAttribute> academicKPIAttributeList =academicKPI.getAcademicKPIAttributeList();
-					
-					List<AcademicKPIAttributeValue> academicKPIAttributeValueList = new ArrayList<AcademicKPIAttributeValue>();
-					for(AcademicKPIAttribute tmp:academicKPIAttributeList){
-						
-						logger.info("  Name: "+tmp.getName()+" value:"+tmp.getValue());
-						AcademicKPIAttributeValue valueTmp = new AcademicKPIAttributeValue();
-						valueTmp.setAcademicKPICode(academicKPI.getCode());
-						valueTmp.setAcademicYear(academicYear);
-						valueTmp.setValue(tmp.getValue());
-						valueTmp.setName(tmp.getName());
-						//valueTmp.(tmp.getRownum());
-						valueTmp.setRatio(tmp.getRatio());
-					//	logger.info(" Controller attribute name:"+tmp.getName()+"  value:"+tmp.getValue());
-						academicKPIAttributeValueList.add(valueTmp);
-					} 
-					
-					academicKPIUserMapping.setAcademicKPIAttributeValueList(academicKPIAttributeValueList);
-					
-					academicKPIUserMapping.setStatus("CREATE");
-					// Save
-					BuckWaRequest request = new BuckWaRequest(); 
-					request.put("academicKPIUserMapping",academicKPIUserMapping);
-					request.put("tmpFileNameList", academicKPI.getTmpFileNameList());
-					BuckWaResponse response = academicKPIService.importwork(request);//ทำตรงนี้ 
-					
-					if(response.getStatus()==BuckWaConstants.SUCCESS){	
-						Long academicKPIId = (Long)response.getResObj("academicKPIId");	
-						academicKPI.setAcademicKPIUserMappingId(academicKPIId); 
-						resp.setResObj(academicKPIId);
-						logger.info("  Save Success academicKPIId: "+academicKPIId);
-					}  			
-				 
-			
-			 			
-			}catch(Exception ex){
-				ex.printStackTrace();
-				resp.setStatus("1");
-				resp.setDescription(ex.getMessage());
+			// String userName = BuckWaUtils.getUserNameFromContext();
+			String academicYear = schoolUtil.getCurrentAcademicYear();
+
+			AcademicKPIUserMapping academicKPIUserMapping = new AcademicKPIUserMapping();
+			academicKPIUserMapping.setUserName(UserLoginUtil.getCurrentUserLogin());
+			academicKPIUserMapping.setAcademicYear(academicYear);
+			academicKPIUserMapping.setAcademicKPICode(academicKPI.getCode());
+			academicKPIUserMapping.setAcademicKPIId(academicKPI.getAcademicKPIId());
+			academicKPIUserMapping.setWorkTypeCode(academicKPI.getWorkTypeCode());
+			academicKPIUserMapping.setName(academicKPI.getName());
+			academicKPIUserMapping.setRatio(academicKPI.getRatio());
+
+			List<AcademicKPIAttribute> academicKPIAttributeList = academicKPI.getAcademicKPIAttributeList();
+
+			List<AcademicKPIAttributeValue> academicKPIAttributeValueList = new ArrayList<AcademicKPIAttributeValue>();
+			for (AcademicKPIAttribute tmp : academicKPIAttributeList) {
+
+				logger.info("  Name: " + tmp.getName() + " value:" + tmp.getValue());
+				AcademicKPIAttributeValue valueTmp = new AcademicKPIAttributeValue();
+				valueTmp.setAcademicKPICode(academicKPI.getCode());
+				valueTmp.setAcademicYear(academicYear);
+				valueTmp.setValue(tmp.getValue());
+				valueTmp.setName(tmp.getName());
+				// valueTmp.(tmp.getRownum());
+				valueTmp.setRatio(tmp.getRatio());
+				// logger.info(" Controller attribute name:"+tmp.getName()+"
+				// value:"+tmp.getValue());
+				academicKPIAttributeValueList.add(valueTmp);
 			}
-			logger.info(" End  ");
-			return resp;
+
+			academicKPIUserMapping.setAcademicKPIAttributeValueList(academicKPIAttributeValueList);
+
+			academicKPIUserMapping.setStatus("CREATE");
+			// Save
+			BuckWaRequest request = new BuckWaRequest();
+			request.put("academicKPIUserMapping", academicKPIUserMapping);
+			request.put("tmpFileNameList", academicKPI.getTmpFileNameList());
+			BuckWaResponse response = academicKPIService.importwork(request);// ทำตรงนี้
+
+			if (response.getStatus() == BuckWaConstants.SUCCESS) {
+				Long academicKPIId = (Long) response.getResObj("academicKPIId");
+				academicKPI.setAcademicKPIUserMappingId(academicKPIId);
+				resp.setResObj(academicKPIId);
+				logger.info("  Save Success academicKPIId: " + academicKPIId);
+			}
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			resp.setStatus("1");
+			resp.setDescription(ex.getMessage());
 		}
-	 
-		@RequestMapping(value = "/importwork_file", method = RequestMethod.POST)
-		public ResponseObj jsonImportwork_filePOST(MultipartHttpServletRequest request, HttpServletResponse response) { 
-			logger.info(" Start  ");
-			ResponseObj resp = new ResponseObj();
-			resp.setStatus("0");
+		logger.info(" End  ");
+		return resp;
+	}
 
-			try{
+	@RequestMapping(value = "/importwork_file", method = RequestMethod.POST)
+	public ResponseObj jsonImportwork_filePOST(MultipartHttpServletRequest request, HttpServletResponse response) {
+		logger.info("importwork_file Start  ");
+		ResponseObj resp = new ResponseObj();
+		resp.setStatus("0");
 
-				logger.info("---- Wait For Uploading File ----");
-				String academicKPIId = request.getParameter("academicKPIId");
-				logger.info("---- PersonId : ----"+academicKPIId);
-				
-				Iterator<String> itr=request.getFileNames();
-				MultipartFile originalfile =request.getFile(itr.next());
-				
-				if (originalfile!=null&&originalfile.getSize() > 0) {
-					logger.info(" originalfile size:"+originalfile.getSize()+" File Name:"+ originalfile.getOriginalFilename() );
-					
-						
-						//  For Upload File >>>>
-						String uploadPath = PAMConstants.rbApp.getString("project.root.dir")+"attatchfile/"+ academicKPIId+"/";
-						logger.info("## File Size :" + originalfile.getSize());
-						logger.info("## File Name Original :" + originalfile.getOriginalFilename());
-						logger.info("## Upload Path :" + uploadPath);
-						
-						String fileUpload = uploadPath + originalfile.getOriginalFilename();
-						
-						logger.info("## File Name + Path :" + fileUpload);
-						
-						int step = 1 ; 
-						boolean isnext = true;
-						
-						while(isnext){
-							switch (step) {
-							case 1 :
-								logger.info("Step : "+step+" >>  Create New Upload Path");
-								isnext = FileUtils.createDirectoryIfNotExist(uploadPath);
-								if(isnext){
-									step++; 
-									continue;
-								}else{
-									isnext = false;
-								}
-							case 2 :
-								logger.info("Step : "+step+" >> Save File To Server directory path");
-								
-//								boolean isFileNameExist = fileLocationService.checkFileNameServerExist(fileName,BuckWaConstants.WORKPERSON_TABLE);
-//								if(!isFileNameExist){
-									isnext = FileUtils.saveFileToDirectory(originalfile, fileUpload);
-									if(isnext){
-										step++; 
-										continue;
-									}else{
-										isnext = false;
-									}
-//								}else{
-//									isnext = false;
-//									mav.addObject("errorCode", BuckWaConstants.MSGCODE_FILE_NAME_EXIST); 
-//								}
-							case 3 :
-								logger.info(" Step : "+step+" >> Insert into File createPBPAttachFile Database (table : academic_kpi_attach_file) For File Upload History");
-								
-								AcademicKPIAttachFile academicKPIAttachFile = null;
+		try {
 
-								
-								
-									
-								academicKPIAttachFile = new AcademicKPIAttachFile();
-								academicKPIAttachFile.setKpiUserMappingId(String.valueOf(academicKPIId));
-								academicKPIAttachFile.setFullFilePathName(uploadPath + originalfile.getOriginalFilename());
-								academicKPIAttachFile.setFileName(originalfile.getOriginalFilename());
-								academicKPIAttachFile.setCreateBy(UserLoginUtil.getCurrentUserLogin());
-								fileLocationService.createPBPAttachFile(academicKPIAttachFile);
-									
-								
-								
-							case 4 :
-								//person.setPicture(fileUpload);
-							default:
-								isnext = false;
-							}
+			logger.info("---- Wait For Uploading File ----");
+			String academicKPIId = request.getParameter("academicKPIId");
+			logger.info("---- PersonId : ----" + academicKPIId);
+
+			Iterator<String> itr = request.getFileNames();
+			MultipartFile originalfile = request.getFile(itr.next());
+
+			if (originalfile != null && originalfile.getSize() > 0) {
+				logger.info(" originalfile size:" + originalfile.getSize() + " File Name:"
+						+ originalfile.getOriginalFilename());
+
+				// For Upload File >>>>
+				String uploadPath = PAMConstants.rbApp.getString("project.root.dir") + "attatchfile/" + academicKPIId
+						+ "/";
+				logger.info("## File Size :" + originalfile.getSize());
+				logger.info("## File Name Original :" + originalfile.getOriginalFilename());
+				logger.info("## Upload Path :" + uploadPath);
+
+				String fileUpload = uploadPath + originalfile.getOriginalFilename();
+
+				logger.info("## File Name + Path :" + fileUpload);
+
+				int step = 1;
+				boolean isnext = true;
+
+				while (isnext) {
+					switch (step) {
+					case 1:
+						logger.info("Step : " + step + " >>  Create New Upload Path");
+						isnext = FileUtils.createDirectoryIfNotExist(uploadPath);
+						if (isnext) {
+							step++;
+							continue;
+						} else {
+							isnext = false;
 						}
-					
-				}
-				else {
-					//mav.addObject("errorCode", BuckWaConstants.MSGCODE_SELECT_FILE); 
-				}	
-				
-				
+					case 2:
+						logger.info("Step : " + step + " >> Save File To Server directory path");
 
-			
-			 			
-			}catch(Exception ex){
-				ex.printStackTrace();
-				resp.setStatus("1");
-				resp.setDescription(ex.getMessage());
+						// boolean isFileNameExist =
+						// fileLocationService.checkFileNameServerExist(fileName,BuckWaConstants.WORKPERSON_TABLE);
+						// if(!isFileNameExist){
+						isnext = FileUtils.saveFileToDirectory(originalfile, fileUpload);
+						if (isnext) {
+							step++;
+							continue;
+						} else {
+							isnext = false;
+						}
+						// }else{
+						// isnext = false;
+						// mav.addObject("errorCode",
+						// BuckWaConstants.MSGCODE_FILE_NAME_EXIST);
+						// }
+					case 3:
+						logger.info(" Step : " + step
+								+ " >> Insert into File createPBPAttachFile Database (table : academic_kpi_attach_file) For File Upload History");
+
+						AcademicKPIAttachFile academicKPIAttachFile = null;
+
+						academicKPIAttachFile = new AcademicKPIAttachFile();
+						academicKPIAttachFile.setKpiUserMappingId(String.valueOf(academicKPIId));
+						academicKPIAttachFile.setFullFilePathName(uploadPath + originalfile.getOriginalFilename());
+						academicKPIAttachFile.setFileName(originalfile.getOriginalFilename());
+						academicKPIAttachFile.setCreateBy(UserLoginUtil.getCurrentUserLogin());
+						fileLocationService.createPBPAttachFile(academicKPIAttachFile);
+
+					case 4:
+						// person.setPicture(fileUpload);
+					default:
+						isnext = false;
+					}
+				}
+
+			} else {
+				// mav.addObject("errorCode",
+				// BuckWaConstants.MSGCODE_SELECT_FILE);
 			}
-			logger.info(" End  ");
-			return resp;
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			resp.setStatus("1");
+			resp.setDescription(ex.getMessage());
+		}
+		logger.info(" End  ");
+		return resp;
+	}
+
+	@RequestMapping(value = "/uploadMultiFile", method = RequestMethod.POST)
+	public void UploadFile(MultipartHttpServletRequest request, HttpServletResponse response) {
+
+		String p_text = request.getParameter("p_data");
+		System.out.println("GetParameter :" + p_text);
+		System.out.println("555+");
+		Iterator<String> itr = request.getFileNames();
+
+		while (itr.hasNext()) {
+
+			MultipartFile file = request.getFile(itr.next());
+
+			String fileName = file.getOriginalFilename();
+			System.out.println(fileName);
+			logger.info("  File Name: " + fileName);
+		}
+	}
+
+	@RequestMapping(value = "/getImageFile/{personId}", method = RequestMethod.GET)
+	public void getImageFile(@PathVariable String personId, HttpServletResponse response)
+			throws IOException, URISyntaxException {
+		ByteArrayOutputStream jpegOutputStream = new ByteArrayOutputStream();
+		System.out.println("-----getImageFile By personID----" + personId);
+		try {
+			String path = PAMConstants.rbApp.getString("project.root.dir") + "profile_picture/" + personId + ".jpg";
+			// String path = personId;
+			System.out.println("Path File Image :" + path);
+			try {
+
+				BufferedImage image = ImageIO.read(new File(path));
+				ImageIO.write(image, "jpeg", jpegOutputStream);
+
+			} catch (IOException e) {
+
+				System.out.println("cannot find image :");
+				BufferedImage image2 = ImageIO.read(new File("../WebContent/baiwa/libs/img/default.jpg"));
+				ImageIO.write(image2, "jpeg", jpegOutputStream);
+			}
+
+		} catch (IllegalArgumentException e) {
+			response.sendError(HttpServletResponse.SC_NOT_FOUND);
+		}
+
+		byte[] imgByte = jpegOutputStream.toByteArray();
+
+		// response.setHeader("Cache-Control", "no-store");
+		// response.setHeader("Pragma", "no-cache");
+		// response.setDateHeader("Expires", 0);
+		response.setContentType("image/jpeg");
+		response.setContentLength(imgByte.length);
+		System.out.println("imgByte.length: " + imgByte.length);
+		ServletOutputStream responseOutputStream = response.getOutputStream();
+		responseOutputStream.write(imgByte);
+		responseOutputStream.flush();
+		responseOutputStream.close();
+	}
+
+	@RequestMapping(value = "/getAcademicWork_File/{KpiID}", method = RequestMethod.GET)
+	public void getFileAcademicWork(@PathVariable String KpiID, HttpServletResponse response)
+			throws IOException, URISyntaxException {
+		response.setContentType("multipart/x-mixed-replace;boundary=END");
+		// logger.info("---- Wait For Uploading File ----");
+		// String academicKPIId = request.getParameter("academicKPIId");
+		// logger.info("---- PersonId : ----"+academicKPIId);
+		ServletOutputStream responseOutputStream = response.getOutputStream();
+		// ByteArrayOutputStream jpegOutputStream = new ByteArrayOutputStream();
+		System.out.println("-----getFile By KPIID----" + KpiID);
+		try {
+			String path = PAMConstants.rbApp.getString("project.root.dir") + "attatchfile/" + "510923" + "/";
+			// String path = personId;
+			System.out.println("Path File Image :" + path);
+			File file = new File(path);
+			String[] paths;
+			// array of files and directory
+			paths = file.list();
+			for (int i = 0; i < paths.length; i++) {
+				System.out.println(" File kpi path" + paths[i]);
+				FileInputStream fis = new FileInputStream(path + paths[i]);
+				BufferedInputStream fif = new BufferedInputStream(fis);
+				int data = 0;
+				byte[] Byte = IOUtils.toByteArray(fif);
+				responseOutputStream.write(Byte);
+				//responseOutputStream.println("--END");
+				// while ((data = fif.read()) != -1) {
+				// out.write(data);
+				// }
+				fif.close();
+				//out.println("--END");
+				responseOutputStream.flush();
+			}
+
+			try {
+
+				BufferedImage image = ImageIO.read(new File(path));
+				// ImageIO.write(image, "jpeg", jpegOutputStream);
+
+			} catch (IOException e) {
+
+				System.out.println("cannot find image :");
+				// BufferedImage image2 = ImageIO.read(new
+				// File("../WebContent/baiwa/libs/img/default.jpg"));
+				// ImageIO.write(image2, "jpeg", jpegOutputStream);
+			}
+
+		} catch (IllegalArgumentException e) {
+			response.sendError(HttpServletResponse.SC_NOT_FOUND);
+		}
+
+		// byte[] imgByte = jpegOutputStream.toByteArray();
+
+		// response.setHeader("Cache-Control", "no-store");
+		// response.setHeader("Pragma", "no-cache");
+		// response.setDateHeader("Expires", 0);
+		// response.setContentType("image/jpeg");
+		// response.setContentLength(imgByte.length);
+		// System.out.println("imgByte.length: "+imgByte.length);
+		// ServletOutputStream responseOutputStream =
+		// response.getOutputStream();
+		// responseOutputStream.write(imgByte);
+		// responseOutputStream.flush();
+		// responseOutputStream.close();
+		responseOutputStream.flush();
+		responseOutputStream.println("--END--");
+		responseOutputStream.close(); 
+	}
+	
+	@RequestMapping(value="/downloadAttachFile/{attachFileId}", method = RequestMethod.GET)
+	public ModelAndView downloadAttachFile(@PathVariable String attachFileId ,HttpServletRequest httpRequest, HttpServletResponse httpResponse) {
+		
+		logger.info("#####  Start  Download   << "+ attachFileId +" >> #### ");
+		
+		//ModelAndView mav = new ModelAndView();
+		//mav.addObject(BuckWaConstants.PAGE_SELECT, BuckWaConstants.ADMIN_INIT);
+		AcademicKPIAttachFile academicKPIAttachFile = new AcademicKPIAttachFile();
+		
+		try {
+			
+			academicKPIAttachFile = fileLocationService.findPBPAttachFile(attachFileId);
+			
+			logger.info("File >>"+academicKPIAttachFile);
+			
+			//String filePath = fileLocation.getFilePath();
+			//String fileName = fileLocation.getFileName()+fileLocation.getFileExtension();
+			//String fullPath = filePath+fileName;
+			
+			InputStream inputStream = new FileInputStream(academicKPIAttachFile.getFullFilePathName());
+			
+			//httpResponse.setContentType(fileLocation.getFileType());
+			//httpResponse.setContentLength(Integer.parseInt(fileLocation.getFileSize()));
+			
+			// Check For IE OR NOT for Encoder fileName !
+			String user_agent = httpRequest.getHeader("user-agent");
+			boolean isInternetExplorer = (user_agent.indexOf(BuckWaConstants.BROWSER_MSIE) > -1);
+			if (isInternetExplorer) {
+				logger.info("Hello You Are IE ");
+				httpResponse.setHeader("Content-disposition", "attachment; filename=\"" + URLEncoder.encode(academicKPIAttachFile.getFileName(), "utf-8") + "\"");
+			} else {
+				logger.info("Hello You Not IE ");
+				httpResponse.setHeader("Content-disposition", "attachment; filename=\"" + MimeUtility.encodeWord(academicKPIAttachFile.getFileName()) + "\"");
+			}
+			
+			FileCopyUtils.copy( inputStream, httpResponse.getOutputStream());
+			   
+			httpResponse.flushBuffer();
+			
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			//mav.addObject("errorCode", BuckWaConstants.ERROR_E001);
 		}
 		
- 
+		return null;
 
-		@RequestMapping(value="/uploadMultiFile",  method = RequestMethod.POST)
-	      public void UploadFile(MultipartHttpServletRequest request, HttpServletResponse response) {
-
-	       String p_text = request.getParameter("p_data");
-	       System.out.println("GetParameter :"+p_text);
-	       System.out.println("555+");
-	          Iterator<String> itr=request.getFileNames();
-
-	          while(itr.hasNext()){
-	           
-	           MultipartFile file=request.getFile(itr.next());
-	           
-	           String fileName=file.getOriginalFilename();
-	           System.out.println(fileName);
-	           logger.info("  File Name: "+fileName);
-	          }
-	      }
-		@RequestMapping(value = "/getImageFile/{personId}", method = RequestMethod.GET)
-		public void getImageFile(@PathVariable String personId,HttpServletResponse response) throws IOException, URISyntaxException {
-			ByteArrayOutputStream jpegOutputStream = new ByteArrayOutputStream();
-			System.out.println("-----getImageFile By personID----"+ personId);
-			try {
-				String path = PAMConstants.rbApp.getString("project.root.dir") + "profile_picture/"+ personId+".jpg";
-				//String path = personId;
-				System.out.println("Path File Image :" + path);
-				try {
-					
-					BufferedImage image = ImageIO.read(new File(path));
-					ImageIO.write(image, "jpeg", jpegOutputStream);
-					
-				}catch (IOException e) {
-					
-					System.out.println("cannot find image :");
-					BufferedImage image2 = ImageIO.read(new File("../WebContent/baiwa/libs/img/default.jpg"));
-					ImageIO.write(image2, "jpeg", jpegOutputStream);
-				}
-
-			} catch (IllegalArgumentException e) {
-				response.sendError(HttpServletResponse.SC_NOT_FOUND);
-			}
-
-			byte[] imgByte = jpegOutputStream.toByteArray();
-
-			//response.setHeader("Cache-Control", "no-store");
-			//response.setHeader("Pragma", "no-cache");
-			//response.setDateHeader("Expires", 0);
-			response.setContentType("image/jpeg");
-			response.setContentLength(imgByte.length);
-			System.out.println("imgByte.length: "+imgByte.length);
-			ServletOutputStream responseOutputStream = response.getOutputStream();
-			responseOutputStream.write(imgByte);
-			responseOutputStream.flush();
-			responseOutputStream.close();
-		}
+	}
+	@RequestMapping(value="/deleteAttachFile/{kpiUserMappingId}/{fileName}/{attachFileId}",method = RequestMethod.GET)
+	public ModelAndView deleteAttachFile(@PathVariable String kpiUserMappingId,@PathVariable String attachFileId,@PathVariable String fileName ) {
 	 
+		logger.info(" kpiUserMappingId:"+kpiUserMappingId+" attachFileId:"+attachFileId+" fileName:" + fileName);
+		
+		ModelAndView mav = new ModelAndView();
+		mav.addObject(BuckWaConstants.PAGE_SELECT, BuckWaConstants.ADMIN_INIT);
+		mav.setViewName("viewImportWork"); 
+		try{
+			BuckWaRequest request = new BuckWaRequest(); 
+			request.put("attachFileId",attachFileId);
+			fileLocationService.deletePBPAttachFile(request);
+			try {
+				String path = PAMConstants.rbApp.getString("project.root.dir") + "attatchfile/"+kpiUserMappingId+"/"+fileName;
+				System.out.println("Path delete file :" +path);
+				File file = new File(path);
+				file.delete();
+				logger.info("deletefile sucess.");
+				
+			} catch (Exception ex) {
+				logger.info("deletefile error.");
+				ex.printStackTrace();
+				
+			}
+			//mav =  viewWork( kpiUserMappingId);
+ 	 			
+		}catch(Exception ex){
+			ex.printStackTrace();
+			//mav.addObject("errorCode", BuckWaConstants.ERROR_E001); 
+		}		
+		return null;
+		
+	}	
+	
+
 }

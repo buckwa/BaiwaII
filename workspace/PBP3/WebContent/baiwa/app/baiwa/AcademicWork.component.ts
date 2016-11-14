@@ -2,8 +2,11 @@ import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import {CommonService} from './../service/Common.service';
 import { Http, Headers, Response } from '@angular/http';
 import { FileSelectDirective, FileDropDirective, FileUploader } from 'ng2-file-upload';
+import {DomSanitizer} from '@angular/platform-browser';
+import {Observable} from 'rxjs/Rx';
 
-const URL = 'http://localhost:8080/PBP3/person/uploadMultiFile';
+
+const URL1 = 'http://localhost:8080/PBP3/person/importwork_file';
 
 
 @Component({
@@ -18,17 +21,21 @@ export class AcademicWork implements OnInit, AfterViewInit {
     public mark: String;
     public pointLPIList: any[];
     public kpival: any[][];
+    public statusKpi: boolean;
+    public fileWork: any[];
+    public tmpUrl: any;
+    public codeKpi:string;
+    fielPath;
+    public f:File;
+    chFilework:boolean;
 
+    public uploader: FileUploader = new FileUploader({ url: URL1 });
 
-
-    public uploader: FileUploader = new FileUploader({ url: URL });
-
-    constructor(private commonService: CommonService, private http: Http) {
+    constructor(private commonService: CommonService, private http: Http, private sanitizer: DomSanitizer) {
         this.academy = this.setdefualtkpi();
         this.kpiuserList = [];
         this.kpival = [];
         this.pointKPI = this.setdefualtpoitkpi();
-
 
     }
     setdefualtkpi() {
@@ -54,9 +61,9 @@ export class AcademicWork implements OnInit, AfterViewInit {
 
     ngOnInit() {
         this.GetUserSession();
-        
+
         this.uploader.onBuildItemForm = (fileItem: any, form: any) => {
-            form.append('data', '2');
+            form.append('academicKPIId', this.codeKpi);
         };
 
     }
@@ -96,8 +103,10 @@ export class AcademicWork implements OnInit, AfterViewInit {
         this.commonService.unLoading();
         this.mapKpi();
     }
-    public ClickGetPointKPI(Code: String, mark: String) {
+    public ClickGetPointKPI(Code:string, mark: String) {
+        this.uploader.clearQueue();
         this.mark = mark;
+        this.codeKpi = Code;
         var url = "../person/getImportWork/" + Code
         return this.http.get(url).subscribe(response => this.GetKPISucess(response),
             error => this.GetUserSessionError(error), () => console.log("editdoneUser !"));
@@ -105,6 +114,20 @@ export class AcademicWork implements OnInit, AfterViewInit {
     public GetKPISucess(response: any) {
         this.pointKPI = response.json(JSON.stringify(response._body));
         this.pointLPIList = this.pointKPI.academicKPIAttributeValueList;
+        this.fileWork = this.pointKPI.academicKPIAttachFileList;
+        if (this.fileWork.length ==0){
+            this.chFilework = true;
+        }else{
+            this.chFilework = false;
+        }
+
+       // FileUploader.prototype.addToQueue(this.f,null,null);
+        if (this.pointKPI.status == "APPROVED") {
+            this.statusKpi = true;
+        } else {
+            this.statusKpi = false;
+        }
+
 
     }
 
@@ -113,14 +136,14 @@ export class AcademicWork implements OnInit, AfterViewInit {
             this.kpival[i] = [];
             for (var j = 0; j < this.kpiuserList[i].length; j++) {
                 if (this.kpiuserList[i][j].academicKPIAttributeValueList.length == 2) {
-                    var temp = this.kpiuserList[i][j].academicKPIAttributeValueList[1].value ;
-                    this.kpival[i][j] = temp+"%";
+                    var temp = this.kpiuserList[i][j].academicKPIAttributeValueList[1].value;
+                    this.kpival[i][j] = temp + "%";
 
                 } else if (this.kpiuserList[i][j].academicKPIAttributeValueList.length == 3) {
                     this.kpival[i][j] = "";
 
                 } else if (this.kpiuserList[i][j].academicKPIAttributeValueList.length == 4) {
-                    var temp = this.kpiuserList[i][j].academicKPIAttributeValueList[2].value ;
+                    var temp = this.kpiuserList[i][j].academicKPIAttributeValueList[2].value;
                     this.kpival[i][j] = temp + "%";
 
                 } else {
@@ -133,6 +156,79 @@ export class AcademicWork implements OnInit, AfterViewInit {
 
 
     }
+
+
+    getImage(url: string) {
+        return Observable.create(observer => {
+            let req = new XMLHttpRequest();
+            req.open('get', url);
+            req.responseType = "arraybuffer";
+            req.onreadystatechange = function () {
+                if (req.readyState == 4 && req.status == 200) {
+                    observer.next(req.response);
+                    observer.complete();
+                }
+            };
+            req.send();
+        });
+    }
+
+    public getFile(KpiID: String) {
+        // var data = {'profileImg' : profileImg}
+        let url = "../person/getAcademicWork_File/" + KpiID;
+
+        this.getImage(url).subscribe(imageData => {
+            this.f = imageData;
+            
+            console.log("imageReturn :" + imageData.length);
+            
+            //var blob: Blob = new Blob(imageData, JSON.stringify('_body'));
+            this.tmpUrl = URL.createObjectURL(new Blob([imageData]));
+            this.fielPath = this.sanitize(this.tmpUrl);
+            //this.f = new File(new Blob([imageData]),"name.txt",{type: "image/png"});
+            //FileUploader.addToQueue();
+            console.log("file");
+        });
+
+
+        // the below will throw not implemented error
+        this.http.get(url).subscribe(image => {
+            console.log("imageUrl :" + image.url);
+            console.log(image.arrayBuffer());
+        });
+    }
+
+    public sanitize(url: string) {
+        return this.sanitizer.bypassSecurityTrustUrl(url);
+    }
+    public uploadFileAll(){
+        this.uploader.uploadAll();
+
+        window.setTimeout(() => {
+        var temp = !this.uploader.getNotUploadedItems().length;
+        this.ClickGetPointKPI(this.codeKpi,this.mark);
+        console.log("status upload :"+temp)
+        this.uploader.clearQueue();
+        },600);
+        
+
+    }   
+    public deleteFile (attachFileId:any,fileName:string){
+        var url = "../person/deleteAttachFile/" + this.codeKpi+"/"+fileName +"/"+attachFileId ;
+        
+        this.http.get(url).subscribe(response => this.deletesucess(response),
+            error => this.deleteError(), () => console.log("editdoneUser !"));;
+        
+    }
+    public deletesucess(response:any){
+
+        console.log("deletesucess!")
+        this.ClickGetPointKPI(this.codeKpi,this.mark);
+    }
+    public deleteError(){
+        console.log("deleteError!")
+    }
+
 
 
 }

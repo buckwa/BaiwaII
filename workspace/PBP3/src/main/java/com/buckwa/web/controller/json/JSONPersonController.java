@@ -57,7 +57,9 @@ import com.buckwa.domain.pbp.PBPWorkType;
 import com.buckwa.domain.pbp.PBPWorkTypeSub;
 import com.buckwa.domain.pbp.PBPWorkTypeWrapper;
 import com.buckwa.domain.pbp.report.DepartmentWorkTypeReport;
+import com.buckwa.domain.pbp.report.MinMaxBean;
 import com.buckwa.domain.pbp.report.RadarPlotReport;
+import com.buckwa.domain.pbp3.ReportMeanMax;
 import com.buckwa.domain.pbp3.ResponseObj;
 import com.buckwa.domain.pbp3.WorkSummary;
 import com.buckwa.domain.pbp3.WorkType;
@@ -224,11 +226,11 @@ public class JSONPersonController {
 
 			// String academicYear = schoolUtil.getCurrentAcademicYear();
 			// logger.info(" Start academicYear:" + academicYear);
-			BuckWaUser user = BuckWaUtils.getUserFromContext();
-			logger.info("radarPlotNew  username :" + user.getUsername() + " academicYear:" + academicYear);
-
+			//BuckWaUser user = BuckWaUtils.getUserFromContext();
+			logger.info("radarPlotNew  username :" + UserLoginUtil.getCurrentUserLogin() + " academicYear:" + academicYear);
+			UserLoginUtil.getCurrentUserLogin();
 			BuckWaRequest request = new BuckWaRequest();
-			request.put("username", user.getUsername());
+			request.put("username", UserLoginUtil.getCurrentUserLogin());
 			request.put("academicYear", academicYear);
 
 			BuckWaResponse response = new BuckWaResponse();
@@ -239,18 +241,18 @@ public class JSONPersonController {
 			if (response.getStatus() == BuckWaConstants.SUCCESS) {
 				person = (Person) response.getResObj("person");
 
-				user.setFirstLastName(person.getThaiName() + " " + person.getThaiSurname());
+				//user.setFirstLastName(person.getThaiName() + " " + person.getThaiSurname());
 
 				person.setAcademicYear(academicYear);
 				person.setAcademicYearList(academicYearUtil.getAcademicYearList());
 
-				user.setPersonProfile(person);
+				//user.setPersonProfile(person);
 				mav.addObject("person", person);
 
 				String facultyCode = person.getFacultyCode();
 
 				request.put("academicYear", academicYear);
-				request.put("userName", BuckWaUtils.getUserNameFromContext());
+				request.put("userName",  UserLoginUtil.getCurrentUserLogin());
 				request.put("round", person.getEvaluateRound());
 				request.put("employeeType", person.getEmployeeType());
 				request.put("facultyCode", facultyCode);
@@ -437,6 +439,147 @@ public class JSONPersonController {
 		return returnList;
 	}
 
+	
+	@RequestMapping(value = "/DepartmentName", method = RequestMethod.GET, headers = "Accept=application/json")
+	public ReportMeanMax radarPlotNewByYear2(HttpServletRequest httpRequest) {
+	 
+		ReportMeanMax resp = new ReportMeanMax();
+		try {
+			
+			String academicYear =UserLoginUtil.getCurrentAcademicYear(); // --*
+			String userName = UserLoginUtil.getCurrentUserLogin(); // --*
+			
+			
+			
+			String facultyName = schoolUtil.getFacutyByUserName(userName, academicYear);
+			String departmentName = schoolUtil.getDepartmentByUserName(userName, academicYear);			
+			String facultyCode = schoolUtil.getFacultyCodeByFacultyName(facultyName, academicYear);
+			String departmentCode  = schoolUtil.getDepartmentCodeByDepartmentName(departmentName, academicYear);
+			
+			
+			BuckWaRequest request = new BuckWaRequest();
+			request.put("academicYear",academicYear);
+			request.put("facultyCode", facultyCode);
+			request.put("departmentCode", departmentCode);
+
+			BuckWaResponse response =headService.getDepartmentMean(request);
+			if (response.getStatus() == BuckWaConstants.SUCCESS) {
+				String mean = (String) response.getResObj("meanValue");
+				resp.setDepartmentName(departmentName);
+				logger.info(" mean value = "+mean);
+				resp.setMean1(mean);
+			
+			 
+			}
+
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			
+		}
+
+		return resp;
+	}
+	
+	@RequestMapping(value = "/MinMaxBean", method = RequestMethod.GET, headers = "Accept=application/json")
+	public ReportMeanMax MinMaxBean(HttpServletRequest httpRequest) {
+	 
+
+		ReportMeanMax resp = new ReportMeanMax();
+		try {
+			
+			String academicYear =UserLoginUtil.getCurrentAcademicYear(); // --*
+			String userName = UserLoginUtil.getCurrentUserLogin(); // --*
+			
+			
+			
+			String facultyName = schoolUtil.getFacutyByUserName(userName, academicYear);
+			String departmentName = schoolUtil.getDepartmentByUserName(userName, academicYear);			
+			String facultyCode = schoolUtil.getFacultyCodeByFacultyName(facultyName, academicYear);
+			String departmentCode  = schoolUtil.getDepartmentCodeByDepartmentName(departmentName, academicYear);
+			
+			
+			
+			BuckWaRequest request = new BuckWaRequest();
+			request.put("academicYear",academicYear);
+			request.put("facultyCode", facultyCode);
+			request.put("departmentCode", departmentCode);
+			
+			request.put("worktypeCode", "1");
+			BuckWaResponse response =headService.getDepartmentMeanByWorkTypeCode(request);	 
+			if (response.getStatus() == BuckWaConstants.SUCCESS) {
+				MinMaxBean minMaxBean = (MinMaxBean) response.getResObj("minMaxBean");	
+				resp.setMean1(minMaxBean.getMeanValue());
+				resp.setMinValue1(minMaxBean.getMinValue());
+				resp.setMaxValue1(minMaxBean.getMaxValue());
+				resp.setMinDesc1(minMaxBean.getMinDesc());
+				resp.setMaxDesc1(minMaxBean.getMaxDesc());
+			}
+			
+			request.put("worktypeCode", "2");
+			response =headService.getDepartmentMeanByWorkTypeCode(request);	 
+			if (response.getStatus() == BuckWaConstants.SUCCESS) {
+				MinMaxBean minMaxBean = (MinMaxBean) response.getResObj("minMaxBean");		
+				
+				resp.setMean2(minMaxBean.getMeanValue());
+				resp.setMinValue2(minMaxBean.getMinValue());
+				resp.setMaxValue2(minMaxBean.getMaxValue());
+				resp.setMinDesc2(minMaxBean.getMinDesc());
+				resp.setMaxDesc2(minMaxBean.getMaxDesc());		
+			}	
+			
+			request.put("worktypeCode", "3");
+			response =headService.getDepartmentMeanByWorkTypeCode(request);	 
+			if (response.getStatus() == BuckWaConstants.SUCCESS) {
+				MinMaxBean minMaxBean = (MinMaxBean) response.getResObj("minMaxBean");		
+				
+				resp.setMean3(minMaxBean.getMeanValue());
+				resp.setMinValue3(minMaxBean.getMinValue());
+				resp.setMaxValue3(minMaxBean.getMaxValue());
+				resp.setMinDesc3(minMaxBean.getMinDesc());
+				resp.setMaxDesc3(minMaxBean.getMaxDesc());		
+			}	
+
+			
+			request.put("worktypeCode", "4");
+			response =headService.getDepartmentMeanByWorkTypeCode(request);	 
+			if (response.getStatus() == BuckWaConstants.SUCCESS) {
+				MinMaxBean minMaxBean = (MinMaxBean) response.getResObj("minMaxBean");		
+				
+				resp.setMean4(minMaxBean.getMeanValue());
+				resp.setMinValue4(minMaxBean.getMinValue());
+				resp.setMaxValue4(minMaxBean.getMaxValue());
+				resp.setMinDesc4(minMaxBean.getMinDesc());
+				resp.setMaxDesc4(minMaxBean.getMaxDesc());		
+			}	
+
+			
+			request.put("worktypeCode", "5");
+			response =headService.getDepartmentMeanByWorkTypeCode(request);	 
+			if (response.getStatus() == BuckWaConstants.SUCCESS) {
+				MinMaxBean minMaxBean = (MinMaxBean) response.getResObj("minMaxBean");		
+				
+				resp.setMean5(minMaxBean.getMeanValue());
+				resp.setMinValue5(minMaxBean.getMinValue());
+				resp.setMaxValue5(minMaxBean.getMaxValue());
+				resp.setMinDesc5(minMaxBean.getMinDesc());
+				resp.setMaxDesc5(minMaxBean.getMaxDesc());		
+			}	
+
+			resp.setDepartmentName(departmentName);
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			
+		}
+
+		return resp;
+	}
+	
+	
+	
+	
+	
 	@RequestMapping(value = "/getBarchart", method = RequestMethod.GET, headers = "Accept=application/json")
 	public List<RadarPlotReport> getWorkTypeBarChartReport() {
 		System.out.println(" ### getBarchart ###");
@@ -447,8 +590,8 @@ public class JSONPersonController {
 		try {
 			BuckWaRequest request = new BuckWaRequest();
 
-			String userName = BuckWaUtils.getUserNameFromContext();
-			String academicYear = schoolUtil.getCurrentAcademicYear();
+			String userName =  UserLoginUtil.getCurrentUserLogin();
+			String academicYear =  UserLoginUtil.getCurrentAcademicYear();
 
 			request.put("username", userName);
 			request.put("academicYear", academicYear);

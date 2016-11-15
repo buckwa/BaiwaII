@@ -139,7 +139,9 @@ public class PersonReportController {
 		
 		
 	    mav.addObject("departmentName", schoolUtil.getDepartmentByUserName(userName,academicYear));	
-		
+	    logger.info(" ####################academicYear  :"+academicYear);
+	    logger.info(" ####################facultyCode   :"+facultyCode);
+	    logger.info(" ####################departmentCode:"+departmentCode);
 		
 	    // Get Mean Value (faculty_code,department_code,academic_year)
 	    String mean1 ="";

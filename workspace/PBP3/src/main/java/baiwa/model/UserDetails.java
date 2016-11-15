@@ -14,6 +14,10 @@ public class UserDetails extends User implements UserBean{
 	 */
 	private static final long serialVersionUID = -1559040180792804240L;
 	private Long userId;
+	private Long personID;
+	private String facultyID;
+	private String departmentID;
+	private String academicYear;
 
 	public UserDetails(String username, String password, boolean enabled, boolean accountNonExpired,
 			boolean credentialsNonExpired, boolean accountNonLocked,
@@ -33,5 +37,40 @@ public class UserDetails extends User implements UserBean{
 		this.userId = userId;
 	}
 
+	public String getFacultyID() {
+		return facultyID;
+	}
+
+	public void setFacultyID(String facultyID) {
+		this.facultyID = facultyID;
+	}
+
+	public String getDepartmentID() {
+		return departmentID;
+	}
+
+	public void setDepartmentID(String departmentID) {
+		this.departmentID = departmentID;
+	}
+
+	public String getAcademicYear() {
+		return academicYear;
+	}
+
+	public void setAcademicYear(String academicYear) {
+		this.academicYear = academicYear;
+	}
+
+	public Long getPersonID() {
+		return personID;
+	}
+
+	public void setPersonID(Long personID) {
+		this.personID = personID;
+	}
+	
+	
+
+	
 
 }

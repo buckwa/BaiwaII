@@ -11,6 +11,12 @@ public interface  UserBean extends UserDetails{
 	
 	public String getUsername();
 	
+	public String getFacultyID();
+	
+	public String getAcademicYear();
+	
+	public String getDepartmentID();
+	
 	public Collection<GrantedAuthority> getAuthorities();
 
 }

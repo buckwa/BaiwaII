@@ -8,7 +8,7 @@ import baiwa.model.UserDetails;
 
 public class UserLoginUtil {
 	
-	public static  UserBean getUserLogin() {
+	private static  UserBean getUserLogin() {
 		UserBean userBean = null;
 		if (SecurityContextHolder.getContext().getAuthentication() != null) {
 			Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -33,5 +33,41 @@ public class UserLoginUtil {
 			return "ANONYMOUS";
 		}
 	}
+	public static String getCurrentFacultyCode(){
+		
+		String facultyCode = null;
+		try{
+		UserDetails userDetail = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		facultyCode = userDetail.getFacultyID();
+		
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return facultyCode;
+	}
+	public static String getCurrentDepartmentCode(){
+		String departmentCode = null;
+		try{
+		UserDetails userDetail = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		departmentCode = userDetail.getDepartmentID();
+		
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return departmentCode;
+	}
+	public static String getCurrentAcademicYear(){
+		String academicYear = null;
+		try{
+		UserDetails userDetail = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		academicYear = userDetail.getAcademicYear();
+		
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return academicYear;
+		
+	}
+
 
 }

@@ -689,8 +689,9 @@ public class JSONPersonController {
 			logger.info(" getUserSession ");
 			// getUsername login.
 			String user = UserLoginUtil.getCurrentUserLogin();
+			String facultyCode = UserLoginUtil.getCurrentFacultyCode();
 
-			System.out.println("Current UserLogin :" + user);
+			System.out.println("Current UserLogin  :" + user+" and FacultyCode :" +facultyCode +" AcademicYear :" +UserLoginUtil.getCurrentAcademicYear()+ " DepartmentCode :"+UserLoginUtil.getCurrentDepartmentCode() );
 			// userreturn = BuckWaUtils.getUserFromContext();
 
 			userreturn = personDetailService.GetUserSession(user);
@@ -698,9 +699,9 @@ public class JSONPersonController {
 			// userreturn.setUserName(user);
 			// userreturn.setFirstName("พิทักษ์ ");
 			// userreturn.setLastName("ธรรมวาริน");
-			userreturn.setCurrentAcademicYear("2558");
-			userreturn.setFacultyCode("01");
-			userreturn.setDepartmentCode("05");
+			userreturn.setCurrentAcademicYear(UserLoginUtil.getCurrentAcademicYear());
+			userreturn.setFacultyCode(facultyCode);
+			userreturn.setDepartmentCode(UserLoginUtil.getCurrentDepartmentCode());
 		} catch (Exception ex) {
 			ex.printStackTrace();
 
@@ -1261,7 +1262,7 @@ public class JSONPersonController {
 		try{
 			BuckWaRequest request = new BuckWaRequest();
 			//String facultyCode = BuckWaUtils.getFacultyCodeFromUserContext();
-			String facultyCode = "01" ;
+			String facultyCode = UserLoginUtil.getCurrentFacultyCode() ;
 			request.put("academicYear",academicYear);
 			request.put("workTypeCode",workTypeCode);
 			request.put("facultyCode",facultyCode);
@@ -1307,7 +1308,7 @@ public class JSONPersonController {
 	public AnonymousWrapper anonymouse(HttpServletResponse response1) {
 		logger.info(" # anonymous 0 ");
 		ModelAndView mav = new ModelAndView();
-		String academicYear ="2558";
+		String academicYear =UserLoginUtil.getCurrentAcademicYear();
 		mav.addObject("academicYearStr",academicYear);
 		AnonymousWrapper anonymousWrapper = new AnonymousWrapper();
 		anonymousWrapper.setAcademicYear(academicYear);
@@ -1322,7 +1323,7 @@ public class JSONPersonController {
 			}	
 			 
 			logger.info(" # anonymous 2");
-			String facultyCode = "01";
+			String facultyCode = UserLoginUtil.getCurrentFacultyCode();
 			logger.info(" # anonymous facultyCode:"+facultyCode);
 			request.put("academicYear",academicYear);
 			request.put("facultyCode",facultyCode);

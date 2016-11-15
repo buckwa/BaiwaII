@@ -7,7 +7,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -39,7 +38,10 @@ public class DefaultUserDetailsServiceImpl implements UserDetailsService{
 				user.getPassword(),
 				grantedAuthorityList
 				);
-		userDeail.setUserId(user.getUser_id());
+		userDeail.setPersonID(user.getPerson_id());
+		userDeail.setAcademicYear(user.getAcademic_year());
+		userDeail.setDepartmentID(user.getDepartment_id());
+		userDeail.setFacultyID(user.getCode());
 		
 		
 		return userDeail;

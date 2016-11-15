@@ -13,8 +13,15 @@ public class UserSession  {
  
  private String facultyCode;
  private String departmentCode;
+ private String person_id;
  
  
+public String getUserId() {
+	return person_id;
+}
+public void setUserId(String userId) {
+	this.person_id = userId;
+}
 public String getUserName() {
 	return userName;
 }

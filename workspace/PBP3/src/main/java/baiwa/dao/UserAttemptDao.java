@@ -28,13 +28,19 @@ public class UserAttemptDao {
 	
 	public UserAttempt findByUsername (String username){
 		username = username+"@kmitl.ac.th";
-		StringBuilder sql = new StringBuilder();
-		sql.append(" SELECT user_id , USERNAME, password ");
-		sql.append(" FROM buckwauser ");
-		sql.append(" WHERE username =  ? ");
+//		StringBuilder sql = new StringBuilder();
+//		sql.append(" SELECT user_id , USERNAME, password ");
+//		sql.append(" FROM buckwauser ");
+//		sql.append(" WHERE username =  ? ");
+		String sql = " SELECT  a.person_id , d.user_id  , d.username , d.password , b.code  AS department_id ,c.code , b.academic_year"
+				+ " FROM person_pbp a INNER JOIN department b ON a.department_desc = b.name "
+				+ " INNER JOIN faculty c ON  c.name = a.faculty_desc "
+				+ " INNER JOIN buckwauser d ON d.username = a.email "
+				+ " WHERE  a.email = ? "
+				+ " ORDER BY b.academic_year DESC LIMIT 1 " ;
 		UserAttempt  userAttempt = null;
 		try {
-		userAttempt = (UserAttempt)jdbcTemplate.queryForObject(sql.toString(),new Object[] { username 
+		userAttempt = (UserAttempt)jdbcTemplate.queryForObject(sql,new Object[] { username 
 				},new BeanPropertyRowMapper<UserAttempt>(UserAttempt.class)) ;
 		
 		}catch (EmptyResultDataAccessException e) 

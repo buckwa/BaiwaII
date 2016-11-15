@@ -9,16 +9,33 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
+var Common_service_1 = require('./../service/Common.service');
+var http_1 = require('@angular/http');
+var platform_browser_1 = require('@angular/platform-browser');
 var personReportInit = (function () {
-    function personReportInit() {
+    function personReportInit(commonService, http, sanitizer) {
+        this.commonService = commonService;
+        this.http = http;
+        this.sanitizer = sanitizer;
         this.libPath = "/PBP3/baiwa/libs/";
-        this.json = [{ "orderNo": 0, "axisName": "งานวิชาการ", "axisValue": "810.00", "axisName2": "งานวิชาการ", "axisValue2": "810.00", "mean": null }, { "orderNo": 0, "axisName": "งานพัฒนาวิชาการ", "axisValue": "100.00", "axisName2": "งานพัฒนาวิชาการ", "axisValue2": "100.00", "mean": null }, { "orderNo": 0, "axisName": "งานวิจัย หรือ สร้างสรรค์", "axisValue": "0.00", "axisName2": "งานวิจัย หรือ สร้างสรรค์", "axisValue2": "0.00", "mean": null }, { "orderNo": 0, "axisName": "งานบริการวิชาการ", "axisValue": "0.00", "axisName2": "งานบริการวิชาการ", "axisValue2": "0.00", "mean": null }, { "orderNo": 0, "axisName": "งานทำนุบำรุงศิลป วัฒนธรรมและสร้างชื่อเสียงให้กับสถาบันฯ", "axisValue": "0.00", "axisName2": "งานทำนุบำรุงศิลป วัฒนธรรมและสร้างชื่อเสียงให้กับสถาบันฯ", "axisValue2": "0.00", "mean": null }];
-        this.json2 = [{ "orderNo": 0, "axisName": "งานวิชาการ", "axisValue": "810.00", "axisName2": "งานวิชาการ", "axisValue2": "810.00", "mean": null }, { "orderNo": 0, "axisName": "งานพัฒนาวิชาการ", "axisValue": "100.00", "axisName2": "งานพัฒนาวิชาการ", "axisValue2": "100.00", "mean": null }, { "orderNo": 0, "axisName": "งานวิจัย หรือ สร้างสรรค์", "axisValue": "0.00", "axisName2": "งานวิจัย หรือ สร้างสรรค์", "axisValue2": "0.00", "mean": null }, { "orderNo": 0, "axisName": "งานบริการวิชาการ", "axisValue": "0.00", "axisName2": "งานบริการวิชาการ", "axisValue2": "0.00", "mean": null }, { "orderNo": 0, "axisName": "งานทำนุบำรุงศิลป วัฒนธรรมและสร้างชื่อเสียงให้กับสถาบันฯ", "axisValue": "0.00", "axisName2": "งานทำนุบำรุงศิลป วัฒนธรรมและสร้างชื่อเสียงให้กับสถาบันฯ", "axisValue2": "0.00", "mean": null }];
     }
     personReportInit.prototype.ngOnInit = function () {
         this.creatChart();
+        this.kendoGrid();
+        // this.GetUserSession();
     };
     personReportInit.prototype.ngAfterViewInit = function () {
+    };
+    personReportInit.prototype.kendoGrid = function () {
+        var _this = this;
+        var url = "../person/getRadarPlotNewByYear/2558";
+        return this.http.get(url).subscribe(function (response) { return _this.GetkendoGridSucess(response); }, function (error) { return _this.GetPersonError(error); }, function () { return console.log("getRadarPlotNewByYear1 !"); });
+    };
+    personReportInit.prototype.GetkendoGridSucess = function (response) {
+        this.json = response.json(JSON.stringify(response._body));
+    };
+    personReportInit.prototype.GetPersonError = function (error) {
+        console.log("GetPersonError.");
     };
     personReportInit.prototype.creatChart = function () {
         jQuery("#chartKendo").kendoChart({
@@ -28,7 +45,7 @@ var personReportInit = (function () {
             dataSource: {
                 transport: {
                     read: {
-                        url: "app/baiwa/kendoJson3.txt",
+                        url: "../person/getRadarPlotNewByYear/2558",
                         dataType: "json"
                     }
                 }
@@ -56,12 +73,13 @@ var personReportInit = (function () {
                 template: "#= series.name #: #= value #"
             }
         });
+        console.log("getRadarPlotNewByYear2 !");
     };
     personReportInit = __decorate([
         core_1.Component({
             templateUrl: 'app/baiwa/html/personReportInit.component.html'
         }), 
-        __metadata('design:paramtypes', [])
+        __metadata('design:paramtypes', [Common_service_1.CommonService, http_1.Http, platform_browser_1.DomSanitizer])
     ], personReportInit);
     return personReportInit;
 }());

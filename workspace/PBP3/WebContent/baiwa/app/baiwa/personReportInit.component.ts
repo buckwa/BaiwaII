@@ -1,6 +1,9 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import {CommonService} from './../service/Common.service';
 import { Http, Headers, Response } from '@angular/http';
+import { RouterModule }   from '@angular/router';
+import {DomSanitizer} from '@angular/platform-browser';
+import {Observable} from 'rxjs/Rx';
 declare var jQuery: any;
 
 @Component({
@@ -10,27 +13,41 @@ export class personReportInit {
 
     public libPath: string;
     public json: any;
-
+    public user: any;
     public json2: any;
 
-    constructor() {
+    constructor(private commonService: CommonService, private http: Http, private sanitizer: DomSanitizer) {
         this.libPath = "/PBP3/baiwa/libs/";
-        this.json = [{ "orderNo": 0, "axisName": "งานวิชาการ", "axisValue": "810.00", "axisName2": "งานวิชาการ", "axisValue2": "810.00", "mean": null }, { "orderNo": 0, "axisName": "งานพัฒนาวิชาการ", "axisValue": "100.00", "axisName2": "งานพัฒนาวิชาการ", "axisValue2": "100.00", "mean": null }, { "orderNo": 0, "axisName": "งานวิจัย หรือ สร้างสรรค์", "axisValue": "0.00", "axisName2": "งานวิจัย หรือ สร้างสรรค์", "axisValue2": "0.00", "mean": null }, { "orderNo": 0, "axisName": "งานบริการวิชาการ", "axisValue": "0.00", "axisName2": "งานบริการวิชาการ", "axisValue2": "0.00", "mean": null }, { "orderNo": 0, "axisName": "งานทำนุบำรุงศิลป วัฒนธรรมและสร้างชื่อเสียงให้กับสถาบันฯ", "axisValue": "0.00", "axisName2": "งานทำนุบำรุงศิลป วัฒนธรรมและสร้างชื่อเสียงให้กับสถาบันฯ", "axisValue2": "0.00", "mean": null }]
-
-
-        this.json2 = [{ "orderNo": 0, "axisName": "งานวิชาการ", "axisValue": "810.00", "axisName2": "งานวิชาการ", "axisValue2": "810.00", "mean": null }, { "orderNo": 0, "axisName": "งานพัฒนาวิชาการ", "axisValue": "100.00", "axisName2": "งานพัฒนาวิชาการ", "axisValue2": "100.00", "mean": null }, { "orderNo": 0, "axisName": "งานวิจัย หรือ สร้างสรรค์", "axisValue": "0.00", "axisName2": "งานวิจัย หรือ สร้างสรรค์", "axisValue2": "0.00", "mean": null }, { "orderNo": 0, "axisName": "งานบริการวิชาการ", "axisValue": "0.00", "axisName2": "งานบริการวิชาการ", "axisValue2": "0.00", "mean": null }, { "orderNo": 0, "axisName": "งานทำนุบำรุงศิลป วัฒนธรรมและสร้างชื่อเสียงให้กับสถาบันฯ", "axisValue": "0.00", "axisName2": "งานทำนุบำรุงศิลป วัฒนธรรมและสร้างชื่อเสียงให้กับสถาบันฯ", "axisValue2": "0.00", "mean": null }]
-
-
+     
     }
     ngOnInit() {
         this.creatChart();
-
+        this.kendoGrid();
+       // this.GetUserSession();
 
     }
 
     ngAfterViewInit() {
 
     }
+
+    public kendoGrid(){
+        var url = "../person/getRadarPlotNewByYear/2558";
+        return this.http.get(url).subscribe(response => this.GetkendoGridSucess(response),
+        error => this.GetPersonError(error), () => console.log("getRadarPlotNewByYear1 !"));
+    }
+
+    public GetkendoGridSucess(response: any) {
+        this.json = response.json(JSON.stringify(response._body));
+
+    }
+
+    public GetPersonError(error: String) {
+        console.log("GetPersonError.")
+
+    }
+
+
 
     public creatChart(){
          jQuery("#chartKendo").kendoChart({
@@ -40,7 +57,7 @@ export class personReportInit {
                 dataSource: {
                     transport: {
                         read: {
-                            url: "app/baiwa/kendoJson3.txt",
+                            url: "../person/getRadarPlotNewByYear/2558",
                             dataType: "json"
                         }
                     } 
@@ -68,8 +85,7 @@ export class personReportInit {
                     template: "#= series.name #: #= value #"
                 }
             });
-            
-
+            console.log("getRadarPlotNewByYear2 !");
     }
 
 

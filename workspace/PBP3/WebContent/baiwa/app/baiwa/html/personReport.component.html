@@ -1,56 +1,12 @@
 <div class="box-typical box-typical-padding">
     <section class="card card-default">
         <header class="card-header">
-            ระดับคะแนนในภาควิชา วิศวกรรมคอมพิวเตอร์
+            ระดับคะแนนในภาควิชา {{nameDepart}}
         </header>
         <div class="card-block">
         <div id="KendoChart"></div>  
 
-        <!--<script>
-
-        function createChart1() {
-        	 $("#KendoChart").kendoChart({
-                 dataSource: {
-                     transport: {
-                         read: {
-                         	 url: "<%=request.getContextPath()%>/json/president/getWorkTypeBarchart/1",
-                             dataType: "json"
-                         }
-                     } 
-                 },
-        	        title: {
-        	            text: "ระดับคะแนนระดับสถาบัน ด้านวิชาการ"
-        	        },
-        	        series: [{
-        	            type: "column",
-        	            field: "axisValue",
-        	            name: "ระดับคะแนน"
-        	        }],
-        	        categoryAxis: {
-        	            field: "axisName",
-        	            labels: {
-        	                rotation: -90
-        	            }
-        	        },
-        	        valueAxis: {
-        	        	min: 0,
-        	        	max: 60,
-        	        	majorUnit: 10
-       	        	},
-                    tooltip: {
-                        visible: true,
-                        template: "#= series.name #: #= value #"
-                    }
-        	    });
-        	
-            
-        }
-
-        $(document).ready(createChart1);
-        
-        $(document).bind("kendo:skinChange", createChart1);
-        </script>-->
-            <!--<img src="{{libPath}}img/kendo_2.png">-->
+      
         </div>
     </section>
 </div>

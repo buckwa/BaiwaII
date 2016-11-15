@@ -8,32 +8,74 @@ declare var jQuery: any;
 })
 export class personReport  {
 
-public libPath: string;
+    public libPath: string;
+    public json: any;
+    public nameDepart: any;
+    public mean1: any;
 
-    constructor() {
+
+    constructor(private commonService: CommonService, private http: Http) {
         this.libPath = "/PBP3/baiwa/libs/";
 
     }
     ngOnInit() {
-        this.kendoChart();
+        this.DepartmentName();
+        
+        
        
     }
     ngAfterViewInit() {
         
     }
+    public DepartmentName(){
+        var url = "../person/DepartmentName";
+        return this.http.get(url).subscribe(response => this.GetkendoSucess(response),
+        error => this.GetDepartmentNameError(error), () => console.log("DepartmentName !"));
+    }
+
+    public GetkendoSucess(response: any) {
+        this.json = response.json(JSON.stringify(response._body));
+        this.nameDepart =this.json.departmentName;
+        this.mean1 =this.json.mean1;
+        this.kendoChart();
+    }
+
+    public GetDepartmentNameError(error: String) {
+        console.log("GetDepartmentNameError.")
+
+    }
+    
         
-    public kendoChart(): void {
+    public NameDepartment(){
+        var url = "../person/getRadarPlotNewByYear/2558";
+        return this.http.get(url).subscribe(response => this.GetkendoGridSucess(response),
+        error => this.GetPersonError(error), () => console.log("getRadarPlotNewByYear1 !"));
+    }
+
+     public GetkendoGridSucess(response: any) {
+        this.json = response.json(JSON.stringify(response._body));
+
+    }
+
+    public GetPersonError(error: String) {
+        console.log("GetPersonError.")
+
+    }
+
+    public kendoChart() {
+
+
         jQuery("#KendoChart").kendoChart({
                  dataSource: {
                      transport: {
                          read: {
-                         	 url: "app/baiwa/kendoJson.txt",
+                         	 url: "../person/getBarchart",
                              dataType: "json"
                          }
                      } 
                  },
         	        title: {
-        	            text: "ระดับคะแนนระดับสถาบัน ด้านวิชาการ"
+        	            text: "ระดับคะแนน ค่าเฉลี่ย "+ this.mean1
         	        },
         	        series: [{
         	            type: "column",

@@ -69,9 +69,9 @@ var home = (function () {
             this.sumasix2 = parseFloat(this.sumasix2) + parseFloat(this.work[i].axisValue2);
         }
     };
-    home.prototype.GetPersonByAcadamy = function (user) {
+    home.prototype.GetPersonByAcadamy = function (user, year) {
         var _this = this;
-        var url = "../person/getPersonByAcademicYear/" + user + "/2558";
+        var url = "../person/getPersonByAcademicYear/" + user + "/" + year;
         this.http.get(url).subscribe(function (response) { return _this.GetPersonSucess(response); }, function (error) { return _this.GetPersonError(error); }, function () { return console.log("editdone !"); });
     };
     home.prototype.GetPersonSucess = function (response) {
@@ -108,7 +108,7 @@ var home = (function () {
     };
     home.prototype.GetuserSucess = function (response) {
         this.user = response.json(JSON.stringify(response._body));
-        this.GetPersonByAcadamy(this.user.userName);
+        this.GetPersonByAcadamy(this.user.userName, this.user.currentAcademicYear);
         this.GetRadarPlotNew(this.user.userName, this.user.currentAcademicYear, "1");
     };
     home.prototype.createChart = function () {

@@ -89,8 +89,8 @@ export class home implements OnInit, AfterViewInit {
             this.sumasix2 = parseFloat(this.sumasix2) + parseFloat(this.work[i].axisValue2);
         }
     }
-    public GetPersonByAcadamy(user: String) {
-        var url = "../person/getPersonByAcademicYear/" + user + "/2558"
+    public GetPersonByAcadamy(user: String,  year: String) {
+        var url = "../person/getPersonByAcademicYear/" + user + "/" + year
         this.http.get(url).subscribe(response => this.GetPersonSucess(response),
             error => this.GetPersonError(error), () => console.log("editdone !")
         );
@@ -135,7 +135,7 @@ export class home implements OnInit, AfterViewInit {
     public GetuserSucess(response: any) {
         this.user = response.json(JSON.stringify(response._body));
 
-        this.GetPersonByAcadamy(this.user.userName);
+        this.GetPersonByAcadamy(this.user.userName, this.user.currentAcademicYear);
         this.GetRadarPlotNew(this.user.userName, this.user.currentAcademicYear, "1");
     }
 

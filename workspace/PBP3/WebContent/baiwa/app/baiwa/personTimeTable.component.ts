@@ -13,6 +13,8 @@ export class personTimeTable implements OnInit {
     public data: any;
     public a: any;
     public user:any;
+    public year:any[];
+    public acdemicyear:string;
 
     @ViewChild('personTimeTable') timetabletable;
     @ViewChild('personTimeTable2') timetabletable2;
@@ -71,13 +73,13 @@ export class personTimeTable implements OnInit {
     }
    
     public getDatatabel1(){
-        var url = "../personTimeTable/getTimeTable/"+this.user.currentAcademicYear+"/"+this.user.userName+"/1";
+        var url = "../personTimeTable/getTimeTable/"+this.acdemicyear+"/"+this.user.userName+"/1";
          this.http.get(url).subscribe(response => this.getTimeTableSucess(response),
             error => this.GetPersonError(error), () => console.log("callsevice done !"));
 
     }
     public getDatatabel2(){
-        var url = "../personTimeTable/getTimeTable/"+this.user.currentAcademicYear+"/"+this.user.userName+"/2";
+        var url = "../personTimeTable/getTimeTable/"+this.acdemicyear+"/"+this.user.userName+"/2";
          this.http.get(url).subscribe(response => this.getTimeTableSucess2(response),
             error => this.GetPersonError(error), () => console.log("callsevice done !"));
 
@@ -101,12 +103,23 @@ export class personTimeTable implements OnInit {
     }
     public GetuserSucess(response: any) {
         this.user = response.json(JSON.stringify(response._body));
+        this.year = this.user.academicYearList;
+        //this.year = ["2557","2558","2559"];
+        this.acdemicyear = this.user.currentAcademicYear;
         this.getDatatabel1();
         this.getDatatabel2();
         return true;
     }
     GetPersonError(error:any){
         console.log("call service error"+error);
+
+    }
+    changYear(value:any){
+        this.acdemicyear = value;
+        console.log("change year"+value)
+        this.getDatatabel1();
+        this.getDatatabel2();
+        //this.year = this.repositories.find(repository => repository.name === this.selectedRepositoryName);
 
     }
 

@@ -7,8 +7,10 @@
             </div>
 
             <div class="col-lg-2 col-md-2">
-                <select id="exampleSelect" class="text-right">
-					<option value="2558" selected="selected">2558</option>
+                <select  name="select"  class="form-control" [(ngModel)]="acdemicyear" (ngModelChange)="changYear($event)"  >
+							<option *ngFor="let a of year " [value]="a.name" >{{a.name}}</option>
+                            
+                            
 				</select>
 
             </div>

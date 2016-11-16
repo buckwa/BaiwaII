@@ -247,7 +247,7 @@ public class KMILTCommonController {
 		return mav;
 	}	
 	
-	@RequestMapping(value="downloadDoc.htm")
+	@RequestMapping(value="downloadDoc")
 	public ModelAndView download(@RequestParam("fileCode") String fileCode ,HttpServletRequest httpRequest, HttpServletResponse httpResponse,@RequestHeader("User-Agent") String userAgent) {
 		
 		logger.info("#####  Start  Download   << "+ fileCode +" >> #### ");

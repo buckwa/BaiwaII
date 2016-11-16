@@ -61,12 +61,12 @@ var personTimeTable = (function () {
     };
     personTimeTable.prototype.getDatatabel1 = function () {
         var _this = this;
-        var url = "../personTimeTable/getTimeTable/" + this.user.currentAcademicYear + "/" + this.user.userName + "/1";
+        var url = "../personTimeTable/getTimeTable/" + this.acdemicyear + "/" + this.user.userName + "/1";
         this.http.get(url).subscribe(function (response) { return _this.getTimeTableSucess(response); }, function (error) { return _this.GetPersonError(error); }, function () { return console.log("callsevice done !"); });
     };
     personTimeTable.prototype.getDatatabel2 = function () {
         var _this = this;
-        var url = "../personTimeTable/getTimeTable/" + this.user.currentAcademicYear + "/" + this.user.userName + "/2";
+        var url = "../personTimeTable/getTimeTable/" + this.acdemicyear + "/" + this.user.userName + "/2";
         this.http.get(url).subscribe(function (response) { return _this.getTimeTableSucess2(response); }, function (error) { return _this.GetPersonError(error); }, function () { return console.log("callsevice done !"); });
     };
     personTimeTable.prototype.getTimeTableSucess = function (response) {
@@ -84,12 +84,22 @@ var personTimeTable = (function () {
     };
     personTimeTable.prototype.GetuserSucess = function (response) {
         this.user = response.json(JSON.stringify(response._body));
+        this.year = this.user.academicYearList;
+        //this.year = ["2557","2558","2559"];
+        this.acdemicyear = this.user.currentAcademicYear;
         this.getDatatabel1();
         this.getDatatabel2();
         return true;
     };
     personTimeTable.prototype.GetPersonError = function (error) {
         console.log("call service error" + error);
+    };
+    personTimeTable.prototype.changYear = function (value) {
+        this.acdemicyear = value;
+        console.log("change year" + value);
+        this.getDatatabel1();
+        this.getDatatabel2();
+        //this.year = this.repositories.find(repository => repository.name === this.selectedRepositoryName);
     };
     __decorate([
         core_1.ViewChild('personTimeTable'), 

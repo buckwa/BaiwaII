@@ -1,15 +1,21 @@
 package com.buckwa.service.impl.util;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
+
 
 import com.buckwa.service.intf.util.PathUtil;
 import com.buckwa.util.FileUtils;
+import com.buckwa.util.PAMConstants;
 
 @Service("pathUtil") 
+@ComponentScan(basePackages = { "com.buckwa.service.impl.*" })
+@PropertySource("classpath:application.properties")
 public class PathUtilImpl   implements PathUtil{
 	
-	
+
 	 
 	@Value("${project.root.dir}")
 	private String projectRootDir;
@@ -155,8 +161,8 @@ public class PathUtilImpl   implements PathUtil{
 	public String getDocPath(  ) {
 		 String returnValue = "";
 		 try{			  
-			 FileUtils.createDirectoryIfNotExist(projectRootDir+"doc"); 
-			 returnValue = projectRootDir+"doc/";				 
+			 FileUtils.createDirectoryIfNotExist(PAMConstants.rbApp.getString("project.root.dir")+"doc"); 
+			 returnValue = PAMConstants.rbApp.getString("project.root.dir")+"doc/";				 
 		 }catch(Exception ex){
 			 ex.printStackTrace();
 		 }

@@ -275,6 +275,22 @@ export class home implements OnInit, AfterViewInit {
             console.log(image.arrayBuffer());
         });
     }
+     public recalculate(){
+        this.commonService.loading();
+        var url = "../person/recalculate";
+        return this.http.get(url).subscribe(response => this.recalsucess(response),
+            error => this.recalError(error), () => console.log("editdone !")
+        );
+    }
+    recalsucess(response:any){
+        this.commonService.unLoading();
+        console.log("recal sucess");
+        window.location.reload();
+    }
+    recalError(error:any){
+        this.commonService.unLoading();
+        console.log("recal error");
+    }
 
 
 

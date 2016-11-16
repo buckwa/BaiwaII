@@ -15,7 +15,7 @@
             <br>
                 <hr>
                 <p class="text-center">ภาคเรียนที่ 1</p>
-                <table id="DTable" class="display table table-bordered table-striped" cellspacing="0" style="width:100%;">
+                <table id="DTable" [jquery-datatable]="makeDataTable" #personTimeTable="DataTableDirect" class="display table table-bordered table-striped" cellspacing="0" style="width:100%;">
                     <thead>
                         <tr>
                             <th>รหัสวิชา</th>
@@ -37,7 +37,7 @@
                 <br>
 
                 <p class="text-center">ภาคเรียนที่ 2</p>
-                <table id="D2Table" class="display table table-bordered table-striped" cellspacing="0" style="width:100%;">
+                <table id="D2Table" [jquery-datatable]="makeDataTable2" #personTimeTable2="DataTableDirect" class="display table table-bordered table-striped" cellspacing="0" style="width:100%;">
                     <thead>
                         <tr>
                             <th>รหัสวิชา</th>

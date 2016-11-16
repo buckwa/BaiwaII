@@ -9,91 +9,101 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
+var Common_service_1 = require('./../service/Common.service');
+var http_1 = require('@angular/http');
 var personTimeTable = (function () {
-    function personTimeTable() {
+    function personTimeTable(commonService, http) {
+        this.commonService = commonService;
+        this.http = http;
         this.makeDataTable = {
+            "searching": false,
+            "bPaginate": false,
+            "paging": false,
+            "bLengthChange": false,
+            "bInfo": false,
+            "bAutoWidth": false,
             "columns": [
-                { "data": "code" },
-                { "data": "name" },
-                { "data": "sub" },
-                { "data": "hour" },
-                { "data": "point" },
-                { "data": "class" },
-                { "data": "student" },
-                { "data": "section" },
-                { "data": "time" },
-                { "data": "other" }
+                { "data": "subjectCode" },
+                { "data": "subjectName" },
+                { "data": "lecOrPrac" },
+                { "data": "teachHr" },
+                { "data": "pracHr" },
+                { "data": "degreeStr" },
+                { "data": "totalStudent" },
+                { "data": "secNo" },
+                { "data": "teachDayStr" },
+                { "data": "remark" }
             ]
         };
-        this.data = {
-            "data": [
-                { "code": "1102001", "name": "Computer Programming", "sub": "T", "hour": "3", "point": "4", "class": "AA", "student": "45", "section": "1", "time": "mon", "other": "-" },
-                { "code": "1102002", "name": "Computer Programming2", "sub": "T", "hour": "3", "point": "4", "class": "AA", "student": "45", "section": "1", "time": "mon", "other": "-" },
-                { "code": "1102003", "name": "Computer Programming3", "sub": "T", "hour": "3", "point": "4", "class": "AA", "student": "45", "section": "1", "time": "mon", "other": "-" }
+        this.makeDataTable2 = {
+            "searching": false,
+            "bPaginate": false,
+            "paging": false,
+            "bLengthChange": false,
+            "bInfo": false,
+            "bAutoWidth": false,
+            "columns": [
+                { "data": "subjectCode" },
+                { "data": "subjectName" },
+                { "data": "lecOrPrac" },
+                { "data": "teachHr" },
+                { "data": "pracHr" },
+                { "data": "degreeStr" },
+                { "data": "totalStudent" },
+                { "data": "secNo" },
+                { "data": "teachDayStr" },
+                { "data": "remark" }
             ]
         };
     }
     personTimeTable.prototype.ngOnInit = function () {
-        //this.timetable = this.data.DataTable;
-        //this.makeDataTable.data = this.data;     
-        this.datatable();
-        this.dataTB();
+        this.GetUserSession();
     };
-    personTimeTable.prototype.datatable = function () {
-        jQuery("#DTable").DataTable({
-            "searching": false,
-            "bPaginate": false,
-            "paging": false,
-            "bLengthChange": false,
-            "bInfo": false,
-            "bAutoWidth": false,
-            "ajax": "app/baiwa/jsonTimeTable.txt",
-            "columns": [
-                { "data": "subjectCode" },
-                { "data": "subjectName" },
-                { "data": "lecOrPrac" },
-                { "data": "teachHr" },
-                { "data": "pracHr" },
-                { "data": "degreeStr" },
-                { "data": "totalStudent" },
-                { "data": "secNo" },
-                { "data": "teachDayStr" },
-                { "data": "remark" }
-            ]
-        });
+    personTimeTable.prototype.getDatatabel1 = function () {
+        var _this = this;
+        var url = "../personTimeTable/getTimeTable/" + this.user.currentAcademicYear + "/" + this.user.userName + "/1";
+        this.http.get(url).subscribe(function (response) { return _this.getTimeTableSucess(response); }, function (error) { return _this.GetPersonError(error); }, function () { return console.log("callsevice done !"); });
     };
-    personTimeTable.prototype.dataTB = function () {
-        this.a = jQuery("#D2Table").DataTable({
-            "searching": false,
-            "bPaginate": false,
-            "paging": false,
-            "bLengthChange": false,
-            "bInfo": false,
-            "bAutoWidth": false,
-            "ajax": "app/baiwa/jsonTimeTable2.txt",
-            "columns": [
-                { "data": "subjectCode" },
-                { "data": "subjectName" },
-                { "data": "lecOrPrac" },
-                { "data": "teachHr" },
-                { "data": "pracHr" },
-                { "data": "degreeStr" },
-                { "data": "totalStudent" },
-                { "data": "secNo" },
-                { "data": "teachDayStr" },
-                { "data": "remark" }
-            ]
-        });
+    personTimeTable.prototype.getDatatabel2 = function () {
+        var _this = this;
+        var url = "../personTimeTable/getTimeTable/" + this.user.currentAcademicYear + "/" + this.user.userName + "/2";
+        this.http.get(url).subscribe(function (response) { return _this.getTimeTableSucess2(response); }, function (error) { return _this.GetPersonError(error); }, function () { return console.log("callsevice done !"); });
+    };
+    personTimeTable.prototype.getTimeTableSucess = function (response) {
+        this.makeDataTable.data = response.json(JSON.stringify(response._body));
+        this.timetabletable.show();
+    };
+    personTimeTable.prototype.getTimeTableSucess2 = function (response) {
+        this.makeDataTable2.data = response.json(JSON.stringify(response._body));
+        this.timetabletable2.show();
+    };
+    personTimeTable.prototype.GetUserSession = function () {
+        var _this = this;
+        var url = "../person/getUserSession";
+        this.http.get(url).subscribe(function (response) { return _this.GetuserSucess(response); }, function (error) { return _this.GetPersonError(error); }, function () { return console.log("callsevice done !"); });
+    };
+    personTimeTable.prototype.GetuserSucess = function (response) {
+        this.user = response.json(JSON.stringify(response._body));
+        this.getDatatabel1();
+        this.getDatatabel2();
+        return true;
+    };
+    personTimeTable.prototype.GetPersonError = function (error) {
+        console.log("call service error" + error);
     };
     __decorate([
         core_1.ViewChild('personTimeTable'), 
         __metadata('design:type', Object)
-    ], personTimeTable.prototype, "namelistcstable", void 0);
+    ], personTimeTable.prototype, "timetabletable", void 0);
+    __decorate([
+        core_1.ViewChild('personTimeTable2'), 
+        __metadata('design:type', Object)
+    ], personTimeTable.prototype, "timetabletable2", void 0);
     personTimeTable = __decorate([
         core_1.Component({
             templateUrl: 'app/baiwa/html/personTimeTable.component.html'
         }), 
-        __metadata('design:paramtypes', [])
+        __metadata('design:paramtypes', [Common_service_1.CommonService, http_1.Http])
     ], personTimeTable);
     return personTimeTable;
 }());

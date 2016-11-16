@@ -59,6 +59,7 @@ import com.buckwa.domain.pbp.PBPWorkTypeWrapper;
 import com.buckwa.domain.pbp.report.DepartmentWorkTypeReport;
 import com.buckwa.domain.pbp.report.MinMaxBean;
 import com.buckwa.domain.pbp.report.RadarPlotReport;
+import com.buckwa.domain.pbp.report.TimeTableReport;
 import com.buckwa.domain.pbp3.ReportMeanMax;
 import com.buckwa.domain.pbp3.ResponseObj;
 import com.buckwa.domain.pbp3.WorkSummary;
@@ -845,6 +846,7 @@ public class JSONPersonController {
 			userreturn.setCurrentAcademicYear(UserLoginUtil.getCurrentAcademicYear());
 			userreturn.setFacultyCode(facultyCode);
 			userreturn.setDepartmentCode(UserLoginUtil.getCurrentDepartmentCode());
+			userreturn.setAcademicYearList(academicYearUtil.getAcademicYearList());
 		} catch (Exception ex) {
 			ex.printStackTrace();
 
@@ -1508,6 +1510,85 @@ public class JSONPersonController {
 		logger.info(" # anonymous success ");
 		return anonymousWrapper;
  
+	}
+	@RequestMapping(value="/recalculate", method = RequestMethod.GET ,headers = "Accept=application/json")
+	public Person recalculate(HttpServletRequest httpRequest) {
+		logger.info(" Start  academicYear:"+academicYearUtil.getAcademicYear());
+		//ModelAndView mav = new ModelAndView();
+		//mav.setViewName("initPerson");
+		//mav.addObject(BuckWaConstants.PAGE_SELECT, BuckWaConstants.PERSON_INIT);
+		Person person = null;
+		try {
+			
+			
+			String academicYear = UserLoginUtil.getCurrentAcademicYear();
+			
+			//BuckWaUser user = BuckWaUtils.getUserFromContext();
+			String facultyCode = UserLoginUtil.getCurrentFacultyCode();
+		 
+			
+			BuckWaRequest request = new BuckWaRequest();
+			request.put("username", UserLoginUtil.getCurrentUserLogin());
+			request.put("academicYear", academicYear);
+			BuckWaResponse response = personProfileService.getByUsername(request);
+			
+			
+            TimeTableReport timetableReport = new TimeTableReport();
+            timetableReport.setAcademicYearList(academicYearUtil.getAcademicYearList()); 
+            timetableReport.setAcademicYear(academicYear);
+            timetableReport.setAcademicYearSelect(academicYear); 
+			//mav.addObject("academicYearSelect", academicYear);
+			
+
+			if (response.getStatus() == BuckWaConstants.SUCCESS) {
+				person = (Person) response.getResObj("person");
+				//user.setFirstLastName(person.getThaiName()+" "+person.getThaiSurname());
+		 
+				person.setAcademicYear(academicYear);
+				person.setAcademicYearList(academicYearUtil.getAcademicYearList());
+				person.setEvaluateRound("1");
+				//user.setPersonProfile(person);
+				//mav.addObject("person", person);
+	 
+				 
+				request.put("academicYear",academicYear);
+				request.put("userName", UserLoginUtil.getCurrentUserLogin());
+				request.put("round",person.getEvaluateRound());
+				request.put("employeeType",person.getEmployeeTypeNo());
+				request.put("facultyCode",facultyCode);
+	 
+				response = pBPWorkTypeService.getCalculateByAcademicYear(request);
+				
+				person.setEvaluateRound("2");
+				pBPWorkTypeService.getCalculateByAcademicYear(request);
+				
+				if(response.getStatus()==BuckWaConstants.SUCCESS){	
+					PBPWorkTypeWrapper pBPWorkTypeWrapper = (PBPWorkTypeWrapper)response.getResObj("pBPWorkTypeWrapper"); 
+					pBPWorkTypeWrapper.setAcademicYear(academicYear);
+					person.setpBPWorkTypeWrapper(pBPWorkTypeWrapper);
+				}	
+				System.out.println("recal sucess!");
+				
+
+
+				 
+				//new RedirectView(httpRequest.getContextPath() + "/baiwa/#/");
+				
+				
+			} else {
+				logger.info("  Fail !!!! :"+response.getErrorCode()+" : "+response.getErrorDesc());
+				//mav.addObject("errorCode", response.getErrorCode());
+			}
+			
+
+			
+		} catch(Exception ex) {
+			ex.printStackTrace();
+			//mav.addObject(BuckWaConstants.ERROR_CODE, BuckWaConstants.ERROR_E001);
+		}
+		return person;
+
+		
 	}
 	
 

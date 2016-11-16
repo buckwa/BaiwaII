@@ -31,6 +31,8 @@ import { FileSelectDirective } from 'ng2-file-upload';
 import { FileDropDirective } from 'ng2-file-upload';
 import { ImagePreview} from './service/image_preview.directive';
 
+import {jQueryDataTableDirective} from './datatable.directive';
+
 
 const routes: Routes = [
 
@@ -82,7 +84,8 @@ const routes: Routes = [
         userCreate,//ยุง
         FileSelectDirective,
         FileDropDirective,
-        ImagePreview
+        ImagePreview,
+        jQueryDataTableDirective
     ],
     providers: [
         CommonService,

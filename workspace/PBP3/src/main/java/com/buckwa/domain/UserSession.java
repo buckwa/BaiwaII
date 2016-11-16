@@ -3,6 +3,7 @@ package com.buckwa.domain;
 import java.util.List;
 
 import com.buckwa.domain.BaseDomain;
+import com.buckwa.domain.pbp.AcademicYear;
 
 public class UserSession  {
 	
@@ -14,6 +15,7 @@ public class UserSession  {
  private String facultyCode;
  private String departmentCode;
  private String person_id;
+ private List<AcademicYear> academicYearList;
  
  
 public String getUserId() {
@@ -57,6 +59,12 @@ public String getDepartmentCode() {
 }
 public void setDepartmentCode(String departmentCode) {
 	this.departmentCode = departmentCode;
+}
+public List<AcademicYear> getAcademicYearList() {
+	return academicYearList;
+}
+public void setAcademicYearList(List<AcademicYear> academicYearList) {
+	this.academicYearList = academicYearList;
 }
  
  

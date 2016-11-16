@@ -229,6 +229,21 @@ var home = (function () {
             console.log(image.arrayBuffer());
         });
     };
+    home.prototype.recalculate = function () {
+        var _this = this;
+        this.commonService.loading();
+        var url = "../person/recalculate";
+        return this.http.get(url).subscribe(function (response) { return _this.recalsucess(response); }, function (error) { return _this.recalError(error); }, function () { return console.log("editdone !"); });
+    };
+    home.prototype.recalsucess = function (response) {
+        this.commonService.unLoading();
+        console.log("recal sucess");
+        window.location.reload();
+    };
+    home.prototype.recalError = function (error) {
+        this.commonService.unLoading();
+        console.log("recal error");
+    };
     home = __decorate([
         core_1.Component({
             templateUrl: 'app/baiwa/html/home.component.html'

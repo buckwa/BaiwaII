@@ -26,6 +26,7 @@ import {work} from './baiwa/work.component';//ยุง
 import {userCreate} from './baiwa/userCreate.component';//ยุง
 import { notificationsList} from './baiwa/notificationsList.component';//ยุง
 import { notificationsDetail} from './baiwa/notificationsDetail.component';//ยุง
+import {barChart} from './baiwa/barChart.component'
 
 import { FileSelectDirective } from 'ng2-file-upload';
 import { FileDropDirective } from 'ng2-file-upload';
@@ -53,7 +54,8 @@ const routes: Routes = [
     { path: 'userCreate', component: userCreate },//ยุง
     { path: 'notificationsList', component: notificationsList },//ยุง
     { path: 'notificationsDetail', component: notificationsDetail },//ยุง
-    { path: '', component: home }
+    { path: '', component: home },
+    { path: 'barchart',component:barChart}
 
 ];
 
@@ -85,7 +87,8 @@ const routes: Routes = [
         FileSelectDirective,
         FileDropDirective,
         ImagePreview,
-        jQueryDataTableDirective
+        jQueryDataTableDirective,
+        barChart
     ],
     providers: [
         CommonService,

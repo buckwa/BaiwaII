@@ -68,6 +68,7 @@
                                         <td width="12%">
                                             <div class="text-center">{{item.fromSourceText}}&nbsp;|
                                                 <img width="25px" [hidden]="item.status !='APPROVED' " src="/PBP3/baiwa/libs/img/sucess.png" />
+                                                <img width="25px" [hidden]="item.status =='APPROVED' " src="/PBP3/baiwa/libs/img/wait.png" />
                                             </div>
                                         </td>
                                         <td width="6%">
@@ -170,7 +171,7 @@
                                                 <tr>
                                                     <th width="50%"><div class="text-center">Name</div></th>
                                                     
-                                                    <th><div class="text-center">Delete</div></th>
+                                                    <th><div class="text-center"></div></th>
 
                                                 </tr>
                                             </thead>
@@ -193,16 +194,18 @@
 
                                         </table>
                                         <hr>
+                                        <div *ngIf="!statusKpi" >
                                         <h5>เพิ่มเอกสารแบบ</h5>
 
-                                        <input type="file" *ngIf="statusKpi  " class="form-control" ng2FileSelect [uploader]="uploader" multiple /><br/>
+                                        <input type="file" class="form-control" ng2FileSelect [uploader]="uploader" multiple /><br/>
+                                        </div>
                                     </div>
                                 </div>
 
 
 
 
-                                <table class="table">
+                                <table class="table" *ngIf="!statusKpi" >
                                     <thead>
                                         <tr>
                                             <th width="50%"><div class="text-center">Name</div></th>
@@ -238,7 +241,7 @@
 
                                 </table>
 
-                                <div *ngIf="statusKpi">
+                                <div *ngIf="!statusKpi">
 
                                     <button type="button" class="btn btn-success btn-s" (click)="uploadFileAll()" [disabled]="!uploader.getNotUploadedItems().length">
                     <span class="glyphicon glyphicon-upload"></span> Upload all

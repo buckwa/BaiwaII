@@ -24,6 +24,8 @@ import com.buckwa.util.BuckWaConstants;
 import com.buckwa.util.BuckWaUtils;
 import com.buckwa.util.school.SchoolUtil;
 
+import baiwa.util.UserLoginUtil;
+
 @RestController
 @RequestMapping("/head")
 public class JSONHeadController {
@@ -50,8 +52,8 @@ public class JSONHeadController {
 		try {
 			BuckWaRequest request = new BuckWaRequest();
 
-			String userName = BuckWaUtils.getUserNameFromContext();
-			String academicYear = schoolUtil.getCurrentAcademicYear();
+			String userName = UserLoginUtil.getCurrentUserLogin();
+			String academicYear = UserLoginUtil.getCurrentAcademicYear();
 
 			request.put("username", userName);
 			request.put("academicYear", academicYear);

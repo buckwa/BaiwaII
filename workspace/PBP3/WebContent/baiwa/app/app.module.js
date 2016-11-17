@@ -32,6 +32,7 @@ var work_component_1 = require('./baiwa/work.component'); //ยุง
 var userCreate_component_1 = require('./baiwa/userCreate.component'); //ยุง
 var notificationsList_component_1 = require('./baiwa/notificationsList.component'); //ยุง
 var notificationsDetail_component_1 = require('./baiwa/notificationsDetail.component'); //ยุง
+var barChart_component_1 = require('./baiwa/barChart.component');
 var image_preview_directive_1 = require('./service/image_preview.directive');
 var datatable_directive_1 = require('./datatable.directive');
 var routes = [
@@ -51,7 +52,8 @@ var routes = [
     { path: 'userCreate', component: userCreate_component_1.userCreate },
     { path: 'notificationsList', component: notificationsList_component_1.notificationsList },
     { path: 'notificationsDetail', component: notificationsDetail_component_1.notificationsDetail },
-    { path: '', component: home_component_1.home }
+    { path: '', component: home_component_1.home },
+    { path: 'barchart', component: barChart_component_1.barChart }
 ];
 var AppModule = (function () {
     function AppModule() {
@@ -85,7 +87,8 @@ var AppModule = (function () {
                 ng2_file_upload_1.FileSelectDirective,
                 ng2_file_upload_1.FileDropDirective,
                 image_preview_directive_1.ImagePreview,
-                datatable_directive_1.jQueryDataTableDirective
+                datatable_directive_1.jQueryDataTableDirective,
+                barChart_component_1.barChart
             ],
             providers: [
                 Common_service_1.CommonService,

@@ -179,10 +179,14 @@ var AcademicWork = (function () {
         }, 600);
     };
     AcademicWork.prototype.deleteFile = function (attachFileId, fileName) {
-        var _this = this;
         var url = "../person/deleteAttachFile/" + this.codeKpi + "/" + fileName + "/" + attachFileId;
-        this.http.get(url).subscribe(function (response) { return _this.deletesucess(response); }, function (error) { return _this.deleteError(); }, function () { return console.log("editdoneUser !"); });
-        ;
+        this.commonService.confirm("คุณต้องการลบเอกสารแบบใช่หรื่อไม่?", jQuery.proxy(function (isOk) {
+            var _this = this;
+            console.log("isOk", isOk);
+            if (isOk) {
+                this.http.get(url).subscribe(function (response) { return _this.deletesucess(response); }, function (error) { return _this.deleteError(); }, function () { return console.log("editdoneUser !"); });
+            }
+        }, this));
     };
     AcademicWork.prototype.deletesucess = function (response) {
         console.log("deletesucess!");

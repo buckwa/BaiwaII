@@ -4,7 +4,7 @@ import { Http, Headers, Response } from '@angular/http';
 import { FileSelectDirective, FileDropDirective, FileUploader } from 'ng2-file-upload';
 import {DomSanitizer} from '@angular/platform-browser';
 import {Observable} from 'rxjs/Rx';
-
+declare var jQuery: any;
 
 const URL1 = 'http://localhost:8080/PBP3/person/importwork_file';
 
@@ -24,10 +24,10 @@ export class AcademicWork implements OnInit, AfterViewInit {
     public statusKpi: boolean;
     public fileWork: any[];
     public tmpUrl: any;
-    public codeKpi:string;
+    public codeKpi: string;
     fielPath;
-    public f:File;
-    chFilework:boolean;
+    public f: File;
+    chFilework: boolean;
 
     public uploader: FileUploader = new FileUploader({ url: URL1 });
 
@@ -103,7 +103,7 @@ export class AcademicWork implements OnInit, AfterViewInit {
         this.commonService.unLoading();
         this.mapKpi();
     }
-    public ClickGetPointKPI(Code:string, mark: String) {
+    public ClickGetPointKPI(Code: string, mark: String) {
         this.uploader.clearQueue();
         this.mark = mark;
         this.codeKpi = Code;
@@ -115,13 +115,13 @@ export class AcademicWork implements OnInit, AfterViewInit {
         this.pointKPI = response.json(JSON.stringify(response._body));
         this.pointLPIList = this.pointKPI.academicKPIAttributeValueList;
         this.fileWork = this.pointKPI.academicKPIAttachFileList;
-        if (this.fileWork.length ==0){
+        if (this.fileWork.length == 0) {
             this.chFilework = true;
-        }else{
+        } else {
             this.chFilework = false;
         }
 
-       // FileUploader.prototype.addToQueue(this.f,null,null);
+        // FileUploader.prototype.addToQueue(this.f,null,null);
         if (this.pointKPI.status == "APPROVED") {
             this.statusKpi = true;
         } else {
@@ -179,9 +179,9 @@ export class AcademicWork implements OnInit, AfterViewInit {
 
         this.getImage(url).subscribe(imageData => {
             this.f = imageData;
-            
+
             console.log("imageReturn :" + imageData.length);
-            
+
             //var blob: Blob = new Blob(imageData, JSON.stringify('_body'));
             this.tmpUrl = URL.createObjectURL(new Blob([imageData]));
             this.fielPath = this.sanitize(this.tmpUrl);
@@ -201,31 +201,35 @@ export class AcademicWork implements OnInit, AfterViewInit {
     public sanitize(url: string) {
         return this.sanitizer.bypassSecurityTrustUrl(url);
     }
-    public uploadFileAll(){
+    public uploadFileAll() {
         this.uploader.uploadAll();
 
         window.setTimeout(() => {
-        var temp = !this.uploader.getNotUploadedItems().length;
-        this.ClickGetPointKPI(this.codeKpi,this.mark);
-        console.log("status upload :"+temp)
-        this.uploader.clearQueue();
-        },600);
-        
+            var temp = !this.uploader.getNotUploadedItems().length;
+            this.ClickGetPointKPI(this.codeKpi, this.mark);
+            console.log("status upload :" + temp)
+            this.uploader.clearQueue();
+        }, 600);
 
-    }   
-    public deleteFile (attachFileId:any,fileName:string){
-        var url = "../person/deleteAttachFile/" + this.codeKpi+"/"+fileName +"/"+attachFileId ;
-        
-        this.http.get(url).subscribe(response => this.deletesucess(response),
-            error => this.deleteError(), () => console.log("editdoneUser !"));;
-        
+
     }
-    public deletesucess(response:any){
+    public deleteFile(attachFileId: any, fileName: string) {
+        var url = "../person/deleteAttachFile/" + this.codeKpi + "/" + fileName + "/" + attachFileId;
+        this.commonService.confirm("คุณต้องการลบเอกสารแบบใช่หรื่อไม่?", jQuery.proxy(function (isOk) {
+            console.log("isOk", isOk);
+            if (isOk) {
+                this.http.get(url).subscribe(response => this.deletesucess(response),
+            error => this.deleteError(), () => console.log("editdoneUser !"));
+            } 
+        }, this));
+    }
+        
+    public deletesucess(response: any) {
 
         console.log("deletesucess!")
-        this.ClickGetPointKPI(this.codeKpi,this.mark);
+        this.ClickGetPointKPI(this.codeKpi, this.mark);
     }
-    public deleteError(){
+    public deleteError() {
         console.log("deleteError!")
     }
 

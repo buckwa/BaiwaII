@@ -204,6 +204,7 @@
 	                                <a class="dropdown-item" href="#/personReport"><span class="font-icon font-icon-cart"></span>ระดับคะแนนในภาควิชา</a>
 	                                <a class="dropdown-item" href="#/workTypeBarChart"><span class="font-icon font-icon-speed"></span>ระดับคะแนนแต่ละด้านในภาควิชา</a>
 	                                <a class="dropdown-item" href="#/personYearReport"><span class="font-icon font-icon-users"></span>Download รายงานประจำปี</a>
+	                                <a class="dropdown-item" href="#/barchart"><span class="font-icon font-icon-users"></span>head ระดับคะแนนในภาควิชา</a>
 	                            
 
 	                            </div>

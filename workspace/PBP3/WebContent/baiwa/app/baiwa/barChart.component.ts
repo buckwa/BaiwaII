@@ -9,10 +9,30 @@ declare var jQuery: any;
 })
 
 export class barChart implements OnInit  {
+	    public json: any;
+    public nameDepart: any;
+    public mean1: any;
         constructor(private http: Http ) {
     }
     ngOnInit(){
+        this.DepartmentName();
+    }
+	public DepartmentName(){
+        var url = "../person/DepartmentName";
+        return this.http.get(url).subscribe(response => this.GetkendoSucess(response),
+        error => this.GetDepartmentNameError(error), () => console.log("DepartmentName !"));
+    }
+
+    public GetkendoSucess(response: any) {
+        this.json = response.json(JSON.stringify(response._body));
+        this.nameDepart =this.json.departmentName;
+        this.mean1 =this.json.mean1;
         this.getbarChart();
+    }
+
+    public GetDepartmentNameError(error: String) {
+        console.log("GetDepartmentNameError.")
+
     }
     getbarChart(){
         jQuery("#KendoChart").kendoChart({
@@ -49,7 +69,7 @@ export class barChart implements OnInit  {
         	        },
         	        valueAxis: {
         	        	min: 0,
-        	        	max: 6000 ,
+        	        	max: 6500,
         	        	majorUnit: 1000 
         	        },
                     tooltip: {
@@ -81,9 +101,15 @@ export class barChart implements OnInit  {
         	 ,
         		    columns   : [        		       
         		        { field: "axisName", title: "บุคลากร" },
-        		        { field: "axisValue", title: "คะแนน" }
+        		        { field: "axisValue", title: "คะแนน",
+						headerAttributes:{ style:"text-align:right"},
+    					attributes:{ class:"text-right" }  
+					}
         		    ]
         		});        	 
 
     }
+	public sortMaxVal(){
+
+	}
 }

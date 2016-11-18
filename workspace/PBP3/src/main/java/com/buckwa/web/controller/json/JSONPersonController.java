@@ -1319,14 +1319,15 @@ public class JSONPersonController {
 	}
 	
 	@RequestMapping(value="/downloadAttachFile/{attachFileId}", method = RequestMethod.GET)
-	public ModelAndView downloadAttachFile(@PathVariable String attachFileId ,HttpServletRequest httpRequest, HttpServletResponse httpResponse) {
+	public ResponseObj downloadAttachFile(@PathVariable String attachFileId ,HttpServletRequest httpRequest, HttpServletResponse httpResponse) {
 		
 		logger.info("#####  Start  Download   << "+ attachFileId +" >> #### ");
 		
 		//ModelAndView mav = new ModelAndView();
 		//mav.addObject(BuckWaConstants.PAGE_SELECT, BuckWaConstants.ADMIN_INIT);
 		AcademicKPIAttachFile academicKPIAttachFile = new AcademicKPIAttachFile();
-		
+		ResponseObj response = new ResponseObj();
+		//response = null;
 		try {
 			
 			academicKPIAttachFile = fileLocationService.findPBPAttachFile(attachFileId);
@@ -1352,6 +1353,7 @@ public class JSONPersonController {
 				logger.info("Hello You Not IE ");
 				httpResponse.setHeader("Content-disposition", "attachment; filename=\"" + MimeUtility.encodeWord(academicKPIAttachFile.getFileName()) + "\"");
 			}
+			response.setStatus("sucess");
 			
 			FileCopyUtils.copy( inputStream, httpResponse.getOutputStream());
 			   
@@ -1359,10 +1361,12 @@ public class JSONPersonController {
 			
 		} catch (Exception ex) {
 			ex.printStackTrace();
+			System.out.println(">>>>>>>path on found<<<<<<<<");
+			response.setStatus("fail");
 			//mav.addObject("errorCode", BuckWaConstants.ERROR_E001);
 		}
 		
-		return null;
+		return response;
 
 	}
 	@RequestMapping(value="/deleteAttachFile/{kpiUserMappingId}/{fileName}/{attachFileId}",method = RequestMethod.GET)

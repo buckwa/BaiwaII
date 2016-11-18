@@ -193,7 +193,7 @@
 	                                <span class="font-icon font-icon-widget"> &nbsp;กฎระเบียบ</span>
 	                            </a>
 	                        </div>
-	                        
+	                       
 	                       	<div class="dropdown dropdown-typical">
 	                            <a class="dropdown-toggle no-arr" id="dd-header-form-builder" data-target="#" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 	                                <span class="font-icon font-icon-widget"> &nbsp;รายงานคะแนน</span>
@@ -204,9 +204,7 @@
 	                                <a class="dropdown-item" href="#/personReport"><span class="font-icon font-icon-cart"></span>ระดับคะแนนในภาควิชา</a>
 	                                <a class="dropdown-item" href="#/workTypeBarChart"><span class="font-icon font-icon-speed"></span>ระดับคะแนนแต่ละด้านในภาควิชา</a>
 	                                <a class="dropdown-item" href="#/personYearReport"><span class="font-icon font-icon-users"></span>Download รายงานประจำปี</a>
-	                                <a class="dropdown-item" href="#/barchart"><span class="font-icon font-icon-users"></span>head ระดับคะแนนในภาควิชา</a>
-	                            
-
+	                        
 	                            </div>
 	                        </div>
 
@@ -215,11 +213,28 @@
 	                                <span class="font-icon font-icon-widget"> &nbsp;ตารางสอน</span>
 	                            </a>
 	                        </div>
+	                        <sec:authorize access="!hasAuthority('ROLE_HEAD')">
  							<div class="dropdown dropdown-typical">
 	                            <a class="dropdown-toggle no-arr" id="dd-header-form-builder"  href="#/work"  >
 	                                <span class="font-icon font-icon-widget"> &nbsp;แก้ไขผลงาน</span>
 	                            </a>
 	                        </div>
+	                        </sec:authorize>
+	                        
+	                         <sec:authorize access="hasAuthority('ROLE_HEAD')">
+	                        <div class="dropdown dropdown-typical">
+	                            <a class="dropdown-toggle no-arr" id="dd-header-form-builder" data-target="#" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	                                <span class="font-icon font-icon-widget"> &nbsp;หัวหน้าภาควิชา</span>
+	                            </a>
+									<div class="dropdown-menu" aria-labelledby="dd-header-form-builder">
+	                                <a class="dropdown-item" href="#/"><span class="font-icon font-icon-users"></span>อนุมัติผลงาน</a>
+	                                <a class="dropdown-item" href="#/"><span class="font-icon font-icon-users"></span>คำนวนคะแนนให้เป็นปัจจุบัน</a>
+	                                <a class="dropdown-item" href="#/barchart"><span class="font-icon font-icon-users"></span>ระดับคะแนนในภาควิชา</a>
+	                                <a class="dropdown-item" href="#/headWorkTypeBarChart"><span class="font-icon font-icon-users"></span>ระดับคะแนนแต่ละด้านในภาควิชา</a>
+	                            </div>
+	                        </div>
+	                        </sec:authorize>
+	                        
 	                        <div class="dropdown dropdown-typical">
 	                            <a class="dropdown-toggle no-arr" id="dd-header-form-builder" href="#/userManual">
 	                                <span class="font-icon font-icon-widget"> &nbsp;คู่มือ</span>

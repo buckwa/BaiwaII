@@ -118,8 +118,8 @@ public class JSONHeadController {
 		try {
 			BuckWaRequest request = new BuckWaRequest();
 
-			String userName = BuckWaUtils.getUserNameFromContext();
-			String academicYear = schoolUtil.getCurrentAcademicYear();
+			String userName = UserLoginUtil.getCurrentUserLogin();
+			String academicYear = UserLoginUtil.getCurrentAcademicYear();
 
 			request.put("username", userName);
 			request.put("academicYear", academicYear);

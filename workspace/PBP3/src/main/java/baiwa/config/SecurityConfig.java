@@ -82,7 +82,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
  				"/theme/**",
  				"/img/**",
  				"/baiwa/**",
- 				"/app/**",
+ 				
  				"/json/**",
  				"/rest/**",
  				"/WEB-INF/jsp/**",

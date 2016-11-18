@@ -52,13 +52,15 @@ public class UserAttemptDao {
 		
 	}
 	
-	public List<GrantedAuthority> findGrantedRoleByUserId(Long userID) {
-		String sql = " SELECT d.role_name FROM buckwauser  AS a INNER JOIN buckwausergroup"
-				+ " AS b  ON a.user_id = b.usergroup_id INNER JOIN buckwagrouprole AS c ON"
-				+ " b.group_id = c.group_id INNER JOIN buckwarole AS d ON d.role_id =  c.role_id"
-				+ " WHERE a.user_id = ? " ;
+	public List<GrantedAuthority> findGrantedRoleByUserId(String username) {
+		String sql = "SELECT u.username , r.role_name FROM buckwauser u   "
+				+ " LEFT OUTER JOIN buckwausergroup  ug ON u.username = ug.username "
+				+ " LEFT OUTER JOIN buckwagroup  g ON ug.group_id = g.group_id  "
+				+ "  LEFT OUTER JOIN buckwagrouprole  gr ON g.group_id = gr.group_id  "
+				+ "  LEFT OUTER JOIN buckwarole r   ON gr.role_id = r.role_id  "
+				+ "  WHERE u.username= ? " ;
 		
-		List<GrantedAuthority> grantedRoleList = jdbcTemplate.query(sql, new Object[] { userID 
+		List<GrantedAuthority> grantedRoleList = jdbcTemplate.query(sql, new Object[] { username 
 		}, new RowMapper<GrantedAuthority>() {
 
 			@Override

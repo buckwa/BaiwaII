@@ -276,6 +276,29 @@ public class HeadServiceImpl implements HeadService {
 	 
 		return response;
 	}
+	@Override	
+	public BuckWaResponse getByHeadAcademicYearCount(BuckWaRequest request) {
+		BuckWaResponse response = new BuckWaResponse();
+		
+		// String headUserName ,String academicYear,String status
+		try{				 
+			
+			String headUserName = (String)request.get("headUserName");
+			String academicYear = (String)request.get("academicYear");
+			String status = (String)request.get("status");
+			
+			AcademicKPIUserMappingWrapper academicKPIUserMappingWrapper= ( AcademicKPIUserMappingWrapper)headDao.getByHeadAcademicYearCount(headUserName,academicYear,status);
+		 
+			 response.addResponse("academicKPIUserMappingWrapper",academicKPIUserMappingWrapper);
+ 	
+		}catch(Exception ex){
+			ex.printStackTrace();
+			response.setStatus(BuckWaConstants.FAIL);
+			response.setErrorCode("E001");			
+		}
+	 
+		return response;
+	}
 	
 	
 	

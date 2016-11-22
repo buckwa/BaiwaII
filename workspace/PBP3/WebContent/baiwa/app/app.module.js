@@ -34,6 +34,7 @@ var notificationsList_component_1 = require('./baiwa/notificationsList.component
 var notificationsDetail_component_1 = require('./baiwa/notificationsDetail.component'); //ยุง
 var barChart_component_1 = require('./baiwa/barChart.component');
 var headWorkTypeBarChart_component_1 = require('./baiwa/headWorkTypeBarChart.component');
+var initApprove_component_1 = require('./baiwa/initApprove.component');
 var image_preview_directive_1 = require('./service/image_preview.directive');
 var datatable_directive_1 = require('./datatable.directive');
 var routes = [
@@ -56,6 +57,7 @@ var routes = [
     { path: '', component: home_component_1.home },
     { path: 'barchart', component: barChart_component_1.barChart },
     { path: 'headWorkTypeBarChart', component: headWorkTypeBarChart_component_1.headWorkTypeBarChart },
+    { path: 'initApprove', component: initApprove_component_1.InitApporve },
 ];
 var AppModule = (function () {
     function AppModule() {
@@ -91,7 +93,8 @@ var AppModule = (function () {
                 image_preview_directive_1.ImagePreview,
                 datatable_directive_1.jQueryDataTableDirective,
                 barChart_component_1.barChart,
-                headWorkTypeBarChart_component_1.headWorkTypeBarChart
+                headWorkTypeBarChart_component_1.headWorkTypeBarChart,
+                initApprove_component_1.InitApporve,
             ],
             providers: [
                 Common_service_1.CommonService,

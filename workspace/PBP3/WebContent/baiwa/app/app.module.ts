@@ -28,7 +28,7 @@ import { notificationsList} from './baiwa/notificationsList.component';//ยุ�
 import { notificationsDetail} from './baiwa/notificationsDetail.component';//ยุง
 import {barChart} from './baiwa/barChart.component';
 import { headWorkTypeBarChart} from './baiwa/headWorkTypeBarChart.component';
-
+import { InitApporve} from './baiwa/initApprove.component';
 import { FileSelectDirective } from 'ng2-file-upload';
 import { FileDropDirective } from 'ng2-file-upload';
 import { ImagePreview} from './service/image_preview.directive';
@@ -58,6 +58,7 @@ const routes: Routes = [
     { path: '', component: home },
     { path: 'barchart',component:barChart},
     { path: 'headWorkTypeBarChart' , component:headWorkTypeBarChart},
+    { path: 'initApprove' , component:InitApporve},
 
 ];
 
@@ -91,7 +92,8 @@ const routes: Routes = [
         ImagePreview,
         jQueryDataTableDirective,
         barChart,
-        headWorkTypeBarChart
+        headWorkTypeBarChart,
+        InitApporve,
     ],
     providers: [
         CommonService,

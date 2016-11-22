@@ -1615,12 +1615,12 @@ public class HeadDaoImpl implements HeadDao {
 			int loop =1;
 			String sqlRound1 =" select *  from academic_evaluate_round where academic_year  ='"+academicYear+"' and evaluate_type='1'"   ;  
 			///logger.info(" sqlRound:"+sqlRound);
-			 AcademicYearEvaluateRound  academicYearEvaluateRound1   = this.jdbcTemplate.queryForObject(sqlRound1,	new AcademicYearEvaluateRoundMapper() );	
+			 //AcademicYearEvaluateRound  academicYearEvaluateRound1   = this.jdbcTemplate.queryForObject(sqlRound1,	new AcademicYearEvaluateRoundMapper() );	
 			
-			 String sqlRound2 =" select *  from academic_evaluate_round where academic_year  ='"+academicYear+"' and evaluate_type='2'"   ;  
+			 //String sqlRound2 =" select *  from academic_evaluate_round where academic_year  ='"+academicYear+"' and evaluate_type='2'"   ;  
 				///logger.info(" sqlRound:"+sqlRound);
-			AcademicYearEvaluateRound  academicYearEvaluateRound2   = this.jdbcTemplate.queryForObject(sqlRound2,	new AcademicYearEvaluateRoundMapper() );	
-				
+			//AcademicYearEvaluateRound  academicYearEvaluateRound2   = this.jdbcTemplate.queryForObject(sqlRound2,	new AcademicYearEvaluateRoundMapper() );	
+
 				
 			
 			for(AcademicPerson personTmp:academicPersonList){
@@ -1629,6 +1629,10 @@ public class HeadDaoImpl implements HeadDao {
 				logger.info("  Loop :"+loop+++":"+personTmp.getThaiName()+" "+personTmp.getThaiSurname());
 				
 				String employeeType = personTmp.getEmployeeTypeNo();
+				
+				String sqlRound =" select *  from academic_evaluate_round where academic_year  ='"+academicYear+"' and evaluate_type='"+employeeType+"'"   ;  
+				///logger.info(" sqlRound:"+sqlRound);
+				 AcademicYearEvaluateRound  academicYearEvaluateRound   = this.jdbcTemplate.queryForObject(sqlRound,	new AcademicYearEvaluateRoundMapper() );	
 				
 				
 				 //logger.info(" academicYearEvaluateRound:"+BeanUtils.getBeanString(academicYearEvaluateRound));
@@ -1641,20 +1645,20 @@ public class HeadDaoImpl implements HeadDao {
 				 String round ="1";
 				 if(employeeType.equalsIgnoreCase("1")){
 					 
-					 long round1EndLong = academicYearEvaluateRound1.getRound1EndDate().getTime();
-						 startTime = academicYearEvaluateRound1.getRound1StartDate().getTime();
-						 startTimeStamp = academicYearEvaluateRound1.getRound1StartDate();
+					 long round1EndLong = academicYearEvaluateRound.getRound1EndDate().getTime();
+						 startTime = academicYearEvaluateRound.getRound1StartDate().getTime();
+						 startTimeStamp = academicYearEvaluateRound.getRound1StartDate();
 						 
-						 endTime = academicYearEvaluateRound1.getRound2EndDate().getTime();
-						 endTimeStamp = academicYearEvaluateRound1.getRound2EndDate();
+						 endTime = academicYearEvaluateRound.getRound2EndDate().getTime();
+						 endTimeStamp = academicYearEvaluateRound.getRound2EndDate();
 
 				 }else{
 					 
-					 startTime = academicYearEvaluateRound2.getRound1StartDate().getTime();
-					 startTimeStamp = academicYearEvaluateRound2.getRound1StartDate();
+					 startTime = academicYearEvaluateRound.getRound1StartDate().getTime();
+					 startTimeStamp = academicYearEvaluateRound.getRound1StartDate();
 					 
-					 endTime = academicYearEvaluateRound2.getRound1EndDate().getTime();
-					 endTimeStamp = academicYearEvaluateRound2.getRound1EndDate(); 
+					 endTime = academicYearEvaluateRound.getRound1EndDate().getTime();
+					 endTimeStamp = academicYearEvaluateRound.getRound1EndDate(); 
 					 
 				 }
 						 

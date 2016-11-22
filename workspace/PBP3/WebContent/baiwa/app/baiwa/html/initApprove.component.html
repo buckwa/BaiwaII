@@ -1,20 +1,25 @@
-<div class="box-typical box-typical-padding" *ngIf="!tabPerson">
+<div class="box-typical box-typical-padding">
     <div class="row">
-        <div class="col-sm-12 text-center"><h4>ผลงานบุคลากร วิศวกรรมคอมพิวเตอร์ ประจำปี 2558</h4></div>
+        <div class="col-sm-12 text-center">
+            <h4>ผลงานบุคลากร วิศวกรรมคอมพิวเตอร์ ประจำปี 2558</h4>
+        </div>
     </div>
-     <table id="table-edit" class="table table-bordered table-hover">
+    <div class="row">
+        <div class="col-sm-1"></div>
+        <div class="col-sm-10">
+            <table id="table-edit" class="table table-bordered table-hover">
                 <thead>
                     <tr>
-                    <th>บุคลากร</th>
-                    <th>ประเภท</th>
-                    <th>รออนุมัติ</th>
-                    <th>อนุมัติแล้ว</th>
-                    <th>รวม</th>
+                        <th>บุคลากร</th>
+                        <th>ประเภท</th>
+                        <th>รออนุมัติ</th>
+                        <th>อนุมัติแล้ว</th>
+                        <th>รวม</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr *ngFor="let item of academicPersonList; let i = index">
-                        <td><a (click)="clickPerson(i)" >{{item.thaiName}}&nbsp;&nbsp;&nbsp;{{item.thaiSurname}}</a></td>
+                        <td><a [routerLink]="['/approvework',item.email , 1]">{{item.thaiName}}&nbsp;&nbsp;&nbsp;{{item.thaiSurname}}</a></td>
                         <td [hidden]="item.employeeTypeNo == 1">พนักงาน</td>
                         <td [hidden]="item.employeeTypeNo != 1">ราชการ</td>
                         <td>{{item.totalNotApprove}}</td>
@@ -23,48 +28,9 @@
 
                     </tr>
                 </tbody>
-     </table>
-
-</div>
-<div class="box-typical box-typical-padding" *ngIf="tabPerson">
-     <div class="row">
-        <div class="col-sm-12 text-center"><h4>ผลงาน {{personWork.thaiName}} &nbsp;&nbsp;{{personWork.thaiSurname}} วิศวกรรมคอมพิวเตอร์ ประจำปี 2558</h4></div>
+            </table>
+        </div>
+        <div class="col-sm-1"></div>
     </div>
 
-    <div class="row">
-    <div class="col-sm-6">
-          <table id="table-edit" class="table table-bordered table-hover">
-              <thead>
-                  <tr>
-                      <th>ผลงานอนุมัติแล้ว</th>
-                  </tr>
-              </thead>
-              <tbody>
-                  <tr>
-                      <article class="comment-item" *ngFor="let item of personWorkList; let i = index " >
-	                            <div class="user-card-row">
-	                                <div class="tbl-row">
-	                                    <div class="tbl-cell">
-	                                        <span class="user-card-row-name">
-	                                        <a >test</a>
-	                                        </span>
-	                                    </div>
-	                                </div>
-	                            </div>
-
-	                        </article>
-                  </tr>
-              </tbody>
-          </table>
-
-    </div>
-    <div  class="col-sm-6">
-
-    </div>
-
-    </div>
-
-    <div class="text-center">	 
-	    <input class="btn btn-primary" value="ย้อนกลับ" type="button" style=" margin-top: 1cm;" (click)="blackpage()">
-	    </div>
 </div>

@@ -23,6 +23,7 @@ import com.buckwa.domain.pbp.Department;
 import com.buckwa.domain.pbp.report.DepartmentWorkTypeReport;
 import com.buckwa.domain.pbp.report.RadarPlotReport;
 import com.buckwa.service.intf.pam.PersonProfileService;
+import com.buckwa.service.intf.pbp.AcademicKPIUserMappingService;
 import com.buckwa.service.intf.pbp.FacultyService;
 import com.buckwa.service.intf.pbp.HeadService;
 import com.buckwa.util.BuckWaConstants;
@@ -51,6 +52,9 @@ public class JSONHeadController {
 	
 	@Autowired
 	private AcademicYearUtil academicYearUtil;
+	
+	@Autowired
+	private AcademicKPIUserMappingService academicKPIUserMappingService;
 
 	@RequestMapping(value = "/getBarchart", method = RequestMethod.GET, headers = "Accept=application/json")
 	public List<RadarPlotReport> getWorkTypeBarChartReport() {
@@ -259,5 +263,53 @@ public class JSONHeadController {
 		}
 		return academicKPIUserMappingWrapper;
 	}	
+	@RequestMapping(value="/approveWork/{kpiUserMappingId}", method = RequestMethod.GET)
+	public BuckWaResponse approveWork(@PathVariable String kpiUserMappingId  ) {
+		logger.info(" Start  kpiUserMappingId:"+kpiUserMappingId );
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("headWorkList");
+		BuckWaResponse response = new BuckWaResponse();
+		try{
+			
+			//String approveUserName =(String)httpRequest.getSession().getAttribute("approveUserName");
+			BuckWaRequest request = new BuckWaRequest(); 
+			String headUserName = UserLoginUtil.getCurrentUserLogin();
+			request.put("kpiUserMappingId",kpiUserMappingId);
+			request.put("headUserName",headUserName);
+			response = academicKPIUserMappingService.approve(request);
+			 logger.info(" ### approveWork after approve ");
+			 //response.setStatus(BuckWaConstants.SUCCESS);
+			if(response.getStatus()==BuckWaConstants.SUCCESS){	
+				
+			} else{
+				mav.addObject("errorCode", "E001"); 
+				mav.setViewName("viewWork");
+				
+			}
+			
+		}catch(Exception ex){
+			ex.printStackTrace();
+			mav.addObject("errorCode", "E001"); 
+		}
+		return response;
+	}
+	@RequestMapping(value="/unApprove/{kpiUserMappingId}", method = RequestMethod.GET)
+	public BuckWaResponse unApprove(@PathVariable String kpiUserMappingId  ) {
+		logger.info(" Start unApprove  kpiUserMappingId:"+kpiUserMappingId);
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("headWorkUserList");
+		BuckWaResponse response = new BuckWaResponse();
+		try{
+			BuckWaRequest request = new BuckWaRequest();
+			request.put("kpiUserMappingId",kpiUserMappingId);
+			response = academicKPIUserMappingService.unApprove(request);
+			//response.setStatus(BuckWaConstants.SUCCESS);
+
+		}catch(Exception ex){
+			ex.printStackTrace();
+			mav.addObject("errorCode", "E001"); 
+		}
+		return response;
+	}
 
 }

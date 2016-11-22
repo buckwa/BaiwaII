@@ -59,6 +59,7 @@ export class AcademicWork implements OnInit, AfterViewInit {
         }
     }
 
+
     ngOnInit() {
         this.GetUserSession();
 

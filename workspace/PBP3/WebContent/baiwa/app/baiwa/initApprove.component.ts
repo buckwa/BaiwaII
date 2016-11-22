@@ -10,6 +10,7 @@ export class InitApporve implements OnInit {
     public tabPerson:boolean;
     public personWork:any;
     public personWorkList:any[];
+    public academicKPIUserMappingList:any[];
 
      constructor(private commonService: CommonService, private http: Http) {
          this.tabPerson = false;
@@ -22,6 +23,7 @@ export class InitApporve implements OnInit {
 
     }
     initTotle(){
+        this.commonService.loading();
         var url = "../head/init";
         this.http.get(url).subscribe(response => this.initTotleSucess(response),
             error => this.initTotlError(error), () => console.log("editdoneUser !"));
@@ -30,21 +32,13 @@ export class InitApporve implements OnInit {
         var bodyJson;
         bodyJson = response.json(JSON.stringify(response._body));
         this.academicPersonList = bodyJson.department.academicPersonList;
+        this.commonService.unLoading();
+        
 
     }
     initTotlError(error:any){
         console.log("error getTotle");
 
-    }
-    clickPerson(index:string){
-        this.tabPerson = true;
-        this.personWork = this.academicPersonList[index];
-        console.log("index of personlist is "+index);
-        this.personWorkList = this.personWork.academicKPIUserMappingList;
-
-    }
-    blackpage(){
-        this.tabPerson = false;
     }
 
 }

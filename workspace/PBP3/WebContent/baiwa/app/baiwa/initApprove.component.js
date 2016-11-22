@@ -22,6 +22,7 @@ var InitApporve = (function () {
     };
     InitApporve.prototype.initTotle = function () {
         var _this = this;
+        this.commonService.loading();
         var url = "../head/init";
         this.http.get(url).subscribe(function (response) { return _this.initTotleSucess(response); }, function (error) { return _this.initTotlError(error); }, function () { return console.log("editdoneUser !"); });
     };
@@ -29,18 +30,10 @@ var InitApporve = (function () {
         var bodyJson;
         bodyJson = response.json(JSON.stringify(response._body));
         this.academicPersonList = bodyJson.department.academicPersonList;
+        this.commonService.unLoading();
     };
     InitApporve.prototype.initTotlError = function (error) {
         console.log("error getTotle");
-    };
-    InitApporve.prototype.clickPerson = function (index) {
-        this.tabPerson = true;
-        this.personWork = this.academicPersonList[index];
-        console.log("index of personlist is " + index);
-        this.personWorkList = this.personWork.academicKPIUserMappingList;
-    };
-    InitApporve.prototype.blackpage = function () {
-        this.tabPerson = false;
     };
     InitApporve = __decorate([
         core_1.Component({

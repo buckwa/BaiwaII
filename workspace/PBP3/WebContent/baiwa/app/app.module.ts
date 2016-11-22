@@ -29,6 +29,8 @@ import { notificationsDetail} from './baiwa/notificationsDetail.component';//ย
 import {barChart} from './baiwa/barChart.component';
 import { headWorkTypeBarChart} from './baiwa/headWorkTypeBarChart.component';
 import { InitApporve} from './baiwa/initApprove.component';
+import { approvework} from './baiwa/approvework.component';
+
 import { FileSelectDirective } from 'ng2-file-upload';
 import { FileDropDirective } from 'ng2-file-upload';
 import { ImagePreview} from './service/image_preview.directive';
@@ -59,6 +61,7 @@ const routes: Routes = [
     { path: 'barchart',component:barChart},
     { path: 'headWorkTypeBarChart' , component:headWorkTypeBarChart},
     { path: 'initApprove' , component:InitApporve},
+    { path: 'approvework/:email/:rond', component:approvework}
 
 ];
 
@@ -94,6 +97,7 @@ const routes: Routes = [
         barChart,
         headWorkTypeBarChart,
         InitApporve,
+        approvework,
     ],
     providers: [
         CommonService,

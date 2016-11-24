@@ -213,7 +213,7 @@
 	                                <span class="font-icon font-icon-widget"> &nbsp;ตารางสอน</span>
 	                            </a>
 	                        </div>
-	                        <sec:authorize access="!hasAuthority('ROLE_HEAD')">
+	                        <sec:authorize access="!hasAuthority('ROLE_HEAD')&&!hasAuthority('ROLE_DEAN')">
  							<div class="dropdown dropdown-typical">
 	                            <a class="dropdown-toggle no-arr" id="dd-header-form-builder"  href="#/work"  >
 	                                <span class="font-icon font-icon-widget"> &nbsp;แก้ไขผลงาน</span>
@@ -221,7 +221,7 @@
 	                        </div>
 	                        </sec:authorize>
 	                        
-	                         <sec:authorize access="hasAuthority('ROLE_HEAD')">
+	                         <sec:authorize access="hasAuthority('ROLE_HEAD')&&!hasAuthority('ROLE_DEAN')">
 	                        <div class="dropdown dropdown-typical">
 	                            <a class="dropdown-toggle no-arr" id="dd-header-form-builder" data-target="#" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 	                                <span class="font-icon font-icon-widget"> &nbsp;หัวหน้าภาควิชา</span>
@@ -231,6 +231,21 @@
 	                                <a class="dropdown-item" href="#/"><span class="font-icon font-icon-users"></span>คำนวนคะแนนให้เป็นปัจจุบัน</a>
 	                                <a class="dropdown-item" href="#/barchart"><span class="font-icon font-icon-users"></span>ระดับคะแนนในภาควิชา</a>
 	                                <a class="dropdown-item" href="#/headWorkTypeBarChart"><span class="font-icon font-icon-users"></span>ระดับคะแนนแต่ละด้านในภาควิชา</a>
+	                            </div>
+	                        </div>
+	                        </sec:authorize>
+	                        
+	                        <sec:authorize access="hasAuthority('ROLE_DEAN')">
+	                        <div class="dropdown dropdown-typical">
+	                            <a class="dropdown-toggle no-arr" id="dd-header-form-builder" data-target="#" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	                                <span class="font-icon font-icon-widget"> &nbsp;คณบดี</span>
+	                            </a>
+									<div class="dropdown-menu" aria-labelledby="dd-header-form-builder">
+	                                <a class="dropdown-item" href="#/facultyReport"><span class="font-icon font-icon-users"></span>รายงานคะแนนทั้งคณะ</a>
+	                                <a class="dropdown-item" href="#/deanBarChart"><span class="font-icon font-icon-users"></span>รายงานระดับคะแนนแต่ล่ะภาควิชา</a>
+	                                <a class="dropdown-item" href="#/deanWorkTypeBarChart"><span class="font-icon font-icon-users"></span>รายงานระดับคะแนนแต่ล่ะภาควิชา แต่ล่ะด้าน</a>
+	                                <a class="dropdown-item" href="#/barchart"><span class="font-icon font-icon-users"></span>รายงานเปรียบเทียบระดับคะแนนแต่ละภาควิชา แต่ละด้าน</a>
+	                                <a class="dropdown-item" href="#/departmentBarChart"><span class="font-icon font-icon-users"></span>ระดับคะแนนในภาควิชา</a>
 	                            </div>
 	                        </div>
 	                        </sec:authorize>

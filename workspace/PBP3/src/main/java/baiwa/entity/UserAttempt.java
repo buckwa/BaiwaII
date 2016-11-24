@@ -8,6 +8,7 @@ public class UserAttempt {
 	private String password;
 	private String department_id;
 	private String code;
+	private String name;
 	private String academic_year;
 	
 	public String getDepartment_id() {
@@ -51,6 +52,12 @@ public class UserAttempt {
 	}
 	public void setUser_id(long user_id) {
 		this.user_id = user_id;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
 	}
 	
 	

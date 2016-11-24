@@ -32,6 +32,8 @@ import org.springframework.ws.client.core.WebServiceMessageCallback;
 import org.springframework.ws.client.core.WebServiceTemplate;
 import org.springframework.ws.soap.saaj.SaajSoapMessage;
 
+//import com.buckwa.dao.impl.pbp.FacultyDaoImpl.AcademicPersonMapper;
+//import com.buckwa.dao.impl.pbp.FacultyDaoImpl.FacultyMapper;
 import com.buckwa.dao.impl.uitl.RejectSubjectUtil;
 import com.buckwa.dao.intf.admin.GroupDao;
 import com.buckwa.dao.intf.pbp.AcademicKPIDao;
@@ -2755,19 +2757,26 @@ public class FacultyDaoImpl implements FacultyDao {
 	@Override
 	public Faculty  getFacultyByDeanUserNameandYear(String username,String academicYear) {	 
 		 	
-		String facSQL =" select d.* from faculty d "+
+		String facSQL =" select d.*,p.* from faculty d "+
 		" inner join person_pbp p on (d.name=p.dean_faculty) "+
 		" where p.email='"+username+"' and p.academic_year="+academicYear + "  and d.academic_year="+academicYear;		
 		logger.info(" facSQL:"+facSQL);
 		Faculty  faculty   = this.jdbcTemplate.queryForObject(facSQL,	new FacultyMapper() ); 	
 		
 		if(faculty!=null){
-			
+			// add new pbp3
 			String sqlDepartment =" select d.* from department d where  d.academic_year="+academicYear+"  and faculty_code="+faculty.getCode();	
-			
-			
-					List<Department>  departmentList   = this.jdbcTemplate.query(sqlDepartment,	new DepartmentMapper() ); 	
+			String sqlhead = " SELECT p.* FROM department d  INNER JOIN person_pbp p ON (d.name=p.department_desc) WHERE "
+					+ " d.academic_year= "+academicYear+" AND d.faculty_code= "+faculty.getCode()+" AND p.is_head ='Y' AND p.head_department !='null'";
+					
+					List<AcademicPerson>  headList   = this.jdbcTemplate.query(sqlhead,	new AcademicPersonMapper() ); 
+					List<Department>  departmentList = new ArrayList<>();
+					Department depart = new Department();
+					depart.setAcademicPersonList(headList);
+					departmentList   = this.jdbcTemplate.query(sqlDepartment,	new DepartmentMapper() ); 
 					faculty.setDepartmentList(departmentList);;
+					
+					
 		}
 		
 		return faculty;
@@ -2908,4 +2917,32 @@ public class FacultyDaoImpl implements FacultyDao {
 		return domain;
     }
 	}
+
+
+
+	@Override
+	public List<AcademicPerson>  getFacultyByDeanUserNameandYearNew(String username,String academicYear) {	 
+	 	
+		List<AcademicPerson>  headList = new ArrayList<>();
+		String facSQL =" select d.* from faculty d "+
+		" inner join person_pbp p on (d.name=p.dean_faculty) "+
+		" where p.email='"+username+"' and p.academic_year="+academicYear + "  and d.academic_year="+academicYear;		
+		logger.info(" facSQL:"+facSQL);
+		Faculty  faculty   = this.jdbcTemplate.queryForObject(facSQL,	new FacultyMapper() ); 	
+		
+		if(faculty!=null){
+			// add new pbp3
+			//String sqlDepartment =" select d.* from department d where  d.academic_year="+academicYear+"  and faculty_code="+faculty.getCode();	
+			String sqlhead = " SELECT p.* FROM department d  INNER JOIN person_pbp p ON (d.name=p.department_desc) WHERE "
+					+ " d.academic_year= "+academicYear+" AND d.faculty_code= "+faculty.getCode()+" AND p.is_head ='Y' AND p.head_department !='null'";
+					
+					headList   = this.jdbcTemplate.query(sqlhead,	new AcademicPersonMapper() ); 
+
+					
+					
+		}
+		
+		return headList;
+	}
+	
 }

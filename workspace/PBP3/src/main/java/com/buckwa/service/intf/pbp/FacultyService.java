@@ -49,6 +49,7 @@ public interface FacultyService {
 	public BuckWaResponse getFacultyListByAcademicYear(BuckWaRequest request);
 	
 	public BuckWaResponse getFacultyByCodeByAcademicYearAndName(BuckWaRequest request);
+	public BuckWaResponse getFacultyByDeanUserNameandYearNew(BuckWaRequest request);
 	
 	
 }

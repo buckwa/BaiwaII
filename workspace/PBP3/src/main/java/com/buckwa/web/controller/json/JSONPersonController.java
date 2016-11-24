@@ -835,7 +835,7 @@ public class JSONPersonController {
 			String user = UserLoginUtil.getCurrentUserLogin();
 			String facultyCode = UserLoginUtil.getCurrentFacultyCode();
 
-			System.out.println("Current UserLogin  :" + user+" and FacultyCode :" +facultyCode +" AcademicYear :" +UserLoginUtil.getCurrentAcademicYear()+ " DepartmentCode :"+UserLoginUtil.getCurrentDepartmentCode() );
+			System.out.println("Current UserLogin  :" + user+" and FacultyCode :" +facultyCode +" AcademicYear :" +UserLoginUtil.getCurrentAcademicYear()+ " DepartmentCode :"+UserLoginUtil.getCurrentDepartmentCode()+" FacultyName: "+UserLoginUtil.getCurrentFacultyName()  );
 			// userreturn = BuckWaUtils.getUserFromContext();
 
 			userreturn = personDetailService.GetUserSession(user);
@@ -847,6 +847,8 @@ public class JSONPersonController {
 			userreturn.setFacultyCode(facultyCode);
 			userreturn.setDepartmentCode(UserLoginUtil.getCurrentDepartmentCode());
 			userreturn.setAcademicYearList(academicYearUtil.getAcademicYearList());
+			userreturn.setFacultyName(UserLoginUtil.getCurrentFacultyName());
+			
 		} catch (Exception ex) {
 			ex.printStackTrace();
 

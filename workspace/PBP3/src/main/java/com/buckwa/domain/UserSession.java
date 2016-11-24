@@ -13,6 +13,7 @@ public class UserSession  {
  private String currentAcademicYear;
  
  private String facultyCode;
+ private String facultyName;
  private String departmentCode;
  private String person_id;
  private List<AcademicYear> academicYearList;
@@ -65,6 +66,12 @@ public List<AcademicYear> getAcademicYearList() {
 }
 public void setAcademicYearList(List<AcademicYear> academicYearList) {
 	this.academicYearList = academicYearList;
+}
+public String getFacultyName() {
+	return facultyName;
+}
+public void setFacultyName(String facultyName) {
+	this.facultyName = facultyName;
 }
  
  

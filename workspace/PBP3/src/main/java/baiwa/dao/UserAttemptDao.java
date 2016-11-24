@@ -32,7 +32,7 @@ public class UserAttemptDao {
 //		sql.append(" SELECT user_id , USERNAME, password ");
 //		sql.append(" FROM buckwauser ");
 //		sql.append(" WHERE username =  ? ");
-		String sql = " SELECT  a.person_id , d.user_id  , d.username , d.password , b.code  AS department_id ,c.code , b.academic_year"
+		String sql = " SELECT  a.person_id , d.user_id  , d.username , d.password , b.code  AS department_id ,c.code, c.name , b.academic_year"
 				+ " FROM person_pbp a INNER JOIN department b ON a.department_desc = b.name "
 				+ " INNER JOIN faculty c ON  c.name = a.faculty_desc "
 				+ " INNER JOIN buckwauser d ON d.username = a.email "

@@ -18,6 +18,7 @@ public class UserDetails extends User implements UserBean{
 	private String facultyID;
 	private String departmentID;
 	private String academicYear;
+	private String facultyName;
 
 	public UserDetails(String username, String password, boolean enabled, boolean accountNonExpired,
 			boolean credentialsNonExpired, boolean accountNonLocked,
@@ -67,6 +68,14 @@ public class UserDetails extends User implements UserBean{
 
 	public void setPersonID(Long personID) {
 		this.personID = personID;
+	}
+
+	public String getFacultyName() {
+		return facultyName;
+	}
+
+	public void setFacultyName(String facultyName) {
+		this.facultyName = facultyName;
 	}
 	
 	

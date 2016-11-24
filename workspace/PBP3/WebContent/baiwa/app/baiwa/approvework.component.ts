@@ -6,6 +6,8 @@ import { URLSearchParams, Http} from '@angular/http';
 
 import {CommonService} from './../service/Common.service';
 
+declare var jQuery: any;
+
 @Component({
     templateUrl: 'app/baiwa/html/approvework.component.html'
 })
@@ -35,6 +37,7 @@ export class approvework implements OnInit {
             "kpiUserMappingId": "",
             "calResultStr": "",
             "status":"",
+            "description":"",
             "academicKPIAttributeValueList": [{}]
         }
     }
@@ -123,6 +126,7 @@ export class approvework implements OnInit {
         this.academicKPIUserMappingList[this.indexKPI].status = 'CREATE';
         this.statusKpi = false;
         }
+        jQuery("#myModal").modal('hide');
         console.log("unApproveSucess!");
     }
     approveSucess(response:any){
@@ -131,6 +135,8 @@ export class approvework implements OnInit {
             this.academicKPIUserMappingList[this.indexKPI].status = 'APPROVED';
             this.statusKpi = true;
         }
+        jQuery("#myModal").modal('hide');
+
         console.log("ApproveSucess!");
     }
 }

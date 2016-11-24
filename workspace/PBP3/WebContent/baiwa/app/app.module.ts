@@ -30,6 +30,11 @@ import {barChart} from './baiwa/barChart.component';
 import { headWorkTypeBarChart} from './baiwa/headWorkTypeBarChart.component';
 import { InitApporve} from './baiwa/initApprove.component';
 import { approvework} from './baiwa/approvework.component';
+import {FacultyReport} from './baiwa/FacultyReport.component';
+import {deanBarChart } from './baiwa/deanBarChart.component';
+import {deanWorkTypeBarChart } from './baiwa/deanWorkTypeBarChart.component';
+import {departmentBarChart } from './baiwa/departmentBarChart.component';
+
 
 import { FileSelectDirective } from 'ng2-file-upload';
 import { FileDropDirective } from 'ng2-file-upload';
@@ -61,7 +66,13 @@ const routes: Routes = [
     { path: 'barchart',component:barChart},
     { path: 'headWorkTypeBarChart' , component:headWorkTypeBarChart},
     { path: 'initApprove' , component:InitApporve},
-    { path: 'approvework/:email/:rond', component:approvework}
+    { path: 'approvework/:email/:rond', component:approvework},
+    { path: 'facultyReport' , component:FacultyReport},
+    { path: 'deanBarChart' , component:deanBarChart},
+    { path: 'deanWorkTypeBarChart' , component:deanWorkTypeBarChart},
+    { path: 'departmentBarChart' , component:departmentBarChart},
+    
+    
 
 ];
 
@@ -98,6 +109,10 @@ const routes: Routes = [
         headWorkTypeBarChart,
         InitApporve,
         approvework,
+        FacultyReport,
+        deanBarChart,
+        deanWorkTypeBarChart,
+        departmentBarChart,
     ],
     providers: [
         CommonService,

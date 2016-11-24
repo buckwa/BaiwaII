@@ -573,5 +573,25 @@ public class FacultyServiceImpl implements FacultyService {
 	 
 		return response;
 	}
+	@Override	
+	public BuckWaResponse getFacultyByDeanUserNameandYearNew(BuckWaRequest request) {
+		BuckWaResponse response = new BuckWaResponse();
+		try{				 
+			
+			String username = (String)request.get("username");
+			String academicYear = (String)request.get("academicYear");
+			List<AcademicPerson> faculty =  facultyDao.getFacultyByDeanUserNameandYearNew(username,academicYear);
+		 
+			 response.addResponse("faculty",faculty);
+ 	
+		}catch(Exception ex){
+			ex.printStackTrace();
+			response.setStatus(BuckWaConstants.FAIL);
+			response.setErrorCode("E001");			
+		}
+	 
+		return response;
+	}
+	
 	
 }

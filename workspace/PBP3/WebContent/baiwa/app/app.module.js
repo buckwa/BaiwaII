@@ -36,6 +36,10 @@ var barChart_component_1 = require('./baiwa/barChart.component');
 var headWorkTypeBarChart_component_1 = require('./baiwa/headWorkTypeBarChart.component');
 var initApprove_component_1 = require('./baiwa/initApprove.component');
 var approvework_component_1 = require('./baiwa/approvework.component');
+var FacultyReport_component_1 = require('./baiwa/FacultyReport.component');
+var deanBarChart_component_1 = require('./baiwa/deanBarChart.component');
+var deanWorkTypeBarChart_component_1 = require('./baiwa/deanWorkTypeBarChart.component');
+var departmentBarChart_component_1 = require('./baiwa/departmentBarChart.component');
 var image_preview_directive_1 = require('./service/image_preview.directive');
 var datatable_directive_1 = require('./datatable.directive');
 var routes = [
@@ -59,7 +63,11 @@ var routes = [
     { path: 'barchart', component: barChart_component_1.barChart },
     { path: 'headWorkTypeBarChart', component: headWorkTypeBarChart_component_1.headWorkTypeBarChart },
     { path: 'initApprove', component: initApprove_component_1.InitApporve },
-    { path: 'approvework/:email/:rond', component: approvework_component_1.approvework }
+    { path: 'approvework/:email/:rond', component: approvework_component_1.approvework },
+    { path: 'facultyReport', component: FacultyReport_component_1.FacultyReport },
+    { path: 'deanBarChart', component: deanBarChart_component_1.deanBarChart },
+    { path: 'deanWorkTypeBarChart', component: deanWorkTypeBarChart_component_1.deanWorkTypeBarChart },
+    { path: 'departmentBarChart', component: departmentBarChart_component_1.departmentBarChart },
 ];
 var AppModule = (function () {
     function AppModule() {
@@ -98,6 +106,10 @@ var AppModule = (function () {
                 headWorkTypeBarChart_component_1.headWorkTypeBarChart,
                 initApprove_component_1.InitApporve,
                 approvework_component_1.approvework,
+                FacultyReport_component_1.FacultyReport,
+                deanBarChart_component_1.deanBarChart,
+                deanWorkTypeBarChart_component_1.deanWorkTypeBarChart,
+                departmentBarChart_component_1.departmentBarChart,
             ],
             providers: [
                 Common_service_1.CommonService,

@@ -27,6 +27,7 @@ var approvework = (function () {
             "kpiUserMappingId": "",
             "calResultStr": "",
             "status": "",
+            "description": "",
             "academicKPIAttributeValueList": [{}]
         };
     };
@@ -113,6 +114,7 @@ var approvework = (function () {
             this.academicKPIUserMappingList[this.indexKPI].status = 'CREATE';
             this.statusKpi = false;
         }
+        jQuery("#myModal").modal('hide');
         console.log("unApproveSucess!");
     };
     approvework.prototype.approveSucess = function (response) {
@@ -121,6 +123,7 @@ var approvework = (function () {
             this.academicKPIUserMappingList[this.indexKPI].status = 'APPROVED';
             this.statusKpi = true;
         }
+        jQuery("#myModal").modal('hide');
         console.log("ApproveSucess!");
     };
     approvework = __decorate([

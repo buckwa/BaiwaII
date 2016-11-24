@@ -42,6 +42,7 @@ public class DefaultUserDetailsServiceImpl implements UserDetailsService{
 		userDeail.setAcademicYear(user.getAcademic_year());
 		userDeail.setDepartmentID(user.getDepartment_id());
 		userDeail.setFacultyID(user.getCode());
+		userDeail.setFacultyName(user.getName());
 		
 		
 		return userDeail;

@@ -68,6 +68,19 @@ public class UserLoginUtil {
 		return academicYear;
 		
 	}
+	
+	public static String getCurrentFacultyName(){
+		String facutyName = null;
+		try{
+		UserDetails userDetail = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		facutyName = userDetail.getFacultyName();
+		
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return facutyName;
+		
+	}
 
 
 }

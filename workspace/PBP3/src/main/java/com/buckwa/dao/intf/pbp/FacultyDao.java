@@ -76,6 +76,8 @@ public interface FacultyDao {
 	
 	public FacultyWrapper getAllMarkByAcademicYear(String  academicYear );
 	
+	public List<AcademicPerson>  getFacultyByDeanUserNameandYearNew(String username,String academicYear) ;
+	
 	 
 	 
 }

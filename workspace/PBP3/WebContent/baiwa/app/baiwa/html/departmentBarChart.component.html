@@ -1,11 +1,21 @@
 <div class="box-typical box-typical-padding">
-    
-        <select name="select" class="form-control" [(ngModel)]="headDepart" (ngModelChange)="changSelection($event)">
-			<option *ngFor="let a of nameDepart " [value]="a.email" >{{a.departmentDesc}}</option>
-        </select>
+        <section class="card card-default">
+                <header class="card-header">
+                        ระดับคะแนนในภาควิชา {{departmentname}}
+                </header>
+                <br>
+                <div class="row">
+                        <div class="col-sm-4"></div>
+                        <div class="col-sm-4">
+                                <select name="select" class="form-control" [(ngModel)]="headDepart" (ngModelChange)="changSelection($event)">
+			<option *ngFor="let a of nameDepart;let i = index " [value]="i" >{{a.departmentDesc}}</option>
+                                </select>
+                        </div>
+                        <div class="col-sm-4"></div>
+                </div>
 
-        <div id="chart"></div>
-        <br>
-        <div id="grid"></div>
-
+                <div id="chart"></div>
+                <br>
+                <div id="grid"></div>
+        </section>
 </div>

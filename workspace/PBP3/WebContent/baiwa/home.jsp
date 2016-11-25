@@ -244,7 +244,7 @@
 	                                <a class="dropdown-item" href="#/facultyReport"><span class="font-icon font-icon-users"></span>รายงานคะแนนทั้งคณะ</a>
 	                                <a class="dropdown-item" href="#/deanBarChart"><span class="font-icon font-icon-users"></span>รายงานระดับคะแนนแต่ล่ะภาควิชา</a>
 	                                <a class="dropdown-item" href="#/deanWorkTypeBarChart"><span class="font-icon font-icon-users"></span>รายงานระดับคะแนนแต่ล่ะภาควิชา แต่ล่ะด้าน</a>
-	                                <a class="dropdown-item" href="#/barchart"><span class="font-icon font-icon-users"></span>รายงานเปรียบเทียบระดับคะแนนแต่ละภาควิชา แต่ละด้าน</a>
+	                                <a class="dropdown-item" href="#/workTypeCompareBarChart"><span class="font-icon font-icon-users"></span>รายงานเปรียบเทียบระดับคะแนนแต่ละภาควิชา แต่ละด้าน</a>
 	                                <a class="dropdown-item" href="#/departmentBarChart"><span class="font-icon font-icon-users"></span>ระดับคะแนนในภาควิชา</a>
 	                            </div>
 	                        </div>

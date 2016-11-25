@@ -26,6 +26,7 @@ var departmentBarChart = (function () {
         this.json = response.json(JSON.stringify(response._body));
         this.nameDepart = this.json.resObj.faculty;
         //this.mean1 = this.json.mean1;
+        this.departmentname = this.nameDepart[0].departmentDesc;
         this.createChart(this.nameDepart[0].email);
     };
     departmentBarChart.prototype.GetDepartmentNameError = function (error) {
@@ -33,7 +34,9 @@ var departmentBarChart = (function () {
     };
     departmentBarChart.prototype.changSelection = function (value) {
         //console.log("headDepart"+value);
-        this.createChart(value);
+        var email = this.nameDepart[value].email;
+        this.departmentname = this.nameDepart[value].departmentDesc;
+        this.createChart(email);
     };
     departmentBarChart.prototype.createChart = function (value) {
         jQuery("#chart").kendoChart({

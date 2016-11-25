@@ -40,6 +40,7 @@ var FacultyReport_component_1 = require('./baiwa/FacultyReport.component');
 var deanBarChart_component_1 = require('./baiwa/deanBarChart.component');
 var deanWorkTypeBarChart_component_1 = require('./baiwa/deanWorkTypeBarChart.component');
 var departmentBarChart_component_1 = require('./baiwa/departmentBarChart.component');
+var workTypeCompareBarChart_component_1 = require('./baiwa/workTypeCompareBarChart.component');
 var image_preview_directive_1 = require('./service/image_preview.directive');
 var datatable_directive_1 = require('./datatable.directive');
 var routes = [
@@ -68,6 +69,7 @@ var routes = [
     { path: 'deanBarChart', component: deanBarChart_component_1.deanBarChart },
     { path: 'deanWorkTypeBarChart', component: deanWorkTypeBarChart_component_1.deanWorkTypeBarChart },
     { path: 'departmentBarChart', component: departmentBarChart_component_1.departmentBarChart },
+    { path: 'workTypeCompareBarChart', component: workTypeCompareBarChart_component_1.workTypeCompareBarChart },
 ];
 var AppModule = (function () {
     function AppModule() {
@@ -110,6 +112,7 @@ var AppModule = (function () {
                 deanBarChart_component_1.deanBarChart,
                 deanWorkTypeBarChart_component_1.deanWorkTypeBarChart,
                 departmentBarChart_component_1.departmentBarChart,
+                workTypeCompareBarChart_component_1.workTypeCompareBarChart,
             ],
             providers: [
                 Common_service_1.CommonService,

@@ -7,11 +7,13 @@ import java.util.StringTokenizer;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.tomcat.util.descriptor.web.LoginConfig;
+import org.json.JSONObject;
 import org.slf4j.Logger;import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -27,6 +29,7 @@ import com.buckwa.domain.pbp.report.DepartmentReport;
 import com.buckwa.domain.pbp.report.DepartmentWorkTypeReport;
 import com.buckwa.domain.pbp.report.FacultyReportLevel;
 import com.buckwa.domain.pbp.report.RadarPlotReport;
+import com.buckwa.domain.pbp.report.WorkTypeCompareReport;
 import com.buckwa.service.intf.pam.PersonProfileService;
 import com.buckwa.service.intf.pbp.DeanService;
 import com.buckwa.service.intf.pbp.FacultyService;
@@ -434,5 +437,93 @@ public class JSONDeanController {
 		//mav.setViewName("deanDepartmentBarchartInit");
 		logger.info(" End  ");
 		return response;
+	}
+	@RequestMapping(value = "/workTypeCompareBarChart", method = RequestMethod.POST , headers = "Accept=application/json")
+	public List<WorkTypeCompareReport> genWorkTypeCompareBarChart(@RequestBody WorkTypeCompareReport workTypeCompareReport) {
+		logger.info(" Start  ");
+		
+		ModelAndView mav = new ModelAndView();
+		
+		List<WorkTypeCompareReport> returnList = new ArrayList<WorkTypeCompareReport>();
+		try {
+			String academicYear =schoolUtil.getCurrentAcademicYear();
+			mav.addObject("facultyName", schoolUtil.getFacutyByDeanUserName(UserLoginUtil.getCurrentUserLogin(),academicYear));
+			
+			BuckWaRequest request = new BuckWaRequest();
+
+			String userName = UserLoginUtil.getCurrentUserLogin();
+		 
+
+			request.put("username", userName);
+			request.put("academicYear", academicYear);
+			BuckWaResponse response = facultyService.getFacultyByDeanUserNameandYear(request);
+
+			if (response.getStatus() == BuckWaConstants.SUCCESS) {
+				Faculty faculty = (Faculty) response.getResObj("faculty");
+				if (faculty != null) {
+					request.put("faculty", faculty);
+					response = deanService.getReportWorkTypeCompareFaculty(request);
+
+					if (response.getStatus() == BuckWaConstants.SUCCESS) {
+						List<DepartmentWorkTypeReport> reportWorkTypeDepartmentList = (List<DepartmentWorkTypeReport>) response.getResObj("facultyWorkTypeReportList");
+						//int loopx = 0;
+						WorkTypeCompareReport rptObj;
+						
+						for (DepartmentWorkTypeReport workType : reportWorkTypeDepartmentList) {
+							
+							if (workTypeCompareReport.isType1()) {
+								rptObj = new WorkTypeCompareReport();
+								rptObj.setOrderNo(1);
+								rptObj.setCategoryName(workType.getDepartmentName());
+								rptObj.setGroupName("1:"+workType.getTypeName1());
+								rptObj.setAxisValue(workType.getMark1());
+								returnList.add(rptObj);
+							}
+							if (workTypeCompareReport.isType2()) {
+								rptObj = new WorkTypeCompareReport();
+								rptObj.setOrderNo(2);
+								rptObj.setCategoryName(workType.getDepartmentName());
+								rptObj.setGroupName("2:"+workType.getTypeName2());
+								rptObj.setAxisValue(workType.getMark2());
+								returnList.add(rptObj);
+							}
+							if (workTypeCompareReport.isType3()) {
+								rptObj = new WorkTypeCompareReport();
+								rptObj.setOrderNo(3);
+								rptObj.setCategoryName(workType.getDepartmentName());
+								rptObj.setGroupName("3:"+workType.getTypeName3());
+								rptObj.setAxisValue(workType.getMark3());
+								returnList.add(rptObj);
+							}
+							if (workTypeCompareReport.isType4()) {
+								rptObj = new WorkTypeCompareReport();
+								rptObj.setOrderNo(4);
+								rptObj.setCategoryName(workType.getDepartmentName());
+								rptObj.setGroupName("4:"+workType.getTypeName4());
+								rptObj.setAxisValue(workType.getMark4());
+								returnList.add(rptObj);
+							}
+							if (workTypeCompareReport.isType5()) {
+								rptObj = new WorkTypeCompareReport();
+								rptObj.setOrderNo(5);
+								rptObj.setCategoryName(workType.getDepartmentName());
+								rptObj.setGroupName("5:"+workType.getTypeName5());
+								rptObj.setAxisValue(workType.getMark5());
+								returnList.add(rptObj);
+							}
+							//loopx++;
+						}
+						//String rptObjJSON = JSONObject.valueToString(returnList);
+						//mav.addObject("rptObjJSON", rptObjJSON);
+					}
+				}
+			}
+			
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		mav.setViewName("deanWorkTypeCompareBarchartInit");
+		logger.info(" End  ");
+		return returnList;
 	}
 }

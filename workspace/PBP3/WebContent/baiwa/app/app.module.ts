@@ -34,7 +34,7 @@ import {FacultyReport} from './baiwa/FacultyReport.component';
 import {deanBarChart } from './baiwa/deanBarChart.component';
 import {deanWorkTypeBarChart } from './baiwa/deanWorkTypeBarChart.component';
 import {departmentBarChart } from './baiwa/departmentBarChart.component';
-
+import {workTypeCompareBarChart } from './baiwa/workTypeCompareBarChart.component';
 
 import { FileSelectDirective } from 'ng2-file-upload';
 import { FileDropDirective } from 'ng2-file-upload';
@@ -71,7 +71,7 @@ const routes: Routes = [
     { path: 'deanBarChart' , component:deanBarChart},
     { path: 'deanWorkTypeBarChart' , component:deanWorkTypeBarChart},
     { path: 'departmentBarChart' , component:departmentBarChart},
-    
+    { path: 'workTypeCompareBarChart' , component:workTypeCompareBarChart},
     
 
 ];
@@ -113,6 +113,7 @@ const routes: Routes = [
         deanBarChart,
         deanWorkTypeBarChart,
         departmentBarChart,
+        workTypeCompareBarChart,
     ],
     providers: [
         CommonService,

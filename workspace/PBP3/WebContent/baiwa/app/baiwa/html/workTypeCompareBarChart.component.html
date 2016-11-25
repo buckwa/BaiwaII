@@ -1,0 +1,21 @@
+<div class="box-typical box-typical-padding">
+
+    <section class="card card-default">
+        <header class="card-header">
+            ระดับคะแนนเปรียบเทียบแต่ละด้านในภาควิชา {{nameDepart}}
+        </header>
+        <br>
+        <div class="row" style="padding:10px">
+            <div class="col-sm-2"><input type="checkbox" [(ngModel)]="WorkTypeCompareReport.type1" name="type1" (change)="changeCheckBox()" />1:ด้านวิชาการ</div>
+            <div class="col-sm-2"><input type="checkbox" [(ngModel)]="WorkTypeCompareReport.type2"  name="type2" (change)="changeCheckBox()" />2:งานพัฒนาวิชาการ</div>
+            <div class="col-sm-2"><input type="checkbox" [(ngModel)]="WorkTypeCompareReport.type3"  name="type3"  (change)="changeCheckBox()" /> 3:งานวิจัย หรือ สร้างสรรค์</div>
+            <div class="col-sm-2"><input type="checkbox" [(ngModel)]="WorkTypeCompareReport.type4"  name="type4" (change)="changeCheckBox()" />4:งานบริการวิชาการ</div>
+            <div class="col-sm-4"><input type="checkbox" [(ngModel)]="WorkTypeCompareReport.type5"  name="type5" (change)="changeCheckBox()" />5:งานทำนุบำรุงศิลป วัฒนธรรมและสร้างชื่อเสียงให้กับสถาบัน</div>
+
+        </div>
+
+
+        <div id="columnChart"></div>
+    </section>
+
+</div>

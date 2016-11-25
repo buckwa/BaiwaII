@@ -13,6 +13,7 @@ export class departmentBarChart implements OnInit  {
     public nameDepart: any[];
     public mean1: any;
     public headDepart:any
+	public departmentname:string;
     constructor(private http: Http) {
     }
     ngOnInit() {
@@ -28,6 +29,7 @@ export class departmentBarChart implements OnInit  {
         this.json = response.json(JSON.stringify(response._body));
         this.nameDepart = this.json.resObj.faculty;
         //this.mean1 = this.json.mean1;
+		this.departmentname = this.nameDepart[0].departmentDesc
 		this.createChart(this.nameDepart[0].email);
         
     }
@@ -38,7 +40,9 @@ export class departmentBarChart implements OnInit  {
     }
     changSelection(value:any){
         //console.log("headDepart"+value);
-        this.createChart(value);
+		var email = this.nameDepart[value].email;
+		this.departmentname = this.nameDepart[value].departmentDesc;
+        this.createChart(email);
 
     }
     createChart(value:any){

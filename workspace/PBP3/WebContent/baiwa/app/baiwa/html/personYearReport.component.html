@@ -1,53 +1,49 @@
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-xxl-3 col-md-6">
+			<section class="widget widget-pie-chart">
+				<div class="widget-pie-chart-header">
+					<div class="col-60">
+						<div class="widget-pie-chart-header-title">พิมพ์รายงานประจำปีการศึกษา</div>
 
-      	
+					</div>
+					<div class="col-40">
+						<div class="period">
+							<div class="lbl">ปี</div>
+							<select name="select" class="form-control" [(ngModel)]="acdemicyear" (ngModelChange)="changYear($event)">
+							<option *ngFor="let a of year " [value]="a.name" >{{a.name}}</option>
+                            
+                            
+				</select>
 
-
-
-
-		<div class="container-fluid">
-			<div class="row">
-				<div class="col-xxl-3 col-md-6">
-					<section class="widget widget-pie-chart">
-						<div class="widget-pie-chart-header">
-							<div class="col-60">
-								<div class="widget-pie-chart-header-title">พิมพ์รายงานประจำปีการศึกษา</div>
-                                
-							</div>
-							<div class="col-40">
-								<div class="period">
-									<div class="lbl">ปี</div>
-									<select class="select2 select2-white form-control">
-										<option>2015</option>
-										<option>2016</option>
-										<option>2017</option>
-									</select>
+						</div>
+					</div>
+				</div>
+				<div class="tbl tbl-grid">
+					<div class="tbl-row">
+						<div class="tbl-cell tbl-cell-60">
+							<div class="ggl-pie-chart-container size-180">
+								<div id="donutchart3" class="ggl-pie-chart"></div>
+								<div class="ggl-pie-chart-title">
+									<button type="button" class="btn btn-rounded" style="    max-width: 155px; " (click)="clickDownload()">Download</button>
 								</div>
 							</div>
 						</div>
-						<div class="tbl tbl-grid">
-							<div class="tbl-row">
-								<div class="tbl-cell tbl-cell-60">
-									<div class="ggl-pie-chart-container size-180">
-										<div id="donutchart3" class="ggl-pie-chart"></div>
-										<div class="ggl-pie-chart-title">
-											<button type="button"  class="btn btn-rounded" style="    max-width: 155px; ">Download</button>
-										</div>
-									</div>
-								</div>
-								<div class="tbl-cell tbl-cell-40">
-									<ul class="chart-legend-list font-16">
-										<li>
-											
-											
-										</li>
-									
-									</ul>
-								</div>
-							</div>
+						<div class="tbl-cell tbl-cell-40">
+							<ul class="chart-legend-list font-16">
+								<li>
+
+
+								</li>
+
+							</ul>
 						</div>
-					</section><!--.widget-pie-chart-->
-ระบบจะบันทึก File ลงที่ Folder download ของแต่ละ Browser
+					</div>
+				</div>
+				ระบบจะบันทึก File ลงที่ Folder download ของแต่ละ Browser
+			</section>
+			<!--.widget-pie-chart-->
+			
+		</div>
+	</div>
 </div>
-								</div>
-							</div>
-					

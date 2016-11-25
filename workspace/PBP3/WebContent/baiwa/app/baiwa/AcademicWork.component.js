@@ -44,6 +44,9 @@ var AcademicWork = (function () {
             "name": "",
             "kpiUserMappingId": "",
             "calResultStr": "",
+            "academicKPI": {
+                "unitDesc": ""
+            },
             "academicKPIAttributeValueList": [{}]
         };
     };

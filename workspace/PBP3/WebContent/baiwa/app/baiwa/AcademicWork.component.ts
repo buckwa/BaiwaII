@@ -55,6 +55,9 @@ export class AcademicWork implements OnInit, AfterViewInit {
             "name": "",
             "kpiUserMappingId": "",
             "calResultStr": "",
+            "academicKPI":{
+                "unitDesc":""
+            },
             "academicKPIAttributeValueList": [{}]
         }
     }

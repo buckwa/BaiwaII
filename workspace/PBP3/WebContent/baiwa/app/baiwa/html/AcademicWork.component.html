@@ -64,7 +64,7 @@
                                             <a href="#" data-toggle="modal" (click)="ClickGetPointKPI(item.academicKPIAttributeValueList[0].academicKPIMappingId,item.academicKPI.mark)"
                                                 data-target="#myModal" data-backdrop="static" data-keyboard="false">{{item.academicKPIAttributeValueList[0].value}}</a>
                                         </td>
-                                        <td width="35%">{{item.name}} {{item.academicKPI.mark}} คะแนน / ชั่วโมงปฎิบัติการ</td>
+                                        <td width="35%">{{item.name}} {{item.academicKPI.mark}} คะแนน / {{item.academicKPI.unitDesc}}</td>
                                         <td width="12%">
                                             <div class="text-center">{{item.fromSourceText}}&nbsp;|
                                                 <img width="25px" [hidden]="item.status !='APPROVED' " src="/PBP3/baiwa/libs/img/sucess.png" />
@@ -129,7 +129,7 @@
                             <div class="form-group row" style="margin-bottom: 2px;">
                                 <label class="col-sm-3 form-control-label">คะแนน KPI:</label>
                                 <div class="col-sm-9">
-                                    <p class="form-control-static">{{mark}} คะแนน/ ชั่วโมงปฎิบัติการ"</p>
+                                    <p class="form-control-static">{{mark}} คะแนน/ {{pointKPI.academicKPI.unitDesc}}"</p>
                                 </div>
                             </div>
 

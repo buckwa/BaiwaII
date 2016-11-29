@@ -1,6 +1,7 @@
 package baiwa.model;
 
 import java.util.Collection;
+import java.util.List;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -17,12 +18,16 @@ public class UserDetails extends User implements UserBean{
 	private Long personID;
 	private String facultyID;
 	private String departmentID;
+	private String departmentName;
 	private String academicYear;
 	private String facultyName;
+	GrantedAuthority []authorities;
+
+	
 
 	public UserDetails(String username, String password, boolean enabled, boolean accountNonExpired,
 			boolean credentialsNonExpired, boolean accountNonLocked,
-			Collection<? extends GrantedAuthority> authorities) {
+			List<GrantedAuthority> authorities ) {
 		super(username, password, enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);
 	}
 	
@@ -77,6 +82,19 @@ public class UserDetails extends User implements UserBean{
 	public void setFacultyName(String facultyName) {
 		this.facultyName = facultyName;
 	}
+	
+	public void setAuthorities(GrantedAuthority[] authorities) {
+		this.authorities = authorities;
+	}
+
+	public String getDepartmentName() {
+		return departmentName;
+	}
+
+	public void setDepartmentName(String departmentName) {
+		this.departmentName = departmentName;
+	}
+	
 	
 	
 

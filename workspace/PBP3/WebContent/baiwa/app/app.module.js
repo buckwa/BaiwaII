@@ -42,6 +42,7 @@ var deanWorkTypeBarChart_component_1 = require('./baiwa/deanWorkTypeBarChart.com
 var departmentBarChart_component_1 = require('./baiwa/departmentBarChart.component');
 var workTypeCompareBarChart_component_1 = require('./baiwa/workTypeCompareBarChart.component');
 var image_preview_directive_1 = require('./service/image_preview.directive');
+var maxLength_pipe_1 = require('./maxLength.pipe');
 var datatable_directive_1 = require('./datatable.directive');
 var routes = [
     { path: 'home', component: home_component_1.home },
@@ -59,7 +60,7 @@ var routes = [
     { path: 'work', component: work_component_1.work },
     { path: 'userCreate', component: userCreate_component_1.userCreate },
     { path: 'notificationsList', component: notificationsList_component_1.notificationsList },
-    { path: 'notificationsDetail', component: notificationsDetail_component_1.notificationsDetail },
+    { path: 'notificationsDetail/:code', component: notificationsDetail_component_1.notificationsDetail },
     { path: '', component: home_component_1.home },
     { path: 'barchart', component: barChart_component_1.barChart },
     { path: 'headWorkTypeBarChart', component: headWorkTypeBarChart_component_1.headWorkTypeBarChart },
@@ -113,10 +114,11 @@ var AppModule = (function () {
                 deanWorkTypeBarChart_component_1.deanWorkTypeBarChart,
                 departmentBarChart_component_1.departmentBarChart,
                 workTypeCompareBarChart_component_1.workTypeCompareBarChart,
+                maxLength_pipe_1.MaxLengthPipe
             ],
             providers: [
                 Common_service_1.CommonService,
-                anonymous_component_1.anonymous
+                anonymous_component_1.anonymous,
             ],
             bootstrap: [app_component_1.AppComponent]
         }), 

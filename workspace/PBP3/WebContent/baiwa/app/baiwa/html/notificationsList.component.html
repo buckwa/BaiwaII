@@ -1,58 +1,30 @@
 <div class="box-typical box-typical-padding">
 
-			
-				<article class="activity-line-item box-typical">
-					
-					<header class="activity-line-item-header">
-						<div class="activity-line-item-user">
-							<div class="activity-line-item-user-photo">
-								<a href="#">
-									<img src="{{libPath}}img/photo-64-2.jpg" alt="">
-								</a>
-							</div>
-							<div class="activity-line-item-user-name">Tim Colins</div>
-							<div class="activity-line-item-user-status">Developer, Palo Alto</div>
-						</div>
-					</header>
-			
-				</article>
-		
-				<article class="activity-line-item box-typical">
-					
-					<header class="activity-line-item-header">
-						<div class="activity-line-item-user">
-							<div class="activity-line-item-user-photo">
-								<a href="#">
-									<img src="{{libPath}}img/photo-64-2.jpg" alt="">
-								</a>
-							</div>
-							<div class="activity-line-item-user-name">Tim Colins</div>
-							<div class="activity-line-item-user-status">Developer, Palo Alto</div>
-						</div>
-					</header>
-				
-				</article><!--.activity-line-item-->
 
+	<article class="activity-line-item box-typical" *ngFor="let item of messageList; let i = index ">
 
+		<header class="activity-line-item-header">
+			<div class="activity-line-item-user">
+				<div class="activity-line-item-user-photo">
+					<a href="#">
+						<img src="{{libPath}}img/photo-64-2.jpg" alt="">
+					</a>
+				</div>
+				<a href="#/notificationsDetail/{{item.topicId}}">
+					<div class="activity-line-item-user-name">{{item.createBy}}:{{item.createDateStr}}</div>
+					<div class="activity-line-item-user-status">{{item.messageDetail}}</div>
+				</a>
+			</div>
+		</header>
 
-
-				<article class="activity-line-item box-typical">
-					
-					<header class="activity-line-item-header">
-						<div class="activity-line-item-user">
-							<div class="activity-line-item-user-photo">
-								<a href="#">
-									<img src="{{libPath}}img/photo-64-2.jpg" alt="">
-								</a>
-							</div>
-							<div class="activity-line-item-user-name">Tim Colins</div>
-							<div class="activity-line-item-user-status">Developer, Palo Alto</div>
-						</div>
-					</header>
-					
-
-				</article><!--.activity-line-item-->
-
-
-
+	</article>
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="test-center">
+				<span *ngFor="let item of page"> 
+					<a href="#/notificationsList" (click)="clickPage(item)">{{item}}</a>
+					</span>
+			</div>
+		</div>
+	</div>
 </div>

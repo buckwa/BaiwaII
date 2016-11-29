@@ -39,6 +39,7 @@ import {workTypeCompareBarChart } from './baiwa/workTypeCompareBarChart.componen
 import { FileSelectDirective } from 'ng2-file-upload';
 import { FileDropDirective } from 'ng2-file-upload';
 import { ImagePreview} from './service/image_preview.directive';
+import { MaxLengthPipe} from './maxLength.pipe';
 
 import {jQueryDataTableDirective} from './datatable.directive';
 
@@ -61,7 +62,7 @@ const routes: Routes = [
     { path: 'work', component: work },//ยุง
     { path: 'userCreate', component: userCreate },//ยุง
     { path: 'notificationsList', component: notificationsList },//ยุง
-    { path: 'notificationsDetail', component: notificationsDetail },//ยุง
+    { path: 'notificationsDetail/:code', component: notificationsDetail },//ยุง
     { path: '', component: home },
     { path: 'barchart',component:barChart},
     { path: 'headWorkTypeBarChart' , component:headWorkTypeBarChart},
@@ -114,10 +115,12 @@ const routes: Routes = [
         deanWorkTypeBarChart,
         departmentBarChart,
         workTypeCompareBarChart,
+        MaxLengthPipe
     ],
     providers: [
         CommonService,
-        anonymous
+        anonymous,
+        
     ],
     bootstrap: [AppComponent]
 })

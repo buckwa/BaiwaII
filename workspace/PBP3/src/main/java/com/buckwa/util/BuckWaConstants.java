@@ -21,6 +21,8 @@ public class BuckWaConstants implements Serializable{
 	//## Role
 	public static String ROLE_ADMIN="ROLE_ADMIN";
 	public static String ROLE_USER="ROLE_USER";
+	public static String ROLE_HEAD = "ROLE_HEAD";
+	public static String ROLE_DEAN = "ROLE_DEAN";
 	public static String ROLE_STORE_ADMIN="ROLE_STORE_ADMIN";
 	public static String ROLE_STORE_USER="ROLE_STORE_USER";
 	public static String ROLE_OFFICER="ROLE_OFFICER";

@@ -10,21 +10,21 @@
             <table id="table-edit" class="table table-bordered table-hover">
                 <thead>
                     <tr>
-                        <th>บุคลากร</th>
-                        <th>ประเภท</th>
-                        <th>รออนุมัติ</th>
-                        <th>อนุมัติแล้ว</th>
-                        <th>รวม</th>
+                        <th><div class="text-center">บุคลากร</div> </th>
+                        <th><div class="text-center">ประเภท</div></th>
+                        <th><div class="text-center">รออนุมัติ</div></th>
+                        <th><div class="text-center">อนุมัติแล้ว</div></th>
+                        <th><div class="text-center">รวม</div></th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr *ngFor="let item of academicPersonList; let i = index">
-                        <td><a [routerLink]="['/approvework',item.email , 1]">{{item.thaiName}}&nbsp;&nbsp;&nbsp;{{item.thaiSurname}}</a></td>
+                        <td><div class="text-center"><a [routerLink]="['/approvework',item.email , 1]">{{item.thaiName}}&nbsp;&nbsp;&nbsp;{{item.thaiSurname}}</a></div></td>
                         <td [hidden]="item.employeeTypeNo == 1">พนักงาน</td>
                         <td [hidden]="item.employeeTypeNo != 1">ราชการ</td>
-                        <td>{{item.totalNotApprove}}</td>
-                        <td>{{item.totalApproved}}</td>
-                        <td>{{item.total}}</td>
+                        <td><div class="text-center">{{item.totalNotApprove}}</div></td>
+                        <td><div class="text-center">{{item.totalApproved}}</div></td>
+                        <td><div class="text-center">{{item.total}}</div></td>
 
                     </tr>
                 </tbody>

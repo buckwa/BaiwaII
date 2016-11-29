@@ -25,6 +25,7 @@ var home = (function () {
         this.profile = this.defaultProfile();
         this.work = this.defaultWork();
         this.imgUpload = true;
+        this.messageList = this.defaultMessage();
     }
     home.prototype.ngOnInit = function () {
         var _this = this;
@@ -61,6 +62,14 @@ var home = (function () {
                 "mean": ""
             }];
     };
+    home.prototype.defaultMessage = function () {
+        return [{
+                "createBy": "",
+                "messageDetail": "",
+                "messageId": "",
+                "topicId": ""
+            }];
+    };
     home.prototype.sumaryAsix = function () {
         this.sumasix = 0;
         this.sumasix2 = 0;
@@ -80,6 +89,8 @@ var home = (function () {
         this.imgUpload = this.profile.picture;
         this.personId = this.profile.personId;
         this.getImageLocal(this.personId);
+        this.getMessage();
+        this.countMessage();
     };
     home.prototype.GetPersonError = function (error) {
         console.log("GetPersonError.");
@@ -244,9 +255,25 @@ var home = (function () {
         this.commonService.unLoading();
         console.log("recal error");
     };
+    home.prototype.getMessage = function () {
+        var _this = this;
+        var url = "../person/getUserMassage";
+        this.http.post(url, this.profile).subscribe(function (response) { return _this.GetMessageSucess(response); }, function (error) { return _this.GetPersonError(error); }, function () { return console.log("editdone !"); });
+    };
+    home.prototype.GetMessageSucess = function (response) {
+        this.messageList = response.json(JSON.stringify(response._body));
+    };
+    home.prototype.countMessage = function () {
+        var _this = this;
+        var url = "../person/countMessage";
+        this.http.get(url).subscribe(function (response) { return _this.countMessageSucess(response); }, function (error) { return _this.GetPersonError(error); }, function () { return console.log("editdone !"); });
+    };
+    home.prototype.countMessageSucess = function (response) {
+        this.totalMessage = response.json(JSON.stringify(response._body));
+    };
     home = __decorate([
         core_1.Component({
-            templateUrl: 'app/baiwa/html/home.component.html'
+            templateUrl: 'app/baiwa/html/home.component.html',
         }), 
         __metadata('design:paramtypes', [Common_service_1.CommonService, http_1.Http, platform_browser_1.DomSanitizer])
     ], home);

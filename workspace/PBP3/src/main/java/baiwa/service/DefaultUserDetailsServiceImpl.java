@@ -43,6 +43,7 @@ public class DefaultUserDetailsServiceImpl implements UserDetailsService{
 		userDeail.setDepartmentID(user.getDepartment_id());
 		userDeail.setFacultyID(user.getCode());
 		userDeail.setFacultyName(user.getName());
+		userDeail.setDepartmentName(user.getDepartment_name());
 		
 		
 		return userDeail;

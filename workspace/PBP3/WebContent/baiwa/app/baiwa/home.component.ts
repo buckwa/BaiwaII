@@ -5,13 +5,15 @@ import { RouterModule }   from '@angular/router';
 import { FileSelectDirective, FileDropDirective, FileUploader } from 'ng2-file-upload';
 import {DomSanitizer} from '@angular/platform-browser';
 import {Observable} from 'rxjs/Rx';
+import {MaxLengthPipe} from './../maxLength.pipe';
 declare var jQuery: any;
 
 const URL1 = 'http://localhost:8080/PBP3/pam/person/uploadPersonProfilePicture2';
 
 
 @Component({
-    templateUrl: 'app/baiwa/html/home.component.html'
+    templateUrl: 'app/baiwa/html/home.component.html',
+    
 })
 export class home implements OnInit, AfterViewInit {
 
@@ -28,16 +30,21 @@ export class home implements OnInit, AfterViewInit {
     public imageProfilePath: any;
     sanitizedUrl;
     tmpUrl;
+    public messageList:any[];
+    totalMessage:any;
+
+
     public uploader: FileUploader = new FileUploader({ url: URL1 });
     constructor(private commonService: CommonService, private http: Http, private sanitizer: DomSanitizer) {
         this.libPath = "/PBP3/baiwa/libs/";
         this.profile = this.defaultProfile();
         this.work = this.defaultWork();
         this.imgUpload = true;
+        this.messageList = this.defaultMessage();
 
     }
     ngOnInit() {
-
+        
         this.GetUserSession();
         this.uploader.queue;
 
@@ -50,6 +57,7 @@ export class home implements OnInit, AfterViewInit {
 
     }
     ngAfterViewInit() {
+        
     }
 
     public defaultProfile() {
@@ -77,6 +85,14 @@ export class home implements OnInit, AfterViewInit {
             "mean": ""
         }];
     }
+    defaultMessage(){
+        return [{
+            "createBy":"",
+            "messageDetail":"",
+            "messageId":"",
+            "topicId":""
+        }]
+    }
 
 
 
@@ -102,6 +118,8 @@ export class home implements OnInit, AfterViewInit {
         this.imgUpload = this.profile.picture;
         this.personId = this.profile.personId;
         this.getImageLocal(this.personId);
+        this.getMessage();
+        this.countMessage();
 
     }
     public GetPersonError(error: String) {
@@ -137,6 +155,7 @@ export class home implements OnInit, AfterViewInit {
 
         this.GetPersonByAcadamy(this.user.userName, this.user.currentAcademicYear);
         this.GetRadarPlotNew(this.user.userName, this.user.currentAcademicYear, "1");
+        
     }
 
     public createChart(): void {
@@ -290,6 +309,29 @@ export class home implements OnInit, AfterViewInit {
     recalError(error:any){
         this.commonService.unLoading();
         console.log("recal error");
+    }
+    getMessage(){
+        var url = "../person/getUserMassage";
+      
+        this.http.post(url,this.profile).subscribe(response => this.GetMessageSucess(response),
+            error => this.GetPersonError(error), () => console.log("editdone !")
+        );
+
+    }
+    GetMessageSucess(response:any){
+        this.messageList =  response.json(JSON.stringify(response._body));
+
+    }
+    countMessage(){
+        var url = "../person/countMessage";
+         this.http.get(url).subscribe(response => this.countMessageSucess(response),
+            error => this.GetPersonError(error), () => console.log("editdone !")
+        );
+
+    }
+    countMessageSucess(response:any){
+        this.totalMessage =  response.json(JSON.stringify(response._body));
+
     }
 
 

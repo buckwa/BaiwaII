@@ -26,6 +26,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.FileCopyUtils;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -56,6 +58,7 @@ import com.buckwa.domain.pbp.MarkRankWrapper;
 import com.buckwa.domain.pbp.PBPWorkType;
 import com.buckwa.domain.pbp.PBPWorkTypeSub;
 import com.buckwa.domain.pbp.PBPWorkTypeWrapper;
+import com.buckwa.domain.pbp.PagingMessage;
 import com.buckwa.domain.pbp.report.DepartmentWorkTypeReport;
 import com.buckwa.domain.pbp.report.MinMaxBean;
 import com.buckwa.domain.pbp.report.RadarPlotReport;
@@ -64,6 +67,8 @@ import com.buckwa.domain.pbp3.ReportMeanMax;
 import com.buckwa.domain.pbp3.ResponseObj;
 import com.buckwa.domain.pbp3.WorkSummary;
 import com.buckwa.domain.pbp3.WorkType;
+import com.buckwa.domain.validator.pbp.ReplyPBPMessageValidator;
+import com.buckwa.domain.webboard.Message;
 import com.buckwa.service.impl.PersonDetailService;
 import com.buckwa.service.intf.pam.FileLocationService;
 import com.buckwa.service.intf.pam.PersonProfileService;
@@ -76,6 +81,7 @@ import com.buckwa.service.intf.pbp.HeadService;
 import com.buckwa.service.intf.pbp.MarkRankService;
 import com.buckwa.service.intf.pbp.PBPWorkTypeService;
 import com.buckwa.service.intf.util.PathUtil;
+import com.buckwa.service.intf.webboard.WebboardTopicService;
 import com.buckwa.util.BeanUtils;
 import com.buckwa.util.BuckWaConstants;
 import com.buckwa.util.BuckWaUtils;
@@ -132,6 +138,9 @@ public class JSONPersonController {
 	
 	@Autowired
 	private MarkRankService markRankService;	
+	
+	@Autowired
+	private WebboardTopicService  webboardTopicService;
 
 	@RequestMapping(value = "/getPersonByAcademicYear/{userName}/{year}", method = RequestMethod.GET, headers = "Accept=application/json")
 	public Person getPersonByAcademicYear(HttpServletRequest httpRequest, @PathVariable String userName,
@@ -834,7 +843,7 @@ public class JSONPersonController {
 			// getUsername login.
 			String user = UserLoginUtil.getCurrentUserLogin();
 			String facultyCode = UserLoginUtil.getCurrentFacultyCode();
-
+			Boolean isHead = UserLoginUtil.isRole(BuckWaConstants.ROLE_HEAD); 
 			System.out.println("Current UserLogin  :" + user+" and FacultyCode :" +facultyCode +" AcademicYear :" +UserLoginUtil.getCurrentAcademicYear()+ " DepartmentCode :"+UserLoginUtil.getCurrentDepartmentCode()+" FacultyName: "+UserLoginUtil.getCurrentFacultyName()  );
 			// userreturn = BuckWaUtils.getUserFromContext();
 
@@ -843,6 +852,11 @@ public class JSONPersonController {
 			// userreturn.setUserName(user);
 			// userreturn.setFirstName("พิทักษ์ ");
 			// userreturn.setLastName("ธรรมวาริน");
+			if (isHead){
+				userreturn.setIsHead(isHead);
+			}else{
+				userreturn.setIsHead(isHead);
+			}
 			userreturn.setCurrentAcademicYear(UserLoginUtil.getCurrentAcademicYear());
 			userreturn.setFacultyCode(facultyCode);
 			userreturn.setDepartmentCode(UserLoginUtil.getCurrentDepartmentCode());
@@ -1595,6 +1609,150 @@ public class JSONPersonController {
 		return person;
 
 		
+	}
+	@RequestMapping(value = "/getUserMassage", method = RequestMethod.POST, headers = "Accept=application/json")
+	public List<Message> getUserMassage(HttpServletRequest httpRequest ,@RequestBody Person request) {
+		//Message messaeg = new Message();
+		List<Message> messagelist = new ArrayList<>();
+		try {
+			Boolean role = UserLoginUtil.isRole(BuckWaConstants.ROLE_HEAD);
+			String user = UserLoginUtil.getCurrentUserLogin();
+			//String facultyCode = UserLoginUtil.getCurrentFacultyCode();
+			String department = UserLoginUtil.getCurrentDepartmentCode();
+			if (role){
+				logger.info("UserMessage is Role : "+ BuckWaConstants.ROLE_HEAD);
+				messagelist = personDetailService.getMessageByHead(user,request.getDepartmentDesc());
+				
+			}else {
+				messagelist = personDetailService.getMessageByUser(user);
+				
+			}
+			
+
+			
+		} catch (Exception ex) {
+			ex.printStackTrace();
+
+		}
+
+		return messagelist;
+	}
+	
+	@RequestMapping(value = "/getMassageByKPI/{kpi_mapping_id}", method = RequestMethod.GET, headers = "Accept=application/json")
+	public List<Message> getMassageByKPI(@PathVariable String kpi_mapping_id) {
+		//Message messaeg = new Message();
+		List<Message> messagelisg = new ArrayList<>();
+		try {
+			logger.info(" getUserSession ");
+			// getUsername login.
+			String user = UserLoginUtil.getCurrentUserLogin();
+
+			//System.out.println("  :" + user+" and FacultyCode :" +facultyCode +" AcademicYear :" +UserLoginUtil.getCurrentAcademicYear()+ " DepartmentCode :"+UserLoginUtil.getCurrentDepartmentCode()+" FacultyName: "+UserLoginUtil.getCurrentFacultyName()  );
+			messagelisg = personDetailService.getMessageByKPIId(user,kpi_mapping_id);
+
+			
+		} catch (Exception ex) {
+			ex.printStackTrace();
+
+		}
+
+		return messagelisg;
+	}
+	@RequestMapping(value="/replyMessage", method = RequestMethod.POST)
+	public BuckWaResponse replyMessage(HttpServletRequest httpRequest ,@RequestBody Message message ) {
+		//ModelAndView mav = new ModelAndView();
+		BuckWaResponse response = new BuckWaResponse();
+		try{			
+			//logger.info(" ## replyMessage:"+academicKPIUserMappingWrapper.getReplyMessage());
+			 
+			//new ReplyPBPMessageValidator().validate(academicKPIUserMappingWrapper, result);			
+							
+				BuckWaRequest request = new BuckWaRequest();
+				 
+				
+				Message newMessage = new Message();
+				newMessage.setMessageDetail(message.getMessageDetail());
+				newMessage.setTopicId(message.getTopicId());
+				newMessage.setStatus("1");				
+				newMessage.setCreateBy(message.getCreateBy());
+				request.put("message", newMessage);
+				logger.info(" replyMessage newMessage:"+BeanUtils.getBeanString(newMessage));
+				response = webboardTopicService.replyPBPMessage(request);
+				if(response.getStatus()==BuckWaConstants.SUCCESS){		
+					response.setStatus(BuckWaConstants.SUCCESS);
+					logger.info(" replyMessage newMessage Success");
+					//mav.addObject("successCode", response.getSuccessCode()); 
+					//academicKPIUserMappingWrapper.setReplyMessage("");
+					//mav = viewWork(academicKPIUserMappingWrapper.getAcademicKPIUserMapping().getKpiUserMappingId()+"");	
+				}else {
+					response.setErrorCode(BuckWaConstants.ERROR_CODE);
+					//mav.addObject("errorCode", response.getErrorCode()); 
+					 
+				}				
+										
+		}catch(Exception ex){
+			ex.printStackTrace();
+			//mav.addObject("errorCode", "E001"); 
+		}
+		return response;
+	}	
+	@RequestMapping(value="/countMessage", method = RequestMethod.GET)
+	public int countMessage (HttpServletRequest httpRequest){
+		int totalMessage = 0;
+		try {
+			Boolean role = UserLoginUtil.isRole(BuckWaConstants.ROLE_HEAD);
+			String user = UserLoginUtil.getCurrentUserLogin();
+			//String facultyCode = UserLoginUtil.getCurrentFacultyCode();
+			String department = UserLoginUtil.getCurrentDepartmentName();
+			if (role){
+				logger.info("UserMessage is Role : "+ BuckWaConstants.ROLE_HEAD);
+				totalMessage = personDetailService.countMessage(department);
+				
+			}else {
+				totalMessage = personDetailService.countMessage(user);
+				
+			}
+			
+
+			
+		} catch (Exception ex) {
+			ex.printStackTrace();
+
+		}
+		return totalMessage;
+	}
+	@RequestMapping(value = "/getMassageAll/{start}/{end}", method = RequestMethod.GET, headers = "Accept=application/json")
+	public List<Message> getMassageAll(HttpServletRequest httpRequest,@PathVariable String start,@PathVariable String end) {
+		//Message messaeg = new Message();
+		List<Message> messagelist = new ArrayList<>();
+		try {
+			Boolean role = UserLoginUtil.isRole(BuckWaConstants.ROLE_HEAD);
+			String user = UserLoginUtil.getCurrentUserLogin();
+			//String facultyCode = UserLoginUtil.getCurrentFacultyCode();
+			String department = UserLoginUtil.getCurrentDepartmentName();
+			PagingMessage request = new PagingMessage();
+			request.setPageStrart(Integer.parseInt(start));
+			request.setPageEnd(Integer.parseInt(end));
+			request.setUser(user);
+			request.setDepartmentName(department);
+			System.out.println("Pageing "+ request.getPageStrart()+","+ request.getPageEnd());
+			if (role){
+				logger.info("UserMessage is Role : "+ BuckWaConstants.ROLE_HEAD);
+				messagelist = personDetailService.getMessageByHeadAll(request);
+				
+			}else {
+				messagelist = personDetailService.getMessageByUser(user);
+				
+			}
+			
+
+			
+		} catch (Exception ex) {
+			ex.printStackTrace();
+
+		}
+
+		return messagelist;
 	}
 	
 

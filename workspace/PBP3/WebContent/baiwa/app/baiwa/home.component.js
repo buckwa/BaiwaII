@@ -73,10 +73,18 @@ var home = (function () {
     home.prototype.sumaryAsix = function () {
         this.sumasix = 0;
         this.sumasix2 = 0;
+        var maxVal;
         for (var i = 0; i < this.work.length; i++) {
             this.sumasix = parseFloat(this.sumasix) + parseFloat(this.work[i].axisValue);
             this.sumasix2 = parseFloat(this.sumasix2) + parseFloat(this.work[i].axisValue2);
+            if (this.work[i].axisValue > this.work[i].axisValue2 && this.work[i].axisValue > maxVal) {
+                maxVal = this.work[i].axisValue;
+            }
+            else if (this.work[i].axisValue < this.work[i].axisValue2 && this.work[i].axisValue2 > maxVal) {
+                maxVal = this.work[i].axisValue2;
+            }
         }
+        this.maxVal = maxVal;
     };
     home.prototype.GetPersonByAcadamy = function (user, year) {
         var _this = this;
@@ -159,7 +167,7 @@ var home = (function () {
                     visible: true,
                 },
                 min: 0,
-                max: 705.0
+                max: this.maxVal
             },
             tooltip: {
                 visible: true,

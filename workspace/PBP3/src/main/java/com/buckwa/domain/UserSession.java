@@ -15,6 +15,7 @@ public class UserSession  {
  private String facultyCode;
  private String facultyName;
  private String departmentCode;
+ private String departmentName;
  private String person_id;
  private Boolean isHead;
  private Boolean isDean;
@@ -87,6 +88,13 @@ public Boolean getIsDean() {
 public void setIsDean(Boolean isDean) {
 	this.isDean = isDean;
 }
+public String getDepartmentName() {
+	return departmentName;
+}
+public void setDepartmentName(String departmentName) {
+	this.departmentName = departmentName;
+}
+
  
  
 

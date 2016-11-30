@@ -12,6 +12,8 @@ export class FacultyReport implements OnInit {
     public json: any;
     public nameDepart: any;
     public mean1: any;
+    public maxVal :any;
+
     constructor(private http: Http) {
     }
     ngOnInit() {
@@ -28,6 +30,16 @@ export class FacultyReport implements OnInit {
         this.json = response.json(JSON.stringify(response._body));
         this.nameDepart = this.json.facultyName;
         //this.mean1 = this.json.mean1;
+        var maxVal;
+        for (var i = 0; i < this.json.length; i++) {
+            if (this.json[i].axisValue > this.json[i].axisValue2 && this.json[i].axisValue > maxVal) {
+                maxVal = this.json[i].axisValue;
+            } else if (this.json[i].axisValue < this.json[i].axisValue2 && this.json[i].axisValue2 > maxVal) {
+                maxVal = this.json[i].axisValue2;
+            }
+        }
+        this.maxVal = maxVal;
+
         this.getbarChart();
     }
 
@@ -64,7 +76,7 @@ export class FacultyReport implements OnInit {
                         visible: true,
                     },
                     min: 0,
-                    max: 30000
+                    max: this.maxVal 
                 },
                 tooltip: {
                     visible: true,

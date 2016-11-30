@@ -46,7 +46,7 @@ public class PersonDetialDao {
 		List<Message> messageList = new ArrayList<>();
 		String sql = " SELECT a.message_id ,a.header ,a.detail,a.topic_id,a.create_by,a.create_date  FROM webboard_message a  INNER JOIN academic_kpi_user_mapping  b ON a.topic_id = b.kpi_user_mapping_id "
 				+ " INNER JOIN person_pbp c ON  b.user_name = c.email "
-				+ " WHERE  c.email = '"+Username+"'  ORDER BY a.message_id DESC  ";
+				+ " WHERE  c.email = '"+Username+"' AND a.detail != ''  ORDER BY a.message_id DESC  ";
 		
 		logger.info(" GetMessageByUsername:"+sql);
 		
@@ -80,7 +80,7 @@ public class PersonDetialDao {
 				+ " ON a.topic_id = b.kpi_user_mapping_id "
 				+ " INNER JOIN person_pbp c ON  b.user_name = c.email "
 				//+ " WHERE  c.email = '"+Username+"' AND topic_id = '"+KpiId+ "' ORDER BY a.message_id ASC  ";
-				+ " WHERE  topic_id = '"+KpiId+ "' ORDER BY a.message_id ASC  ";
+				+ " WHERE  topic_id = '"+KpiId+ "'  AND a.detail != '' ORDER BY a.message_id ASC  ";
 		
 		logger.info(" GetMessageByKPIID:"+sql);
 		
@@ -115,7 +115,7 @@ public class PersonDetialDao {
 				+ " FROM person_pbp a LEFT JOIN academic_kpi_user_mapping b "
 				+ " ON b.user_name =  a.email INNER JOIN  (SELECT * FROM webboard_message GROUP BY topic_id ) c "
 				+ " ON c.topic_id = b.kpi_user_mapping_id WHERE a.department_desc = '"+Department+"' "
-				+ " AND c.status ='1' ORDER BY  DATE(c.create_date) DESC LIMIT 0,? " ;
+				+ " AND c.status ='1' AND c.detail != '' ORDER BY  DATE(c.create_date) DESC LIMIT 0,? " ;
 		if (count > 20){		
 			count = 20;
 		}
@@ -154,7 +154,7 @@ public class PersonDetialDao {
 		}else{
 			sql = " SELECT COUNT(*)  FROM webboard_message a  INNER JOIN academic_kpi_user_mapping  b ON a.topic_id = b.kpi_user_mapping_id "
 					+ " INNER JOIN person_pbp c ON  b.user_name = c.email "
-					+ " WHERE  c.email = '"+criteria+"'  ";
+					+ " WHERE  c.email = '"+criteria+"' AND a.detail != '' ";
 		}
 		logger.info(" CountMessage:"+sql);
 		int count = jdbcTemplate.queryForObject(sql, Integer.class);

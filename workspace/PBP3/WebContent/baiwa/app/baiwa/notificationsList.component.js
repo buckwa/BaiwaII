@@ -9,10 +9,12 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
+var Common_service_1 = require('./../service/Common.service');
 var http_1 = require('@angular/http');
 var notificationsList = (function () {
-    function notificationsList(http) {
+    function notificationsList(http, commonService) {
         this.http = http;
+        this.commonService = commonService;
         this.libPath = "/PBP3/baiwa/libs/";
         this.messageList = this.defaultMessage();
         this.pageCount = this.pagecountD();
@@ -52,12 +54,15 @@ var notificationsList = (function () {
     };
     notificationsList.prototype.GetMessageSucess = function (response) {
         this.messageList = response.json(JSON.stringify(response._body));
+        this.commonService.unLoading();
     };
     notificationsList.prototype.GetMessageError = function (error) {
+        this.commonService.unLoading();
         console.log("error");
     };
     notificationsList.prototype.CountMessageAll = function () {
         var _this = this;
+        this.commonService.loading();
         var url = "../person/countMessage";
         this.http.get(url).subscribe(function (response) { return _this.countMessageSucess(response); }, function (error) { return _this.GetMessageError(error); }, function () { return console.log("editdone !"); });
     };
@@ -70,8 +75,13 @@ var notificationsList = (function () {
     notificationsList.prototype.countPaging = function () {
         var npage;
         var a = [];
-        if (this.totalMessage / 20 > 1) {
-            for (var i = 1; i < this.totalMessage / 20; i++) {
+        var totalpage = this.totalMessage / 20;
+        var modPage = this.totalMessage % 20;
+        if (modPage > 0) {
+            totalpage = totalpage + 1;
+        }
+        if (totalpage > 1) {
+            for (var i = 1; i < totalpage; i++) {
                 a.push(i);
             }
             this.start = 0;
@@ -79,7 +89,7 @@ var notificationsList = (function () {
         }
         else {
             this.start = 0;
-            this.end = this.totalMessage;
+            this.end = totalpage;
             a.push(1);
         }
         this.page = a;
@@ -89,13 +99,15 @@ var notificationsList = (function () {
         this.getMessage();
     };
     notificationsList.prototype.clickPage = function (val) {
+        this.commonService.loading();
+        var modPage = this.totalMessage % 20;
         console.log("click value:" + val);
-        if (val > 1) {
+        if (val > 1 && val != this.page.length) {
             this.start = (val - 1) * 20;
         }
         else if (val == this.page.length) {
             this.start = (val - 1) * 20;
-            this.end = 20 - this.totalMessage;
+            this.end = modPage;
         }
         this.pagingMessage.pageStart = this.start;
         // this.pagingMessage.pageEnd = this.end
@@ -106,7 +118,7 @@ var notificationsList = (function () {
         core_1.Component({
             templateUrl: 'app/baiwa/html/notificationsList.component.html'
         }), 
-        __metadata('design:paramtypes', [http_1.Http])
+        __metadata('design:paramtypes', [http_1.Http, Common_service_1.CommonService])
     ], notificationsList);
     return notificationsList;
 }());

@@ -12,33 +12,59 @@ declare var jQuery: any;
 export class personReportInit {
 
     public libPath: string;
-    public json: any;
+    public json: any[];
     public user: any;
     public json2: any;
-
+    public maxVal: any;
+    public url;
     constructor(private commonService: CommonService, private http: Http, private sanitizer: DomSanitizer) {
         this.libPath = "/PBP3/baiwa/libs/";
-     
+
     }
     ngOnInit() {
-        this.creatChart();
-        this.kendoGrid();
-       // this.GetUserSession();
+        this.GetUserSession();
+        // this.GetUserSession();
 
     }
 
     ngAfterViewInit() {
 
     }
+    public GetUserSession() {
+        var url = "../person/getUserSession";
+        return this.http.get(url).subscribe(response => this.GetUserSessionSucess(response),
+            error => this.GetUserSessionError(error), () => console.log("editdoneUser !"));
+    }
+    public GetUserSessionSucess(response: any) {
+        this.user = response.json(JSON.stringify(response._body));
+        this.kendoGrid(this.user.currentAcademicYear);
 
-    public kendoGrid(){
-        var url = "../person/getRadarPlotNewByYear/2558";
+    }
+    public GetUserSessionError(error: String) {
+        console.log("GetPersonError.")
+
+    }
+
+    public kendoGrid(year: any) {
+        var url = "../person/getRadarPlotNewByYear/" + year;
+        this.url  = url;
         return this.http.get(url).subscribe(response => this.GetkendoGridSucess(response),
-        error => this.GetPersonError(error), () => console.log("getRadarPlotNewByYear1 !"));
+            error => this.GetPersonError(error), () => console.log("getRadarPlotNewByYear1 !"));
     }
 
     public GetkendoGridSucess(response: any) {
         this.json = response.json(JSON.stringify(response._body));
+        var maxVal;
+        for (var i = 0; i < this.json.length; i++) {
+            if (this.json[i].axisValue > this.json[i].axisValue2 && this.json[i].axisValue > maxVal) {
+                maxVal = this.json[i].axisValue;
+            } else if (this.json[i].axisValue < this.json[i].axisValue2 && this.json[i].axisValue2 > maxVal) {
+                maxVal = this.json[i].axisValue2;
+            }
+        }
+        this.maxVal = maxVal;
+
+        this.creatChart();
 
     }
 
@@ -49,43 +75,43 @@ export class personReportInit {
 
 
 
-    public creatChart(){
-         jQuery("#chartKendo").kendoChart({
-                title: {
-                    text: "คะแนนประจำปี  " 
-                },
-                dataSource: {
-                    transport: {
-                        read: {
-                            url: "../person/getRadarPlotNewByYear/2558",
-                            dataType: "json"
-                        }
-                    } 
-                },
-                seriesDefaults: {
-                    type: "radarLine"
-                },
-                series: [{
-                    name: "คะแนน",
-                    field: "axisValue"
-                }],
-                categoryAxis: {
-                    field: "axisName"
-                },
-                valueAxis: {
-                    labels: {
-                    	format: "{0}",
-                        visible: true,
-                    },
-                    min: 0,
-                    max: 1000
-                },
-                tooltip: {
-                    visible: true,
-                    template: "#= series.name #: #= value #"
+    public creatChart() {
+        jQuery("#chartKendo").kendoChart({
+            title: {
+                text: "คะแนนประจำปี  "
+            },
+            dataSource: {
+                transport: {
+                    read: {
+                        url: this.url ,
+                        dataType: "json"
+                    }
                 }
-            });
-            console.log("getRadarPlotNewByYear2 !");
+            },
+            seriesDefaults: {
+                type: "radarLine"
+            },
+            series: [{
+                name: "คะแนน",
+                field: "axisValue"
+            }],
+            categoryAxis: {
+                field: "axisName"
+            },
+            valueAxis: {
+                labels: {
+                    format: "{0}",
+                    visible: true,
+                },
+                min: 0,
+                max: this.maxVal
+            },
+            tooltip: {
+                visible: true,
+                template: "#= series.name #: #= value #"
+            }
+        });
+        console.log("getRadarPlotNewByYear2 !");
     }
 
 

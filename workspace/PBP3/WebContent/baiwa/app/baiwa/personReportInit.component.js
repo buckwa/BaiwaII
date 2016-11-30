@@ -20,19 +20,42 @@ var personReportInit = (function () {
         this.libPath = "/PBP3/baiwa/libs/";
     }
     personReportInit.prototype.ngOnInit = function () {
-        this.creatChart();
-        this.kendoGrid();
+        this.GetUserSession();
         // this.GetUserSession();
     };
     personReportInit.prototype.ngAfterViewInit = function () {
     };
-    personReportInit.prototype.kendoGrid = function () {
+    personReportInit.prototype.GetUserSession = function () {
         var _this = this;
-        var url = "../person/getRadarPlotNewByYear/2558";
+        var url = "../person/getUserSession";
+        return this.http.get(url).subscribe(function (response) { return _this.GetUserSessionSucess(response); }, function (error) { return _this.GetUserSessionError(error); }, function () { return console.log("editdoneUser !"); });
+    };
+    personReportInit.prototype.GetUserSessionSucess = function (response) {
+        this.user = response.json(JSON.stringify(response._body));
+        this.kendoGrid(this.user.currentAcademicYear);
+    };
+    personReportInit.prototype.GetUserSessionError = function (error) {
+        console.log("GetPersonError.");
+    };
+    personReportInit.prototype.kendoGrid = function (year) {
+        var _this = this;
+        var url = "../person/getRadarPlotNewByYear/" + year;
+        this.url = url;
         return this.http.get(url).subscribe(function (response) { return _this.GetkendoGridSucess(response); }, function (error) { return _this.GetPersonError(error); }, function () { return console.log("getRadarPlotNewByYear1 !"); });
     };
     personReportInit.prototype.GetkendoGridSucess = function (response) {
         this.json = response.json(JSON.stringify(response._body));
+        var maxVal;
+        for (var i = 0; i < this.json.length; i++) {
+            if (this.json[i].axisValue > this.json[i].axisValue2 && this.json[i].axisValue > maxVal) {
+                maxVal = this.json[i].axisValue;
+            }
+            else if (this.json[i].axisValue < this.json[i].axisValue2 && this.json[i].axisValue2 > maxVal) {
+                maxVal = this.json[i].axisValue2;
+            }
+        }
+        this.maxVal = maxVal;
+        this.creatChart();
     };
     personReportInit.prototype.GetPersonError = function (error) {
         console.log("GetPersonError.");
@@ -45,7 +68,7 @@ var personReportInit = (function () {
             dataSource: {
                 transport: {
                     read: {
-                        url: "../person/getRadarPlotNewByYear/2558",
+                        url: this.url,
                         dataType: "json"
                     }
                 }
@@ -66,7 +89,7 @@ var personReportInit = (function () {
                     visible: true,
                 },
                 min: 0,
-                max: 1000
+                max: this.maxVal
             },
             tooltip: {
                 visible: true,

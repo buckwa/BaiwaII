@@ -32,7 +32,7 @@ export class home implements OnInit, AfterViewInit {
     tmpUrl;
     public messageList:any[];
     totalMessage:any;
-
+    public maxVal:any;
 
     public uploader: FileUploader = new FileUploader({ url: URL1 });
     constructor(private commonService: CommonService, private http: Http, private sanitizer: DomSanitizer) {
@@ -99,11 +99,18 @@ export class home implements OnInit, AfterViewInit {
     public sumaryAsix() {
         this.sumasix = 0;
         this.sumasix2 = 0;
-
+        var maxVal;
         for (var i = 0; i < this.work.length; i++) {
             this.sumasix = parseFloat(this.sumasix) + parseFloat(this.work[i].axisValue);
             this.sumasix2 = parseFloat(this.sumasix2) + parseFloat(this.work[i].axisValue2);
+
+            if (this.work[i].axisValue > this.work[i].axisValue2 && this.work[i].axisValue > maxVal){
+                maxVal = this.work[i].axisValue;
+            }else if (this.work[i].axisValue < this.work[i].axisValue2 &&this.work[i].axisValue2> maxVal ){
+                maxVal = this.work[i].axisValue2 ;
+            }
         }
+        this.maxVal = maxVal;
     }
     public GetPersonByAcadamy(user: String,  year: String) {
         var url = "../person/getPersonByAcademicYear/" + user + "/" + year
@@ -198,7 +205,7 @@ export class home implements OnInit, AfterViewInit {
                     visible: true,
                 },
                 min: 0,
-                max: 705.0
+                max:  this.maxVal
             },
             tooltip: {
                 visible: true,

@@ -18,7 +18,21 @@ var InitApporve = (function () {
         this.tabPerson = false;
     }
     InitApporve.prototype.ngOnInit = function () {
+        this.GetUserSession();
+    };
+    InitApporve.prototype.GetUserSession = function () {
+        var _this = this;
+        var url = "../person/getUserSession";
+        return this.http.get(url).subscribe(function (response) { return _this.GetUserSessionSucess(response); }, function (error) { return _this.GetUserSessionError(error); }, function () { return console.log("editdoneUser !"); });
+    };
+    InitApporve.prototype.GetUserSessionSucess = function (response) {
+        this.user = response.json(JSON.stringify(response._body));
+        this.nameDepart = this.user.facultyName;
+        this.year = this.user.currentAcademicYear;
         this.initTotle();
+    };
+    InitApporve.prototype.GetUserSessionError = function (error) {
+        console.log("GetPersonError.");
     };
     InitApporve.prototype.initTotle = function () {
         var _this = this;

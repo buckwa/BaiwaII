@@ -847,7 +847,7 @@ public class JSONPersonController {
 			System.out.println("Current UserLogin  :" + user+" and FacultyCode :" +facultyCode +" AcademicYear :" +UserLoginUtil.getCurrentAcademicYear()+ " DepartmentCode :"+UserLoginUtil.getCurrentDepartmentCode()+" FacultyName: "+UserLoginUtil.getCurrentFacultyName()  );
 			// userreturn = BuckWaUtils.getUserFromContext();
 
-			userreturn = personDetailService.GetUserSession(user);
+			//userreturn = personDetailService.GetUserSession(user);
 
 			// userreturn.setUserName(user);
 			// userreturn.setFirstName("พิทักษ์ ");
@@ -857,11 +857,13 @@ public class JSONPersonController {
 			}else{
 				userreturn.setIsHead(isHead);
 			}
+			userreturn.setUserName(UserLoginUtil.getCurrentUserLogin());
 			userreturn.setCurrentAcademicYear(UserLoginUtil.getCurrentAcademicYear());
 			userreturn.setFacultyCode(facultyCode);
 			userreturn.setDepartmentCode(UserLoginUtil.getCurrentDepartmentCode());
 			userreturn.setAcademicYearList(academicYearUtil.getAcademicYearList());
 			userreturn.setFacultyName(UserLoginUtil.getCurrentFacultyName());
+			userreturn.setDepartmentName(UserLoginUtil.getCurrentDepartmentName());
 			
 		} catch (Exception ex) {
 			ex.printStackTrace();

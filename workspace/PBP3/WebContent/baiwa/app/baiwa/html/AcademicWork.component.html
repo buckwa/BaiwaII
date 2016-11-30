@@ -9,7 +9,7 @@
 			            </select>
         </div>
 
-        <div class="col-sm-4 ">สถานะ : <img width="25px" src="/PBP3/baiwa/libs/img/wait.png" /> รออนุมัติ &nbsp;<img width="25px" src="/PBP3/baiwa/libs/img/co_wait.png"
+        <div class="col-sm-4 text-center ">สถานะ : <img width="25px" src="/PBP3/baiwa/libs/img/wait.png" /> รออนุมัติ &nbsp;<img width="25px" src="/PBP3/baiwa/libs/img/co_wait.png"
             />&nbsp; รออนุมัติสอนร่วม &nbsp; <img width="25px" src="/PBP3/baiwa/libs/img/sucess.png" />&nbsp;อนุมัติ </div>
         <div class="col-sm-5 text-center"><b>ช่องทาง</b>: A&nbsp;:นำเข้าอัตโนมัติจากสำนักทะเบียน&nbsp; M:นำเข้าเอง</div>
 
@@ -31,14 +31,14 @@
                         <th width="15%">
                             <div class="text-center">ประเภทภาระงาน</div>
                         </th>
-                        <th width="20%">
+                        <th width="25%">
                             <div class="text-center">งาน</div>
                         </th>
                         <th width="30%">
                             <div class="text-center">ภาระงาน/คะแนน</div>
                         </th>
-                        <th width="10%">
-                            <div class="text-center">ช่องทาง|สถานะ</div>
+                        <th width="5%">
+                            <div class="text-center">ช่องทาง|<br>สถานะ</div>
                         </th>
                         <th width="5%">
                             <div class="text-center"> สัดส่วน</div>
@@ -51,10 +51,11 @@
                         </th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody *ngFor="let item1 of academyList; let i = index">
+                    <!--
                     <tr *ngFor="let item of academyList; let i = index">
                         <td style="vertical-align:top">&nbsp;{{i+1}}&nbsp;&nbsp;{{item.name}}</td>
-
+                         
                         <td colspan="5" style="padding:0px ;">
                             <table>
                                 <tbody>
@@ -88,8 +89,32 @@
                         <td colspan="6">คะแนนรวม</td>
                         <td> {{academy.totalMark}}</td>
                     </tr>
+                    -->
 
-                    </tbody>
+                        <tr width="100%" *ngFor="let item2 of kpiuserList[i]; let j = index ">
+                            <td [attr.rowspan]="kpiuserList[i].length" style="vertical-align:top" *ngIf="j==0">&nbsp;{{i+1}}&nbsp;&nbsp;{{item1.name}}</td>
+                            <td width="23%">
+                                <a href="#" data-toggle="modal" (click)="ClickGetPointKPI(item2.academicKPIAttributeValueList[0].academicKPIMappingId,item2.academicKPI.mark)"
+                                    data-target="#myModal" data-backdrop="static" data-keyboard="false">{{item2.academicKPIAttributeValueList[0].value}}</a>
+                            </td>
+                            <td width="35%">{{item2.name}} {{item2.academicKPI.mark}} คะแนน / {{item2.academicKPI.unitDesc}}</td>
+                            <td width="12%">
+                                <div class="text-center">{{item2.fromSourceText}}&nbsp;|
+                                    <img width="25px" [hidden]="item2.status !='APPROVED' " src="/PBP3/baiwa/libs/img/sucess.png" />
+                                    <img width="25px" [hidden]="item2.status =='APPROVED' " src="/PBP3/baiwa/libs/img/wait.png" />
+                                </div>
+                            </td>
+                            <td width="6%">
+                                <div class="text-center">{{kpival[i][j]}}</div>
+                            </td>
+                            <td width="14%">
+                                <div class="text-center">{{item2.totalInMapping}}|<b><span style="color:green;">{{item2.totalInMapping}}</span></b></div>
+                            </td>
+                             <td [attr.rowspan]="kpiuserList[i].length" *ngIf="j==0" style="vertical-align:top">{{item1.totalInWorkType}}</td>
+                            
+
+
+                </tbody>
             </table>
             <br>
             <div class="col-lg-12 col-md-12 box-typical box-typical-padding">
@@ -169,35 +194,39 @@
                                         <table class="table">
                                             <thead>
                                                 <tr>
-                                                    <th width="50%"><div class="text-center">Name</div></th>
-                                                    
-                                                    <th><div class="text-center"></div></th>
+                                                    <th width="50%">
+                                                        <div class="text-center">Name</div>
+                                                    </th>
+
+                                                    <th>
+                                                        <div class="text-center"></div>
+                                                    </th>
 
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <tr [hidden]="chFilework == ture" *ngFor="let item of fileWork">
-                                                
-                                                    <td width="70%" ><strong><a href="../person/downloadAttachFile/{{item.attachFileId}}">{{item.fileName}}</a></strong></td>
-                                                    
+
+                                                    <td width="70%"><strong><a href="../person/downloadAttachFile/{{item.attachFileId}}">{{item.fileName}}</a></strong></td>
+
                                                     <td nowrap width="30%">
-                                                       <button type="button" class="btn btn-danger btn-xs" (click)="deleteFile(item.attachFileId,item.fileName)">
+                                                        <button type="button" class="btn btn-danger btn-xs" (click)="deleteFile(item.attachFileId,item.fileName)">
                                                         <span class="glyphicon glyphicon-trash"></span> 
                                                     </button>
                                                     </td>
-                                                   
+
                                                 </tr>
-                                                <tr [hidden]="chFilework == false" >
+                                                <tr [hidden]="chFilework == false">
                                                     <td colspan="3" class="text-center">ไม่มีเอกสารแนบ</td>
                                                 </tr>
                                             </tbody>
 
                                         </table>
                                         <hr>
-                                        <div *ngIf="!statusKpi" >
-                                        <h5>เพิ่มเอกสารแบบ</h5>
+                                        <div *ngIf="!statusKpi">
+                                            <h5>เพิ่มเอกสารแบบ</h5>
 
-                                        <input type="file" class="form-control" ng2FileSelect [uploader]="uploader" multiple /><br/>
+                                            <input type="file" class="form-control" ng2FileSelect [uploader]="uploader" multiple /><br/>
                                         </div>
                                     </div>
                                 </div>
@@ -205,10 +234,12 @@
 
 
 
-                                <table class="table" *ngIf="!statusKpi" >
+                                <table class="table" *ngIf="!statusKpi">
                                     <thead>
                                         <tr>
-                                            <th width="50%"><div class="text-center">Name</div></th>
+                                            <th width="50%">
+                                                <div class="text-center">Name</div>
+                                            </th>
                                             <th>Status</th>
                                             <th>Progress</th>
 

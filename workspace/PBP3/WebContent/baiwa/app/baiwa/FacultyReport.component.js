@@ -26,6 +26,16 @@ var FacultyReport = (function () {
         this.json = response.json(JSON.stringify(response._body));
         this.nameDepart = this.json.facultyName;
         //this.mean1 = this.json.mean1;
+        var maxVal;
+        for (var i = 0; i < this.json.length; i++) {
+            if (this.json[i].axisValue > this.json[i].axisValue2 && this.json[i].axisValue > maxVal) {
+                maxVal = this.json[i].axisValue;
+            }
+            else if (this.json[i].axisValue < this.json[i].axisValue2 && this.json[i].axisValue2 > maxVal) {
+                maxVal = this.json[i].axisValue2;
+            }
+        }
+        this.maxVal = maxVal;
         this.getbarChart();
     };
     FacultyReport.prototype.GetDepartmentNameError = function (error) {
@@ -60,7 +70,7 @@ var FacultyReport = (function () {
                     visible: true,
                 },
                 min: 0,
-                max: 30000
+                max: this.maxVal
             },
             tooltip: {
                 visible: true,

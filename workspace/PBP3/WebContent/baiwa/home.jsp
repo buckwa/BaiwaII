@@ -15,7 +15,7 @@
 
 <html>
   <head>
-    <title>Angular QuickStart</title>
+    <title>PBP</title>
     <base href="${contextLibs}">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -68,8 +68,8 @@
 	    <div class="container-fluid">
 	        <a href="#" class="site-logo">
 	        
-	            <img class="hidden-md-down" src="${contextLibs}libs/img/logo-2.png" alt="">
-	            <img class="hidden-lg-up" src="${contextLibs}libs/img/logo-2-mob.png" alt="">
+	            <img class="hidden-md-down" src="${contextLibs}libs/img/Logo02.png" alt="">
+	            <img class="hidden-lg-up" src="${contextLibs}libs/img/Logo02.png" alt="">
 	            
 	        </a>
 	        <button class="hamburger hamburger--htla">
@@ -79,14 +79,7 @@
 	            <div class="site-header-content-in">
 	                <div class="site-header-shown">
 	                    <div class="dropdown dropdown-notification notif">
-	                        <a href="#"
-	                           class="header-alarm dropdown-toggle active"
-	                           id="dd-notification"
-	                           data-toggle="dropdown"
-	                           aria-haspopup="true"
-	                           aria-expanded="false">
-	                            <i class="font-icon-alarm"></i>
-	                        </a>
+	                     
 	                        <div class="dropdown-menu dropdown-menu-right dropdown-menu-notif" aria-labelledby="dd-notification">
 	                            <div class="dropdown-menu-notif-header">
 	                                Notifications
@@ -137,15 +130,22 @@
 	                    <div class="dropdown user-menu">
 	                        <button class="dropdown-toggle" id="dd-user-menu" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 	                            <img src="${contextLibs}libs/img/avatar-2-64.png" alt="">
+ 
 	                        </button>
+	                       		
+
 	                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dd-user-menu">
-	                            <a class="dropdown-item" href="#"><span class="font-icon glyphicon glyphicon-user"></span>Profile</a>
-	                            <a class="dropdown-item" href="#"><span class="font-icon glyphicon glyphicon-cog"></span>Settings</a>
-	                            <a class="dropdown-item" href="#"><span class="font-icon glyphicon glyphicon-question-sign"></span>Help</a>
+	                            <a class="dropdown-item" href="#/home"><span class="font-icon glyphicon glyphicon-user"></span>Profile</a>
+	                            <a class="dropdown-item" href="#/userManual" ><span class="font-icon glyphicon glyphicon-question-sign"></span>Help</a>
 	                            <div class="dropdown-divider"></div>
 	                            <a class="dropdown-item" href="../logout.htm"><span class="font-icon glyphicon glyphicon-log-out"></span>Logout</a>
 	                        </div>
 	                    </div>
+	                    
+<!-- 	<label style="color: #adb7be;"> </label> -->
+<!-- 	<label style="color: #adb7be;     padding-left: 70px;">  การศึกษา 2558 </label> -->
+<!-- 	<label style="color: #adb7be;     padding-left: 70px;">  รอบการประเมิน: 1 ส.ค. 2558 - 31 ก.ค. 2559 </label> -->
+	
 	
 	                    <button type="button" class="burger-right">
 	                        <i class="font-icon-menu-addl"></i>
@@ -250,18 +250,24 @@
 	                        </div>
 	                        </sec:authorize>
 	                        
-	                        <div class="dropdown dropdown-typical">
-	                            <a class="dropdown-toggle no-arr" id="dd-header-form-builder" href="#/userManual">
-	                                <span class="font-icon font-icon-widget"> &nbsp;คู่มือ</span>
-	                            </a>
-	                        </div>
+<!-- 	                        <div class="dropdown dropdown-typical"> -->
+<!-- 	                            <a class="dropdown-toggle no-arr" id="dd-header-form-builder" href="#/userManual"> -->
+<!-- 	                                <span class="font-icon font-icon-widget"> &nbsp;คู่มือ</span> -->
+<!-- 	                            </a> -->
+<!-- 	                        </div> -->
 
 
 
 
 	                    </div><!--.site-header-collapsed-in-->
+	                    	               
+	                 <label style="color: #adb7be;    text-align: right; ">  รอบการประเมิน: 1 ส.ค. 2558 - 31 ก.ค. 2559 |  การศึกษา ${year} | ${username} </label>
+
+
 	                </div><!--.site-header-collapsed-->
+
 	            </div><!--site-header-content-in-->
+	           
 	        </div><!--.site-header-content-->
 	    </div><!--.container-fluid-->
 	</header><!--.site-header-->
@@ -273,13 +279,6 @@
     		<my-app>Loading...</my-app>
      	</div>
     </div>
-     
-     
-     
-     
-     
-     
-     
      
 <div class="" style="
 	text-align: center;

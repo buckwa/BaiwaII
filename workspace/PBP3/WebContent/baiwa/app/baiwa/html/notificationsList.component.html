@@ -11,7 +11,8 @@
 					</a>
 				</div>
 				<a href="#/notificationsDetail/{{item.topicId}}">
-					<div class="activity-line-item-user-name">{{item.createBy}}:{{item.createDateStr}}</div>
+					<span  *ngIf="item.statusMessage !='0' " ><div class="activity-line-item-user-name">{{item.createBy}}:{{item.createDateStr}}</div> <span class="label label-danger" style="float:right;">New</span></span>
+					<span  *ngIf="item.statusMessage =='0' " ><div class="activity-line-item-user-name">{{item.createBy}}:{{item.createDateStr}}</div></span>  
 					<div class="activity-line-item-user-status">{{item.messageDetail}}</div>
 				</a>
 			</div>

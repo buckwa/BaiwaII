@@ -21,6 +21,8 @@ public class UserDetails extends User implements UserBean{
 	private String departmentName;
 	private String academicYear;
 	private String facultyName;
+	private String thaiName;
+	private String thaiSurname;
 	GrantedAuthority []authorities;
 
 	
@@ -94,6 +96,23 @@ public class UserDetails extends User implements UserBean{
 	public void setDepartmentName(String departmentName) {
 		this.departmentName = departmentName;
 	}
+
+	public String getThaiName() {
+		return thaiName;
+	}
+
+	public void setThaiName(String thaiName) {
+		this.thaiName = thaiName;
+	}
+
+	public String getThaiSurname() {
+		return thaiSurname;
+	}
+
+	public void setThaiSurname(String thaiSurname) {
+		this.thaiSurname = thaiSurname;
+	}
+	
 	
 	
 	

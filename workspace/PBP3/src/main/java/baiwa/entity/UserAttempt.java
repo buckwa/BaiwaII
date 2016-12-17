@@ -11,6 +11,8 @@ public class UserAttempt {
 	private String code;
 	private String name;
 	private String academic_year;
+	private String thai_name;
+	private String thai_surname;
 	
 	public String getDepartment_id() {
 		return department_id;
@@ -65,6 +67,18 @@ public class UserAttempt {
 	}
 	public void setDepartment_name(String department_name) {
 		this.department_name = department_name;
+	}
+	public String getThai_name() {
+		return thai_name;
+	}
+	public void setThai_name(String thai_name) {
+		this.thai_name = thai_name;
+	}
+	public String getThai_surname() {
+		return thai_surname;
+	}
+	public void setThai_surname(String thai_surname) {
+		this.thai_surname = thai_surname;
 	}
 	
 	

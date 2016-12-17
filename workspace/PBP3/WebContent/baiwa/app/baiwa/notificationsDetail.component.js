@@ -54,6 +54,7 @@ var notificationsDetail = (function () {
     };
     notificationsDetail.prototype.GetuserSucess = function (response) {
         this.user = response.json(JSON.stringify(response._body));
+        this.GetPersonByAcadamy(this.user.userName, this.user.currentAcademicYear);
         this.getMessage();
     };
     notificationsDetail.prototype.getMessage = function () {
@@ -63,6 +64,7 @@ var notificationsDetail = (function () {
     };
     notificationsDetail.prototype.GetMessageSucess = function (response) {
         this.messageList = response.json(JSON.stringify(response._body));
+        this.UpdateFlagMessage(this.messageList[0].messageId);
     };
     notificationsDetail.prototype.GetPersonError = function (error) {
         console.log("error");
@@ -71,13 +73,32 @@ var notificationsDetail = (function () {
         var _this = this;
         var url = "../person/replyMessage";
         this.nMessage.topicId = this.code;
-        this.nMessage.createBy = this.user.firstName + " " + this.user.lastName;
+        this.nMessage.createBy = this.profile.thaiName + " " + this.profile.thaiSurname;
         this.http.post(url, this.nMessage).subscribe(function (response) { return _this.replyMessageSucess(response); }, function (error) { return _this.GetPersonError(error); }, function () { return console.log("editdone !"); });
     };
     notificationsDetail.prototype.replyMessageSucess = function (response) {
         this.nMessage.messageDetail = "";
         console.log("addmessageSucess!");
         this.getMessage();
+    };
+    notificationsDetail.prototype.UpdateFlagMessage = function (messageId) {
+        var _this = this;
+        var url = "../person/updateFlagMessage/" + messageId;
+        this.http.get(url).subscribe(function (response) { return _this.updateSucess(response); }, function (error) { return _this.GetPersonError(error); }, function () { return console.log("editdone !"); });
+    };
+    notificationsDetail.prototype.updateSucess = function (response) {
+        console.log("UpdateStatus Message Sucess..");
+    };
+    notificationsDetail.prototype.backToHome = function () {
+        window.location.href = "#/home";
+    };
+    notificationsDetail.prototype.GetPersonByAcadamy = function (user, year) {
+        var _this = this;
+        var url = "../person/getPersonByAcademicYear/" + user + "/" + year;
+        this.http.get(url).subscribe(function (response) { return _this.GetPersonSucess(response); }, function (error) { return _this.GetPersonError(error); }, function () { return console.log("editdone !"); });
+    };
+    notificationsDetail.prototype.GetPersonSucess = function (response) {
+        this.profile = response.json(JSON.stringify(response._body));
     };
     notificationsDetail = __decorate([
         core_1.Component({

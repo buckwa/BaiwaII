@@ -1,9 +1,6 @@
 package com.buckwa.domain.webboard;
 
-import java.util.Date;
-
 import com.buckwa.domain.BaseDomain;
-import com.buckwa.util.BuckWaDateUtils;
 
 public class Message extends BaseDomain{
 	
@@ -11,7 +8,7 @@ public class Message extends BaseDomain{
 	private Long topicId;
 	private String messageDetail;
 	private String imagePath;
-	private String status;
+	private Boolean statusMessage;
 	private String userName;
  
 	
@@ -39,11 +36,17 @@ public class Message extends BaseDomain{
 	public void setImagePath(String imagePath) {
 		this.imagePath = imagePath;
 	}
-	public String getStatus() {
-		return status;
+
+	public String getStatusMessage() {
+		if (this.statusMessage == true ||this.statusMessage.equals("1")){
+			return "1";
+		}else {
+			return "0";
+			
+		}
 	}
-	public void setStatus(String status) {
-		this.status = status;
+	public void setStatusMessage(Boolean statusMessage) {
+		this.statusMessage = statusMessage;
 	}
 	public String getUserName() {
 		return userName;

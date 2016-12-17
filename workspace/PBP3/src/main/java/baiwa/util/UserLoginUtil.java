@@ -116,5 +116,17 @@ public class UserLoginUtil {
 		return departmentName;
 		
 	}
+	public static String getCurrentFullThaiName(){
+		String fullName = null;
+		try{
+		UserDetails userDetail = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		fullName = userDetail.getThaiName()+"  "+userDetail.getThaiSurname();
+		
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return fullName;
+		
+	}
 
 }

@@ -9,7 +9,7 @@
 				<div class="form-group row">
 					<label for="exampleSelect" class="col-sm-3 form-control-label">ปีการศึกษา</label>
 					<div class="col-sm-5">
-						<select  id="SelectYearList" (change)="GetRadarPlotNewSearch($event.target.value)"  class="form-control"  >
+						<select id="SelectYearList" (change)="GetRadarPlotNewSearch($event.target.value)" class="form-control">
 							<option *ngFor="let a of profile.academicYearList " >{{a.name}}</option>
 						</select>
 					</div>
@@ -58,7 +58,7 @@
 				<div class="profile-card-status">สังกัด:{{profile.facultyDesc}}</div>
 				<div class="profile-card-location">ส่วนงาน:{{profile.departmentDesc}}</div>
 				<button type="button" data-toggle="modal" href="#" data-toggle="modal" data-target="#myModal" data-backdrop="static" data-keyboard="false"
-					class="btn btn-rounded" style="max-width: 155px;" (click)="UpdateImage()" >แก้ไขรูปประจำตัว</button>
+					class="btn btn-rounded" style="max-width: 155px;" (click)="UpdateImage()">แก้ไขรูปประจำตัว</button>
 
 			</div>
 			<!--.profile-card-->
@@ -122,15 +122,16 @@
 			<header class="box-typical-header-sm">Notifications</header>
 
 
-			<div class="friends-list stripped" *ngFor="let item of messageList; let i = index " >
+			<div class="friends-list stripped" *ngFor="let item of messageList; let i = index ">
 				<article class="friends-list-item" *ngIf="i < 7">
-					<div class="user-card-row"  >
-						<div class="tbl-row" >
-
+					<div class="user-card-row">
+						<div class="tbl-row">
 							<div class="tbl-cell">
-								<p class="user-card-row-name "><a href="#/notificationsDetail/{{item.topicId}}">{{item.createBy}}</a></p>
-								<p class="user-card-row-status"><a href="#/notificationsDetail/{{item.topicId}}">{{item.messageDetail | maxLength : 15 }}</a></p>
+								<span *ngIf="item.statusMessage !='0' "><p class="user-card-row-name "><a href="#/notificationsDetail/{{item.topicId}}">{{item.createBy}}</a> <span class="label label-danger" style="float:right;">New</span> </p> </span>
+								<span *ngIf="item.statusMessage =='0' " ><p class="user-card-row-name "><a href="#/notificationsDetail/{{item.topicId}}">{{item.createBy}}</a> </p> </span>
+								<p class="user-card-row-status"><a href="#/notificationsDetail/{{item.topicId}}">{{item.messageDetail | maxLength : 15 }}</a></p> 
 							</div>
+							
 
 						</div>
 					</div>
@@ -217,22 +218,22 @@
 			<div class="modal-body">
 				<div class="row">
 
-					<div class="col-md-12" >
-						
+					<div class="col-md-12">
+
 						<div *ngIf="updateImg" class="row">
 							<div class="text-center">
-							<img [src]="imageProfilePath" alt="" style="width:400px;padding:10px;" />
+								<img [src]="imageProfilePath" alt="" style="width:400px;padding:10px;" />
 							</div>
 						</div>
 						<div ng-if="!updateImg" class="row" *ngFor="let item of uploader.queue; let i = index ">
-							<div class="col-md-12"  >
+							<div class="col-md-12">
 								<div class="text-center">
-								<img src="" imgPreview [image]="item?._file" style="width:300px;padding:10px;" />
+									<img src="" imgPreview [image]="item?._file" style="width:300px;padding:10px;" />
 								</div>
 							</div>
-						
 
-<!--
+
+							<!--
 						<table class="table">
 							<thead>
 								<tr>
@@ -280,25 +281,25 @@
                     <span class="glyphicon glyphicon-trash"></span> Remove
                 </button>
 						</div> -->
-						<div class="text-center">
-						<button type="button" class="btn btn-success btn-xs" (click)="UploadPicture(item)" [disabled]="item.isReady || item.isUploading || item.isSuccess || (item.file.type != 'image/png' && item.file.type !='image/jpeg') ">
+							<div class="text-center">
+								<button type="button" class="btn btn-success btn-xs" (click)="UploadPicture(item)" [disabled]="item.isReady || item.isUploading || item.isSuccess || (item.file.type != 'image/png' && item.file.type !='image/jpeg') ">
                             <span class="glyphicon glyphicon-upload"></span> Upload
                         </button>
-						<button type="button" class="btn btn-danger btn-xs" (click)="cancleUpload(item)" (change)="cancleUpload()">
+								<button type="button" class="btn btn-danger btn-xs" (click)="cancleUpload(item)" (change)="cancleUpload()">
                             <span class="glyphicon glyphicon-trash"></span> Remove
                         </button>
-						</div>
+							</div>
 						</div>
 
 					</div>
 
 					<div class="row">
 
-							<div class="col-md-12" *ngIf="imgUpload">
-								
-								<input type="file" class="form-control" ng2FileSelect [uploader]="uploader" (change)="changeUpload()" /><br/>
-							</div>
+						<div class="col-md-12" *ngIf="imgUpload">
+
+							<input type="file" class="form-control" ng2FileSelect [uploader]="uploader" (change)="changeUpload()" /><br/>
 						</div>
+					</div>
 
 				</div>
 

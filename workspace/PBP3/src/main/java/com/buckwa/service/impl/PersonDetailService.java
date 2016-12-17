@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.buckwa.dao.impl.PersonDetialDao;
 import com.buckwa.domain.UserSession;
+import com.buckwa.domain.common.BuckWaResponse;
 import com.buckwa.domain.pbp.PagingMessage;
 import com.buckwa.domain.webboard.Message;
 import com.buckwa.web.util.AcademicYearUtil;
@@ -64,6 +65,12 @@ public class PersonDetailService {
 		messagelist = personDetialDao.getMessageByHeadAll(request);
 		
 		return messagelist;
+		
+	}
+	public BuckWaResponse updateflagMessage(String MessageID){
+		BuckWaResponse response  = new BuckWaResponse();
+		personDetialDao.updateFlagMessage(MessageID);
+		return response;
 		
 	}
 	

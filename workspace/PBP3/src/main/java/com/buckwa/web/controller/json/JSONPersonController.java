@@ -90,6 +90,7 @@ import com.buckwa.util.PAMConstants;
 import com.buckwa.util.school.SchoolUtil;
 import com.buckwa.web.util.AcademicYearUtil;
 
+import baiwa.util.BaiwaConstants;
 import baiwa.util.UserLoginUtil;
 
 @RestController
@@ -843,15 +844,10 @@ public class JSONPersonController {
 			// getUsername login.
 			String user = UserLoginUtil.getCurrentUserLogin();
 			String facultyCode = UserLoginUtil.getCurrentFacultyCode();
+			String fullName = UserLoginUtil.getCurrentFullThaiName();
 			Boolean isHead = UserLoginUtil.isRole(BuckWaConstants.ROLE_HEAD); 
 			System.out.println("Current UserLogin  :" + user+" and FacultyCode :" +facultyCode +" AcademicYear :" +UserLoginUtil.getCurrentAcademicYear()+ " DepartmentCode :"+UserLoginUtil.getCurrentDepartmentCode()+" FacultyName: "+UserLoginUtil.getCurrentFacultyName()  );
-			// userreturn = BuckWaUtils.getUserFromContext();
-
-			//userreturn = personDetailService.GetUserSession(user);
-
-			// userreturn.setUserName(user);
-			// userreturn.setFirstName("พิทักษ์ ");
-			// userreturn.setLastName("ธรรมวาริน");
+			System.out.println("------ FullName is "+fullName);
 			if (isHead){
 				userreturn.setIsHead(isHead);
 			}else{
@@ -1757,5 +1753,27 @@ public class JSONPersonController {
 		return messagelist;
 	}
 	
+	@RequestMapping(value = "/updateFlagMessage/{MessageID}", method = RequestMethod.GET, headers = "Accept=application/json")
+	public BuckWaResponse getMassageAll(HttpServletRequest httpRequest,@PathVariable String MessageID) {
+		//Message messaeg = new Message();
+		BuckWaResponse response = new BuckWaResponse();
+		try {
+			Boolean role = UserLoginUtil.isRole(BuckWaConstants.ROLE_HEAD);
+			String user = UserLoginUtil.getCurrentUserLogin();
+			//String facultyCode = UserLoginUtil.getCurrentFacultyCode();
+			String department = UserLoginUtil.getCurrentDepartmentName();
+			PagingMessage request = new PagingMessage();
+			System.out.println("Update Flag Message by  "+ MessageID);
+			personDetailService.updateflagMessage(MessageID);
+			response.setStatus(BuckWaConstants.SUCCESS);
+
+			
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			response.setStatus(BuckWaConstants.FAIL);
+		}
+
+		return response;
+	}
 
 }

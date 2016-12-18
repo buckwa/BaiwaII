@@ -41,7 +41,12 @@
                     </div>
                     <header class="sign-title">Sign In</header>
                     <c:if test="${not empty error}">
-										<div class="error-signin">${error}</div>
+									<div class="alert alert-danger alert-no-border alert-close alert-dismissible fade in" role="alert">
+										<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+											<span aria-hidden="true">&times;</span>
+										</button>
+										${error}
+									</div>
 					</c:if>
                     <div class="form-group">
                         <input type="text" name="username" class="form-control" placeholder="Username"/ value="user">
@@ -54,12 +59,9 @@
                             <input type="checkbox" id="signed-in"/>
                             <label for="signed-in">Keep me signed in</label>
                         </div>
-                        <div class="float-right reset">
-                            <a href="reset-password.html">Reset Password</a>
-                        </div>
+                        
                     </div>
                     <button type="submit" class="btn btn-rounded">Sign in</button>
-                    <p class="sign-note">New to our website? <a href="sign-up.html">Sign up</a></p>
                     <!--<button type="button" class="close">
                         <span aria-hidden="true">&times;</span>
                     </button>-->

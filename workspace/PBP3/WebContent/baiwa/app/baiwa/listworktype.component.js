@@ -20,7 +20,10 @@ var listworktype = (function () {
         this.uploader = new ng2_file_upload_1.FileUploader({ url: URL });
         this.hasBaseDropZoneOver = false;
         this.hasAnotherDropZoneOver = false;
+        this.savealert = false;
+        this.uploadalert = false;
         this.statusActiveUpload = false;
+        this.valid = true;
         this.libPath = "/PBP3/baiwa/libs/";
         this.Inport = this.defaultInport();
         this.inport5 = this.defaultImport();
@@ -32,6 +35,7 @@ var listworktype = (function () {
         this.uploader.onBuildItemForm = function (fileItem, form) {
             form.append('academicKPIId', _this.academicKPIId);
         };
+        //this.uploadalert =true;
     };
     listworktype.prototype.ngAfterViewInit = function () {
     };
@@ -166,6 +170,8 @@ var listworktype = (function () {
         this.academicKPIId = response.json(JSON.stringify(response._body));
         this.academicKPIId = this.academicKPIId.resObj;
         this.statusActiveUpload = true;
+        this.savealert = true;
+        this.valid = false;
     };
     listworktype.prototype.exitModal = function () {
         this.statusActiveUpload = false;

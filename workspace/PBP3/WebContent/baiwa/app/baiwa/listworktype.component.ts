@@ -28,9 +28,12 @@ export class listworktype implements OnInit, AfterViewInit {
     public uploader:FileUploader = new FileUploader({url: URL});
     public hasBaseDropZoneOver:boolean = false;
     public hasAnotherDropZoneOver:boolean = false;
-
+    public savealert: boolean  = false;
+    public uploadalert: boolean  = false;
     public statusActiveUpload: boolean = false;
     public validType:boolean;
+    public valid: boolean = true;
+
 
     constructor(private commonService: CommonService, private http: Http) {
         this.libPath = "/PBP3/baiwa/libs/";
@@ -43,11 +46,10 @@ export class listworktype implements OnInit, AfterViewInit {
        this.GetUserSession();
 
        this.uploader.onBuildItemForm = (fileItem: any, form: any) => {
-
-
         form.append(  'academicKPIId', this.academicKPIId  );
-
         };
+        //this.uploadalert =true;
+
 
     }
     ngAfterViewInit() {
@@ -237,6 +239,8 @@ export class listworktype implements OnInit, AfterViewInit {
             this.academicKPIId = response.json(JSON.stringify(response._body));
             this.academicKPIId = this.academicKPIId.resObj;
             this.statusActiveUpload = true;
+            this.savealert = true;
+            this.valid = false;
     }
 
     public exitModal (){

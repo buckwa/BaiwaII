@@ -118,6 +118,16 @@ var listworktype = (function () {
         var url = "../person/getAllWorkList/" + currentAcademicYear + "/" + facultyCode;
         this.http.get(url).subscribe(function (response) { return _this.GetSucess(response); }, function (error) { return _this.GetError(error); }, function () { return console.log("editdoneInportt !"); });
     };
+    listworktype.prototype.uploadFileAll = function () {
+        var _this = this;
+        this.uploader.uploadAll();
+        window.setTimeout(function () {
+            var temp = !_this.uploader.getNotUploadedItems().length;
+            _this.uploadalert = true;
+            console.log("status upload :" + temp);
+            _this.uploader.clearQueue();
+        }, 600);
+    };
     listworktype.prototype.GetSucess = function (response) {
         this.Inport = response.json(JSON.stringify(response._body));
         this.inport0 = this.Inport[0].academicKPIList;

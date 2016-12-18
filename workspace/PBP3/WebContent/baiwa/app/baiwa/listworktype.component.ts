@@ -150,7 +150,18 @@ export class listworktype implements OnInit, AfterViewInit {
 
     }
 
+    public uploadFileAll() {
+        this.uploader.uploadAll();
 
+        window.setTimeout(() => {
+            var temp = !this.uploader.getNotUploadedItems().length;
+            this.uploadalert = true;
+            console.log("status upload :" + temp)
+            this.uploader.clearQueue();
+        }, 600);
+
+
+    }
 
 
 

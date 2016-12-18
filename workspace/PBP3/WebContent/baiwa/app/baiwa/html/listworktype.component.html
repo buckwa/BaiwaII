@@ -393,8 +393,7 @@
                 <tr>
                     <th width="50%">Name</th>
                     <th>Status</th>
-                    <th>Progress</th>
-
+                    
                 </tr>
                 </thead>
                 <tbody>
@@ -411,7 +410,7 @@
                         <span *ngIf="item.isCancel"><i class="glyphicon glyphicon-ban-circle"></i></span>
                         <span *ngIf="item.isError"><i class="glyphicon glyphicon-remove"></i></span>
                     </td>
-                    <td nowrap>
+                    <!--<td nowrap>
                         <button type="button" class="btn btn-success btn-xs"
                                 (click)="item.upload()" [disabled]="item.isReady || item.isUploading || item.isSuccess">
                             <span class="glyphicon glyphicon-upload"></span> 
@@ -424,7 +423,7 @@
                                 (click)="item.remove()">
                             <span class="glyphicon glyphicon-trash"></span> 
                         </button>
-                    </td>
+                    </td>-->
                 </tr>
                 </tbody>
             </table>
@@ -437,7 +436,7 @@
                     </div>
                 </div>
                 <button type="button" class="btn btn-success btn-s"
-                        (click)="uploader.uploadAll()" [disabled]="!uploader.getNotUploadedItems().length">
+                        (click)="uploadFileAll()" [disabled]="!uploader.getNotUploadedItems().length">
                     <span class="glyphicon glyphicon-upload"></span> Upload all
                 </button>
                 <button type="button" class="btn btn-warning btn-s"
@@ -459,7 +458,7 @@
           </div>
         </div>
         <div class="modal-upload-bottom">
-          <button type="button" class="btn btn-rounded btn-default" data-dismiss="modal" (click)="exitModal()" >เสร็จสิ้น</button>
+          <button type="button" class="btn btn-rounded btn-success" data-dismiss="modal" (click)="exitModal()" >เสร็จสิ้น</button>
         </div>
         </form>
       </div>

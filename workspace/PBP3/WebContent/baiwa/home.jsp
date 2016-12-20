@@ -12,7 +12,7 @@
 
 <c:url var="contextLibs" value="/baiwa/"/>
 <c:url var="contextPath" value="/"/>
-<c:url var="ver" value="1.0.1"/>
+<c:url var="ver" value="1.0.2"/>
 
 <html>
   <head>
@@ -94,6 +94,7 @@
 	                            <a class="dropdown-item" href="#/home"><span class="font-icon glyphicon glyphicon-user"></span>หน้าแรก</a>
 	                            <a class="dropdown-item" href="#/userManual" ><span class="font-icon glyphicon glyphicon-question-sign"></span>คู่มือ</a>
 	                            <div class="dropdown-divider"></div>
+	                            <div class="dropdown-header">เวอร์ชั่น : ${ver}</div>
 	                            <a class="dropdown-item" href="../logout.htm"><span class="font-icon glyphicon glyphicon-log-out"></span>Logout</a>
 	                        </div>
 	                    </div>
@@ -109,78 +110,60 @@
 	                </div><!--.site-header-shown-->
 	
 	                <div class="mobile-menu-right-overlay"></div>
+	                
 	                <div class="site-header-collapsed">
 	                    <div class="site-header-collapsed-in" style=" width: 100%;">
-	                    
-<!-- 	                        <div class="dropdown dropdown-typical"> -->
-<!-- 	                            <div class="dropdown-menu" aria-labelledby="dd-header-sales"> -->
-<!-- 	                                <a class="dropdown-item" href="#"><span class="font-icon font-icon-home"></span>Quant and Verbal</a> -->
-<!-- 	                                <a class="dropdown-item" href="#"><span class="font-icon font-icon-cart"></span>Real Gmat Test</a> -->
-<!-- 	                                <a class="dropdown-item" href="#"><span class="font-icon font-icon-speed"></span>Prep Official App</a> -->
-<!-- 	                                <a class="dropdown-item" href="#"><span class="font-icon font-icon-users"></span>CATprer Test</a> -->
-<!-- 	                                <a class="dropdown-item" href="#"><span class="font-icon font-icon-comments"></span>Third Party Test</a> -->
-<!-- 	                            </div> -->
-<!-- 	                        </div> -->
-	                        
-	                        
 	                        
 	                        <div class="dropdown dropdown-typical">
 	                            <a class="dropdown-toggle no-arr" id="dd-header-marketing" data-target="#/home" href="#/home" >
-	                                <span class="font-icon"> &nbsp; หน้าแรก</span>
+	                                <span class="font-icon"><i class="fa fa-home"></i> หน้าแรก</span>
 	                            </a>
 	                        </div>
-	                        
-	                        
 	                      
 	                        <div class="dropdown dropdown-typical">
-	                            <a href="#/ListByWorkType" class="dropdown-toggle no-arr">
-	                                <span class="font-icon"> &nbsp;นำเข้าผลงาน</span>
+	                            <a class="dropdown-toggle" data-target="#" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+	                                <span class="font-icon"><i class="fa fa-tasks"></i>&nbsp;รายการผลงาน</span>
 	                            </a>
-	                        </div>
-	                        <div class="dropdown dropdown-typical">
-	                            <a class="dropdown-toggle no-arr" id="dd-header-form-builder"  href="#/AcademicWork" >
-	                                <span class="font-icon"> &nbsp;ผลงานประจำปี</span>
-	                            </a>
+	                            <div class="dropdown-menu" aria-labelledby="dd-header-form-builder">
+	                                <a class="dropdown-item" href="#/AcademicWork"><i class="fa fa-book"></i>&nbsp;&nbsp;ผลงานประจำปี</a>
+	                                <a class="dropdown-item" href="#/ListByWorkType"><i class="fa fa-upload"></i>&nbsp;&nbsp;นำเข้าผลงาน</a>
+	                                 <sec:authorize access="!hasAuthority('ROLE_HEAD')&&!hasAuthority('ROLE_DEAN')">
+		                                <a class="dropdown-item" href="#/work"><i class="fa fa-edit"></i>&nbsp;&nbsp;แก้ไขผลงาน</a>
+			                        </sec:authorize>
+	                            </div>
 	                        </div>
 	                        
-	                        <div class="dropdown dropdown-typical">
-	                            <a class="dropdown-toggle no-arr"  id="dd-header-form-builder" href="#/anonymous" >
-	                                <span class="font-icon"> &nbsp;กฎระเบียบ</span>
-	                            </a>
-	                        </div>
-	                       
 	                       	<div class="dropdown dropdown-typical">
 	                            
-	                            <a class="dropdown-toggle no-arr" data-target="#" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-	                                <span class="font-icon"> &nbsp;รายงานคะแนน</span>
+	                            <a class="dropdown-toggle" data-target="#" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+	                                <span class="font-icon"><i class="fa fa-check-square-o"></i>&nbsp;รายงานคะแนน</span>
 	                            </a>
 									<div class="dropdown-menu" aria-labelledby="dd-header-form-builder">
-
-	                                <a class="dropdown-item" href="#/personReportInit"><span class="font-icon font-icon-home"></span>คะแนนประจำปี</a>
+	                                <a class="dropdown-item" href="#/personReportInit"><span class="font-icon"><i class="fa fa-flag"></i></span>คะแนนประจำปี</a>
 	                                <a class="dropdown-item" href="#/personReport"><span class="font-icon font-icon-cart"></span>ระดับคะแนนในภาควิชา</a>
 	                                <a class="dropdown-item" href="#/workTypeBarChart"><span class="font-icon font-icon-speed"></span>ระดับคะแนนแต่ละด้านในภาควิชา</a>
-	                                <a class="dropdown-item" href="#/personYearReport"><span class="font-icon font-icon-users"></span>Download รายงานประจำปี</a>
+	                                <a class="dropdown-item" href="#/personYearReport"><span class="font-icon"><i class="fa fa-download"></i></span>Download รายงานประจำปี</a>
 	                        
 	                            </div>
 	                        </div>
 
 	                        <div class="dropdown dropdown-typical">
+	                            <a class="dropdown-toggle no-arr"  id="dd-header-form-builder" href="#/anonymous" >
+	                                <span class="font-icon"><i class="fa fa-balance-scale"></i>&nbsp;กฎระเบียบ</span>
+	                            </a>
+	                        </div>
+	                       
+	                        <div class="dropdown dropdown-typical">
 	                            <a class="dropdown-toggle no-arr" id="dd-header-form-builder" href="#/personTimeTable" >
-	                                <span class="font-icon"> &nbsp;ตารางสอน</span>
+	                                <span class="font-icon"><i class="fa fa-calendar"></i>&nbsp;ตารางสอน</span>
 	                            </a>
 	                        </div>
-	                        <sec:authorize access="!hasAuthority('ROLE_HEAD')&&!hasAuthority('ROLE_DEAN')">
- 							<div class="dropdown dropdown-typical">
-	                            <a class="dropdown-toggle no-arr" id="dd-header-form-builder"  href="#/work"  >
-	                                <span class="font-icon"> &nbsp;แก้ไขผลงาน</span>
-	                            </a>
-	                        </div>
-	                        </sec:authorize>
+	                       
 	                        
 	                         <sec:authorize access="hasAuthority('ROLE_HEAD')&&!hasAuthority('ROLE_DEAN')">
 	                        <div class="dropdown dropdown-typical">
-	                            <a class="dropdown-toggle no-arr" id="dd-header-form-builder" data-target="#" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-	                                <span class="font-icon"> &nbsp;หัวหน้าภาควิชา</span>
+	                            <a class="dropdown-toggle" id="dd-header-form-builder" data-target="#" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	                                <span class="font-icon"><i class="fa fa-sitemap"></i>&nbsp;หัวหน้าภาควิชา</span>
 	                            </a>
 									<div class="dropdown-menu" aria-labelledby="dd-header-form-builder">
 	                                <a class="dropdown-item" href="#/initApprove"><span class="font-icon font-icon-users"></span>อนุมัติผลงาน</a>
@@ -193,8 +176,8 @@
 	                        
 	                        <sec:authorize access="hasAuthority('ROLE_DEAN')">
 	                        <div class="dropdown dropdown-typical">
-	                            <a class="dropdown-toggle no-arr" id="dd-header-form-builder" data-target="#" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-	                                <span class="font-icon"> &nbsp;คณบดี</span>
+	                            <a class="dropdown-toggle" id="dd-header-form-builder" data-target="#" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	                                <span class="font-icon"><i class="fa fa-university"></i>&nbsp;คณบดี</span>
 	                            </a>
 									<div class="dropdown-menu" aria-labelledby="dd-header-form-builder">
 	                                <a class="dropdown-item" href="#/facultyReport"><span class="font-icon font-icon-users"></span>รายงานคะแนนทั้งคณะ</a>
@@ -238,23 +221,15 @@
     		<my-app></my-app>
      	</div>
 
-<!-- 		<div class=" hidden-xs hidden-sm"> -->
-<!-- 				<div class="panel-rightbody" id="slide"> -->
-<!-- 					45555555555555 -->
-<!-- 					    <img   src="http://lorempixel.com/output/cats-q-c-100-100-4.jpg" /> -->
-<!-- 				</div> -->
-<!-- 				<div class="clearfix"></div> -->
-<!-- 		</div> -->
-
 	</div>
 	
 
      
-<div class="kk-footer">
-    <span > พัฒนาโดย คณะวิศวกรรมศาสตร์ สถาบันเทคโนโลยีพระจอมเกล้าเจ้าคุณทหารลาดกระบัง.</span> &nbsp;&nbsp;&nbsp;
-    <span > (หากมีข้อสงสัยในการใช้งาน สอบถามได้ที่ 3278 คุณ นิสากร สีนวลแตง)</span> 
-</div>
-     
+	<div class="kk-footer">
+	    <span > พัฒนาโดย คณะวิศวกรรมศาสตร์ สถาบันเทคโนโลยีพระจอมเกล้าเจ้าคุณทหารลาดกระบัง.</span> &nbsp;&nbsp;&nbsp;
+	    <span > (หากมีข้อสงสัยในการใช้งาน สอบถามได้ที่ 3278 คุณ นิสากร สีนวลแตง)</span> 
+	</div>
+	     
      
      
      <script src="${contextLibs}libs/js/lib/jquery/jquery.min.js"></script>
@@ -279,12 +254,14 @@
  	
  	<script type="text/javascript">
  		$( document ).ready(function() {    
-		    $(window).scroll(function () {     
-		        if ($('body').scrollTop() < 50) {
-		           $('#tophiddenbar').fadeIn();
+		    $(window).scroll(function () {  
+		    	var scl =  $('body').scrollTop();
+		        if (scl < 50) {
+		           $('#tophiddenbar,.kk-footer').fadeIn();
 		        } else {
-		           $('#tophiddenbar').fadeOut();
+		           $('#tophiddenbar,.kk-footer').fadeOut();
 		        }
+		        
 		    });
 		});
  	</script>

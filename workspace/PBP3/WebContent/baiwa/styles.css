@@ -3,10 +3,8 @@ body,html {
     font-size: 14px !important;
 }
 
-/* Master Styles */
 h1 {
-	color: #369;
-	font-size: 250%;
+	font-size: 2rem;
 }
 
 h2, h3 {
@@ -14,13 +12,25 @@ h2, h3 {
 	font-weight: lighter;
 }
 
+h2{
+    font-size: 1.5rem;
+}
+
+h3{
+    font-size: 1.25rem;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    margin-bottom: -0.8rem;
+}
+
 a {
 	content: text-decoration: none !important;
 }
 
 .page-content {
-    padding: 120px 15px 10px;
-	padding-bottom: 30px;
+    padding: 110px 5px 0px;
+/* 	padding-bottom: 30px; */
 }
 
 .kk-footer {
@@ -42,6 +52,16 @@ a {
     color: #f6f8fa;
     font-size: 14px !important;
 }
+
+.dropdown.dropdown-typical a.dropdown-toggle:after{
+	color: #f6f8fa;
+}
+
+.dropdown-toggle::after{
+	color: #f6f8fa;
+	margin: 0px;
+}
+
 
 .site-header {
     position: fixed;
@@ -69,8 +89,9 @@ a {
     font-size: 14px;
 }
 
-.dropdown-item .font-icon {
+.dropdown-item .font-icon, .dropdown-item .fa{
     font-size: 14px;
+    color: #919fa9;
 }
 
 .site-header .dropdown.dropdown-typical {
@@ -85,6 +106,7 @@ a {
     padding-right: 10px;
     padding-left: 10px;
 }
+
 
 
 .wrapper {
@@ -123,4 +145,21 @@ a {
     text-align: center;
     text-shadow: 1px 1px 0 #444;
     font-size: 12px;
+}
+
+
+.section-header {
+    padding: 0 0 18px;
+}
+
+.comment-item {
+    padding: 8px;
+}
+
+.comment-item .user-card-row {
+    margin: 0px;
+}
+
+.box-typical.box-typical-dashboard {
+    margin: 0px;
 }

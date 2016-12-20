@@ -12,6 +12,7 @@
 
 <c:url var="contextLibs" value="/baiwa/"/>
 <c:url var="contextPath" value="/"/>
+<c:url var="ver" value="1.0.1"/>
 
 <html>
   <head>
@@ -50,7 +51,7 @@
     <link rel="stylesheet" href="${contextLibs}libs/css/lib/font-awesome/font-awesome.min.css">
     <link rel="stylesheet" href="${contextLibs}libs/css/main.css">
     <link rel="stylesheet" href="${contextLibs}libs/css/lib/bootstrap-sweetalert/sweetalert.css"/>
-    <link rel="stylesheet" href="${contextLibs}styles.css">
+    <link rel="stylesheet" href="${contextLibs}styles.css?v=${ver}">
     
     <script>
     "use strict";
@@ -226,7 +227,7 @@
 	        </div><!--.site-header-content-->
 	    </div><!--.container-fluid-->
 	</header><!--.site-header-->
-	<div id="tophiddenbar">
+	<div id="tophiddenbar" class="nav-down">
 		<span style="float: left;">&nbsp;&nbsp;&nbsp;รอบการประเมิน : 1 ส.ค. 2558 - 31 ก.ค. 2559</span>
 		<span style="float: right;">ปีการศึกษา : 2559&nbsp;&nbsp;</span>
 	</div>
@@ -259,12 +260,12 @@
      <script src="${contextLibs}libs/js/lib/jquery/jquery.min.js"></script>
 	 <script src="${contextLibs}libs/js/lib/tether/tether.min.js"></script>
 	 <script src="${contextLibs}libs/js/lib/bootstrap/bootstrap.min.js"></script>
-	       <script type="text/javascript" src="${contextLibs}libs/js/lib/blockUI/jquery.blockUI.js"></script>
+	 <script type="text/javascript" src="${contextLibs}libs/js/lib/blockUI/jquery.blockUI.js"></script>
 	 <script src="${contextLibs}libs/js/plugins.js"></script>
 	 <script src="${contextLibs}libs/js/app.js"></script>
 	 <script src="${contextLibs}libs/js/lib/datatables-net/datatables.min.js"></script>
-      <script src="${contextLibs}libs/js/lib/bootstrap-sweetalert/sweetalert.js"></script>
-      <script type="text/javascript" src="${contextLibs}libs/editor1.5.6/js/dataTables.editor.js"></script>
+     <script src="${contextLibs}libs/js/lib/bootstrap-sweetalert/sweetalert.js"></script>
+     <script type="text/javascript" src="${contextLibs}libs/editor1.5.6/js/dataTables.editor.js"></script>
 
 
 
@@ -275,7 +276,18 @@
 	<link rel="stylesheet" href="${contextLibs}libs/kendo/styles/kendo.dataviz.default.min.css"> 
  	<script type="text/javascript" src="${contextLibs}libs/kendo/js/kendo.all.min.js"></script> 	
 	<script type="text/javascript" src="${contextLibs}libs/kendo/js/angular.min.js"></script>
- 
+ 	
+ 	<script type="text/javascript">
+ 		$( document ).ready(function() {    
+		    $(window).scroll(function () {     
+		        if ($('body').scrollTop() < 50) {
+		           $('#tophiddenbar').fadeIn();
+		        } else {
+		           $('#tophiddenbar').fadeOut();
+		        }
+		    });
+		});
+ 	</script>
 
    
   </body>

@@ -81,6 +81,11 @@ a {
     border-right: 1px solid #BCBCBC;
 }
 
+.dropdown.dropdown-typical a.dropdown-toggle {
+    padding-right: 10px;
+    padding-left: 10px;
+}
+
 
 .wrapper {
     position: relative;

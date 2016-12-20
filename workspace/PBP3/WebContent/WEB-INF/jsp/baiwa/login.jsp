@@ -49,10 +49,10 @@
 									</div>
 					</c:if>
                     <div class="form-group">
-                        <input type="text" name="username" class="form-control" placeholder="ผู้ใช้งาน" value="ktpitak">
+                        <input type="text" name="username" class="form-control" placeholder="ผู้ใช้งาน" value="">
                     </div>
                     <div class="form-group">
-                        <input type="password"  name="password" class="form-control" placeholder="รหัสผ่าน" value="password" />
+                        <input type="password"  name="password" class="form-control" placeholder="รหัสผ่าน" value="" />
                     </div>
                     
                     <div class="form-group">

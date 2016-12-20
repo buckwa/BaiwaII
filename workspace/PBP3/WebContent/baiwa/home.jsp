@@ -91,10 +91,11 @@
 	                       		
 
 	                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dd-user-menu">
+	                            <div class="dropdown-header">เวอร์ชั่น : ${ver}</div>
+	                            <div class="dropdown-divider"></div>
 	                            <a class="dropdown-item" href="#/home"><span class="font-icon glyphicon glyphicon-user"></span>หน้าแรก</a>
 	                            <a class="dropdown-item" href="#/userManual" ><span class="font-icon glyphicon glyphicon-question-sign"></span>คู่มือ</a>
 	                            <div class="dropdown-divider"></div>
-	                            <div class="dropdown-header">เวอร์ชั่น : ${ver}</div>
 	                            <a class="dropdown-item" href="../logout.htm"><span class="font-icon glyphicon glyphicon-log-out"></span>Logout</a>
 	                        </div>
 	                    </div>

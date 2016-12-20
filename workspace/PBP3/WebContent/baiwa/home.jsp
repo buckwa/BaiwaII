@@ -20,16 +20,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     
-    <link href="${contextLibs}libs/img/favicon.114x114.png" rel="apple-touch-icon" type="image/png" sizes="114x114"> 
-	<link href="${contextLibs}libs/img/favicon.72x72.png" rel="apple-touch-icon" type="image/png" sizes="72x72"> 
-	<link href="${contextLibs}libs/img/favicon.57x57.png" rel="apple-touch-icon" type="image/png"> 
-	<link href="${contextLibs}libs/img/favicon.png" rel="icon" type="image/png"> 
+<%--     <link href="${contextLibs}libs/img/favicon.114x114.png" rel="apple-touch-icon" type="image/png" sizes="114x114">  --%>
+<%-- 	<link href="${contextLibs}libs/img/favicon.72x72.png" rel="apple-touch-icon" type="image/png" sizes="72x72">  --%>
+<%-- 	<link href="${contextLibs}libs/img/favicon.57x57.png" rel="apple-touch-icon" type="image/png">  --%>
+<%-- 	<link href="${contextLibs}libs/img/favicon.png" rel="icon" type="image/png">  --%>
 	<link href="${contextLibs}libs/img/favicon.ico" rel="shortcut icon"> 
     
-    <link rel="stylesheet" href="${contextLibs}styles.css">
     
 	<link rel="stylesheet" href="${contextLibs}libs/css/lib/font-awesome/font-awesome.min.css">
 	<link rel="stylesheet" href="${contextLibs}libs/css/main.css">
+	
+<%--     <link rel="stylesheet" href="${contextLibs}libs/fonts/th_baijam.css">  --%>
+<%--     <link rel="stylesheet" href="${contextLibs}libs/fonts/th_krub.css">  --%>
+    <link rel="stylesheet" href="${contextLibs}styles.css">
 
     <!-- 1. Load libraries -->
     <!-- Polyfill(s) for older browsers -->
@@ -72,60 +75,12 @@
 	            <img class="hidden-lg-up" src="${contextLibs}libs/img/Logo02.png" alt="">
 	            
 	        </a>
-	        <button class="hamburger hamburger--htla">
-	            <span>toggle menu</span>
-	        </button>
+<!-- 	        <button class="hamburger hamburger--htla"> -->
+<!-- 	            <span>toggle menu</span> -->
+<!-- 	        </button> -->
 	        <div class="site-header-content">
 	            <div class="site-header-content-in">
 	                <div class="site-header-shown">
-	                    <div class="dropdown dropdown-notification notif">
-	                     
-	                        <div class="dropdown-menu dropdown-menu-right dropdown-menu-notif" aria-labelledby="dd-notification">
-	                            <div class="dropdown-menu-notif-header">
-	                                Notifications
-	                                <span class="label label-pill label-danger">4</span>
-	                            </div>
-	                            <div class="dropdown-menu-notif-list">
-	                                <div class="dropdown-menu-notif-item">
-	                                    <div class="photo">
-	                                        <img src="img/photo-64-1.jpg" alt="">
-	                                    </div>
-	                                    <div class="dot"></div>
-	                                    <a href="#">Morgan</a> was bothering about something
-	                                    <div class="color-blue-grey-lighter">7 hours ago</div>
-	                                </div>
-	                                <div class="dropdown-menu-notif-item">
-	                                    <div class="photo">
-	                                        <img src="img/photo-64-2.jpg" alt="">
-	                                    </div>
-	                                    <div class="dot"></div>
-	                                    <a href="#">Lioneli</a> had commented on this <a href="#">Super Important Thing</a>
-	                                    <div class="color-blue-grey-lighter">7 hours ago</div>
-	                                </div>
-	                                <div class="dropdown-menu-notif-item">
-	                                    <div class="photo">
-	                                        <img src="img/photo-64-3.jpg" alt="">
-	                                    </div>
-	                                    <div class="dot"></div>
-	                                    <a href="#">Xavier</a> had commented on the <a href="#">Movie title</a>
-	                                    <div class="color-blue-grey-lighter">7 hours ago</div>
-	                                </div>
-	                                <div class="dropdown-menu-notif-item">
-	                                    <div class="photo">
-	                                        <img src="img/photo-64-4.jpg" alt="">
-	                                    </div>
-	                                    <a href="#">Lionely</a> wants to go to <a href="#">Cinema</a> with you to see <a href="#">This Movie</a>
-	                                    <div class="color-blue-grey-lighter">7 hours ago</div>
-	                                </div>
-	                            </div>
-	                            <div class="dropdown-menu-notif-more">
-	                                <a href="#">See more</a>
-	                            </div>
-	                        </div>
-	                    </div>
-	
-	                  
-
 	
 	                    <div class="dropdown user-menu">
 	                        <button class="dropdown-toggle" id="dd-user-menu" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -156,22 +111,21 @@
 	                <div class="site-header-collapsed">
 	                    <div class="site-header-collapsed-in" style=" width: 100%;">
 	                    
-	                        <div class="dropdown dropdown-typical">
-	                            <div class="dropdown-menu" aria-labelledby="dd-header-sales">
-	                                <a class="dropdown-item" href="#"><span class="font-icon font-icon-home"></span>Quant and Verbal</a>
-	                                <a class="dropdown-item" href="#"><span class="font-icon font-icon-cart"></span>Real Gmat Test</a>
-	                                <a class="dropdown-item" href="#"><span class="font-icon font-icon-speed"></span>Prep Official App</a>
-	                                <a class="dropdown-item" href="#"><span class="font-icon font-icon-users"></span>CATprer Test</a>
-	                                <a class="dropdown-item" href="#"><span class="font-icon font-icon-comments"></span>Third Party Test</a>
-	                            </div>
-	                        </div>
+<!-- 	                        <div class="dropdown dropdown-typical"> -->
+<!-- 	                            <div class="dropdown-menu" aria-labelledby="dd-header-sales"> -->
+<!-- 	                                <a class="dropdown-item" href="#"><span class="font-icon font-icon-home"></span>Quant and Verbal</a> -->
+<!-- 	                                <a class="dropdown-item" href="#"><span class="font-icon font-icon-cart"></span>Real Gmat Test</a> -->
+<!-- 	                                <a class="dropdown-item" href="#"><span class="font-icon font-icon-speed"></span>Prep Official App</a> -->
+<!-- 	                                <a class="dropdown-item" href="#"><span class="font-icon font-icon-users"></span>CATprer Test</a> -->
+<!-- 	                                <a class="dropdown-item" href="#"><span class="font-icon font-icon-comments"></span>Third Party Test</a> -->
+<!-- 	                            </div> -->
+<!-- 	                        </div> -->
 	                        
 	                        
 	                        
 	                        <div class="dropdown dropdown-typical">
 	                            <a class="dropdown-toggle no-arr" id="dd-header-marketing" data-target="#/home" href="#/home" >
-	                                <span class="font-icon font-icon-home"> &nbsp; หน้าแรก</span>
-	                               
+	                                <span class="font-icon"> &nbsp; หน้าแรก</span>
 	                            </a>
 	                        </div>
 	                        
@@ -179,24 +133,25 @@
 	                      
 	                        <div class="dropdown dropdown-typical">
 	                            <a href="#/ListByWorkType" class="dropdown-toggle no-arr">
-	                                <span class="font-icon font-icon-widget"> &nbsp;นำเข้าผลงาน</span>
+	                                <span class="font-icon"> &nbsp;นำเข้าผลงาน</span>
 	                            </a>
 	                        </div>
 	                        <div class="dropdown dropdown-typical">
 	                            <a class="dropdown-toggle no-arr" id="dd-header-form-builder"  href="#/AcademicWork" >
-	                                <span class="font-icon font-icon-widget"> &nbsp;ผลงานประจำปี</span>
+	                                <span class="font-icon"> &nbsp;ผลงานประจำปี</span>
 	                            </a>
 	                        </div>
 	                        
 	                        <div class="dropdown dropdown-typical">
 	                            <a class="dropdown-toggle no-arr"  id="dd-header-form-builder" href="#/anonymous" >
-	                                <span class="font-icon font-icon-widget"> &nbsp;กฎระเบียบ</span>
+	                                <span class="font-icon"> &nbsp;กฎระเบียบ</span>
 	                            </a>
 	                        </div>
 	                       
 	                       	<div class="dropdown dropdown-typical">
-	                            <a class="dropdown-toggle no-arr" id="dd-header-form-builder" data-target="#" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-	                                <span class="font-icon font-icon-widget"> &nbsp;รายงานคะแนน</span>
+	                            
+	                            <a class="dropdown-toggle no-arr" data-target="#" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+	                                <span class="font-icon"> &nbsp;รายงานคะแนน</span>
 	                            </a>
 									<div class="dropdown-menu" aria-labelledby="dd-header-form-builder">
 
@@ -210,13 +165,13 @@
 
 	                        <div class="dropdown dropdown-typical">
 	                            <a class="dropdown-toggle no-arr" id="dd-header-form-builder" href="#/personTimeTable" >
-	                                <span class="font-icon font-icon-widget"> &nbsp;ตารางสอน</span>
+	                                <span class="font-icon"> &nbsp;ตารางสอน</span>
 	                            </a>
 	                        </div>
 	                        <sec:authorize access="!hasAuthority('ROLE_HEAD')&&!hasAuthority('ROLE_DEAN')">
  							<div class="dropdown dropdown-typical">
 	                            <a class="dropdown-toggle no-arr" id="dd-header-form-builder"  href="#/work"  >
-	                                <span class="font-icon font-icon-widget"> &nbsp;แก้ไขผลงาน</span>
+	                                <span class="font-icon"> &nbsp;แก้ไขผลงาน</span>
 	                            </a>
 	                        </div>
 	                        </sec:authorize>
@@ -224,7 +179,7 @@
 	                         <sec:authorize access="hasAuthority('ROLE_HEAD')&&!hasAuthority('ROLE_DEAN')">
 	                        <div class="dropdown dropdown-typical">
 	                            <a class="dropdown-toggle no-arr" id="dd-header-form-builder" data-target="#" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-	                                <span class="font-icon font-icon-widget"> &nbsp;หัวหน้าภาควิชา</span>
+	                                <span class="font-icon"> &nbsp;หัวหน้าภาควิชา</span>
 	                            </a>
 									<div class="dropdown-menu" aria-labelledby="dd-header-form-builder">
 	                                <a class="dropdown-item" href="#/initApprove"><span class="font-icon font-icon-users"></span>อนุมัติผลงาน</a>
@@ -238,7 +193,7 @@
 	                        <sec:authorize access="hasAuthority('ROLE_DEAN')">
 	                        <div class="dropdown dropdown-typical">
 	                            <a class="dropdown-toggle no-arr" id="dd-header-form-builder" data-target="#" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-	                                <span class="font-icon font-icon-widget"> &nbsp;คณบดี</span>
+	                                <span class="font-icon"> &nbsp;คณบดี</span>
 	                            </a>
 									<div class="dropdown-menu" aria-labelledby="dd-header-form-builder">
 	                                <a class="dropdown-item" href="#/facultyReport"><span class="font-icon font-icon-users"></span>รายงานคะแนนทั้งคณะ</a>
@@ -252,7 +207,7 @@
 	                        
 <!-- 	                        <div class="dropdown dropdown-typical"> -->
 <!-- 	                            <a class="dropdown-toggle no-arr" id="dd-header-form-builder" href="#/userManual"> -->
-<!-- 	                                <span class="font-icon font-icon-widget"> &nbsp;คู่มือ</span> -->
+<!-- 	                                <span class="font-icon"> &nbsp;คู่มือ</span> -->
 <!-- 	                            </a> -->
 <!-- 	                        </div> -->
 
@@ -261,7 +216,7 @@
 
 	                    </div><!--.site-header-collapsed-in-->
 	                    	               
-	                 <label style="color: #adb7be;    text-align: right; ">  รอบการประเมิน: 1 ส.ค. 2558 - 31 ก.ค. 2559 |  การศึกษา ${year} | ${username} </label>
+<%-- 	                 <label style="color: #adb7be;    text-align: right; ">  รอบการประเมิน: 1 ส.ค. 2558 - 31 ก.ค. 2559 |  การศึกษา ${year} | ${username} </label> --%>
 
 
 	                </div><!--.site-header-collapsed-->
@@ -271,29 +226,32 @@
 	        </div><!--.site-header-content-->
 	    </div><!--.container-fluid-->
 	</header><!--.site-header-->
-	
-	
+	<div id="tophiddenbar">
+		<span style="float: left;">&nbsp;&nbsp;&nbsp;รอบการประเมิน : 1 ส.ค. 2558 - 31 ก.ค. 2559</span>
+		<span style="float: right;">ปีการศึกษา : 2559&nbsp;&nbsp;</span>
+	</div>
+
 	<div class="page-content">
+	 
 		<div class="container-fluid">
-
-    		<my-app>Loading...</my-app>
+    		<my-app></my-app>
      	</div>
-    </div>
-     
-<div class="" style="
-	text-align: center;
-    padding: 18px 0 10px 10px;
-    background: #fff;
-    color: #fff;
-    font-family: THSarabun, 'Thai Sans Lite', sans-serif;
 
-    bottom: 0px;
-    font-size: 13px;
-    width: 100%;
-">
-     <span style="color: black;"> พัฒนาโดย คณะวิศวกรรมศาสตร์ สถาบันเทคโนโลยีพระจอมเกล้าเจ้าคุณทหารลาดกระบัง.</span> &nbsp;&nbsp;&nbsp;
-    <span style="color: black;"> (หากมีข้อสงสัยในการใช้งาน สอบถามได้ที่ 3278 คุณ นิสากร สีนวลแตง)</span> 
-        
+<!-- 		<div class=" hidden-xs hidden-sm"> -->
+<!-- 				<div class="panel-rightbody" id="slide"> -->
+<!-- 					45555555555555 -->
+<!-- 					    <img   src="http://lorempixel.com/output/cats-q-c-100-100-4.jpg" /> -->
+<!-- 				</div> -->
+<!-- 				<div class="clearfix"></div> -->
+<!-- 		</div> -->
+
+	</div>
+	
+
+     
+<div class="kk-footer">
+    <span > พัฒนาโดย คณะวิศวกรรมศาสตร์ สถาบันเทคโนโลยีพระจอมเกล้าเจ้าคุณทหารลาดกระบัง.</span> &nbsp;&nbsp;&nbsp;
+    <span > (หากมีข้อสงสัยในการใช้งาน สอบถามได้ที่ 3278 คุณ นิสากร สีนวลแตง)</span> 
 </div>
      
      

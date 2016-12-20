@@ -1,19 +1,121 @@
+body,html {
+    font-family: 'Proxima Nova',sans-serif;
+    font-size: 14px !important;
+}
+
 /* Master Styles */
 h1 {
-  color: #369;
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 250%;
+	color: #369;
+	font-size: 250%;
 }
+
 h2, h3 {
-  color: #444;
-  font-family: Arial, Helvetica, sans-serif;
-  font-weight: lighter;
-}
-body {
-  margin: 2em;
-   font-size: 90%;
+	color: #444;
+	font-weight: lighter;
 }
 
 a {
-	content:text-decoration: none !important;
+	content: text-decoration: none !important;
+}
+
+.page-content {
+    padding: 120px 15px 10px;
+	padding-bottom: 30px;
+}
+
+.kk-footer {
+	text-align: center;
+	padding: 8px 0 4px 10px;
+/* 	background: #fff; */
+/* 	color: #6c7a86; */
+	background: #484848;
+    color: #f6f8fa;
+	bottom: 0px;
+	font-size: 12px;
+	width: 100%;
+	position: fixed;
+	border-top: 1px solid #d8e2e7;
+	text-shadow: 1px 1px 0 #444;
+}
+
+.dropdown.dropdown-typical a.dropdown-toggle .font-icon {
+    color: #f6f8fa;
+    font-size: 14px !important;
+}
+
+.site-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 65px;
+    background: #484848;
+    color: #f6f8fa;
+/*     background: #4450A8; */
+    border-bottom: solid 1px #c5d6de;
+    padding: 12px 10px 0 0;
+    z-index: 80;
+}
+
+.site-header .site-logo {
+    position: absolute;
+}
+
+.site-header .site-header-content .site-header-content-in {
+    margin-left: 345px;
+}
+
+.site-header .dropdown .dropdown-item {
+    font-size: 14px;
+}
+
+.dropdown-item .font-icon {
+    font-size: 14px;
+}
+
+.site-header .dropdown.dropdown-typical {
+    margin-right: 0;
+}
+
+.site-header .dropdown a.dropdown-toggle {
+    border-right: 1px solid #BCBCBC;
+}
+
+
+.wrapper {
+    position: relative;
+    overflow: hidden;
+    width: 100px;
+    height: 100px; 
+    border: 1px solid black;
+}
+
+#slide {
+    position: absolute;
+    left: -100px;
+    width: 100px;
+    height: 100px;
+    background: blue;
+    transition: 1s;
+}
+
+.wrapper:hover #slide {
+    transition: 1s;
+    left: 0;
+}
+
+#tophiddenbar {
+	margin-top: 65px;
+    display: block;
+    position: fixed;
+    z-index:1;
+    width: 100%;
+    display: block;
+    width: 100%;
+    background: #7d7d7d;
+    color: #f6f8fa;
+    padding: 5px 0;
+    text-align: center;
+    text-shadow: 1px 1px 0 #444;
+    font-size: 12px;
 }

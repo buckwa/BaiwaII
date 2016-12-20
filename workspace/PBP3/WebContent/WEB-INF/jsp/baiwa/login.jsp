@@ -39,7 +39,7 @@
                     <div class="sign-avatar">
                         <img src="<c:url value='/baiwa/libs/img/kmitl_logo.png' />" alt="">
                     </div>
-                    <header class="sign-title">Sign In</header>
+                    <header class="sign-title">เข้าสู่ระบบ</header>
                     <c:if test="${not empty error}">
 									<div class="alert alert-danger alert-no-border alert-close alert-dismissible fade in" role="alert">
 										<button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -49,11 +49,12 @@
 									</div>
 					</c:if>
                     <div class="form-group">
-                        <input type="text" name="username" class="form-control" placeholder="Username"/ value="user">
+                        <input type="text" name="username" class="form-control" placeholder="ผู้ใช้งาน" value="ktpitak">
                     </div>
                     <div class="form-group">
-                        <input type="password"  name="password" class="form-control" placeholder="Password" value="password" />
+                        <input type="password"  name="password" class="form-control" placeholder="รหัสผ่าน" value="password" />
                     </div>
+                    
                     <div class="form-group">
                         <div class="checkbox float-left">
                             <input type="checkbox" id="signed-in"/>
@@ -61,10 +62,10 @@
                         </div>
                         
                     </div>
-                    <button type="submit" class="btn btn-rounded">Sign in</button>
-                    <!--<button type="button" class="close">
+                    <button type="submit" class="btn btn-rounded">ตกลง</button>
+<!--                     <button type="button" class="close">
                         <span aria-hidden="true">&times;</span>
-                    </button>-->
+                    </button> -->
                 </form>
             </div>
         </div>

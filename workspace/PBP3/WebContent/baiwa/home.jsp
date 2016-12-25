@@ -212,7 +212,7 @@
 	</header><!--.site-header-->
 	<div id="tophiddenbar" class="nav-down">
 		<span style="float: left;">&nbsp;&nbsp;&nbsp;รอบการประเมิน : 1 ส.ค. 2558 - 31 ก.ค. 2559</span>
-		<span style="float: right;">ปีการศึกษา : 2559&nbsp;&nbsp;</span>
+		<span style="float: right;">ปีการศึกษา : ${year}&nbsp;&nbsp;</span>
 	</div>
 
 	<div class="page-content">

@@ -40,6 +40,7 @@
                         <img src="<c:url value='/baiwa/libs/img/kmitl_logo.png' />" alt="">
                     </div>
                     <header class="sign-title">เข้าสู่ระบบ</header>
+                  <header class="sign-title" style="font-size: 1.0rem;">  ระบบประเมินคุณภาพบุคลากรวิชาการ</header>
                     <c:if test="${not empty error}">
 									<div class="alert alert-danger alert-no-border alert-close alert-dismissible fade in" role="alert">
 										<button type="button" class="close" data-dismiss="alert" aria-label="Close">

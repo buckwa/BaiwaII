@@ -32,6 +32,7 @@ var work_component_1 = require('./baiwa/work.component'); //ยุง
 var userCreate_component_1 = require('./baiwa/userCreate.component'); //ยุง
 var notificationsList_component_1 = require('./baiwa/notificationsList.component'); //ยุง
 var notificationsDetail_component_1 = require('./baiwa/notificationsDetail.component'); //ยุง
+var AdminAcademicYear_component_1 = require('./baiwa/AdminAcademicYear.component'); //ยุง
 var barChart_component_1 = require('./baiwa/barChart.component');
 var headWorkTypeBarChart_component_1 = require('./baiwa/headWorkTypeBarChart.component');
 var initApprove_component_1 = require('./baiwa/initApprove.component');
@@ -61,6 +62,7 @@ var routes = [
     { path: 'userCreate', component: userCreate_component_1.userCreate },
     { path: 'notificationsList', component: notificationsList_component_1.notificationsList },
     { path: 'notificationsDetail/:code', component: notificationsDetail_component_1.notificationsDetail },
+    { path: 'AdminAcademicYear', component: AdminAcademicYear_component_1.AdminAcademicYear },
     { path: '', component: home_component_1.home },
     { path: 'barchart', component: barChart_component_1.barChart },
     { path: 'headWorkTypeBarChart', component: headWorkTypeBarChart_component_1.headWorkTypeBarChart },
@@ -101,6 +103,7 @@ var AppModule = (function () {
                 notificationsList_component_1.notificationsList,
                 notificationsDetail_component_1.notificationsDetail,
                 userCreate_component_1.userCreate,
+                AdminAcademicYear_component_1.AdminAcademicYear,
                 ng2_file_upload_1.FileSelectDirective,
                 ng2_file_upload_1.FileDropDirective,
                 image_preview_directive_1.ImagePreview,

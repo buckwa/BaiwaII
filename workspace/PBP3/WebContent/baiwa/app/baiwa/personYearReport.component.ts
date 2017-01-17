@@ -47,7 +47,7 @@ export class personYearReport  {
 
     }
     clickDownload(){
-        window.location.href='../report/printReportYear.htm?year='+this.acdemicyear+'&round=1';
+        window.location.href='../report/printReportYear.htm?year='+this.acdemicyear+'&round=undefined';
     }
 
 

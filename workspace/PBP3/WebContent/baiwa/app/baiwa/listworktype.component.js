@@ -164,14 +164,20 @@ var listworktype = (function () {
         var _this = this;
         var keys = Object.keys(this.FormAddInput);
         var len = keys.length;
-        var tamp = 0;
+        var tamp = 1;
         for (var i = 0; i < len; i++) {
             if (this.FormAddInput[i].value == null) {
-                console.log("Required Na !");
-                tamp = 1;
+                console.log("Required Now !");
+                tamp = 0;
+            }
+            if (this.FormAddInput[i].code == "3") {
+                if (this.FormAddInput[i].value > 100) {
+                    console.log("Number limit !");
+                    tamp = 0;
+                }
             }
         }
-        if (tamp == 0) {
+        if (tamp == 1) {
             var url = "../person/importwork";
             this.http.post(url, this.inport5).subscribe(function (response) { return _this.savesucess(response); }, function (error) { return _this.GetError(error); }, function () { return console.log("save sucess na !"); });
         }
@@ -186,6 +192,8 @@ var listworktype = (function () {
     listworktype.prototype.exitModal = function () {
         this.statusActiveUpload = false;
         this.uploader.clearQueue();
+        this.savealert = false;
+        this.valid = true;
     };
     listworktype = __decorate([
         core_1.Component({

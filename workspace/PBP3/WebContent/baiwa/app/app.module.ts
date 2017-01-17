@@ -26,6 +26,9 @@ import {work} from './baiwa/work.component';//ยุง
 import {userCreate} from './baiwa/userCreate.component';//ยุง
 import { notificationsList} from './baiwa/notificationsList.component';//ยุง
 import { notificationsDetail} from './baiwa/notificationsDetail.component';//ยุง
+import {AdminAcademicYear} from './baiwa/AdminAcademicYear.component';//ยุง
+
+
 import {barChart} from './baiwa/barChart.component';
 import { headWorkTypeBarChart} from './baiwa/headWorkTypeBarChart.component';
 import { InitApporve} from './baiwa/initApprove.component';
@@ -63,6 +66,8 @@ const routes: Routes = [
     { path: 'userCreate', component: userCreate },//ยุง
     { path: 'notificationsList', component: notificationsList },//ยุง
     { path: 'notificationsDetail/:code', component: notificationsDetail },//ยุง
+    { path: 'AdminAcademicYear', component: AdminAcademicYear },//ยุง
+    
     { path: '', component: home },
     { path: 'barchart',component:barChart},
     { path: 'headWorkTypeBarChart' , component:headWorkTypeBarChart},
@@ -102,7 +107,8 @@ const routes: Routes = [
         notificationsList,//ยุง
         notificationsDetail,//ยุง
         userCreate,//ยุง
-        FileSelectDirective,
+        AdminAcademicYear,//ยุง
+        FileSelectDirective,//ยุง
         FileDropDirective,
         ImagePreview,
         jQueryDataTableDirective,

@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import {CommonService} from './../service/Common.service';
 import { Http, Headers, Response } from '@angular/http';
 import { FileSelectDirective, FileDropDirective, FileUploader } from 'ng2-file-upload';
-
+declare var jQuery: any;
 const URL = 'http://localhost:8080/PBP3/person/importwork_file';
 
 @Component({
@@ -223,18 +223,29 @@ export class listworktype implements OnInit, AfterViewInit {
 
         var keys = Object.keys(this.FormAddInput);
         var len = keys.length;
-        var tamp =0;
+        var tamp =1;
             for(var i=0;i<len;i++) {
                 
                 if(this.FormAddInput[i].value == null ){
                 
-                    console.log("Required Na !");
-                    tamp =1;
+                    console.log("Required Now !");
+                    tamp =0;
                 }
 
+
+                if(this.FormAddInput[i].code =="3"){
+       
+
+
+                         if(this.FormAddInput[i].value > 100){
+                            console.log("Number limit !");
+                            tamp =0;
+                         }
+
+                }
             }
             
-            if(tamp==0){
+            if(tamp==1){
                 var url = "../person/importwork"
                 this.http.post(url,this.inport5).subscribe(response => this.savesucess(response),
                 error => this.GetError(error), () => console.log("save sucess na !"));
@@ -258,6 +269,10 @@ export class listworktype implements OnInit, AfterViewInit {
 
              this.statusActiveUpload =  false;
              this.uploader.clearQueue();
+
+            this.savealert = false;
+            this.valid = true;
+
     }
 
 

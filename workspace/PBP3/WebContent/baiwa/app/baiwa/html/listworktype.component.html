@@ -339,13 +339,19 @@
 							<small class="text-muted" style="color: #fa424a;" >* </small>
 						</div>
 						<!--{{item.number}}-->
-						<div class="col-sm-9" *ngIf="a.code =='2' || a.code =='3' ||a.code =='4' || a.code =='5' ">
+						<div class="col-sm-9" *ngIf="a.code =='2'  ||a.code =='4' || a.code =='5' ">
 							<p class="form-control-static"><input type="number" [ngModelOptions]="{standalone: true}" name="{{a.name}}" [(ngModel)]="a.value" class="form-control" id="inputPassword" value="{{a.value}}" placeholder="{{a.name}}" required="required" ></p>
 							<small class="text-muted" style="color: #fa424a;" >* กรอกค่าตัวเลข</small>
 						<!--{{item.number}}-->
 						</div>
+						<div class="col-sm-9" *ngIf=" a.code =='3'  ">
+							<p class="form-control-static"><input type="number" [ngModelOptions]="{standalone: true}" name="{{a.name}}" max="100" min="0" [(ngModel)]="a.value" class="form-control" id="number" value="{{a.value}}"  name="number" placeholder="{{a.name}}" required="required" ></p>
+							<small class="text-muted" style="color: #fa424a;" >* กรอกค่าตัวเลข2</small>
+						<!--{{item.number}}-->
+						</div>
 
 					</div>
+
 					<div class="form-group row" style="margin-bottom: 2px;">
 						<label class="col-sm-3 form-control-label"></label>
 						<div class="col-sm-9 text-center ">
@@ -381,7 +387,7 @@
         
             <div class="col-md-8">
 
-                <h3>Select files</h3>
+                <h3 style=" margin-top: 2.2rem; margin-bottom: 1.2rem;">Select files</h3>
 
                 <input type="file" class="form-control" ng2FileSelect [uploader]="uploader" multiple  /><br/> 
             </div>

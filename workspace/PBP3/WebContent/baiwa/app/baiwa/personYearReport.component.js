@@ -40,7 +40,7 @@ var personYearReport = (function () {
         //this.year = this.repositories.find(repository => repository.name === this.selectedRepositoryName);
     };
     personYearReport.prototype.clickDownload = function () {
-        window.location.href = '../report/printReportYear.htm?year=' + this.acdemicyear + '&round=1';
+        window.location.href = '../report/printReportYear.htm?year=' + this.acdemicyear + '&round=undefined';
     };
     personYearReport = __decorate([
         core_1.Component({

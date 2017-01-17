@@ -41,6 +41,7 @@ import com.buckwa.util.BuckWaConstants;
 import com.buckwa.util.BuckWaUtils;
 import com.buckwa.util.PAMConstants;
 
+import baiwa.util.UserLoginUtil;
 import eu.bitwalker.useragentutils.UserAgent;
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperExportManager;
@@ -93,12 +94,14 @@ public class ReportYearPersonController{
 			}
 	 
 			BuckWaUser user = BuckWaUtils.getUserFromContext();
-			logger.info("username :" + user.getUsername());
+			logger.info("username :" +  UserLoginUtil.getCurrentUserLogin());
 			logger.info("year :" + year);
 			
+//			request.put("username", user.getUsername());
+//			request.put("academicYear", year);
+			
 
-
-			request.put("username", user.getUsername());
+			request.put("username", UserLoginUtil.getCurrentUserLogin());
 			request.put("academicYear", year);
 			
 
@@ -111,7 +114,7 @@ public class ReportYearPersonController{
 			
 			String facultyCode = person.getFacultyCode();
 			 
-			request.put("userName",BuckWaUtils.getUserNameFromContext());
+			request.put("userName",UserLoginUtil.getCurrentUserLogin());
 			request.put("round",round);
 			request.put("employeeType",person.getEmployeeTypeNo());
 			request.put("facultyCode",facultyCode);

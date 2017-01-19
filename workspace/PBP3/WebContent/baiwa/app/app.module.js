@@ -32,7 +32,6 @@ var work_component_1 = require('./baiwa/work.component'); //ยุง
 var userCreate_component_1 = require('./baiwa/userCreate.component'); //ยุง
 var notificationsList_component_1 = require('./baiwa/notificationsList.component'); //ยุง
 var notificationsDetail_component_1 = require('./baiwa/notificationsDetail.component'); //ยุง
-var AdminAcademicYear_component_1 = require('./baiwa/AdminAcademicYear.component'); //ยุง
 var barChart_component_1 = require('./baiwa/barChart.component');
 var headWorkTypeBarChart_component_1 = require('./baiwa/headWorkTypeBarChart.component');
 var initApprove_component_1 = require('./baiwa/initApprove.component');
@@ -45,6 +44,8 @@ var workTypeCompareBarChart_component_1 = require('./baiwa/workTypeCompareBarCha
 var image_preview_directive_1 = require('./service/image_preview.directive');
 var maxLength_pipe_1 = require('./maxLength.pipe');
 var datatable_directive_1 = require('./datatable.directive');
+var AdminChainOfCommandinit_component_1 = require('./baiwa/AdminChainOfCommandinit.component'); //ยุง
+var AdminChainOfCommandinitEdit_component_1 = require('./baiwa/AdminChainOfCommandinitEdit.component'); //ยุง
 var routes = [
     { path: 'home', component: home_component_1.home },
     { path: 'importwork', component: importwork_component_1.importwork },
@@ -62,7 +63,6 @@ var routes = [
     { path: 'userCreate', component: userCreate_component_1.userCreate },
     { path: 'notificationsList', component: notificationsList_component_1.notificationsList },
     { path: 'notificationsDetail/:code', component: notificationsDetail_component_1.notificationsDetail },
-    { path: 'AdminAcademicYear', component: AdminAcademicYear_component_1.AdminAcademicYear },
     { path: '', component: home_component_1.home },
     { path: 'barchart', component: barChart_component_1.barChart },
     { path: 'headWorkTypeBarChart', component: headWorkTypeBarChart_component_1.headWorkTypeBarChart },
@@ -73,6 +73,8 @@ var routes = [
     { path: 'deanWorkTypeBarChart', component: deanWorkTypeBarChart_component_1.deanWorkTypeBarChart },
     { path: 'departmentBarChart', component: departmentBarChart_component_1.departmentBarChart },
     { path: 'workTypeCompareBarChart', component: workTypeCompareBarChart_component_1.workTypeCompareBarChart },
+    { path: 'AdminChainOfCommandinit', component: AdminChainOfCommandinit_component_1.AdminChainOfCommandinit },
+    { path: 'AdminChainOfCommandinitEdit', component: AdminChainOfCommandinitEdit_component_1.AdminChainOfCommandinitEdit },
 ];
 var AppModule = (function () {
     function AppModule() {
@@ -103,7 +105,6 @@ var AppModule = (function () {
                 notificationsList_component_1.notificationsList,
                 notificationsDetail_component_1.notificationsDetail,
                 userCreate_component_1.userCreate,
-                AdminAcademicYear_component_1.AdminAcademicYear,
                 ng2_file_upload_1.FileSelectDirective,
                 ng2_file_upload_1.FileDropDirective,
                 image_preview_directive_1.ImagePreview,
@@ -117,7 +118,9 @@ var AppModule = (function () {
                 deanWorkTypeBarChart_component_1.deanWorkTypeBarChart,
                 departmentBarChart_component_1.departmentBarChart,
                 workTypeCompareBarChart_component_1.workTypeCompareBarChart,
-                maxLength_pipe_1.MaxLengthPipe
+                maxLength_pipe_1.MaxLengthPipe,
+                AdminChainOfCommandinit_component_1.AdminChainOfCommandinit,
+                AdminChainOfCommandinitEdit_component_1.AdminChainOfCommandinitEdit,
             ],
             providers: [
                 Common_service_1.CommonService,

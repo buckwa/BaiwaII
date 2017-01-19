@@ -14,13 +14,9 @@ var AdminAcademicYear = (function () {
     }
     AdminAcademicYear.prototype.ngOnInit = function () {
     };
-    AdminAcademicYear.prototype.getjSonSucess = function (response) {
-    };
-    AdminAcademicYear.prototype.dataError = function (error) {
-    };
     AdminAcademicYear = __decorate([
         core_1.Component({
-            templateUrl: 'app/baiwa/html/AdminAcademicYear.component.html'
+            templateUrl: 'app/baiwa/html/AdminAcademicYear.component'
         }), 
         __metadata('design:paramtypes', [])
     ], AdminAcademicYear);

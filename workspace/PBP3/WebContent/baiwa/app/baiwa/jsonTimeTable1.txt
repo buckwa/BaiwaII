@@ -1,0 +1,8 @@
+{
+            "data": [
+                { "code": "kppaiboo@kmitl.ac.th ", "name": "ไพบูลย์ พวงวงศ์ตระกูล ", "sub": "T", "hour": "3"  },
+                { "code": "kppaiboo@kmitl.ac.th ", "name": "Computer Programming2", "sub": "T", "hour": "2" },
+                { "code": "kppaiboo@kmitl.ac.th ", "name": "Computer Programming3", "sub": "T", "hour": "3" }
+            ]
+}
+

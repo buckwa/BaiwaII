@@ -5,10 +5,7 @@ import { Routes, RouterModule }   from '@angular/router';
 import { AppComponent }   from './app.component';
 import { HttpModule } from '@angular/http';
 import { CommonService } from'./service/Common.service';
-
-
 import { FileSelectDirective, FileDropDirective, FileUploader } from 'ng2-file-upload/ng2-file-upload';
-
 import {importwork} from './baiwa/importwork.component';
 import {home} from './baiwa/home.component';
 import {listworktype} from './baiwa/listworktype.component';
@@ -17,7 +14,6 @@ import {anonymous} from './baiwa/anonymous.component';
 import {listKPIByWorktype} from './baiwa/listPIByWorktype.component';
 import {personTimeTable} from './baiwa/personTimeTable.component';
 import {userManual} from './baiwa/userManual.component';
-
 import {personYearReport} from './baiwa/personYearReport.component';//ยุง
 import {personReportInit} from './baiwa/personReportInit.component';//ยุง
 import {personReport}     from './baiwa/personReport.component';//ยุง
@@ -26,25 +22,22 @@ import {work} from './baiwa/work.component';//ยุง
 import {userCreate} from './baiwa/userCreate.component';//ยุง
 import { notificationsList} from './baiwa/notificationsList.component';//ยุง
 import { notificationsDetail} from './baiwa/notificationsDetail.component';//ยุง
-import {AdminAcademicYear} from './baiwa/AdminAcademicYear.component';//ยุง
-
-
-import {barChart} from './baiwa/barChart.component';
+import { barChart} from './baiwa/barChart.component';
 import { headWorkTypeBarChart} from './baiwa/headWorkTypeBarChart.component';
 import { InitApporve} from './baiwa/initApprove.component';
 import { approvework} from './baiwa/approvework.component';
-import {FacultyReport} from './baiwa/FacultyReport.component';
-import {deanBarChart } from './baiwa/deanBarChart.component';
-import {deanWorkTypeBarChart } from './baiwa/deanWorkTypeBarChart.component';
-import {departmentBarChart } from './baiwa/departmentBarChart.component';
-import {workTypeCompareBarChart } from './baiwa/workTypeCompareBarChart.component';
-
+import { FacultyReport} from './baiwa/FacultyReport.component';
+import { deanBarChart } from './baiwa/deanBarChart.component';
+import { deanWorkTypeBarChart } from './baiwa/deanWorkTypeBarChart.component';
+import { departmentBarChart } from './baiwa/departmentBarChart.component';
+import { workTypeCompareBarChart } from './baiwa/workTypeCompareBarChart.component';
 import { FileSelectDirective } from 'ng2-file-upload';
 import { FileDropDirective } from 'ng2-file-upload';
 import { ImagePreview} from './service/image_preview.directive';
 import { MaxLengthPipe} from './maxLength.pipe';
-
 import {jQueryDataTableDirective} from './datatable.directive';
+import { AdminChainOfCommandinit } from './baiwa/AdminChainOfCommandinit.component';//ยุง
+import { AdminChainOfCommandinitEdit } from './baiwa/AdminChainOfCommandinitEdit.component';//ยุง
 
 
 const routes: Routes = [
@@ -66,8 +59,6 @@ const routes: Routes = [
     { path: 'userCreate', component: userCreate },//ยุง
     { path: 'notificationsList', component: notificationsList },//ยุง
     { path: 'notificationsDetail/:code', component: notificationsDetail },//ยุง
-    { path: 'AdminAcademicYear', component: AdminAcademicYear },//ยุง
-    
     { path: '', component: home },
     { path: 'barchart',component:barChart},
     { path: 'headWorkTypeBarChart' , component:headWorkTypeBarChart},
@@ -78,7 +69,9 @@ const routes: Routes = [
     { path: 'deanWorkTypeBarChart' , component:deanWorkTypeBarChart},
     { path: 'departmentBarChart' , component:departmentBarChart},
     { path: 'workTypeCompareBarChart' , component:workTypeCompareBarChart},
-    
+    { path: 'AdminChainOfCommandinit' , component:AdminChainOfCommandinit},
+    { path: 'AdminChainOfCommandinitEdit' , component:AdminChainOfCommandinitEdit},
+
 
 ];
 
@@ -107,7 +100,6 @@ const routes: Routes = [
         notificationsList,//ยุง
         notificationsDetail,//ยุง
         userCreate,//ยุง
-        AdminAcademicYear,//ยุง
         FileSelectDirective,//ยุง
         FileDropDirective,
         ImagePreview,
@@ -121,7 +113,10 @@ const routes: Routes = [
         deanWorkTypeBarChart,
         departmentBarChart,
         workTypeCompareBarChart,
-        MaxLengthPipe
+        MaxLengthPipe,
+        AdminChainOfCommandinit,
+        AdminChainOfCommandinitEdit,
+
     ],
     providers: [
         CommonService,

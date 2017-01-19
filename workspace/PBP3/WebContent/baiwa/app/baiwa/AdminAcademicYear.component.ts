@@ -5,7 +5,7 @@ import { Http, Headers, Response } from '@angular/http';
 
 
 @Component({
-    templateUrl: 'app/baiwa/html/AdminAcademicYear.component.html'
+    templateUrl: 'app/baiwa/html/AdminAcademicYear.component'
 })
 
 export class AdminAcademicYear implements OnInit  {
@@ -18,16 +18,5 @@ export class AdminAcademicYear implements OnInit  {
      
 
     }
-    getjSonSucess(response:any){
-   
-    }
-    dataError(error:any){
-        
-    }
-
-    
-
-
-
 
 }

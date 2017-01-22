@@ -45,7 +45,11 @@ var image_preview_directive_1 = require('./service/image_preview.directive');
 var maxLength_pipe_1 = require('./maxLength.pipe');
 var datatable_directive_1 = require('./datatable.directive');
 var AdminChainOfCommandinit_component_1 = require('./baiwa/AdminChainOfCommandinit.component'); //ยุง
-var AdminChainOfCommandinitEdit_component_1 = require('./baiwa/AdminChainOfCommandinitEdit.component'); //ยุง
+var AdminChainOfCommandinitPresident_component_1 = require('./baiwa/AdminChainOfCommandinitPresident.component'); //ยุง
+var AdminChainOfCommandinitHead_component_1 = require('./baiwa/AdminChainOfCommandinitHead.component'); //ยุง
+var AdminChainOfCommandinitDean_component_1 = require('./baiwa/AdminChainOfCommandinitDean.component'); //ยุง
+var AdminWorkUser_component_1 = require('./baiwa/AdminWorkUser.component'); //ยุง
+var AdminUserCreate_component_1 = require('./baiwa/AdminUserCreate.component'); //ยุง
 var routes = [
     { path: 'home', component: home_component_1.home },
     { path: 'importwork', component: importwork_component_1.importwork },
@@ -74,7 +78,11 @@ var routes = [
     { path: 'departmentBarChart', component: departmentBarChart_component_1.departmentBarChart },
     { path: 'workTypeCompareBarChart', component: workTypeCompareBarChart_component_1.workTypeCompareBarChart },
     { path: 'AdminChainOfCommandinit', component: AdminChainOfCommandinit_component_1.AdminChainOfCommandinit },
-    { path: 'AdminChainOfCommandinitEdit', component: AdminChainOfCommandinitEdit_component_1.AdminChainOfCommandinitEdit },
+    { path: 'AdminChainOfCommandinitPresident', component: AdminChainOfCommandinitPresident_component_1.AdminChainOfCommandinitPresident },
+    { path: 'AdminChainOfCommandinitHead', component: AdminChainOfCommandinitHead_component_1.AdminChainOfCommandinitHead },
+    { path: 'AdminChainOfCommandinitDean', component: AdminChainOfCommandinitDean_component_1.AdminChainOfCommandinitDean },
+    { path: 'AdminWorkUser', component: AdminWorkUser_component_1.AdminWorkUser },
+    { path: 'AdminUserCreate', component: AdminUserCreate_component_1.AdminUserCreate },
 ];
 var AppModule = (function () {
     function AppModule() {
@@ -120,7 +128,11 @@ var AppModule = (function () {
                 workTypeCompareBarChart_component_1.workTypeCompareBarChart,
                 maxLength_pipe_1.MaxLengthPipe,
                 AdminChainOfCommandinit_component_1.AdminChainOfCommandinit,
-                AdminChainOfCommandinitEdit_component_1.AdminChainOfCommandinitEdit,
+                AdminChainOfCommandinitPresident_component_1.AdminChainOfCommandinitPresident,
+                AdminChainOfCommandinitHead_component_1.AdminChainOfCommandinitHead,
+                AdminChainOfCommandinitDean_component_1.AdminChainOfCommandinitDean,
+                AdminWorkUser_component_1.AdminWorkUser,
+                AdminUserCreate_component_1.AdminUserCreate,
             ],
             providers: [
                 Common_service_1.CommonService,

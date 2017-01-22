@@ -11,8 +11,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require('@angular/core');
 var Common_service_1 = require('./../service/Common.service');
 var http_1 = require('@angular/http');
-var AdminChainOfCommandinitEdit = (function () {
-    function AdminChainOfCommandinitEdit(commonService, http) {
+var AdminChainOfCommandinitDean = (function () {
+    function AdminChainOfCommandinitDean(commonService, http) {
         this.commonService = commonService;
         this.http = http;
         this.makeDataTable = {
@@ -37,10 +37,10 @@ var AdminChainOfCommandinitEdit = (function () {
             ]
         };
     }
-    AdminChainOfCommandinitEdit.prototype.ngOnInit = function () {
+    AdminChainOfCommandinitDean.prototype.ngOnInit = function () {
         this.datatable();
     };
-    AdminChainOfCommandinitEdit.prototype.datatable = function () {
+    AdminChainOfCommandinitDean.prototype.datatable = function () {
         jQuery("#DTable").DataTable({
             "searching": false,
             "bPaginate": false,
@@ -57,19 +57,19 @@ var AdminChainOfCommandinitEdit = (function () {
             ]
         });
     };
-    AdminChainOfCommandinitEdit.prototype.ngAfterViewInit = function () {
+    AdminChainOfCommandinitDean.prototype.ngAfterViewInit = function () {
     };
     __decorate([
         core_1.ViewChild('personTimeTable'), 
         __metadata('design:type', Object)
-    ], AdminChainOfCommandinitEdit.prototype, "timetabletable", void 0);
-    AdminChainOfCommandinitEdit = __decorate([
+    ], AdminChainOfCommandinitDean.prototype, "timetabletable", void 0);
+    AdminChainOfCommandinitDean = __decorate([
         core_1.Component({
-            templateUrl: 'app/baiwa/html/AdminChainOfCommandinitEdit.component.html'
+            templateUrl: 'app/baiwa/html/AdminChainOfCommandinitDean.component.html'
         }), 
         __metadata('design:paramtypes', [Common_service_1.CommonService, http_1.Http])
-    ], AdminChainOfCommandinitEdit);
-    return AdminChainOfCommandinitEdit;
+    ], AdminChainOfCommandinitDean);
+    return AdminChainOfCommandinitDean;
 }());
-exports.AdminChainOfCommandinitEdit = AdminChainOfCommandinitEdit;
-//# sourceMappingURL=AdminChainOfCommandinitEdit.component.js.map
+exports.AdminChainOfCommandinitDean = AdminChainOfCommandinitDean;
+//# sourceMappingURL=AdminChainOfCommandinitDean.component.js.map

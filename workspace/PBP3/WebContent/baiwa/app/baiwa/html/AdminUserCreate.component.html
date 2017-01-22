@@ -1,0 +1,425 @@
+<div class="box-typical box-typical-padding">
+    <section class="card card-default">
+        <header class="card-header">
+            ข้อมูลบุคลากร
+        </header>
+      
+        <form (ngSubmit)="onSubmit()" #AdminUserCreate="ngForm">
+            <div class="card-block">
+                <div class=" form-group row">
+                    <label class="col-xs-2 form-control-label">ชื่อเข้าใช้ระบบ:</label>
+
+                    <div class="col-sm-5">
+                        
+                            <input type="text" class="form-control" [(ngModel)]="model.username" name="model.username" placeholder="ชื่อผู้เข้าใช้ระบบ">
+                            <!--<div class="form-tooltip-error sm">Password must be at least 6 characters</div>-->
+                        
+                    </div>
+                   
+                    <small class="text-muted">Username must not be empty</small>
+
+                </div>
+                <div class=" form-group row">
+                    <label class="col-xs-2 form-control-label">รหัสผ่าน:</label>
+
+                    <div class="col-sm-5">
+                        <p class="form-control-static">
+                            <input type="password" class="form-control" [(ngModel)]="model.password" name="password" placeholder="รหัสผ่าน">
+                        </p>
+                    </div>
+
+                </div>
+                <div class=" form-group row">
+                    <label class="col-xs-2 form-control-label">ยืนยันรหัสผ่าน:</label>
+
+                    <div class="col-sm-5">
+                        <p class="form-control-static">
+                            <input type="password" class="form-control" [(ngModel)]="model.passwordConfirmation" name="passwordConfirmation" placeholder="ยืนยันรหัสผ่าน">
+                        </p>
+                    </div>
+
+                </div>
+                <div class=" form-group row">
+                    <label class="col-xs-2 form-control-label">สถานะ:</label>
+
+                    <div class="col-sm-5">
+                        <div class="radio">
+                            <input type="radio" [(ngModel)]="model.enabled" name="enabled" id="radio-1" value="true" checked>
+                            <label for="radio-1">Active </label>
+                            <input type="radio" [(ngModel)]="model.enabled" name="enabled" id="radio-2" value="false" >
+                            <label for="radio-2">Inactive </label>
+                        </div>
+
+                    </div>
+
+                </div>
+                <!--//groupList-->
+                <div class=" form-group row"> 
+                    <label class="col-xs-2 form-control-label">กลุ่มผู้ใช้งาน :</label>
+
+                    <div class="col-sm-5">
+                        <div class="radio"  >
+                            <div class="checkbox" *ngFor="let group of groupList;" >
+                                <input [(ngModel)]="model.groups" name="groups"  type="checkbox" id="check-1">
+                                <label for="check-1">{{group.groupName}}</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!--<div class=" form-group row">
+                    <label class="col-xs-2 form-control-label">ชื่อเข้าใช้ระบบ:</label>
+
+                    <div class="col-sm-5">
+                        <p class="form-control-static">
+                            <input type="text" class="form-control" id="thaiName"  [(ngModel)]="person.thaiName" name="thaiName" placeholder="ชื่อผู้เข้าใช้ระบบ">
+                        </p>
+                    </div>
+
+                </div>-->
+                <!--Person thaiName-->
+                <div class=" form-group row">
+                    <label class="col-xs-2 form-control-label">ชื่อ (ไทย): </label>
+
+                    <div class="col-sm-5">
+                        <p class="form-control-static">
+                            <input type="text" class="form-control" id="name" [(ngModel)]="person.thaiName" name="thaiName" placeholder="ชื่อ">
+                        </p>
+                    </div>
+
+                </div>
+                <div class=" form-group row">
+                    <label class="col-xs-2 form-control-label">นามสกุล (ไทย):  </label>
+
+                    <div class="col-sm-5">
+                        <p class="form-control-static">
+                            <input type="text" class="form-control" id="name" [(ngModel)]="person.thaiSurname" name="thaiSurname" placeholder="นามสกุล ">
+                        </p>
+                    </div>
+
+                </div>
+                <div class=" form-group row">
+                    <label class="col-xs-2 form-control-label">เพศ:</label>
+
+                    <div class="col-sm-5">
+                        <div class="radio">
+                            <input type="radio" [(ngModel)]="person.sex" name="sex" id="radio-1" value="option1">
+                            <label for="radio-1">ชาย </label>
+                            <input type="radio" [(ngModel)]="person.sex" name="sex" id="radio-2" value="option2" checked>
+                            <label for="radio-2">หญิง </label>
+                        </div>
+
+                    </div>
+
+                </div>
+                <!--person.birthdateStr-->
+                <div class=" form-group row">
+                    <label class="col-xs-2 form-control-label">วัน เดือน ปีเกิด:   </label>
+
+                    <div class="col-sm-5">
+                        <p class="form-control-static">
+                            <input type="text" class="form-control"  [(ngModel)]="person.birthdateStr" name="birthdateStr" id="name" placeholder="วัน เดือน ปีเกิด ">
+                        </p>
+                    </div>
+
+                </div>
+                <!--person.rateNo-->
+                <div class=" form-group row">
+                    <label class="col-xs-2 form-control-label">เลขที่อัตรา:    </label>
+
+                    <div class="col-sm-5">
+                        <p class="form-control-static">
+                            <input type="text" class="form-control" [(ngModel)]="person.rateNo" name="rateNo" id="name" placeholder="เลขที่อัตรา">
+                        </p>
+                    </div>
+
+                </div>
+                <!--person.employeeType-->
+                <div class=" form-group row">
+                    <label class="col-xs-2 form-control-label"> ประเภทข้าราชการ:    </label>
+
+                    <div class="col-sm-5">
+                        <p class="form-control-static">
+                            <select id="exampleSelect" class="form-control"  [(ngModel)]="person.employeeType" name="employeeType" >
+								<option  *ngFor="let EmployeeType of lovEmployeeTypeList ;" [value]="EmployeeType.code">{{EmployeeType.name}}</option>
+	
+                            </select>
+                        </p>
+                    </div>
+
+                </div>
+                <!--person.position-->
+                <div class=" form-group row">
+                    <label class="col-xs-2 form-control-label">ตำแหน่ง:     </label>
+
+                    <div class="col-sm-5">
+                        <p class="form-control-static">
+                            <select id="exampleSelect" class="form-control"  [(ngModel)]="person.position" name="position" >
+								<option  *ngFor="let Position of lovPositionList;" [value]="Position.code" >{{Position.name}}</option>
+
+                        </select>
+                        </p>
+                    </div>
+
+                </div>
+
+<!--ขาดระดับ-->
+
+                <!--person.workLine-->
+                <div class=" form-group row">
+                    <label class="col-xs-2 form-control-label">สายงาน:     </label>
+
+                    <div class="col-sm-5">
+                        <p class="form-control-static">
+                            <select id="exampleSelect" class="form-control" [(ngModel)]="person.workLine" name="workLine">
+								<option  *ngFor="let WorkLine of lovWorkLineList;" [value]="WorkLine.code" >{{WorkLine.name}}</option>
+
+                        </select>
+                        </p>
+                    </div>
+
+                </div>
+
+                <!--person.workTelNo-->
+                <div class=" form-group row">
+                    <label class="col-xs-2 form-control-label">โทรศัพท์ที่ทำงาน:      </label>
+
+                    <div class="col-sm-5">
+                        <p class="form-control-static">
+                            <input type="text" class="form-control" [(ngModel)]="person.workTelNo" name="workTelNo" id="name" placeholder="โทรศัพท์ที่ทำงาน ">
+                        </p>
+                    </div>
+
+                </div>
+
+                <!--person.belongTo-->
+                <div class=" form-group row">
+                    <label class="col-xs-2 form-control-label">สังกัด:      </label>
+
+                    <div class="col-sm-5">
+                        <p class="form-control-static">
+                            <input type="text" class="form-control" [(ngModel)]="person.belongTo" name="belongTo" id="name" placeholder="สังกัด ">
+                        </p>
+                    </div>
+
+                </div>
+
+                <!--person.faculty-->
+                <div class=" form-group row">
+                    <label class="col-xs-2 form-control-label">หน่วยงาน:    </label>
+
+                    <div class="col-sm-5">
+                        <p class="form-control-static">
+                            <select id="exampleSelect" class="form-control" [(ngModel)]="person.faculty" name="faculty" >
+								<option *ngFor="let Faculty of lovFacultyList;" [value]="Faculty.code" >{{Faculty.name}}</option>
+								
+                        </select>
+                        </p>
+                    </div>
+
+                </div>
+
+                <!--person.workingDateStr-->
+                <div class=" form-group row">
+                    <label class="col-xs-2 form-control-label">วันที่เริ่มทำงานจริง:     </label>
+
+                    <div class="col-sm-5">
+                        <p class="form-control-static">
+                            <input type="text" class="form-control" [(ngModel)]="person.workingDateStr" name="workingDateStr" id="name" placeholder="วันที่เริ่มทำงานจริง ">
+                        </p>
+                    </div>
+
+                </div>
+                <!--person.assignDateStr-->
+                <div class=" form-group row">
+                    <label class="col-xs-2 form-control-label">วันสั่งบรรจุ:      </label>
+
+                    <div class="col-sm-5">
+                        <p class="form-control-static">
+                            <input type="text" class="form-control" [(ngModel)]="person.assignDateStr" name="assignDateStr" id="name" placeholder="วันสั่งบรรจุ">
+                        </p>
+                    </div>
+
+                </div>
+
+                <!--person.retireDateStr-->
+                <div class=" form-group row">
+                    <label class="col-xs-2 form-control-label">วันเกษียณอายุ:    </label>
+
+                    <div class="col-sm-5">
+                        <p class="form-control-static">
+                            <input type="text" class="form-control" [(ngModel)]="person.retireDateStr" name="retireDateStr" id="name" placeholder="วันเกษียณอายุ ">
+                        </p>
+                    </div>
+
+                </div>
+
+                <!--person.maxInsignia-->
+                <div class=" form-group row">
+                    <label class="col-xs-2 form-control-label">เครื่องราชการสูงสุด:     </label>
+
+                    <div class="col-sm-5">
+                        <p class="form-control-static">
+                            <select id="exampleSelect" class="form-control" [(ngModel)]="person.maxInsignia" name="maxInsignia" >
+								 <option *ngFor="let Insignia of lovInsigniaList;" [value]="Insignia.code" >{{Insignia.name}}</option>
+                        </select>
+                        </p>
+                    </div>
+
+                </div>
+
+                <!--person.maxEducation-->
+                <div class=" form-group row">
+                    <label class="col-xs-2 form-control-label">คุณวุฒิการศึกษา ณ วันที่บรรจุ:     </label>
+
+                    <div class="col-sm-5">
+                        <p class="form-control-static">
+                            <select id="exampleSelect" class="form-control" [(ngModel)]="person.maxEducation" name="maxEducation" >
+								<option *ngFor="let Education of lovEducationList;" [value]="Education.code" >{{Education.name}}</option>
+
+                        </select>
+                        </p>
+                    </div>
+                </div>
+                <!--person.taxNo-->
+                <div class=" form-group row">
+                    <label class="col-xs-2 form-control-label">บัตรผู้เสียภาษี:     </label>
+
+                    <div class="col-sm-5">
+                        <p class="form-control-static">
+                            <input type="text" class="form-control" id="name" [(ngModel)]="person.taxNo" name="taxNo" placeholder="บัตรผู้เสียภาษี ">
+                        </p>
+                    </div>
+
+                </div>
+                <!--person.marriedStatus-->
+                <div class=" form-group row">
+                    <label class="col-xs-2 form-control-label">สถานะภาพสมรส:     </label>
+
+                    <div class="col-sm-5">
+                        <p class="form-control-static">
+                            <select id="exampleSelect" class="form-control" [(ngModel)]="person.marriedStatus" name="marriedStatus" >
+								<option *ngFor="let Education of lovEducationList;" [value]="Education.code" >{{Education.name}}</option>
+                        </select>
+                        </p>
+                    </div>
+                </div>
+                <!--person.workNumber-->
+                <div class=" form-group row">
+                    <label class="col-xs-2 form-control-label">เลขที่บัตรข้าราชการ:     </label>
+
+                    <div class="col-sm-5">
+                        <p class="form-control-static">
+                            <input type="text" class="form-control" id="name" [(ngModel)]="person.workNumber" name="workNumber" placeholder="เลขที่บัตรข้าราชการ ">
+                        </p>
+                    </div>
+
+                </div>
+                <!--person.insureNo-->
+                <div class=" form-group row">
+                    <label class="col-xs-2 form-control-label">เลขที่ กบข กสจ สปส:     </label>
+
+                    <div class="col-sm-5">
+                        <p class="form-control-static">
+                            <input type="text" class="form-control" [(ngModel)]="person.insureNo" name="insureNo" id="name" placeholder="เลขที่ กบข กสจ สปส " >
+                        </p>
+                    </div>
+
+                </div>
+                <!--person.fund-->
+                <div class=" form-group row">
+                    <label class="col-xs-2 form-control-label">การสมัครกองทุน:      </label>
+
+                    <div class="col-sm-5">
+                        <p class="form-control-static">
+                            <input type="text" class="form-control" [(ngModel)]="person.fund" name="fund" id="name" placeholder="การสมัครกองทุน ">
+                        </p>
+                    </div>
+
+                </div>
+                <!--person.address-->
+                <div class=" form-group row">
+                    <label class="col-xs-2 form-control-label">ที่อยู่ตามทะเบียนบ้าน:     </label>
+
+                    <div class="col-sm-5">
+                        <p class="form-control-static">
+                            <textarea rows="4" class="form-control" [(ngModel)]="person.address" name="address" placeholder="ที่อยู่ตามทะเบียนบ้าน"></textarea>
+
+                        </p>
+                    </div>
+
+                </div>
+                <!--person.zipCode-->
+                <div class=" form-group row">
+                    <label class="col-xs-2 form-control-label">รหัสไปรษณีย์:     </label>
+
+                    <div class="col-sm-5">
+                        <p class="form-control-static">
+                            <input type="text" class="form-control" [(ngModel)]="person.zipCode" name="zipCode" id="name" placeholder="ที่อยู่ตามทะเบียนบ้าน ">
+                        </p>
+                    </div>
+
+                </div>
+                <!--person.workingStatus-->
+                <div class=" form-group row">
+                    <label class="col-xs-2 form-control-label">เบอร์โทรศัพท์:     </label>
+
+                    <div class="col-sm-5">
+                        <p class="form-control-static">
+                            <input type="text" class="form-control" [(ngModel)]="person.workTelNo" name="workTelNo" id="name" placeholder="เบอร์โทรศัพท์">
+                        </p>
+                    </div>
+
+                </div>
+                <!--person.workingStatus-->
+                <div class=" form-group row">
+                    <label class="col-xs-2 form-control-label">สถานะภาพการทำงาน:     </label>
+
+                    <div class="col-sm-5">
+                        <p class="form-control-static">
+                            <select id="exampleSelect" class="form-control" [(ngModel)]="person.workingStatus" name="workingStatus">
+								<option *ngFor="let WorkingStatus of lovWorkingStatusList;" [value]="WorkingStatus.code" >{{WorkingStatus.name}}</option>
+                        </select>
+                        </p>
+                    </div>
+
+                </div>
+                <!--person.fileData-->
+                <!--<div class=" form-group row">
+                    <label class="col-xs-2 form-control-label">รูปประวัติส่วนตัว:     </label>
+
+                    <div class="col-sm-5">
+                        <p class="form-control-static">
+                            <label class="control-label">Select File</label>
+                            <input id="input-4" name="input4[]" type="file" multiple class="file-loading form-control">
+                            <button type="button" class="btn btn-rounded btn-inline btn-warning">อัพโหลด</button>
+                        </p>
+                    </div>
+
+                </div>-->
+                <!--<div class=" form-group row">
+                    <label class="col-xs-2 form-control-label">ชื่อรูป    </label>
+
+                    <div class="col-sm-5">
+                        <p class="form-control-static">
+                            <input type="text" class="form-control" id="name" placeholder="ชื่อรูป ">
+                        </p>
+                    </div>
+
+                </div>-->
+                <div class=" form-group row">
+                    <label class="col-xs-2 form-control-label"></label>
+
+                    <div class="col-sm-5">
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-rounded btn-inline btn-primary" >บันทึก</button>
+                            <button type="reset" class="btn btn-rounded btn-inline btn-danger">ยกเลิก</button>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </form>
+    </section>
+</div>

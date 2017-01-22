@@ -3,7 +3,7 @@
         <label for="exampleSelect" class="col-sm-2 form-control-label">ปีการศึกษา</label>
         <div class="col-sm-2">
             <select id="exampleSelect" class="form-control">
-								<option>2558</option>
+			<option  *ngFor="let item of FacultyWrappers; let i = index" >{{academicYear}}</option>
             </select>
         </div>
     </div>
@@ -11,7 +11,7 @@
     <div class="form-group row">
         <div class="pbp-header"> สายบังคับบัญชา ประจำปี {{academicYear}}
         </div>
-        <div class="pbp-header" >อธิการบดี  {{thaiName}} {{thaiSurname}} <span class="font-icon font-icon-cogwheel"></span>
+        <div class="pbp-header" >อธิการบดี  {{thaiName}} {{thaiSurname}}  <a href="#AdminChainOfCommandinitPresident"><span class="font-icon font-icon-cogwheel" > </span></a>
             <span class="lsf-icon colororange" title="man"></span>
 
             <table class="table table-bordered table-hover" >
@@ -21,22 +21,22 @@
                     <th class="thLast">ภาควิชา / หัวหน้าภาค</th>
 
                 </thead>
-                <tbody>
+                <tbody >
                      <tr *ngFor="let item of facultyList; let i = index" >
                     <td > {{item.name}} </td>
 
 
-                    <td > {{item.dean.email}} {{item.dean.thaiName}} {{item.dean.thaiSurname}} <span class="font-icon font-icon-cogwheel" data-toggle="modal"  data-target="#myModal"> </span> </td>
-                   
+                    <td   *ngIf="item.dean" > {{item.dean.email}} {{item.dean.thaiName}} {{item.dean.thaiSurname}} <a href="#AdminChainOfCommandinitDean"><span class="font-icon font-icon-cogwheel" > </span></a> </td>
+                    <td   *ngIf="!item.dean" > <a href="#AdminChainOfCommandinitEdit"><span class="font-icon font-icon-cogwheel" > </span></a></td>
                     <td >
-                        <table >
+                        <table *ngIf="item.departmentList"  >
                             <tr *ngFor="let items of item.departmentList;" >
                                  <!--*ngFor="item.departmentList.departmentList"-->
-                                <td>
-                                    {{items.name}}
+                                <td >
+                                  <a href="#" data-toggle="modal"  data-target="#myModal" (click)="clickShowDepartment(items.departmentId)" >{{items.name}}</a>
                                 </td>
-                                <td>
-                                    {{items.head.email}}{{items.head.thaiName}} {{items.head.thaiSurname}}
+                                <td  >
+                                    {{items.head.email}}{{items.head.thaiName}} {{items.head.thaiSurname}} <a href="#AdminChainOfCommandinitHead"><span class="font-icon font-icon-cogwheel" > </span></a>
                                 </td>
                             </tr>
                         </table>
@@ -51,18 +51,35 @@
   </div>
 
 
-    <!--Modal 
+    <!--Modal -->
   <div class="modal fade" id="myModal" role="dialog">
     <div class="modal-dialog " style=" width: 80%;">
       <div class="modal-content">
        <form >
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">นำเข้าภาระงานด้าน งานวิชาการ</h4>
+          <h4 class="modal-title">สายบังคับบัญชา {{DepartmentName}} </h4>
         </div>
         <div class="modal-body">
           <div class="row">
-          
+           <table class="table table-bordered table-hover" >
+                <thead>
+
+
+                </thead>
+                <tbody >
+                    <tr *ngFor="let item of listByDepartment;  let i = index" >
+                        <td>{{i+1}} {{item.thaiName}} {{item.thaiSurname}}
+                        </td>
+                        <td>{{item.email}}
+                        </td>
+                        <td>{{item.regId}}
+                        </td>
+                        <td>{{item.employeeType}}
+                        </td>
+                    </tr>
+                </tbody>
+           </table>
 	
 
           </div>
@@ -73,4 +90,4 @@
         </form>
       </div>
     </div>
-  </div>-->
+  </div>

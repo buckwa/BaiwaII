@@ -13,7 +13,37 @@ var http_1 = require('@angular/http');
 var AdminChainOfCommandinit = (function () {
     function AdminChainOfCommandinit(http) {
         this.http = http;
+        this.facultyList = this.facultyListJson();
+        this.FacultyWrapper = this.FacultyWrapperJson();
     }
+    AdminChainOfCommandinit.prototype.facultyListJson = function () {
+        return [{
+                "name": "",
+                "departmentList": [{
+                        "name": "",
+                        "head": {
+                            "email": null,
+                            "thaiName": "",
+                            "thaiSurname": "",
+                        }
+                    }],
+                "dean": {
+                    "thaiName": "",
+                    "thaiSurname": "",
+                    "email": null,
+                },
+            }];
+    };
+    AdminChainOfCommandinit.prototype.FacultyWrapperJson = function () {
+        return {
+            "academicYear": "",
+            "president": {
+                "thaiName": "",
+                "thaiSurname": "",
+            },
+            "facultyList": {},
+        };
+    };
     AdminChainOfCommandinit.prototype.ngOnInit = function () {
         this.chainOfCommand();
     };
@@ -28,11 +58,28 @@ var AdminChainOfCommandinit = (function () {
         this.academicYear = this.FacultyWrapper.academicYear;
         this.thaiName = this.FacultyWrapper.president.thaiName;
         this.thaiSurname = this.FacultyWrapper.president.thaiSurname;
+        //this.facultyList = this.facultyListJson();
         this.facultyList = this.FacultyWrapper.facultyList;
-        console.log("SS !");
+        console.log("SSS !");
     };
     AdminChainOfCommandinit.prototype.chainOfCommandError = function (error) {
         console.log("GetchainOfCommandError.");
+    };
+    AdminChainOfCommandinit.prototype.clickShowDepartment = function (departID) {
+        var _this = this;
+        var url = "../admin/json/getlistByDepartment/" + departID;
+        this.http.get(url).subscribe(function (response) { return _this.GetImportSucess(response); }, function (error) { return _this.GetError(error); }, function () { return console.log("getlistByDepartment !"); });
+    };
+    AdminChainOfCommandinit.prototype.GetImportSucess = function (response) {
+        this.listByDepartments = response.json(JSON.stringify(response._body));
+        this.DepartmentName = this.listByDepartments[0].department.name;
+        this.listByDepartment = this.listByDepartments[0].department.academicPersonList;
+        // this.department = this.listByDepartment.department;
+        // this.academicPersonList = this.department.academicPersonList;
+        console.log("SS2 !");
+    };
+    AdminChainOfCommandinit.prototype.GetError = function (error) {
+        console.log("GetPersonError.");
     };
     AdminChainOfCommandinit = __decorate([
         core_1.Component({

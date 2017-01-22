@@ -37,7 +37,11 @@ import { ImagePreview} from './service/image_preview.directive';
 import { MaxLengthPipe} from './maxLength.pipe';
 import {jQueryDataTableDirective} from './datatable.directive';
 import { AdminChainOfCommandinit } from './baiwa/AdminChainOfCommandinit.component';//ยุง
-import { AdminChainOfCommandinitEdit } from './baiwa/AdminChainOfCommandinitEdit.component';//ยุง
+import { AdminChainOfCommandinitPresident } from './baiwa/AdminChainOfCommandinitPresident.component';//ยุง
+import { AdminChainOfCommandinitHead } from './baiwa/AdminChainOfCommandinitHead.component';//ยุง
+import { AdminChainOfCommandinitDean } from './baiwa/AdminChainOfCommandinitDean.component';//ยุง
+import { AdminWorkUser } from './baiwa/AdminWorkUser.component';//ยุง
+import { AdminUserCreate} from './baiwa/AdminUserCreate.component';//ยุง
 
 
 const routes: Routes = [
@@ -70,8 +74,11 @@ const routes: Routes = [
     { path: 'departmentBarChart' , component:departmentBarChart},
     { path: 'workTypeCompareBarChart' , component:workTypeCompareBarChart},
     { path: 'AdminChainOfCommandinit' , component:AdminChainOfCommandinit},
-    { path: 'AdminChainOfCommandinitEdit' , component:AdminChainOfCommandinitEdit},
-
+    { path: 'AdminChainOfCommandinitPresident' , component:AdminChainOfCommandinitPresident},
+    { path: 'AdminChainOfCommandinitHead' , component:AdminChainOfCommandinitHead},
+    { path: 'AdminChainOfCommandinitDean' , component:AdminChainOfCommandinitDean},
+    { path: 'AdminWorkUser' , component:AdminWorkUser},
+    { path: 'AdminUserCreate' , component:AdminUserCreate},
 
 ];
 
@@ -115,8 +122,11 @@ const routes: Routes = [
         workTypeCompareBarChart,
         MaxLengthPipe,
         AdminChainOfCommandinit,
-        AdminChainOfCommandinitEdit,
-
+        AdminChainOfCommandinitPresident,
+        AdminChainOfCommandinitHead,
+        AdminChainOfCommandinitDean,
+        AdminWorkUser,
+        AdminUserCreate,
     ],
     providers: [
         CommonService,

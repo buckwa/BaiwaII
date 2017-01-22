@@ -4,10 +4,10 @@ import { Http, Headers, Response } from '@angular/http';
 declare var jQuery: any;
 
 @Component({
-    templateUrl: 'app/baiwa/html/AdminChainOfCommandinitEdit.component.html'
+    templateUrl: 'app/baiwa/html/AdminChainOfCommandinitDean.component.html'
 })
 
-export class AdminChainOfCommandinitEdit implements OnInit {
+export class AdminChainOfCommandinitDean implements OnInit {
 
     @ViewChild('personTimeTable') timetabletable;
 

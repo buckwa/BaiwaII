@@ -212,7 +212,7 @@
 	                                <a class="dropdown-item" href="#/deanWorkTypeBarChart"><span class="font-icon font-icon-users"></span>หน่วยงาน</a>
 	                                <a class="dropdown-item" href="#/AdminChainOfCommandinit"><span class="font-icon font-icon-users"></span>สายบังคับบัญชา</a>
 	                                <a class="dropdown-item" href="#/departmentBarChart"><span class="font-icon font-icon-users"></span>นำเข้าบุคลากร</a>
-	                                <a class="dropdown-item" href="#/workTypeCompareBarChart"><span class="font-icon font-icon-users"></span>ข้อมูลบุคลากร</a>
+	                                <a class="dropdown-item" href="#/AdminWorkUser"><span class="font-icon font-icon-users"></span>ข้อมูลบุคลากร</a>
 	                                <a class="dropdown-item" href="#/departmentBarChart"><span class="font-icon font-icon-users"></span>ข้อความ</a>
 	                                
 	                                

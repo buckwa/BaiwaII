@@ -188,14 +188,14 @@ public class Person extends BaseDomain  {
 	}
 
 	public String getEmployeeTypeNo() {
-		String evalType = "1";
-		
-		if(employeeType.equalsIgnoreCase("ข้าราชการ")){
-			
-		}else{
-			evalType ="2";
-		}
-		return evalType;
+//		String evalType = "1";
+//		
+//		if(employeeType.equalsIgnoreCase("ข้าราชการ")){
+//			
+//		}else{
+//			evalType ="2";
+//		}
+		return employeeTypeNo;
 	}
 
 	public void setEmployeeTypeNo(String employeeTypeNo) {

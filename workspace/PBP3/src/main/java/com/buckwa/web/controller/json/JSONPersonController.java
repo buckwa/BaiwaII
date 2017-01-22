@@ -54,6 +54,7 @@ import com.buckwa.domain.pbp.AcademicUnitWrapper;
 import com.buckwa.domain.pbp.AcademicYearWrapper;
 import com.buckwa.domain.pbp.AnonymousWrapper;
 import com.buckwa.domain.pbp.Department;
+import com.buckwa.domain.pbp.FacultyWrapper;
 import com.buckwa.domain.pbp.MarkRankWrapper;
 import com.buckwa.domain.pbp.PBPWorkType;
 import com.buckwa.domain.pbp.PBPWorkTypeSub;
@@ -846,6 +847,7 @@ public class JSONPersonController {
 			String facultyCode = UserLoginUtil.getCurrentFacultyCode();
 			String fullName = UserLoginUtil.getCurrentFullThaiName();
 			Boolean isHead = UserLoginUtil.isRole(BuckWaConstants.ROLE_HEAD); 
+			Boolean isAdmin = UserLoginUtil.isRole(BuckWaConstants.ROLE_ADMIN); 
 			System.out.println("Current UserLogin  :" + user+" and FacultyCode :" +facultyCode +" AcademicYear :" +UserLoginUtil.getCurrentAcademicYear()+ " DepartmentCode :"+UserLoginUtil.getCurrentDepartmentCode()+" FacultyName: "+UserLoginUtil.getCurrentFacultyName()  );
 			System.out.println("------ FullName is "+fullName);
 			if (isHead){
@@ -1775,5 +1777,6 @@ public class JSONPersonController {
 
 		return response;
 	}
-
+	
+	
 }

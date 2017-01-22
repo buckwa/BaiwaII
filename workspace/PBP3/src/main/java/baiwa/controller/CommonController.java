@@ -86,8 +86,7 @@ public class CommonController {
 //			person = (Person) response.getResObj("person");
 //			logger.info("Person : " + person);
 			
-			mav.addObject("username", UserLoginUtil.getCurrentFullThaiName());
-			mav.addObject("year", UserLoginUtil.getCurrentAcademicYear());
+
 
 			
 		} catch (Exception ex) {

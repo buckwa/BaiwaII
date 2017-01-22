@@ -1,5 +1,6 @@
 package com.buckwa.domain.pbp;
 
+import java.io.Serializable;
 import java.util.List;
 
 import com.buckwa.domain.BaseDomain;

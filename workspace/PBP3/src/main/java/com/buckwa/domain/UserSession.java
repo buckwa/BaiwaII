@@ -19,7 +19,9 @@ public class UserSession  {
  private String person_id;
  private Boolean isHead;
  private Boolean isDean;
- private List<AcademicYear> academicYearList;
+ private Boolean isAdmin;
+
+private List<AcademicYear> academicYearList;
  
  
 public String getUserId() {
@@ -95,7 +97,12 @@ public void setDepartmentName(String departmentName) {
 	this.departmentName = departmentName;
 }
 
- 
+public Boolean getIsAdmin() {
+	return isAdmin;
+}
+public void setIsAdmin(Boolean isAdmin) {
+	this.isAdmin = isAdmin;
+}
  
 
 }

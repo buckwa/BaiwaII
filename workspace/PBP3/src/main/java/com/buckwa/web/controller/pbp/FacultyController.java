@@ -7,9 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
@@ -19,6 +21,7 @@ import com.buckwa.domain.common.BuckWaResponse;
 import com.buckwa.domain.pbp.Department;
 import com.buckwa.domain.pbp.Faculty;
 import com.buckwa.domain.pbp.FacultyWrapper;
+import com.buckwa.domain.pbp3.ResponseObj;
 import com.buckwa.domain.validator.pbp.DepartmentValidator;
 import com.buckwa.domain.validator.pbp.FacultyValidator;
 import com.buckwa.service.intf.pbp.FacultyService;
@@ -342,4 +345,54 @@ public class FacultyController {
 		return mav;
 	}
 	
+	@RequestMapping(value="deleteFacultyById/{facultyId}", method = RequestMethod.GET)
+	@ResponseBody
+	public ResponseObj deleteFacultyByIdJson(@PathVariable String facultyId) {
+		logger.info(" Start  ");
+		ResponseObj resObj =new ResponseObj();
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("facultyEdit");
+		mav.addObject(BuckWaConstants.PAGE_SELECT, BuckWaConstants.ADMIN_INIT);		 
+		BuckWaRequest request = new BuckWaRequest();
+		request.put("facultyId", facultyId);
+		BuckWaResponse response = facultyService.deleteFacultyById(request);
+		if(response.getStatus()==BuckWaConstants.SUCCESS){		
+			 
+			resObj.setResObj(response);
+			resObj.setStatus("1");
+			//mav = initList();
+			 				
+		}else {
+			mav.addObject("errorCode", response.getErrorCode()); 
+			 
+		}	
+ 
+		return resObj;
+	}
+	
+	
+	@RequestMapping(value="deleteDepartmentById/{departmentId}", method = RequestMethod.GET)
+	@ResponseBody
+	public ResponseObj deleteDepartmentByIdJson(@PathVariable String departmentId) {
+		
+		ResponseObj resObj =new ResponseObj();
+		logger.info(" Start  ");
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("departmentEdit");
+		mav.addObject(BuckWaConstants.PAGE_SELECT, BuckWaConstants.ADMIN_INIT);		 
+		BuckWaRequest request = new BuckWaRequest();
+		request.put("departmentId", departmentId);
+		BuckWaResponse response = facultyService.deleteDepartmentById(request);
+		if(response.getStatus()==BuckWaConstants.SUCCESS){		
+			 
+			//mav = initList();
+			resObj.setResObj(response);
+			resObj.setStatus("1");
+		}else {
+			mav.addObject("errorCode", response.getErrorCode()); 
+			 
+		}	
+ 
+		return resObj;
+	}
 }

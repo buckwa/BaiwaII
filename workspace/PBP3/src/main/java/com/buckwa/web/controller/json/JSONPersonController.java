@@ -855,6 +855,13 @@ public class JSONPersonController {
 			}else{
 				userreturn.setIsHead(isHead);
 			}
+			
+			if (isAdmin){
+				userreturn.setIsAdmin(isAdmin);
+			}else{
+				userreturn.setIsAdmin(isAdmin);
+			}
+			
 			userreturn.setUserName(UserLoginUtil.getCurrentUserLogin());
 			userreturn.setCurrentAcademicYear(UserLoginUtil.getCurrentAcademicYear());
 			userreturn.setFacultyCode(facultyCode);

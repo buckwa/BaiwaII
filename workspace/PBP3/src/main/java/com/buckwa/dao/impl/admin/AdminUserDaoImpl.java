@@ -242,7 +242,7 @@ public class AdminUserDaoImpl implements AdminUserDao {
 		}	
  
 		
-		sb.append(" LIMIT " + pagingBean.getLimitItemFrom() + ","	+ pagingBean.getMaxPageItems());
+		//sb.append(" LIMIT " + pagingBean.getLimitItemFrom() + ","	+ pagingBean.getMaxPageItems());
  
 		logger.info("sql:"+sb.toString());
 		
@@ -398,7 +398,7 @@ public class AdminUserDaoImpl implements AdminUserDao {
 		}	
  
 		
-		sb.append(" LIMIT " + pagingBean.getLimitItemFrom() + ","	+ pagingBean.getMaxPageItems());
+		//sb.append(" LIMIT " + pagingBean.getLimitItemFrom() + ","	+ pagingBean.getMaxPageItems());
  
 		logger.info("sql:"+sb.toString());
 		

@@ -207,13 +207,13 @@
 	                            </a>
 
 									<div class="dropdown-menu" aria-labelledby="dd-header-form-builder">
-	                                <a class="dropdown-item" href="#/facultyReport"><span class="font-icon font-icon-users"></span>ปีการศึกษา</a>
-	                                <a class="dropdown-item" href="#/deanBarChart"><span class="font-icon font-icon-users"></span>รอบการประเมิน</a>
-	                                <a class="dropdown-item" href="#/deanWorkTypeBarChart"><span class="font-icon font-icon-users"></span>หน่วยงาน</a>
+	                                <a class="dropdown-item" href="#/AdminAcademicYear"><span class="font-icon font-icon-users"></span>ปีการศึกษา</a>
+	                                <a class="dropdown-item" href="#/AdminEvaluateRoundinit"><span class="font-icon font-icon-users"></span>รอบการประเมิน</a>
+	                                <a class="dropdown-item" href="#/AdminFaculty"><span class="font-icon font-icon-users"></span>หน่วยงาน</a>
 	                                <a class="dropdown-item" href="#/AdminChainOfCommandinit"><span class="font-icon font-icon-users"></span>สายบังคับบัญชา</a>
-	                                <a class="dropdown-item" href="#/departmentBarChart"><span class="font-icon font-icon-users"></span>นำเข้าบุคลากร</a>
+	                                <a class="dropdown-item" href="javascript:void(0);"><span class="font-icon font-icon-users"></span>นำเข้าบุคลากร</a>
 	                                <a class="dropdown-item" href="#/AdminWorkUser"><span class="font-icon font-icon-users"></span>ข้อมูลบุคลากร</a>
-	                                <a class="dropdown-item" href="#/departmentBarChart"><span class="font-icon font-icon-users"></span>ข้อความ</a>
+	                                <a class="dropdown-item" href="javascript:void(0);"><span class="font-icon font-icon-users"></span>ข้อความ</a>
 	                                
 	                                
 	                            </div>
@@ -224,10 +224,10 @@
 	                                <span class="font-icon"><i class="fa fa-university"></i>&nbsp;นำเข้าข้อมูลและคำนวณ </span>  
 	                            </a>
 									<div class="dropdown-menu" aria-labelledby="dd-header-form-builder">
-	                                <a class="dropdown-item" href="#/facultyReport"><span class="font-icon font-icon-users"></span>เกณฑ์คะแนน</a>
-	                                <a class="dropdown-item" href="#/deanBarChart"><span class="font-icon font-icon-users"></span>หน่วยนับ</a>
-	                                <a class="dropdown-item" href="#/deanWorkTypeBarChart"><span class="font-icon font-icon-users"></span>ประเภทภาระงาน</a>
-	                                <a class="dropdown-item" href="#/workTypeCompareBarChart"><span class="font-icon font-icon-users"></span>ภาระงานประจำปี</a>
+	                                <a class="dropdown-item" href="javascript:void(0);"><span class="font-icon font-icon-users"></span>เกณฑ์คะแนน</a>
+	                                <a class="dropdown-item" href="javascript:void(0);t"><span class="font-icon font-icon-users"></span>หน่วยนับ</a>
+	                                <a class="dropdown-item" href="javascript:void(0);"><span class="font-icon font-icon-users"></span>ประเภทภาระงาน</a>
+	                                <a class="dropdown-item" href="javascript:void(0);"><span class="font-icon font-icon-users"></span>ภาระงานประจำปี</a>
 	                            </div>
 	                        </div>
 	                        
@@ -236,26 +236,21 @@
 	                                <span class="font-icon"><i class="fa fa-university"></i>&nbsp;นำเข้าตารางสอน </span>  
 	                            </a>
 									<div class="dropdown-menu" aria-labelledby="dd-header-form-builder">
-	                                <a class="dropdown-item" href="#/facultyReport"><span class="font-icon font-icon-users"></span> (Webservice)รายบุคล </a>
-	                                <a class="dropdown-item" href="#/deanBarChart"><span class="font-icon font-icon-users"></span> หน่วยนับ </a>
-	                                <a class="dropdown-item" href="#/deanWorkTypeBarChart"><span class="font-icon font-icon-users"></span>แก้ไขตารางสอน</a>
-	                                <a class="dropdown-item" href="#/workTypeCompareBarChart"><span class="font-icon font-icon-users"></span>คำนวณคะแนน</a>
+	                                <a class="dropdown-item" href="javascript:void(0);"><span class="font-icon font-icon-users"></span> (Webservice)รายบุคล </a>
+	                                <a class="dropdown-item" href="javascript:void(0);"><span class="font-icon font-icon-users"></span> หน่วยนับ </a>
+	                                <a class="dropdown-item" href="javascript:void(0);"><span class="font-icon font-icon-users"></span>แก้ไขตารางสอน</a>
+	                                <a class="dropdown-item" href="javascript:void(0);"><span class="font-icon font-icon-users"></span>คำนวณคะแนน</a>
 	                            </div>
 	                        </div>
-	                        
-	                        <div class="dropdown dropdown-typical">
-	                            <a class="dropdown-toggle no-arr" id="dd-header-marketing" data-target="#/home" href="#/home" >
-	                                <span class="font-icon"><i class="fa fa-university"></i> คู่มือ </span>
-	                            </a>
-	                        </div>
+	                     
 	                        
 							<div class="dropdown dropdown-typical">
 	                            <a class="dropdown-toggle" id="dd-header-form-builder" data-target="#" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 	                                <span class="font-icon"><i class="fa fa-university"></i>&nbsp;รายงาน </span>  
 	                            </a>
 								<div class="dropdown-menu" aria-labelledby="dd-header-form-builder">
-	                                <a class="dropdown-item" href="#/facultyReport"><span class="font-icon font-icon-users"></span> รายงานคะแนนบุคลากรทั้งสถาบัน  </a>
-	                                <a class="dropdown-item" href="#/deanBarChart"><span class="font-icon font-icon-users"></span> หน่วยนับ  Access Log </a>
+	                                <a class="dropdown-item" href="javascript:void(0);"><span class="font-icon font-icon-users"></span> รายงานคะแนนบุคลากรทั้งสถาบัน  </a>
+	                                <a class="dropdown-item" href="javascript:void(0);"><span class="font-icon font-icon-users"></span> หน่วยนับ  Access Log </a>
 	                            </div>
 	                        </div>
 	                        

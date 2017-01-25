@@ -22,23 +22,15 @@ export class AdminUserCreate {
     public lovWorkingStatusList: any;
     public evaluateRoundList: any;
     public tampvalue: any;
+
+    public model: any;
+    public person: any;
+
     submitted = false;
-    onSubmit() { 
-        
-        this.submitted = true; 
-        console.log("GetUserSubmitted :" + this.submitted );
-
-    }
-
-    // TODO: Remove this when we're done
-    get diagnostic() {
-        return JSON.stringify(this.person());
-    }
-
-
+   
     constructor(private http: Http) {
-        this.model();
-        this.person();
+        this.model = this.ModelUser();
+        this.person = this.PersonUser();
 
     }
     ngOnInit() {
@@ -49,7 +41,7 @@ export class AdminUserCreate {
 
     }
 
-    public model() {
+    public ModelUser() {
         return {
             "username": "",
             "password": "",
@@ -57,12 +49,12 @@ export class AdminUserCreate {
             "enabled": "",
             "groups": "",
             "person": {
-                   
+
             }
         }
     }
 
-    public person() {
+    public PersonUser() {
         return {
 
             "thaiName": "",
@@ -114,6 +106,9 @@ export class AdminUserCreate {
         this.modelUser = response.json(JSON.stringify(response._body));
         this.modelUser = this.modelUser[0];
 
+        this.model =this.modelUser;
+        this.person =this.modelUser.person;
+
         this.groupList = this.modelUser.groupList;
         this.lovSexList = this.modelUser.person.lovSexList;
         this.lovEmployeeTypeList = this.modelUser.person.lovEmployeeTypeList;
@@ -126,12 +121,49 @@ export class AdminUserCreate {
         this.lovWorkingStatusList = this.modelUser.person.lovWorkingStatusList;
         this.evaluateRoundList = this.modelUser.person.evaluateRoundList;
 
-        console.log("GetUserJsonSucess !");
+
+
+        console.log("AdminUserCreate :GetUserJsonSucess !");
     }
 
     public GetUserJsonError(response: any) {
 
-        console.log("GetUserJsonError :" + response);
+        console.log("AdminUserCreate :GetUserJsonError " + response);
+    }
+
+
+    public onSubmit() {
+
+        this.submitted = true;
+        console.log("GetUserSubmitted :" + this.submitted);
+        this.saveUser();
+
+
+    }
+
+    public saveUser() {
+        //Ready 
+
+        
+        console.log("AdminUserCreate : Ready SaveUser");
+
+        var url = "../admin/json/createuserSave";
+        this.http.post(url,this.model).subscribe(response => this.SaveUserJsonSucess(response),
+        error => this.SaveUserJsonError(error), () => console.log("AdminUserCreate : Success saveUser !"));
+
+
+    }
+
+    public SaveUserJsonSucess(response: any) {
+        //Todo
+        //Show Status
+        // window.location.href='http://www.google.com/';
+        console.log("AdminUserCreate : Ready SaveUserJsonSucess !");
+    }
+
+    public SaveUserJsonError(response: any) {
+        //Todo
+        console.log("AdminUserCreate : Success SaveUser Error !");
     }
 
 }

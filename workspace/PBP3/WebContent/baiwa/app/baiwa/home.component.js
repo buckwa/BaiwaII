@@ -14,9 +14,11 @@ var http_1 = require('@angular/http');
 var ng2_file_upload_1 = require('ng2-file-upload');
 var platform_browser_1 = require('@angular/platform-browser');
 var Rx_1 = require('rxjs/Rx');
+var router_1 = require('@angular/router');
 var URL1 = 'http://localhost:8080/PBP3/pam/person/uploadPersonProfilePicture2';
 var home = (function () {
-    function home(commonService, http, sanitizer) {
+    function home(router, commonService, http, sanitizer) {
+        this.router = router;
         this.commonService = commonService;
         this.http = http;
         this.sanitizer = sanitizer;
@@ -127,6 +129,9 @@ var home = (function () {
     };
     home.prototype.GetuserSucess = function (response) {
         this.user = response.json(JSON.stringify(response._body));
+        if (this.user.isAdmin == true) {
+            this.router.navigate(['/AdminAcademicKPI']);
+        }
         this.GetPersonByAcadamy(this.user.userName, this.user.currentAcademicYear);
         this.GetRadarPlotNew(this.user.userName, this.user.currentAcademicYear, "1");
     };
@@ -283,7 +288,7 @@ var home = (function () {
         core_1.Component({
             templateUrl: 'app/baiwa/html/home.component.html',
         }), 
-        __metadata('design:paramtypes', [Common_service_1.CommonService, http_1.Http, platform_browser_1.DomSanitizer])
+        __metadata('design:paramtypes', [router_1.Router, Common_service_1.CommonService, http_1.Http, platform_browser_1.DomSanitizer])
     ], home);
     return home;
 }());

@@ -50,6 +50,20 @@ var AdminChainOfCommandinitHead_component_1 = require('./baiwa/AdminChainOfComma
 var AdminChainOfCommandinitDean_component_1 = require('./baiwa/AdminChainOfCommandinitDean.component'); //ยุง
 var AdminWorkUser_component_1 = require('./baiwa/AdminWorkUser.component'); //ยุง
 var AdminUserCreate_component_1 = require('./baiwa/AdminUserCreate.component'); //ยุง
+var AdminUserEdit_component_1 = require('./baiwa/AdminUserEdit.component'); //ยุง
+var AdminFaculty_component_1 = require('./baiwa/AdminFaculty.component'); //มอส
+var AdminFacultyCreate_component_1 = require('./baiwa/AdminFacultyCreate.component'); //มอส
+var AdminFacultycreateDepartment_component_1 = require('./baiwa/AdminFacultycreateDepartment.component'); //มอส
+var AdminFacultyeditFaculty_component_1 = require('./baiwa/AdminFacultyeditFaculty.component'); //มอส
+var AdminFacultyEditDepartment_component_1 = require('./baiwa/AdminFacultyEditDepartment.component'); //มอส
+var AdminAcademicKPI_component_1 = require('./baiwa/AdminAcademicKPI.component');
+var AdminAcademicKPIcreate_component_1 = require('./baiwa/AdminAcademicKPIcreate.component');
+var AdminAcademicKPIedit_component_1 = require('./baiwa/AdminAcademicKPIedit.component');
+var AdminAcademicYear_component_1 = require('./baiwa/AdminAcademicYear.component');
+var AdminEvaluateRoundinit_component_1 = require('./baiwa/AdminEvaluateRoundinit.component');
+var AdminAcademicYeareditDateEvaluateRound_component_1 = require('./baiwa/AdminAcademicYeareditDateEvaluateRound.component');
+var AdminmarkRankinit_component_1 = require('./baiwa/AdminmarkRankinit.component');
+var AdminmarkRankinitEditRound_component_1 = require('./baiwa/AdminmarkRankinitEditRound.component');
 var routes = [
     { path: 'home', component: home_component_1.home },
     { path: 'importwork', component: importwork_component_1.importwork },
@@ -79,10 +93,24 @@ var routes = [
     { path: 'workTypeCompareBarChart', component: workTypeCompareBarChart_component_1.workTypeCompareBarChart },
     { path: 'AdminChainOfCommandinit', component: AdminChainOfCommandinit_component_1.AdminChainOfCommandinit },
     { path: 'AdminChainOfCommandinitPresident', component: AdminChainOfCommandinitPresident_component_1.AdminChainOfCommandinitPresident },
-    { path: 'AdminChainOfCommandinitHead', component: AdminChainOfCommandinitHead_component_1.AdminChainOfCommandinitHead },
-    { path: 'AdminChainOfCommandinitDean', component: AdminChainOfCommandinitDean_component_1.AdminChainOfCommandinitDean },
+    { path: 'AdminChainOfCommandinitHead/:result', component: AdminChainOfCommandinitHead_component_1.AdminChainOfCommandinitHead },
+    { path: 'AdminChainOfCommandinitDean/:result', component: AdminChainOfCommandinitDean_component_1.AdminChainOfCommandinitDean },
     { path: 'AdminWorkUser', component: AdminWorkUser_component_1.AdminWorkUser },
     { path: 'AdminUserCreate', component: AdminUserCreate_component_1.AdminUserCreate },
+    { path: 'AdminUserEdit/:user', component: AdminUserEdit_component_1.AdminUserEdit },
+    { path: 'AdminFaculty', component: AdminFaculty_component_1.AdminFaculty },
+    { path: 'AdminFacultycreateDepartment/:Faculty_id', component: AdminFacultycreateDepartment_component_1.AdminFacultycreateDepartment },
+    { path: 'AdminFacultyCreate/:year', component: AdminFacultyCreate_component_1.AdminFacultyCreate },
+    { path: 'AdminFacultyeditFaculty/:FacultyID', component: AdminFacultyeditFaculty_component_1.AdminFacultyeditFaculty },
+    { path: 'AdminFacultyEditDepartment/:Depart_Id', component: AdminFacultyEditDepartment_component_1.AdminFacultyEditDepartment },
+    { path: 'AdminAcademicKPI', component: AdminAcademicKPI_component_1.AdminAcademicKPI },
+    { path: 'AdminAcademicKPIcreate', component: AdminAcademicKPIcreate_component_1.AdminAcademicKPIcreate },
+    { path: 'AdminAcademicKPIedit', component: AdminAcademicKPIedit_component_1.AdminAcademicKPIedit },
+    { path: 'AdminAcademicYear', component: AdminAcademicYear_component_1.AdminAcademicYear },
+    { path: 'AdminEvaluateRoundinit', component: AdminEvaluateRoundinit_component_1.AdminEvaluateRoundinit },
+    { path: 'AdminAcademicYeareditDateEvaluateRound', component: AdminAcademicYeareditDateEvaluateRound_component_1.AdminAcademicYeareditDateEvaluateRound },
+    { path: 'AdminmarkRankinit', component: AdminmarkRankinit_component_1.AdminmarkRankinit },
+    { path: 'AdminmarkRankinitEditRound', component: AdminmarkRankinitEditRound_component_1.AdminmarkRankinitEditRound },
 ];
 var AppModule = (function () {
     function AppModule() {
@@ -133,6 +161,20 @@ var AppModule = (function () {
                 AdminChainOfCommandinitDean_component_1.AdminChainOfCommandinitDean,
                 AdminWorkUser_component_1.AdminWorkUser,
                 AdminUserCreate_component_1.AdminUserCreate,
+                AdminUserEdit_component_1.AdminUserEdit,
+                AdminFaculty_component_1.AdminFaculty,
+                AdminFacultyCreate_component_1.AdminFacultyCreate,
+                AdminFacultycreateDepartment_component_1.AdminFacultycreateDepartment,
+                AdminFacultyeditFaculty_component_1.AdminFacultyeditFaculty,
+                AdminFacultyEditDepartment_component_1.AdminFacultyEditDepartment,
+                AdminAcademicKPI_component_1.AdminAcademicKPI,
+                AdminAcademicKPIcreate_component_1.AdminAcademicKPIcreate,
+                AdminAcademicKPIedit_component_1.AdminAcademicKPIedit,
+                AdminAcademicYear_component_1.AdminAcademicYear,
+                AdminEvaluateRoundinit_component_1.AdminEvaluateRoundinit,
+                AdminAcademicYeareditDateEvaluateRound_component_1.AdminAcademicYeareditDateEvaluateRound,
+                AdminmarkRankinit_component_1.AdminmarkRankinit,
+                AdminmarkRankinitEditRound_component_1.AdminmarkRankinitEditRound,
             ],
             providers: [
                 Common_service_1.CommonService,

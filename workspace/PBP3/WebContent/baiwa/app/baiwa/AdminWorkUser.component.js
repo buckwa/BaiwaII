@@ -11,14 +11,16 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require('@angular/core');
 var Common_service_1 = require('./../service/Common.service');
 var http_1 = require('@angular/http');
+var router_1 = require('@angular/router');
 var AdminWorkUser = (function () {
-    function AdminWorkUser(commonService, http) {
+    function AdminWorkUser(router, commonService, http) {
+        this.router = router;
         this.commonService = commonService;
         this.http = http;
         this.makeDataTable = {
-            "searching": false,
+            "searching": true,
             "bPaginate": false,
-            "paging": false,
+            "paging": true,
             "bLengthChange": false,
             "bInfo": false,
             "bAutoWidth": false,
@@ -30,9 +32,11 @@ var AdminWorkUser = (function () {
                 { "data": "employeeType" },
                 { "data": "academicYear" },
                 {
-                    data: null,
+                    data: "username",
                     className: "center",
-                    defaultContent: '<a href="" class="editor_edit">Edit</a> / <a href="" class="editor_remove">Delete</a>'
+                    "render": function (data, type, full, meta) {
+                        return '<a href="javascript:void(0);"  Action="Edit" value="' + data + '" class="editor_remove">Edit</a> / <a href="javascript:void(0);" Action="Edit" class="editor_remove">Delete</a>';
+                    }
                 }
             ]
         };
@@ -53,15 +57,39 @@ var AdminWorkUser = (function () {
     AdminWorkUser.prototype.GetPersonError = function (error) {
         console.log("call service error" + error);
     };
+    AdminWorkUser.prototype.handleKeyboardEvent = function (target) {
+        //
+        var ele = jQuery(target);
+        console.log(ele.attr("value"), ele.attr("Action"));
+        if (ele.attr("Action") == "Edit") {
+            if (ele.attr("value")) {
+                this.router.navigate(['/AdminUserEdit', ele.attr("value")]);
+            }
+        }
+    };
+    AdminWorkUser.prototype.DeleteDataUser = function (Username) {
+    };
+    AdminWorkUser.prototype.UpdateDataUser = function (Username) {
+    };
     __decorate([
         core_1.ViewChild('personTimeTable'), 
         __metadata('design:type', Object)
     ], AdminWorkUser.prototype, "timetabletable", void 0);
+    __decorate([
+        core_1.ViewChild('name'), 
+        __metadata('design:type', Object)
+    ], AdminWorkUser.prototype, "name", void 0);
+    __decorate([
+        core_1.HostListener('click', ['$event.target']), 
+        __metadata('design:type', Function), 
+        __metadata('design:paramtypes', [Object]), 
+        __metadata('design:returntype', void 0)
+    ], AdminWorkUser.prototype, "handleKeyboardEvent", null);
     AdminWorkUser = __decorate([
         core_1.Component({
             templateUrl: 'app/baiwa/html/AdminWorkUser.component.html'
         }), 
-        __metadata('design:paramtypes', [Common_service_1.CommonService, http_1.Http])
+        __metadata('design:paramtypes', [router_1.Router, Common_service_1.CommonService, http_1.Http])
     ], AdminWorkUser);
     return AdminWorkUser;
 }());

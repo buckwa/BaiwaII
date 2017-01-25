@@ -1,0 +1,300 @@
+<div style="width: 100%">
+<div class="col-md-4 col-lg-12">
+    <section id="blockui-element-container-dark" class="card">
+        <div class="card-block display-table" style="min-height: auto">
+<section class="card card-default">
+    <header class="card-header" style="text-align: center"><i class="font-icon font-icon-cogwheel"></i> แก้ไขภาระงาน </header>
+<div class="card-block">
+    <br>
+    <div class="row">
+        <div class="col-md-7 col-md-offset-3">
+            <div class="form-group">
+                <label for="inputEmail3" class="col-sm-4 control-label">ชื่อภาระงาน :</label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" placeholder="Text input">
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-md-7 col-md-offset-3">
+            <div class="form-group ">
+                <label for="inputPassword3" class="col-sm-4 control-label">คะแนน :</label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" placeholder="Text input">
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-md-7 col-md-offset-3">
+            <div class="form-group">
+                <label for="inputEmail3" class="col-sm-4 control-label">หน่วย :</label>
+                <div class="col-sm-6">
+                    <select class="form-control">
+                                <option>ชั่วโมงปฏิบัติการ(หน่วยกิจ)</option>
+                                <option>ชั่วโมงปฏิบัติการ</option>
+                                <option>สัปดาห์</option>
+                                </select>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-md-7 col-md-offset-3">
+            <div class="form-group">
+                <label for="inputEmail3" class="col-sm-4 control-label">ตัวคูณ :</label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" placeholder="Text input">
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-md-7 col-md-offset-3">
+            <div class="form-group">
+                <label for="inputEmail3" class="col-sm-4 control-label">ลำดับการจัดเรียง :</label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" placeholder="Text input">
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-md-7 col-md-offset-3">
+            <div class="form-group">
+                <label for="inputEmail3" class="col-sm-4 control-label">หมายเหตุ :</label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" placeholder="Text input">
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-md-7 col-md-offset-3">
+            <div class="form-group">
+                <label for="inputEmail3" class="col-sm-4 control-label">ดึงข้อมูลอัตโนมัติจากสำนักทะเบียน :</label>
+                <div class="col-sm-6">
+                    <input type="checkbox" value="">
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+</div>
+</section>
+
+<section class="card card-default">
+    <header class="card-header">รูปแบบการกรอกข้อมูลผู้ใช้งาน</header>
+    <div class="card-block">
+        <table id="table-edit" class="table table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th>ชื่อ
+                        <div class="fa-hover col-md-3 col-md-offset-2"></div>
+                    </th>
+                    <th>ใช้ในการคำนวณ
+                        <div class="fa-hover col-md-3 col-md-offset-2"></div>
+                    </th>
+                    <th>Validate Number
+                        <div class="fa-hover col-md-3 col-md-offset-2"></div>
+                    </th>
+                    <th>ลบ
+                        <div class="fa-hover col-md-3 col-md-offset-2"></div>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <div class="row">
+                            <div class="col-md-6"><input type="text" class="form-control" placeholder="Text input"></div>
+                        </div>
+
+                    </td>
+                    <td>
+                        <div class="row">
+                            <div class="col-md-6"><input type="checkbox" value=""></div>
+                        </div>
+
+                    </td>
+                    <td>
+                        <div class="row">
+                            <div class="col-md-6"><input type="checkbox" value=""></div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="row">
+                            <div class="col-md-1 col-md-offset-4">
+                                <a class="btn btn-inline btn-danger font-icon font-icon-trash" href="" role="button"></a>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</section>
+
+<section class="card card-default">
+    <header class="card-header"> กำหนดคุณสมบัติ (เฉพาะด้านวิชาการ)</header>
+    <div class="card-block">
+        <table id="table-edit" class="table table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th style="width: 30%; text-align: center">คุณสมบัติ</th>
+<th style="width: 50%; text-align: center">ค่า</th>
+<th style="text-align: center">Remark</th>
+</tr>
+</thead>
+<tbody>
+    <tr>
+        <td>
+            <div class="row">
+                <div class="col-md-6">ระดับ</div>
+            </div>
+        </td>
+        <td>
+            <div class="row">
+                <div class="col-xs-6 col-md-6"><select class="form-control">
+  <option>ป.ตรี</option>
+  <option>ป.โท</option>
+  <option>ป.เอก</option>
+</select></div>
+            </div>
+        </td>
+        <td>
+            <div class="row">
+                <div class="col-md-4"></div>
+            </div>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <div class="row">
+                <div class="col-md-6">ประเภทวิชา</div>
+            </div>
+        </td>
+        <td>
+            <div class="row">
+                <div class="col-xs-6 col-md-6"><select class="form-control">
+  <option>ทฤษฎี</option>
+  <option>ปฏิบัติ</option>
+</select></div>
+            </div>
+        </td>
+        <td>
+            <div class="row">
+                <div class="col-md-4"></div>
+            </div>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <div class="row">
+                <div class="col-md-6">ผู้ช่วยสอน (TA)</div>
+            </div>
+        </td>
+        <td>
+            <div class="row">
+                <div class="col-xs-6 col-md-6"><select class="form-control">
+  <option>มี</option>
+  <option>ไม่มี</option>
+</select></div>
+            </div>
+        </td>
+        <td>
+            <div class="row">
+                <div class="col-md-6"></div>
+            </div>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <div class="row">
+                <div class="col-md-6">Project Base Learning</div>
+            </div>
+        </td>
+        <td>
+            <div class="row">
+                <div class="col-xs-6 col-md-6"><select class="form-control">
+  <option>ใช่</option>
+  <option>ไม่ใช่</option>
+</select></div>
+            </div>
+        </td>
+        <td>
+            <div class="row">
+                <div class="col-md-4"></div>
+            </div>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <div class="row">
+                <div class="col-md-6">ใช้จำนวนนักศึกษาคำนวณหรือไม่</div>
+            </div>
+        </td>
+        <td>
+            <div class="row">
+                <div class="col-xs-6 col-md-6"><select class="form-control">
+  <option>ใช่ในการคำนวณ</option>
+  <option>ไม่ใช่ในการคำนวณ</option>
+</select></div>
+            </div>
+        </td>
+        <td>
+            <div class="row">
+                <div class="col-md-4"></div>
+            </div>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <div class="row">
+                <div class="col-md-6">จำนวนนักศึกษาระหว่าง</div>
+            </div>
+        </td>
+        <td>
+            <div class="row">
+                <div class="col-xs-8 col-md-8">
+                    <div class="row">
+                        <div class="col-md-3"><input type="text" class="form-control" placeholder="Text input"><input type="text" class="form-control" placeholder="Text input"></div>
+                        <label>ถึง</label>
+
+                    </div>
+                </div>
+            </div>
+        </td>
+        <td>
+            <div class="row">
+                <div class="col-md-4"></div>
+            </div>
+        </td>
+    </tr>
+</tbody>
+</table>
+<br>
+<div class="row">
+    <div class="col-md-12" style="text-align: center">
+<button class="btn btn-inline btn-primary" type="submit">บันทึก</button>
+<button class="btn btn-inline btn-primary" type="submit">ย้อนกลับ</button>
+</div>
+</div>
+</div>
+</section>
+</div>
+</section>
+</div>
+</div>

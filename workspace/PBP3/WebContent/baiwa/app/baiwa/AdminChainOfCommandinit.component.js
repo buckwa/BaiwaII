@@ -10,9 +10,11 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('@angular/core');
 var http_1 = require('@angular/http');
+var router_1 = require('@angular/router');
 var AdminChainOfCommandinit = (function () {
-    function AdminChainOfCommandinit(http) {
+    function AdminChainOfCommandinit(http, router) {
         this.http = http;
+        this.router = router;
         this.facultyList = this.facultyListJson();
         this.FacultyWrapper = this.FacultyWrapperJson();
     }
@@ -81,11 +83,23 @@ var AdminChainOfCommandinit = (function () {
     AdminChainOfCommandinit.prototype.GetError = function (error) {
         console.log("GetPersonError.");
     };
+    AdminChainOfCommandinit.prototype.AdminChainOfCommandinitPresident = function () {
+        console.log("result : SS");
+        this.router.navigate(['/AdminChainOfCommandinitPresident']);
+    };
+    AdminChainOfCommandinit.prototype.AdminChainOfCommandinitDean = function (result) {
+        console.log("result :", result);
+        this.router.navigate(['/AdminChainOfCommandinitDean', result]);
+    };
+    AdminChainOfCommandinit.prototype.AdminChainOfCommandinitHead = function (result) {
+        console.log("result :", result);
+        this.router.navigate(['/AdminChainOfCommandinitHead', result]);
+    };
     AdminChainOfCommandinit = __decorate([
         core_1.Component({
             templateUrl: 'app/baiwa/html/AdminChainOfCommandinit.component.html'
         }), 
-        __metadata('design:paramtypes', [http_1.Http])
+        __metadata('design:paramtypes', [http_1.Http, router_1.Router])
     ], AdminChainOfCommandinit);
     return AdminChainOfCommandinit;
 }());

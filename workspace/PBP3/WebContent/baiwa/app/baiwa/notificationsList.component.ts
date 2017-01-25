@@ -6,6 +6,8 @@ declare var jQuery: any;
 @Component({
     templateUrl: 'app/baiwa/html/notificationsList.component.html'
 })
+
+
 export class notificationsList  {
 
     public libPath: string;

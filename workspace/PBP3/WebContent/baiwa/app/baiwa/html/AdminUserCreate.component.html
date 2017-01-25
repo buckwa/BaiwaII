@@ -7,7 +7,7 @@
         <form (ngSubmit)="onSubmit()" #AdminUserCreate="ngForm">
             <div class="card-block">
                 <div class=" form-group row">
-                    <label class="col-xs-2 form-control-label">ชื่อเข้าใช้ระบบ:</label>
+                    <label class="col-xs-2 form-control-label">ชื่อเข้าใช้ระบบ: <span style="color: Red;">*</span> </label>
 
                     <div class="col-sm-5">
                         
@@ -16,11 +16,11 @@
                         
                     </div>
                    
-                    <small class="text-muted">Username must not be empty</small>
+                    <!--<small class="text-muted">Username must not be empty</small>-->
 
                 </div>
                 <div class=" form-group row">
-                    <label class="col-xs-2 form-control-label">รหัสผ่าน:</label>
+                    <label class="col-xs-2 form-control-label">รหัสผ่าน: <span style="color: Red;">*</span> </label>
 
                     <div class="col-sm-5">
                         <p class="form-control-static">
@@ -30,7 +30,7 @@
 
                 </div>
                 <div class=" form-group row">
-                    <label class="col-xs-2 form-control-label">ยืนยันรหัสผ่าน:</label>
+                    <label class="col-xs-2 form-control-label">ยืนยันรหัสผ่าน:<span style="color: Red;">*</span></label>
 
                     <div class="col-sm-5">
                         <p class="form-control-static">
@@ -44,10 +44,10 @@
 
                     <div class="col-sm-5">
                         <div class="radio">
-                            <input type="radio" [(ngModel)]="model.enabled" name="enabled" id="radio-1" value="true" checked>
-                            <label for="radio-1">Active </label>
-                            <input type="radio" [(ngModel)]="model.enabled" name="enabled" id="radio-2" value="false" >
-                            <label for="radio-2">Inactive </label>
+                            <input type="radio" [(ngModel)]="model.enabled" id="enabled" name="enabled" id="enabled-1" value="true" checked>
+                            <label for="enabled-1">Active </label>
+                            <input type="radio" [(ngModel)]="model.enabled" id="enabled" name="enabled" id="enabled-2" value="false" >
+                            <label for="enabled-2">Inactive </label>
                         </div>
 
                     </div>
@@ -59,9 +59,9 @@
 
                     <div class="col-sm-5">
                         <div class="radio"  >
-                            <div class="checkbox" *ngFor="let group of groupList;" >
-                                <input [(ngModel)]="model.groups" name="groups"  type="checkbox" id="check-1">
-                                <label for="check-1">{{group.groupName}}</label>
+                            <div class="checkbox" *ngFor="let group of groupList ; let i=index" >
+                                <input [(ngModel)]="model.groups" name="groups"  type="checkbox" id="check{{i}}" />
+                                <label for="check" >{{group.groupName}}</label>
                             </div>
                         </div>
                     </div>
@@ -79,7 +79,7 @@
                 </div>-->
                 <!--Person thaiName-->
                 <div class=" form-group row">
-                    <label class="col-xs-2 form-control-label">ชื่อ (ไทย): </label>
+                    <label class="col-xs-2 form-control-label">ชื่อ (ไทย):<span style="color: Red;">*</span> </label>
 
                     <div class="col-sm-5">
                         <p class="form-control-static">
@@ -89,7 +89,7 @@
 
                 </div>
                 <div class=" form-group row">
-                    <label class="col-xs-2 form-control-label">นามสกุล (ไทย):  </label>
+                    <label class="col-xs-2 form-control-label">นามสกุล (ไทย): <span style="color: Red;">*</span> </label>
 
                     <div class="col-sm-5">
                         <p class="form-control-static">
@@ -99,14 +99,14 @@
 
                 </div>
                 <div class=" form-group row">
-                    <label class="col-xs-2 form-control-label">เพศ:</label>
+                    <label class="col-xs-2 form-control-label">เพศ: <span style="color: Red;">*</span></label>
 
                     <div class="col-sm-5">
                         <div class="radio">
-                            <input type="radio" [(ngModel)]="person.sex" name="sex" id="radio-1" value="option1">
-                            <label for="radio-1">ชาย </label>
-                            <input type="radio" [(ngModel)]="person.sex" name="sex" id="radio-2" value="option2" checked>
-                            <label for="radio-2">หญิง </label>
+                            <input type="radio" [(ngModel)]="person.sex" name="sex" id="sex-1" value="option1">
+                            <label for="sex-1">ชาย </label>
+                            <input type="radio" [(ngModel)]="person.sex" name="sex" id="sex-2" value="option2" checked>
+                            <label for="sex-2">หญิง </label>
                         </div>
 
                     </div>
@@ -114,18 +114,18 @@
                 </div>
                 <!--person.birthdateStr-->
                 <div class=" form-group row">
-                    <label class="col-xs-2 form-control-label">วัน เดือน ปีเกิด:   </label>
+                    <label class="col-xs-2 form-control-label">วัน เดือน ปีเกิด:<span style="color: Red;">*</span>   </label>
 
                     <div class="col-sm-5">
                         <p class="form-control-static">
-                            <input type="text" class="form-control"  [(ngModel)]="person.birthdateStr" name="birthdateStr" id="name" placeholder="วัน เดือน ปีเกิด ">
+                            <input type="date" class="form-control"  [(ngModel)]="person.birthdateStr" name="birthdateStr" id="name" placeholder="วัน เดือน ปีเกิด ">
                         </p>
                     </div>
 
                 </div>
                 <!--person.rateNo-->
                 <div class=" form-group row">
-                    <label class="col-xs-2 form-control-label">เลขที่อัตรา:    </label>
+                    <label class="col-xs-2 form-control-label">เลขที่อัตรา:<span style="color: Red;">*</span>    </label>
 
                     <div class="col-sm-5">
                         <p class="form-control-static">
@@ -136,12 +136,12 @@
                 </div>
                 <!--person.employeeType-->
                 <div class=" form-group row">
-                    <label class="col-xs-2 form-control-label"> ประเภทข้าราชการ:    </label>
+                    <label class="col-xs-2 form-control-label"> ประเภทข้าราชการ:<span style="color: Red;">*</span>    </label>
 
                     <div class="col-sm-5">
                         <p class="form-control-static">
-                            <select id="exampleSelect" class="form-control"  [(ngModel)]="person.employeeType" name="employeeType" >
-								<option  *ngFor="let EmployeeType of lovEmployeeTypeList ;" [value]="EmployeeType.code">{{EmployeeType.name}}</option>
+                            <select id="exampleSelect" class="form-control"  [(ngModel)]="person.employeeType" name="employeeType" id="employeeType"  >
+								<option  *ngFor="let EmployeeType of lovEmployeeTypeList ;" [value]="EmployeeType.code" selected >{{EmployeeType.name}}</option>
 	
                             </select>
                         </p>
@@ -150,12 +150,12 @@
                 </div>
                 <!--person.position-->
                 <div class=" form-group row">
-                    <label class="col-xs-2 form-control-label">ตำแหน่ง:     </label>
+                    <label class="col-xs-2 form-control-label">ตำแหน่ง:<span style="color: Red;">*</span>     </label>
 
                     <div class="col-sm-5">
                         <p class="form-control-static">
                             <select id="exampleSelect" class="form-control"  [(ngModel)]="person.position" name="position" >
-								<option  *ngFor="let Position of lovPositionList;" [value]="Position.code" >{{Position.name}}</option>
+								<option  *ngFor="let Position of lovPositionList;" [value]="Position.code" selected >{{Position.name}}</option>
 
                         </select>
                         </p>
@@ -167,7 +167,7 @@
 
                 <!--person.workLine-->
                 <div class=" form-group row">
-                    <label class="col-xs-2 form-control-label">สายงาน:     </label>
+                    <label class="col-xs-2 form-control-label">สายงาน:<span style="color: Red;">*</span>     </label>
 
                     <div class="col-sm-5">
                         <p class="form-control-static">
@@ -182,7 +182,7 @@
 
                 <!--person.workTelNo-->
                 <div class=" form-group row">
-                    <label class="col-xs-2 form-control-label">โทรศัพท์ที่ทำงาน:      </label>
+                    <label class="col-xs-2 form-control-label">โทรศัพท์ที่ทำงาน:<span style="color: Red;">*</span>      </label>
 
                     <div class="col-sm-5">
                         <p class="form-control-static">
@@ -206,7 +206,7 @@
 
                 <!--person.faculty-->
                 <div class=" form-group row">
-                    <label class="col-xs-2 form-control-label">หน่วยงาน:    </label>
+                    <label class="col-xs-2 form-control-label">หน่วยงาน:<span style="color: Red;">*</span>    </label>
 
                     <div class="col-sm-5">
                         <p class="form-control-static">
@@ -221,22 +221,22 @@
 
                 <!--person.workingDateStr-->
                 <div class=" form-group row">
-                    <label class="col-xs-2 form-control-label">วันที่เริ่มทำงานจริง:     </label>
+                    <label class="col-xs-2 form-control-label">วันที่เริ่มทำงานจริง:<span style="color: Red;">*</span>     </label>
 
                     <div class="col-sm-5">
                         <p class="form-control-static">
-                            <input type="text" class="form-control" [(ngModel)]="person.workingDateStr" name="workingDateStr" id="name" placeholder="วันที่เริ่มทำงานจริง ">
+                            <input type="date" class="form-control" [(ngModel)]="person.workingDateStr" name="workingDateStr" id="name" placeholder="วันที่เริ่มทำงานจริง ">
                         </p>
                     </div>
 
                 </div>
                 <!--person.assignDateStr-->
                 <div class=" form-group row">
-                    <label class="col-xs-2 form-control-label">วันสั่งบรรจุ:      </label>
+                    <label class="col-xs-2 form-control-label">วันสั่งบรรจุ: <span style="color: Red;">*</span>     </label>
 
                     <div class="col-sm-5">
                         <p class="form-control-static">
-                            <input type="text" class="form-control" [(ngModel)]="person.assignDateStr" name="assignDateStr" id="name" placeholder="วันสั่งบรรจุ">
+                            <input type="date" class="form-control" [(ngModel)]="person.assignDateStr" name="assignDateStr" id="name" placeholder="วันสั่งบรรจุ">
                         </p>
                     </div>
 
@@ -248,7 +248,7 @@
 
                     <div class="col-sm-5">
                         <p class="form-control-static">
-                            <input type="text" class="form-control" [(ngModel)]="person.retireDateStr" name="retireDateStr" id="name" placeholder="วันเกษียณอายุ ">
+                            <input type="date" class="form-control" [(ngModel)]="person.retireDateStr" name="retireDateStr" id="name" placeholder="วันเกษียณอายุ ">
                         </p>
                     </div>
 
@@ -385,7 +385,7 @@
 
                 </div>
                 <!--person.fileData-->
-                <!--<div class=" form-group row">
+                <div class=" form-group row">
                     <label class="col-xs-2 form-control-label">รูปประวัติส่วนตัว:     </label>
 
                     <div class="col-sm-5">
@@ -396,8 +396,8 @@
                         </p>
                     </div>
 
-                </div>-->
-                <!--<div class=" form-group row">
+                </div>
+                <div class=" form-group row">
                     <label class="col-xs-2 form-control-label">ชื่อรูป    </label>
 
                     <div class="col-sm-5">
@@ -406,7 +406,7 @@
                         </p>
                     </div>
 
-                </div>-->
+                </div>
                 <div class=" form-group row">
                     <label class="col-xs-2 form-control-label"></label>
 
@@ -416,7 +416,6 @@
                             <button type="reset" class="btn btn-rounded btn-inline btn-danger">ยกเลิก</button>
                         </div>
                     </div>
-
                 </div>
 
             </div>

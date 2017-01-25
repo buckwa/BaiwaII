@@ -15,27 +15,15 @@ var AdminUserCreate = (function () {
     function AdminUserCreate(http) {
         this.http = http;
         this.submitted = false;
-        this.model();
-        this.person();
+        this.model = this.ModelUser();
+        this.person = this.PersonUser();
     }
-    AdminUserCreate.prototype.onSubmit = function () {
-        this.submitted = true;
-        console.log("GetUserSubmitted :" + this.submitted);
-    };
-    Object.defineProperty(AdminUserCreate.prototype, "diagnostic", {
-        // TODO: Remove this when we're done
-        get: function () {
-            return JSON.stringify(this.person());
-        },
-        enumerable: true,
-        configurable: true
-    });
     AdminUserCreate.prototype.ngOnInit = function () {
         this.getCreateUserJson();
     };
     AdminUserCreate.prototype.ngAfterViewInit = function () {
     };
-    AdminUserCreate.prototype.model = function () {
+    AdminUserCreate.prototype.ModelUser = function () {
         return {
             "username": "",
             "password": "",
@@ -45,7 +33,7 @@ var AdminUserCreate = (function () {
             "person": {}
         };
     };
-    AdminUserCreate.prototype.person = function () {
+    AdminUserCreate.prototype.PersonUser = function () {
         return {
             "thaiName": "",
             "thaiSurname": "",
@@ -90,6 +78,8 @@ var AdminUserCreate = (function () {
         console.log("AdminUserCreate : Ready GetUserJsonSucess");
         this.modelUser = response.json(JSON.stringify(response._body));
         this.modelUser = this.modelUser[0];
+        this.model = this.modelUser;
+        this.person = this.modelUser.person;
         this.groupList = this.modelUser.groupList;
         this.lovSexList = this.modelUser.person.lovSexList;
         this.lovEmployeeTypeList = this.modelUser.person.lovEmployeeTypeList;
@@ -101,10 +91,32 @@ var AdminUserCreate = (function () {
         this.lovEducationList = this.modelUser.person.lovEducationList;
         this.lovWorkingStatusList = this.modelUser.person.lovWorkingStatusList;
         this.evaluateRoundList = this.modelUser.person.evaluateRoundList;
-        console.log("GetUserJsonSucess !");
+        console.log("AdminUserCreate :GetUserJsonSucess !");
     };
     AdminUserCreate.prototype.GetUserJsonError = function (response) {
-        console.log("GetUserJsonError :" + response);
+        console.log("AdminUserCreate :GetUserJsonError " + response);
+    };
+    AdminUserCreate.prototype.onSubmit = function () {
+        this.submitted = true;
+        console.log("GetUserSubmitted :" + this.submitted);
+        this.saveUser();
+    };
+    AdminUserCreate.prototype.saveUser = function () {
+        //Ready 
+        var _this = this;
+        console.log("AdminUserCreate : Ready SaveUser");
+        var url = "../admin/json/createuserSave";
+        this.http.post(url, this.model).subscribe(function (response) { return _this.SaveUserJsonSucess(response); }, function (error) { return _this.SaveUserJsonError(error); }, function () { return console.log("AdminUserCreate : Success saveUser !"); });
+    };
+    AdminUserCreate.prototype.SaveUserJsonSucess = function (response) {
+        //Todo
+        //Show Status
+        // window.location.href='http://www.google.com/';
+        console.log("AdminUserCreate : Ready SaveUserJsonSucess !");
+    };
+    AdminUserCreate.prototype.SaveUserJsonError = function (response) {
+        //Todo
+        console.log("AdminUserCreate : Success SaveUser Error !");
     };
     AdminUserCreate = __decorate([
         core_1.Component({

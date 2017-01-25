@@ -42,7 +42,24 @@ import { AdminChainOfCommandinitHead } from './baiwa/AdminChainOfCommandinitHead
 import { AdminChainOfCommandinitDean } from './baiwa/AdminChainOfCommandinitDean.component';//ยุง
 import { AdminWorkUser } from './baiwa/AdminWorkUser.component';//ยุง
 import { AdminUserCreate} from './baiwa/AdminUserCreate.component';//ยุง
+import { AdminUserEdit} from './baiwa/AdminUserEdit.component';//ยุง
 
+
+
+import { AdminFaculty } from './baiwa/AdminFaculty.component';//มอส
+import { AdminFacultyCreate } from './baiwa/AdminFacultyCreate.component';//มอส
+import { AdminFacultycreateDepartment } from './baiwa/AdminFacultycreateDepartment.component';//มอส
+import { AdminFacultyeditFaculty } from './baiwa/AdminFacultyeditFaculty.component';//มอส
+import { AdminFacultyEditDepartment } from './baiwa/AdminFacultyEditDepartment.component';//มอส
+
+import { AdminAcademicKPI } from './baiwa/AdminAcademicKPI.component';
+import { AdminAcademicKPIcreate } from './baiwa/AdminAcademicKPIcreate.component';
+import { AdminAcademicKPIedit } from './baiwa/AdminAcademicKPIedit.component';
+import { AdminAcademicYear } from './baiwa/AdminAcademicYear.component';
+import { AdminEvaluateRoundinit } from './baiwa/AdminEvaluateRoundinit.component';
+import { AdminAcademicYeareditDateEvaluateRound } from './baiwa/AdminAcademicYeareditDateEvaluateRound.component';
+import { AdminmarkRankinit } from './baiwa/AdminmarkRankinit.component';
+import { AdminmarkRankinitEditRound } from './baiwa/AdminmarkRankinitEditRound.component';
 
 const routes: Routes = [
 
@@ -75,10 +92,26 @@ const routes: Routes = [
     { path: 'workTypeCompareBarChart' , component:workTypeCompareBarChart},
     { path: 'AdminChainOfCommandinit' , component:AdminChainOfCommandinit},
     { path: 'AdminChainOfCommandinitPresident' , component:AdminChainOfCommandinitPresident},
-    { path: 'AdminChainOfCommandinitHead' , component:AdminChainOfCommandinitHead},
-    { path: 'AdminChainOfCommandinitDean' , component:AdminChainOfCommandinitDean},
+    { path: 'AdminChainOfCommandinitHead/:result' , component:AdminChainOfCommandinitHead},
+    { path: 'AdminChainOfCommandinitDean/:result' , component:AdminChainOfCommandinitDean},
     { path: 'AdminWorkUser' , component:AdminWorkUser},
     { path: 'AdminUserCreate' , component:AdminUserCreate},
+    { path: 'AdminUserEdit/:user' , component:AdminUserEdit},
+
+    { path: 'AdminFaculty', component: AdminFaculty },//มอส
+    { path: 'AdminFacultycreateDepartment/:Faculty_id', component: AdminFacultycreateDepartment },//มอส
+    { path: 'AdminFacultyCreate/:year', component: AdminFacultyCreate },//มอส
+    { path: 'AdminFacultyeditFaculty/:FacultyID', component: AdminFacultyeditFaculty },//มอส
+    { path: 'AdminFacultyEditDepartment/:Depart_Id', component:AdminFacultyEditDepartment },//มอส
+
+    { path: 'AdminAcademicKPI', component: AdminAcademicKPI },
+    { path: 'AdminAcademicKPIcreate', component: AdminAcademicKPIcreate },
+    { path: 'AdminAcademicKPIedit', component: AdminAcademicKPIedit },
+    { path: 'AdminAcademicYear', component: AdminAcademicYear },
+    { path: 'AdminEvaluateRoundinit', component: AdminEvaluateRoundinit },
+    { path: 'AdminAcademicYeareditDateEvaluateRound', component: AdminAcademicYeareditDateEvaluateRound },
+    { path: 'AdminmarkRankinit', component: AdminmarkRankinit },
+    { path: 'AdminmarkRankinitEditRound', component: AdminmarkRankinitEditRound },
 
 ];
 
@@ -127,6 +160,21 @@ const routes: Routes = [
         AdminChainOfCommandinitDean,
         AdminWorkUser,
         AdminUserCreate,
+        AdminUserEdit,
+        AdminFaculty,//มอส
+        AdminFacultyCreate,//มอส
+        AdminFacultycreateDepartment,//มอส
+        AdminFacultyeditFaculty,//มอส
+        AdminFacultyEditDepartment,//มอส
+        AdminAcademicKPI,//มอส
+        AdminAcademicKPIcreate,//มอส
+        AdminAcademicKPIedit,//มอส
+        AdminAcademicYear,//มอส
+        AdminEvaluateRoundinit,//มอส
+        AdminAcademicYeareditDateEvaluateRound,//มอส
+        AdminmarkRankinit,//มอส
+        AdminmarkRankinitEditRound,//มอส
+
     ],
     providers: [
         CommonService,

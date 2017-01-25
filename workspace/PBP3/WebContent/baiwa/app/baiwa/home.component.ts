@@ -6,6 +6,7 @@ import { FileSelectDirective, FileDropDirective, FileUploader } from 'ng2-file-u
 import {DomSanitizer} from '@angular/platform-browser';
 import {Observable} from 'rxjs/Rx';
 import {MaxLengthPipe} from './../maxLength.pipe';
+import { Router, ActivatedRoute, NavigationCancel  } from '@angular/router';
 declare var jQuery: any;
 
 const URL1 = 'http://localhost:8080/PBP3/pam/person/uploadPersonProfilePicture2';
@@ -35,7 +36,7 @@ export class home implements OnInit, AfterViewInit {
     public maxVal:any;
 
     public uploader: FileUploader = new FileUploader({ url: URL1 });
-    constructor(private commonService: CommonService, private http: Http, private sanitizer: DomSanitizer) {
+    constructor(private router: Router,private commonService: CommonService, private http: Http, private sanitizer: DomSanitizer) {
         this.libPath = "/PBP3/baiwa/libs/";
         this.profile = this.defaultProfile();
         this.work = this.defaultWork();
@@ -159,6 +160,10 @@ export class home implements OnInit, AfterViewInit {
     }
     public GetuserSucess(response: any) {
         this.user = response.json(JSON.stringify(response._body));
+
+        if(this.user.isAdmin==true){
+             this.router.navigate(['/AdminAcademicKPI']);
+        }
 
         this.GetPersonByAcadamy(this.user.userName, this.user.currentAcademicYear);
         this.GetRadarPlotNew(this.user.userName, this.user.currentAcademicYear, "1");

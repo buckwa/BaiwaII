@@ -11,7 +11,7 @@
     <div class="form-group row">
         <div class="pbp-header"> สายบังคับบัญชา ประจำปี {{academicYear}}
         </div>
-        <div class="pbp-header" >อธิการบดี  {{thaiName}} {{thaiSurname}}  <a href="#AdminChainOfCommandinitPresident"><span class="font-icon font-icon-cogwheel" > </span></a>
+        <div class="pbp-header" >อธิการบดี  {{thaiName}} {{thaiSurname}}  <a href="javascript:void(0);" (click)="AdminChainOfCommandinitPresident()" ><span class="font-icon font-icon-cogwheel" > </span></a>
             <span class="lsf-icon colororange" title="man"></span>
 
             <table class="table table-bordered table-hover" >
@@ -26,8 +26,8 @@
                     <td > {{item.name}} </td>
 
 
-                    <td   *ngIf="item.dean" > {{item.dean.email}} {{item.dean.thaiName}} {{item.dean.thaiSurname}} <a href="#AdminChainOfCommandinitDean"><span class="font-icon font-icon-cogwheel" > </span></a> </td>
-                    <td   *ngIf="!item.dean" > <a href="#AdminChainOfCommandinitEdit"><span class="font-icon font-icon-cogwheel" > </span></a></td>
+                    <td   *ngIf="item.dean" > {{item.dean.email}} {{item.dean.thaiName}} {{item.dean.thaiSurname}} <a href="javascript:void(0);" (click)="AdminChainOfCommandinitDean(item.facultyId)" ><span class="font-icon font-icon-cogwheel" > </span></a> </td>
+                    <td   *ngIf="!item.dean" > <a href="#" ><span class="font-icon font-icon-cogwheel" > </span></a></td>
                     <td >
                         <table *ngIf="item.departmentList"  >
                             <tr *ngFor="let items of item.departmentList;" >
@@ -35,8 +35,8 @@
                                 <td >
                                   <a href="#" data-toggle="modal"  data-target="#myModal" (click)="clickShowDepartment(items.departmentId)" >{{items.name}}</a>
                                 </td>
-                                <td  >
-                                    {{items.head.email}}{{items.head.thaiName}} {{items.head.thaiSurname}} <a href="#AdminChainOfCommandinitHead"><span class="font-icon font-icon-cogwheel" > </span></a>
+                                <td   *ngIf="items.head"  >
+                                    {{items.head.email}}{{items.head.thaiName}} {{items.head.thaiSurname}} <a href="javascript:void(0);" (click)="AdminChainOfCommandinitHead(items.departmentId)" ><span class="font-icon font-icon-cogwheel" > </span></a>
                                 </td>
                             </tr>
                         </table>

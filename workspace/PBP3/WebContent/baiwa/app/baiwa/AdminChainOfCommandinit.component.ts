@@ -1,6 +1,7 @@
 import { Component, Injectable, Input, ViewChild, OnInit, Output, EventEmitter } from '@angular/core';
 import {CommonService} from './../service/Common.service';
 import { Http, Headers, Response } from '@angular/http';
+import { Router, ActivatedRoute, NavigationCancel  } from '@angular/router';
 
 
 
@@ -21,7 +22,7 @@ export class AdminChainOfCommandinit implements OnInit {
     public department: any;
     public academicPersonList: any;
     public DepartmentName: any;
-    constructor(private http: Http) {
+    constructor(private http: Http,private router: Router) {
        
           this.facultyList = this.facultyListJson();
           this.FacultyWrapper=this.FacultyWrapperJson();
@@ -114,4 +115,20 @@ export class AdminChainOfCommandinit implements OnInit {
         console.log("GetPersonError.")
 
     }
+
+    public AdminChainOfCommandinitPresident(){
+        console.log("result : SS")
+        this.router.navigate(['/AdminChainOfCommandinitPresident']);
+    }
+
+    public AdminChainOfCommandinitDean(result: String){
+        console.log("result :",result)
+        this.router.navigate(['/AdminChainOfCommandinitDean', result]);
+    }
+    
+    public AdminChainOfCommandinitHead(result: String){
+          console.log("result :",result)
+          this.router.navigate(['/AdminChainOfCommandinitHead', result]);
+    }
+
 }

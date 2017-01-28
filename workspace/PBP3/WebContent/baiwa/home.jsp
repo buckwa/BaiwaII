@@ -28,7 +28,7 @@
 <%-- 	<link href="${contextLibs}libs/img/favicon.png" rel="icon" type="image/png">  --%>
 	<link href="${contextLibs}libs/img/favicon.ico" rel="shortcut icon"> 
     
-    
+    	<link rel="stylesheet" href="${contextLibs}libs/css/lib/clockpicker/bootstrap-clockpicker.min.css">
 	<link rel="stylesheet" href="${contextLibs}libs/css/lib/font-awesome/font-awesome.min.css">
 	<link rel="stylesheet" href="${contextLibs}libs/css/main.css">
 	
@@ -310,7 +310,10 @@
      <script src="${contextLibs}libs/js/lib/bootstrap-sweetalert/sweetalert.js"></script>
      <script type="text/javascript" src="${contextLibs}libs/editor1.5.6/js/dataTables.editor.js"></script>
 
-
+	<script src="${contextLibs}libs/js/lib/clockpicker/bootstrap-clockpicker.min.js"></script>
+	<script src="${contextLibs}libs/js/lib/clockpicker/bootstrap-clockpicker-init.js"></script>
+	<script src="${contextLibs}libs/js/lib/daterangepicker/daterangepicker.js"></script>
+	<script src="${contextLibs}libs/js/lib/bootstrap-select/bootstrap-select.min.js"></script>
 
 
 	<link rel="stylesheet" href="${contextLibs}libs/kendo/styles/kendo.common.min.css"> 

@@ -3,19 +3,19 @@
         <header class="card-header">
             ข้อมูลบุคลากร
         </header>
-      
+
         <form (ngSubmit)="onSubmit()" #AdminUserCreate="ngForm">
             <div class="card-block">
                 <div class=" form-group row">
                     <label class="col-xs-2 form-control-label">ชื่อเข้าใช้ระบบ: <span style="color: Red;">*</span> </label>
 
                     <div class="col-sm-5">
-                        
-                            <input type="text" class="form-control" [(ngModel)]="model.username" name="model.username" placeholder="ชื่อผู้เข้าใช้ระบบ">
-                            <!--<div class="form-tooltip-error sm">Password must be at least 6 characters</div>-->
-                        
+
+                        <input type="text" class="form-control" [(ngModel)]="model.username" name="model.username" placeholder="ชื่อผู้เข้าใช้ระบบ" required>
+                        <!--<div class="form-tooltip-error sm">Password must be at least 6 characters</div>-->
+     
                     </div>
-                   
+
                     <!--<small class="text-muted">Username must not be empty</small>-->
 
                 </div>
@@ -24,7 +24,7 @@
 
                     <div class="col-sm-5">
                         <p class="form-control-static">
-                            <input type="password" class="form-control" [(ngModel)]="model.password" name="password" placeholder="รหัสผ่าน">
+                            <input type="password" class="form-control" [(ngModel)]="model.password" name="password" placeholder="รหัสผ่าน" required>
                         </p>
                     </div>
 
@@ -34,8 +34,10 @@
 
                     <div class="col-sm-5">
                         <p class="form-control-static">
-                            <input type="password" class="form-control" [(ngModel)]="model.passwordConfirmation" name="passwordConfirmation" placeholder="ยืนยันรหัสผ่าน">
+                            <input type="password" class="form-control" [(ngModel)]="model.passwordConfirmation" (ngModelChange)="saverange($event)" name="passwordConfirmation" placeholder="ยืนยันรหัสผ่าน" required>
+                           
                         </p>
+                         <div class="form-tooltip-error sm" *ngIf="model.passwordConfirmation != model.password" > Password does not match the confirm password.</div>
                     </div>
 
                 </div>
@@ -44,9 +46,9 @@
 
                     <div class="col-sm-5">
                         <div class="radio">
-                            <input type="radio" [(ngModel)]="model.enabled" id="enabled" name="enabled" id="enabled-1" value="true" checked>
+                            <input type="radio" [(ngModel)]="model.enabled"  name="enabled" id="enabled-1" value="true" checked>
                             <label for="enabled-1">Active </label>
-                            <input type="radio" [(ngModel)]="model.enabled" id="enabled" name="enabled" id="enabled-2" value="false" >
+                            <input type="radio" [(ngModel)]="model.enabled"  name="enabled" id="enabled-2" value="false">
                             <label for="enabled-2">Inactive </label>
                         </div>
 
@@ -54,36 +56,43 @@
 
                 </div>
                 <!--//groupList-->
-                <div class=" form-group row"> 
-                    <label class="col-xs-2 form-control-label">กลุ่มผู้ใช้งาน :</label>
 
+                <div class=" form-group row">
+                    <label class="col-xs-2 form-control-label">กลุ่มผู้ใช้งาน :</label>
                     <div class="col-sm-5">
-                        <div class="radio"  >
-                            <div class="checkbox" *ngFor="let group of groupList ; let i=index" >
-                                <input [(ngModel)]="model.groups" name="groups"  type="checkbox" id="check{{i}}" />
-                                <label for="check" >{{group.groupName}}</label>
+
+                        <div *ngFor="let group of groupList;">
+                            <label for="check-1">
+                                <input type="checkbox"  value="{{group.groupName}}"  >
+                                {{group.groupName}}</label>
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <!--<div class=" form-group row">
+                    <label class="col-xs-2 form-control-label">ทดสอบ :</label>
+                    <div class="col-sm-5">
+                        <div class="form-group">
+                            <div class='input-group date datetimepicker-1'>
+                                <input type='text' id="abc" class="form-control" />
+                                <span class="input-group-addon">
+									<i class="font-icon font-icon-calend"></i>
+								</span>
                             </div>
                         </div>
                     </div>
-                </div>
-                
-                <!--<div class=" form-group row">
-                    <label class="col-xs-2 form-control-label">ชื่อเข้าใช้ระบบ:</label>
-
-                    <div class="col-sm-5">
-                        <p class="form-control-static">
-                            <input type="text" class="form-control" id="thaiName"  [(ngModel)]="person.thaiName" name="thaiName" placeholder="ชื่อผู้เข้าใช้ระบบ">
-                        </p>
-                    </div>
-
                 </div>-->
+
+
                 <!--Person thaiName-->
                 <div class=" form-group row">
                     <label class="col-xs-2 form-control-label">ชื่อ (ไทย):<span style="color: Red;">*</span> </label>
 
                     <div class="col-sm-5">
                         <p class="form-control-static">
-                            <input type="text" class="form-control" id="name" [(ngModel)]="person.thaiName" name="thaiName" placeholder="ชื่อ">
+                            <input type="text" class="form-control" id="thaiName" [(ngModel)]="person.thaiName" name="thaiName" placeholder="ชื่อ" required >
                         </p>
                     </div>
 
@@ -93,7 +102,7 @@
 
                     <div class="col-sm-5">
                         <p class="form-control-static">
-                            <input type="text" class="form-control" id="name" [(ngModel)]="person.thaiSurname" name="thaiSurname" placeholder="นามสกุล ">
+                            <input type="text" class="form-control" id="thaiSurname" [(ngModel)]="person.thaiSurname" name="thaiSurname" placeholder="นามสกุล " required>
                         </p>
                     </div>
 
@@ -105,7 +114,7 @@
                         <div class="radio">
                             <input type="radio" [(ngModel)]="person.sex" name="sex" id="sex-1" value="option1">
                             <label for="sex-1">ชาย </label>
-                            <input type="radio" [(ngModel)]="person.sex" name="sex" id="sex-2" value="option2" checked>
+                            <input type="radio" [(ngModel)]="person.sex" name="sex" id="sex-2" value="option2" >
                             <label for="sex-2">หญิง </label>
                         </div>
 
@@ -117,9 +126,16 @@
                     <label class="col-xs-2 form-control-label">วัน เดือน ปีเกิด:<span style="color: Red;">*</span>   </label>
 
                     <div class="col-sm-5">
-                        <p class="form-control-static">
-                            <input type="date" class="form-control"  [(ngModel)]="person.birthdateStr" name="birthdateStr" id="name" placeholder="วัน เดือน ปีเกิด ">
-                        </p>
+                        <div class="form-group">
+                            <div class='input-group date datetimepicker-1'>
+                                <input type='text'  [(ngModel)]="person.birthdateStr" name="birthdateStr" id="birthdateStr" class="form-control" placeholder="วัน เดือน ปีเกิด "
+                                required />
+                                <span class="input-group-addon">
+									<i class="font-icon font-icon-calend"></i>
+								</span>
+                                <div  ></div>
+                            </div>
+                        </div>
                     </div>
 
                 </div>
@@ -129,7 +145,7 @@
 
                     <div class="col-sm-5">
                         <p class="form-control-static">
-                            <input type="text" class="form-control" [(ngModel)]="person.rateNo" name="rateNo" id="name" placeholder="เลขที่อัตรา">
+                            <input type="text" class="form-control" [(ngModel)]="person.rateNo" name="rateNo" id="rateNo" required  placeholder="เลขที่อัตรา">
                         </p>
                     </div>
 
@@ -140,8 +156,8 @@
 
                     <div class="col-sm-5">
                         <p class="form-control-static">
-                            <select id="exampleSelect" class="form-control"  [(ngModel)]="person.employeeType" name="employeeType" id="employeeType"  >
-								<option  *ngFor="let EmployeeType of lovEmployeeTypeList ;" [value]="EmployeeType.code" selected >{{EmployeeType.name}}</option>
+                            <select class="form-control" [(ngModel)]="person.employeeType" name="employeeType" id="employeeType">
+								<option  *ngFor="let EmployeeType of lovEmployeeTypeList ;"  [value]="EmployeeType.code"  >{{EmployeeType.name}}</option>
 	
                             </select>
                         </p>
@@ -154,8 +170,8 @@
 
                     <div class="col-sm-5">
                         <p class="form-control-static">
-                            <select id="exampleSelect" class="form-control"  [(ngModel)]="person.position" name="position" >
-								<option  *ngFor="let Position of lovPositionList;" [value]="Position.code" selected >{{Position.name}}</option>
+                            <select id="position" class="form-control" [(ngModel)]="person.position" name="position">
+								<option  *ngFor="let Position of lovPositionList;"  [value]="Position.code"  >{{Position.name}}</option>
 
                         </select>
                         </p>
@@ -163,7 +179,7 @@
 
                 </div>
 
-<!--ขาดระดับ-->
+                <!--ขาดระดับ-->
 
                 <!--person.workLine-->
                 <div class=" form-group row">
@@ -171,8 +187,8 @@
 
                     <div class="col-sm-5">
                         <p class="form-control-static">
-                            <select id="exampleSelect" class="form-control" [(ngModel)]="person.workLine" name="workLine">
-								<option  *ngFor="let WorkLine of lovWorkLineList;" [value]="WorkLine.code" >{{WorkLine.name}}</option>
+                            <select id="workLine" class="form-control" [(ngModel)]="person.workLine" name="workLine">
+								<option  *ngFor="let WorkLine of lovWorkLineList;" required [value]="WorkLine.code" >{{WorkLine.name}}</option>
 
                         </select>
                         </p>
@@ -186,7 +202,7 @@
 
                     <div class="col-sm-5">
                         <p class="form-control-static">
-                            <input type="text" class="form-control" [(ngModel)]="person.workTelNo" name="workTelNo" id="name" placeholder="โทรศัพท์ที่ทำงาน ">
+                            <input type="text" class="form-control" required [(ngModel)]="person.workTelNo" name="workTelNo" id="workTelNo" placeholder="โทรศัพท์ที่ทำงาน ">
                         </p>
                     </div>
 
@@ -198,7 +214,7 @@
 
                     <div class="col-sm-5">
                         <p class="form-control-static">
-                            <input type="text" class="form-control" [(ngModel)]="person.belongTo" name="belongTo" id="name" placeholder="สังกัด ">
+                            <input type="text" class="form-control" [(ngModel)]="person.belongTo" name="belongTo" id="belongTo" placeholder="สังกัด ">
                         </p>
                     </div>
 
@@ -210,7 +226,7 @@
 
                     <div class="col-sm-5">
                         <p class="form-control-static">
-                            <select id="exampleSelect" class="form-control" [(ngModel)]="person.faculty" name="faculty" >
+                            <select id="exampleSelect" class="form-control" [(ngModel)]="person.faculty" name="faculty">
 								<option *ngFor="let Faculty of lovFacultyList;" [value]="Faculty.code" >{{Faculty.name}}</option>
 								
                         </select>
@@ -224,20 +240,29 @@
                     <label class="col-xs-2 form-control-label">วันที่เริ่มทำงานจริง:<span style="color: Red;">*</span>     </label>
 
                     <div class="col-sm-5">
-                        <p class="form-control-static">
-                            <input type="date" class="form-control" [(ngModel)]="person.workingDateStr" name="workingDateStr" id="name" placeholder="วันที่เริ่มทำงานจริง ">
-                        </p>
+                        <div class="form-group">
+                            <div class='input-group date datetimepicker-1'>
+                                <input type="text" class="form-control" required [(ngModel)]="person.workingDateStr" name="workingDateStr" id="workingDateStr" placeholder="วันที่เริ่มทำงานจริง ">
+                                <span class="input-group-addon">
+									<i class="font-icon font-icon-calend"></i>
+								</span>
+                            </div>
+                        </div>
                     </div>
-
                 </div>
                 <!--person.assignDateStr-->
                 <div class=" form-group row">
                     <label class="col-xs-2 form-control-label">วันสั่งบรรจุ: <span style="color: Red;">*</span>     </label>
 
                     <div class="col-sm-5">
-                        <p class="form-control-static">
-                            <input type="date" class="form-control" [(ngModel)]="person.assignDateStr" name="assignDateStr" id="name" placeholder="วันสั่งบรรจุ">
-                        </p>
+                        <div class="form-group">
+                            <div class='input-group date datetimepicker-1'>
+                                <input type="text" class="form-control" required [(ngModel)]="person.assignDateStr" name="assignDateStr" id="assignDateStr" placeholder="วันสั่งบรรจุ">
+                                <span class="input-group-addon">
+									<i class="font-icon font-icon-calend"></i>
+								</span>
+                            </div>
+                        </div>
                     </div>
 
                 </div>
@@ -247,9 +272,14 @@
                     <label class="col-xs-2 form-control-label">วันเกษียณอายุ:    </label>
 
                     <div class="col-sm-5">
-                        <p class="form-control-static">
-                            <input type="date" class="form-control" [(ngModel)]="person.retireDateStr" name="retireDateStr" id="name" placeholder="วันเกษียณอายุ ">
-                        </p>
+                        <div class="form-group">
+                            <div class='input-group date datetimepicker-1'>
+                                <input type="text" class="form-control" [(ngModel)]="person.retireDateStr" name="retireDateStr" id="retireDateStr" placeholder="วันเกษียณอายุ ">
+                                <span class="input-group-addon">
+									<i class="font-icon font-icon-calend"></i>
+								</span>
+                            </div>
+                        </div>
                     </div>
 
                 </div>
@@ -260,7 +290,7 @@
 
                     <div class="col-sm-5">
                         <p class="form-control-static">
-                            <select id="exampleSelect" class="form-control" [(ngModel)]="person.maxInsignia" name="maxInsignia" >
+                            <select id="exampleSelect" class="form-control" [(ngModel)]="person.maxInsignia" name="maxInsignia">
 								 <option *ngFor="let Insignia of lovInsigniaList;" [value]="Insignia.code" >{{Insignia.name}}</option>
                         </select>
                         </p>
@@ -274,7 +304,7 @@
 
                     <div class="col-sm-5">
                         <p class="form-control-static">
-                            <select id="exampleSelect" class="form-control" [(ngModel)]="person.maxEducation" name="maxEducation" >
+                            <select id="exampleSelect" class="form-control" [(ngModel)]="person.maxEducation" name="maxEducation">
 								<option *ngFor="let Education of lovEducationList;" [value]="Education.code" >{{Education.name}}</option>
 
                         </select>
@@ -298,7 +328,7 @@
 
                     <div class="col-sm-5">
                         <p class="form-control-static">
-                            <select id="exampleSelect" class="form-control" [(ngModel)]="person.marriedStatus" name="marriedStatus" >
+                            <select id="exampleSelect" class="form-control" [(ngModel)]="person.marriedStatus" name="marriedStatus">
 								<option *ngFor="let Education of lovEducationList;" [value]="Education.code" >{{Education.name}}</option>
                         </select>
                         </p>
@@ -321,7 +351,7 @@
 
                     <div class="col-sm-5">
                         <p class="form-control-static">
-                            <input type="text" class="form-control" [(ngModel)]="person.insureNo" name="insureNo" id="name" placeholder="เลขที่ กบข กสจ สปส " >
+                            <input type="text" class="form-control" [(ngModel)]="person.insureNo" name="insureNo" id="name" placeholder="เลขที่ กบข กสจ สปส ">
                         </p>
                     </div>
 
@@ -391,8 +421,10 @@
                     <div class="col-sm-5">
                         <p class="form-control-static">
                             <label class="control-label">Select File</label>
-                            <input id="input-4" name="input4[]" type="file" multiple class="file-loading form-control">
-                            <button type="button" class="btn btn-rounded btn-inline btn-warning">อัพโหลด</button>
+                            <!--path="person.fileData" id="image" type="file" cssClass="input" -->
+                            <input ng2FileSelect [uploader]="uploader" multiple type="file" multiple class="file-loading form-control" [(ngModel)]="person.fileData"
+                                name="workingStatus" (change)="onChangefile($event)">
+                            <button type="button" class="btn btn-rounded btn-inline btn-warning" (click)="uploadFileAll()" [disabled]="!uploader.getNotUploadedItems().length">อัพโหลด</button>
                         </p>
                     </div>
 
@@ -402,7 +434,8 @@
 
                     <div class="col-sm-5">
                         <p class="form-control-static">
-                            <input type="text" class="form-control" id="name" placeholder="ชื่อรูป ">
+                            <input type="text" class="form-control" id="namePhoto" placeholder="ชื่อรูป " [(ngModel)]="person.picture" name="picture"
+                                value="{{Filename}}" disabled>
                         </p>
                     </div>
 
@@ -412,7 +445,7 @@
 
                     <div class="col-sm-5">
                         <div class="form-group">
-                            <button type="submit" class="btn btn-rounded btn-inline btn-primary" >บันทึก</button>
+                            <button type="submit" class="btn btn-rounded btn-inline btn-primary">บันทึก</button>
                             <button type="reset" class="btn btn-rounded btn-inline btn-danger">ยกเลิก</button>
                         </div>
                     </div>

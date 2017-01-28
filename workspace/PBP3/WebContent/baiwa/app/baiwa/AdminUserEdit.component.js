@@ -16,6 +16,9 @@ var AdminUserEdit = (function () {
     function AdminUserEdit(http, route) {
         this.http = http;
         this.route = route;
+        this.javascript = false;
+        this.angular = false;
+        this.csharp = false;
         this.submitted = false;
         this.model = this.ModelUser();
         this.person = this.PersonUser();
@@ -23,15 +26,17 @@ var AdminUserEdit = (function () {
     }
     AdminUserEdit.prototype.ngOnInit = function () {
         var _this = this;
-        this.getCreateUserJson();
         this.route.params.subscribe(function (params) { return _this.user = params["user"]; });
         if (this.user) {
             console.log("User :", this.user);
         }
         else {
         }
+        this.getCreateUserJson();
+        this.Datetime();
     };
     AdminUserEdit.prototype.ngAfterViewInit = function () {
+        this.makeDatePicker();
     };
     AdminUserEdit.prototype.ModelUser = function () {
         return {
@@ -81,13 +86,13 @@ var AdminUserEdit = (function () {
     AdminUserEdit.prototype.getCreateUserJson = function () {
         var _this = this;
         console.log("AdminUserCreate : Ready getlistByDepartment ");
-        var url = "../admin/json/createuser";
+        var url = "../admin/json/editUser/" + this.user + "/work";
         this.http.get(url).subscribe(function (response) { return _this.GetUserJsonSucess(response); }, function (error) { return _this.GetUserJsonError(error); }, function () { return console.log("AdminUserCreate : Success getlistByDepartment !"); });
     };
     AdminUserEdit.prototype.GetUserJsonSucess = function (response) {
         console.log("AdminUserCreate : Ready GetUserJsonSucess");
         this.modelUser = response.json(JSON.stringify(response._body));
-        this.modelUser = this.modelUser[0];
+        this.modelUser = this.modelUser.resObj;
         this.model = this.modelUser;
         this.person = this.modelUser.person;
         this.groupList = this.modelUser.groupList;
@@ -102,7 +107,8 @@ var AdminUserEdit = (function () {
         this.lovWorkingStatusList = this.modelUser.person.lovWorkingStatusList;
         this.evaluateRoundList = this.modelUser.person.evaluateRoundList;
         console.log("AdminUserCreate :GetUserJsonSucess !");
-        this.getEditUserJson();
+        console.log(this.groupList);
+        //this.getEditUserJson();
     };
     AdminUserEdit.prototype.GetUserJsonError = function (response) {
         console.log("AdminUserCreate :GetUserJsonError " + response);
@@ -116,34 +122,58 @@ var AdminUserEdit = (function () {
         //Ready 
         var _this = this;
         console.log("AdminUserCreate : Ready SaveUser");
-        var url = "../admin/json/createuserSave"; //ติดไว้ก่อน
-        this.http.post(url, this.model).subscribe(function (response) { return _this.SaveUserJsonSucess(response); }, function (error) { return _this.SaveUserJsonError(error); }, function () { return console.log("AdminUserCreate : Success saveUser !"); });
+        var url = "../admin/json/editUserSave"; //ติดไว้ก่อน
+        this.http.post(url, this.modelUser).subscribe(function (response) { return _this.SaveUserJsonSucess(response); }, function (error) { return _this.SaveUserJsonError(error); }, function () { return console.log("AdminUserCreate : Success saveUser !"); });
     };
     AdminUserEdit.prototype.SaveUserJsonSucess = function (response) {
         //Todo
         //Show Status
-        window.location.href = 'http://www.google.com/';
+        alert("บันทึกเรียบร้อย !");
+        window.location.href = '#/AdminWorkUser';
         console.log("AdminUserCreate : Ready SaveUserJsonSucess !");
     };
     AdminUserEdit.prototype.SaveUserJsonError = function (response) {
         //Todo
         console.log("AdminUserCreate : Success SaveUser Error !");
     };
-    AdminUserEdit.prototype.getEditUserJson = function () {
-        var _this = this;
-        console.log("AdminUserCreate : Ready getlistByDepartment ");
-        var url = "../admin/json/editUser/" + this.user;
-        this.http.get(url).subscribe(function (response) { return _this.GetUserEditJsonSucess(response); }, function (error) { return _this.GetUserEditJsonError(error); }, function () { return console.log("AdminUserCreate : Success getlistByDepartment !"); });
-    };
-    AdminUserEdit.prototype.GetUserEditJsonSucess = function (response) {
-        console.log("AdminUserCreate : Ready GetUserJsonSucess");
-        this.modelEdit = response.json(JSON.stringify(response._body));
-    };
     AdminUserEdit.prototype.GetUserEditJsonError = function (response) {
         console.log("AdminUserCreate : Error");
     };
+    AdminUserEdit.prototype.makeDatePicker = function () {
+    };
+    AdminUserEdit.prototype.Datetime = function () {
+        jQuery("#birthdateStr").daterangepicker({
+            singleDatePicker: true,
+            showDropdowns: true,
+            locale: {
+                format: 'MM/DD/YYYY'
+            }
+        });
+        jQuery("#workingDateStr").daterangepicker({
+            singleDatePicker: true,
+            showDropdowns: true,
+            locale: {
+                format: 'MM/DD/YYYY'
+            }
+        });
+        jQuery("#assignDateStrU").daterangepicker({
+            singleDatePicker: true,
+            showDropdowns: true,
+            locale: {
+                format: 'MM/DD/YYYY'
+            }
+        });
+        jQuery("#retireDateStrU").daterangepicker({
+            singleDatePicker: true,
+            showDropdowns: true,
+            locale: {
+                format: 'MM/DD/YYYY'
+            }
+        });
+    };
     AdminUserEdit = __decorate([
         core_1.Component({
+            selector: 'input-controls',
             templateUrl: 'app/baiwa/html/AdminUserEdit.component.html'
         }), 
         __metadata('design:paramtypes', [http_1.Http, router_1.ActivatedRoute])

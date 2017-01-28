@@ -18,6 +18,7 @@ export class AdminWorkUser implements OnInit {
 
     public data: any;
     public datalist: any;
+    public page: any;
 
     public makeDataTable: any = {
         "searching": true,
@@ -37,7 +38,7 @@ export class AdminWorkUser implements OnInit {
                 data: "username",
                 className: "center",
                 "render": function (data, type, full, meta) {
-                    return '<a href="javascript:void(0);"  Action="Edit" value="' + data + '" class="editor_remove">Edit</a> / <a href="javascript:void(0);" Action="Edit" class="editor_remove">Delete</a>';
+                    return '<a href="javascript:void(0);"  Action="Edit" value="' + data + '" class="editor_remove">Edit</a> / <a href="javascript:void(0);" Action="DELETE" value="' + data + '" class="editor_remove">Delete</a>';
                 }
             }
 
@@ -61,6 +62,7 @@ export class AdminWorkUser implements OnInit {
     getTimeTableSucess(response: any) {
         this.datalist = response.json(JSON.stringify(response._body));
         this.makeDataTable.data = this.datalist[0].currentPageItem;
+        this.page = this.datalist[0];
         this.timetabletable.show();
 
     }
@@ -78,18 +80,32 @@ export class AdminWorkUser implements OnInit {
             if (ele.attr("value")) {
                 this.router.navigate(['/AdminUserEdit', ele.attr("value")]);
             }
+        } else {
+            if (ele.attr("Action") == "DELETE") {
+                if (ele.attr("value")) {
+                    this.DeleteDataUser(ele.attr("value"));
+                }
+            }
         }
     }
 
     DeleteDataUser(Username: any) {
+        this.commonService.confirm("Are you sure you want to delete?", jQuery.proxy(function (isOk: any) {
+            if (isOk) {
+                //action
+                var url = "../admin/json/deleteUser/" + Username + "/work";
+                this.http.post(url, this.page).subscribe(response => this.getTimeTableSucess(response),
+                    error => this.GetPersonError(error), () => console.log("callsevice done !"));
+                //this.router.navigate(['/AdminWorkUser']);
+                 location.reload();
+            }
+        }, this));
+
 
 
     }
 
-    UpdateDataUser(Username: any) {
 
-
-    }
 
 
 }

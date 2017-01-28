@@ -9,7 +9,7 @@ declare var jQuery: any;
 })
 
 export class barChart implements OnInit  {
-	    public json: any;
+	public json: any;
     public nameDepart: any;
     public mean1: any;
         constructor(private http: Http ) {

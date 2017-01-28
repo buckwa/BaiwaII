@@ -2,11 +2,19 @@ import { Component, OnInit, ViewChild, AfterViewInit  } from '@angular/core';
 import {CommonService} from './../service/Common.service';
 import { Http, Headers, Response } from '@angular/http';
 import { Router, ActivatedRoute, NavigationCancel  } from '@angular/router';
+declare var jQuery: any;
+
 //Dev  Amuletkill !
 @Component({
+    selector: 'input-controls',
     templateUrl: 'app/baiwa/html/AdminUserEdit.component.html'
 })
 export class AdminUserEdit {
+
+
+    javascript = false;
+    angular = false;
+    csharp = false;
 
 
     public modelUser: any;
@@ -36,8 +44,10 @@ export class AdminUserEdit {
         console.log("Sub : ", this.sub);
 
     }
+
+
     ngOnInit() {
-        this.getCreateUserJson();
+
         this.route.params.subscribe(params => this.user = params["user"]);
         if (this.user) {
             console.log("User :", this.user);
@@ -46,9 +56,13 @@ export class AdminUserEdit {
 
         }
 
+
+        this.getCreateUserJson();
+        this.Datetime();
+
     }
     ngAfterViewInit() {
-
+        this.makeDatePicker();
     }
 
     public ModelUser() {
@@ -103,7 +117,7 @@ export class AdminUserEdit {
 
     public getCreateUserJson() {
         console.log("AdminUserCreate : Ready getlistByDepartment ");
-        var url = "../admin/json/createuser";
+        var url = "../admin/json/editUser/" + this.user + "/work";
         this.http.get(url).subscribe(response => this.GetUserJsonSucess(response),
             error => this.GetUserJsonError(error), () => console.log("AdminUserCreate : Success getlistByDepartment !"));
     }
@@ -114,7 +128,7 @@ export class AdminUserEdit {
 
 
         this.modelUser = response.json(JSON.stringify(response._body));
-        this.modelUser = this.modelUser[0];
+        this.modelUser = this.modelUser.resObj;
 
         this.model = this.modelUser;
         this.person = this.modelUser.person;
@@ -132,7 +146,8 @@ export class AdminUserEdit {
         this.evaluateRoundList = this.modelUser.person.evaluateRoundList;
 
         console.log("AdminUserCreate :GetUserJsonSucess !");
-        this.getEditUserJson();
+        console.log(this.groupList);
+        //this.getEditUserJson();
     }
 
 
@@ -155,8 +170,8 @@ export class AdminUserEdit {
 
         console.log("AdminUserCreate : Ready SaveUser");
 
-        var url = "../admin/json/createuserSave";//ติดไว้ก่อน
-        this.http.post(url, this.model).subscribe(response => this.SaveUserJsonSucess(response),
+        var url = "../admin/json/editUserSave";//ติดไว้ก่อน
+        this.http.post(url, this.modelUser).subscribe(response => this.SaveUserJsonSucess(response),
             error => this.SaveUserJsonError(error), () => console.log("AdminUserCreate : Success saveUser !"));
 
 
@@ -165,7 +180,8 @@ export class AdminUserEdit {
     public SaveUserJsonSucess(response: any) {
         //Todo
         //Show Status
-        window.location.href = 'http://www.google.com/';
+        alert("บันทึกเรียบร้อย !");
+        window.location.href = '#/AdminWorkUser';
         console.log("AdminUserCreate : Ready SaveUserJsonSucess !");
     }
 
@@ -174,23 +190,65 @@ export class AdminUserEdit {
         console.log("AdminUserCreate : Success SaveUser Error !");
     }
 
-    public getEditUserJson() {
-        console.log("AdminUserCreate : Ready getlistByDepartment ");
-        var url = "../admin/json/editUser/" + this.user;
-        this.http.get(url).subscribe(response => this.GetUserEditJsonSucess(response),
-            error => this.GetUserEditJsonError(error), () => console.log("AdminUserCreate : Success getlistByDepartment !"));
 
-    }
-
-    public GetUserEditJsonSucess(response: any) {
-
-        console.log("AdminUserCreate : Ready GetUserJsonSucess");
-        this.modelEdit = response.json(JSON.stringify(response._body));
-
-    }
 
     public GetUserEditJsonError(response: any) {
         console.log("AdminUserCreate : Error");
     }
+
+
+    private makeDatePicker() {
+  
+
+     } 
+
+
+  Datetime(){
+  
+        jQuery("#birthdateStr").daterangepicker({
+        singleDatePicker: true,
+        showDropdowns: true,
+        locale: {
+            format: 'MM/DD/YYYY'
+        }
+
+        });
+
+          jQuery("#workingDateStr").daterangepicker({
+        singleDatePicker: true,
+        showDropdowns: true,
+        locale: {
+            format: 'MM/DD/YYYY'
+        }
+
+        });
+
+          jQuery("#assignDateStrU").daterangepicker({
+        singleDatePicker: true,
+        showDropdowns: true,
+        locale: {
+            format: 'MM/DD/YYYY'
+        }
+
+        });
+
+          jQuery("#retireDateStrU").daterangepicker({
+        singleDatePicker: true,
+        showDropdowns: true,
+
+        locale: {
+            format: 'MM/DD/YYYY'
+        }
+
+        });
+
+
+
+  }
+
+
+
+
+
 
 }

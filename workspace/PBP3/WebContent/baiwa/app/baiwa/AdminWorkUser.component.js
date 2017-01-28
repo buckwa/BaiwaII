@@ -35,7 +35,7 @@ var AdminWorkUser = (function () {
                     data: "username",
                     className: "center",
                     "render": function (data, type, full, meta) {
-                        return '<a href="javascript:void(0);"  Action="Edit" value="' + data + '" class="editor_remove">Edit</a> / <a href="javascript:void(0);" Action="Edit" class="editor_remove">Delete</a>';
+                        return '<a href="javascript:void(0);"  Action="Edit" value="' + data + '" class="editor_remove">Edit</a> / <a href="javascript:void(0);" Action="DELETE" value="' + data + '" class="editor_remove">Delete</a>';
                     }
                 }
             ]
@@ -52,6 +52,7 @@ var AdminWorkUser = (function () {
     AdminWorkUser.prototype.getTimeTableSucess = function (response) {
         this.datalist = response.json(JSON.stringify(response._body));
         this.makeDataTable.data = this.datalist[0].currentPageItem;
+        this.page = this.datalist[0];
         this.timetabletable.show();
     };
     AdminWorkUser.prototype.GetPersonError = function (error) {
@@ -66,10 +67,25 @@ var AdminWorkUser = (function () {
                 this.router.navigate(['/AdminUserEdit', ele.attr("value")]);
             }
         }
+        else {
+            if (ele.attr("Action") == "DELETE") {
+                if (ele.attr("value")) {
+                    this.DeleteDataUser(ele.attr("value"));
+                }
+            }
+        }
     };
     AdminWorkUser.prototype.DeleteDataUser = function (Username) {
-    };
-    AdminWorkUser.prototype.UpdateDataUser = function (Username) {
+        this.commonService.confirm("Are you sure you want to delete?", jQuery.proxy(function (isOk) {
+            var _this = this;
+            if (isOk) {
+                //action
+                var url = "../admin/json/deleteUser/" + Username + "/work";
+                this.http.post(url, this.page).subscribe(function (response) { return _this.getTimeTableSucess(response); }, function (error) { return _this.GetPersonError(error); }, function () { return console.log("callsevice done !"); });
+                //this.router.navigate(['/AdminWorkUser']);
+                location.reload();
+            }
+        }, this));
     };
     __decorate([
         core_1.ViewChild('personTimeTable'), 

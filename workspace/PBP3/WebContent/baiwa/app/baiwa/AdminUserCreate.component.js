@@ -10,16 +10,24 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('@angular/core');
 var http_1 = require('@angular/http');
+var ng2_file_upload_1 = require('ng2-file-upload');
+var URL1 = 'http://localhost:8080/PBP3/admin/json/UploadFile_Profile';
 //Dev  Amuletkill !
 var AdminUserCreate = (function () {
     function AdminUserCreate(http) {
         this.http = http;
+        this.uploader = new ng2_file_upload_1.FileUploader({ url: URL1 });
+        this.CheckPass = false;
         this.submitted = false;
         this.model = this.ModelUser();
         this.person = this.PersonUser();
     }
     AdminUserCreate.prototype.ngOnInit = function () {
         this.getCreateUserJson();
+        this.Datetime();
+        this.uploader.onBuildItemForm = function (fileItem, form) {
+            form.append('academicKPIId', "1");
+        };
     };
     AdminUserCreate.prototype.ngAfterViewInit = function () {
     };
@@ -66,6 +74,7 @@ var AdminUserCreate = (function () {
             "oldWorklineCode": "",
             "worklineCode": "",
             "worklineName": "",
+            "picture": ""
         };
     };
     AdminUserCreate.prototype.getCreateUserJson = function () {
@@ -98,25 +107,107 @@ var AdminUserCreate = (function () {
     };
     AdminUserCreate.prototype.onSubmit = function () {
         this.submitted = true;
+        // if (this.model.password == this.model.passwordConfirmation) {
+        //     this.CheckPass = true;
+        // }
+        // if (this.CheckPass) {
+        // }
         console.log("GetUserSubmitted :" + this.submitted);
         this.saveUser();
+    };
+    AdminUserCreate.prototype.saverange = function (newValue) {
+        console.log(newValue);
+        //   this.range = newValue;
+        //   this.Platform.ready().then(() => {
+        //      this.rootRef.child("users").child(this.UserID).child('range').set(this.range)
+        //   })
     };
     AdminUserCreate.prototype.saveUser = function () {
         //Ready 
         var _this = this;
+        var temp = jQuery('input[type="checkbox"]:checked');
+        for (var i = 0; i < temp.length; i++) {
+            // console.log("Tamp",temp[i].value);
+            for (var j = 0; j < this.groupList.length; j++) {
+                if (temp[i].value == this.groupList[j].groupName) {
+                    this.groupList[j].enable = true;
+                }
+            }
+        }
+        this.model.groupList = this.groupList;
+        var birthdateStr = jQuery("#birthdateStr").val();
+        var workingDateStr = jQuery("#workingDateStr").val();
+        var retireDateStr = jQuery("#retireDateStr").val();
+        var assignDateStr = jQuery("#assignDateStr").val();
+        this.model.person.birthdateStr = birthdateStr;
+        this.model.person.workingDateStr = workingDateStr;
+        this.model.person.retireDateStr = retireDateStr;
+        this.model.person.assignDateStr = assignDateStr;
         console.log("AdminUserCreate : Ready SaveUser");
+        this.model.person = this.person;
         var url = "../admin/json/createuserSave";
         this.http.post(url, this.model).subscribe(function (response) { return _this.SaveUserJsonSucess(response); }, function (error) { return _this.SaveUserJsonError(error); }, function () { return console.log("AdminUserCreate : Success saveUser !"); });
     };
     AdminUserCreate.prototype.SaveUserJsonSucess = function (response) {
         //Todo
-        //Show Status
-        // window.location.href='http://www.google.com/';
+        alert("บันทึกเรียบร้อย !");
+        window.location.href = '#/AdminWorkUser';
         console.log("AdminUserCreate : Ready SaveUserJsonSucess !");
     };
     AdminUserCreate.prototype.SaveUserJsonError = function (response) {
         //Todo
         console.log("AdminUserCreate : Success SaveUser Error !");
+    };
+    AdminUserCreate.prototype.uploadFileAll = function () {
+        this.uploader.uploadAll();
+        if (this.uploader.uploadAll()) {
+            console.log("uploadsucess1");
+        }
+        console.log("uploadsucess2");
+    };
+    AdminUserCreate.prototype.onChangefile = function (event) {
+        var eventObj = event;
+        var target = eventObj.target;
+        var files = target.files;
+        this.file = files[0];
+        //this.person.fileData =this.file;
+        this.person.picture = this.file.name;
+        this.Filename = this.file.name;
+        console.log(this.file);
+    };
+    AdminUserCreate.prototype.Datetime = function () {
+        jQuery("#birthdateStr").daterangepicker({
+            singleDatePicker: true,
+            showDropdowns: true,
+            // timePicker: true,
+            locale: {
+                format: 'DD/MM/YYYY'
+            }
+        });
+        jQuery("#workingDateStr").daterangepicker({
+            singleDatePicker: true,
+            showDropdowns: true,
+            // timePicker: true,
+            locale: {
+                format: 'DD/MM/YYYY'
+            }
+        });
+        jQuery("#assignDateStr").daterangepicker({
+            singleDatePicker: true,
+            showDropdowns: true,
+            // timePicker: true,
+            locale: {
+                format: 'DD/MM/YYYY'
+            }
+        });
+        jQuery("#retireDateStr").daterangepicker({
+            singleDatePicker: true,
+            showDropdowns: true,
+            // timePicker: true,
+            locale: {
+                format: 'DD/MM/YYYY'
+            }
+        });
     };
     AdminUserCreate = __decorate([
         core_1.Component({

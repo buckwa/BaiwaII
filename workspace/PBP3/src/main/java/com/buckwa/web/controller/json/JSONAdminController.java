@@ -1,14 +1,17 @@
 package com.buckwa.web.controller.json;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,6 +19,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
@@ -26,6 +31,7 @@ import com.buckwa.domain.common.BuckWaResponse;
 import com.buckwa.domain.common.PagingBean;
 import com.buckwa.domain.pam.Person;
 import com.buckwa.domain.pbp.AcademicKPI;
+import com.buckwa.domain.pbp.AcademicKPIAttachFile;
 import com.buckwa.domain.pbp.AcademicPerson;
 import com.buckwa.domain.pbp.ChainOfCommandWrapper;
 import com.buckwa.domain.pbp.Department;
@@ -39,10 +45,13 @@ import com.buckwa.domain.validator.pbp.FacultyValidator;
 import com.buckwa.service.intf.CommonService;
 import com.buckwa.service.intf.admin.AdminUserService;
 import com.buckwa.service.intf.pbp.FacultyService;
+import com.buckwa.service.intf.util.PathUtil;
 import com.buckwa.util.BeanUtils;
 import com.buckwa.util.BuckWaConstants;
 import com.buckwa.util.BuckWaDateUtils;
 import com.buckwa.util.BuckWaUtils;
+import com.buckwa.util.FileUtils;
+import com.buckwa.util.PAMConstants;
 import com.buckwa.util.school.SchoolUtil;
 import com.buckwa.web.util.AcademicYearUtil;
 
@@ -70,6 +79,9 @@ public class JSONAdminController {
 	
 	@Autowired
 	private CommonService commonService;
+	
+	@Autowired
+    private PathUtil pathUtil;
 
 	
 	@RequestMapping(value = "/getFacultyWrapper", method = RequestMethod.GET, headers = "Accept=application/json")
@@ -459,8 +471,8 @@ public class JSONAdminController {
 	}		
 	
 
-	@RequestMapping(value="/editUser/{username}", method = RequestMethod.GET , headers = "Accept=application/json")
-	public ResponseObj initEdit(@PathVariable String username) {	
+	@RequestMapping(value="/editUser/{username}/{work}", method = RequestMethod.GET , headers = "Accept=application/json")
+	public ResponseObj initEdit(@PathVariable String username,@PathVariable String work) {	
 		logger.info(" Start  ");
 		//username ="kppaiboo@kmitl.ac.th"; //อย่าลืม
 		ModelAndView mav = new ModelAndView();
@@ -493,48 +505,54 @@ public class JSONAdminController {
 	}	
 	
 	
-//
-//	@RequestMapping(value="edit.htm", method = RequestMethod.POST)
-//	public ModelAndView submitEdit(@ModelAttribute User user, BindingResult result) {		
-//		logger.info(" Start  ");
-//		ModelAndView mav = new ModelAndView();
-//		try{
-//			 
-//			new UserValidator().validate(user, result);			
-//			if (result.hasErrors()) {
-//				logger.info("  Validate Error");
-//				mav.setViewName("userEdit");
-//			}
-//			else {
-//				logger.info("  Validate Success , Do create User ");
-//				
-//				BuckWaUser buckwaUser = BuckWaUtils.getUserFromContext();
-//				
-//				user.getPerson().setBirthdate(BuckWaDateUtils.parseDate(user.getPerson().getBirthdateStr()));
-//				user.getPerson().setWorkingDate(BuckWaDateUtils.parseDate(user.getPerson().getWorkingDateStr()));
-//				user.getPerson().setAssignDate(BuckWaDateUtils.parseDate(user.getPerson().getAssignDateStr()));
-//				user.getPerson().setRetireDate(BuckWaDateUtils.parseDate(user.getPerson().getRetireDateStr()));
-//				user.getPerson().setUpdateBy(buckwaUser.getUsername());
-//				
-//				BuckWaRequest request = new BuckWaRequest();
-//				request.put("user", user);
-//				BuckWaResponse response = userService.updateUser(request);
-//				if(response.getStatus()==BuckWaConstants.SUCCESS){					
-//					mav.addObject("group", user);
-//					mav.addObject("successCode", response.getSuccessCode()); 
-//					//mav = gotoList(mav);
-//				}else {					 
-//					mav.addObject("errorCode", response.getErrorCode()); 
-//					mav.setViewName("userEdit");
-//				}
-//			}
-//			
-//		}catch(Exception ex){
-//			ex.printStackTrace();
-//			mav.addObject("errorCode", "E001"); 
-//		}
-//		return mav;
-//	}	
+
+	@RequestMapping(value="/editUserSave", method = RequestMethod.POST)
+	public ResponseObj submitEdit(@RequestBody  User user, BindingResult result) {		
+		logger.info(" Start  ");
+		ResponseObj resp = new ResponseObj();
+		ModelAndView mav = new ModelAndView();
+		try{
+			 
+			new UserValidator().validate(user, result);			
+			if (result.hasErrors()) {
+				logger.info("  Validate Error");
+				mav.setViewName("userEdit");
+			}
+			else {
+				logger.info("  Validate Success , Do create User ");
+				
+				BuckWaUser buckwaUser = BuckWaUtils.getUserFromContext();
+				
+				user.getPerson().setBirthdate(BuckWaDateUtils.parseDate(user.getPerson().getBirthdateStr()));
+				user.getPerson().setWorkingDate(BuckWaDateUtils.parseDate(user.getPerson().getWorkingDateStr()));
+				user.getPerson().setAssignDate(BuckWaDateUtils.parseDate(user.getPerson().getAssignDateStr()));
+				user.getPerson().setRetireDate(BuckWaDateUtils.parseDate(user.getPerson().getRetireDateStr()));
+				user.getPerson().setUpdateBy(UserLoginUtil.getCurrentUserLogin());
+				
+				BuckWaRequest request = new BuckWaRequest();
+				request.put("user", user);
+				BuckWaResponse response = userService.updateUser(request);
+				if(response.getStatus()==BuckWaConstants.SUCCESS){					
+					mav.addObject("group", user);
+					mav.addObject("successCode", response.getSuccessCode()); 
+					
+					resp.setStatus("1");
+					resp.setDescription(response.getErrorCode());
+					
+					
+					//mav = gotoList(mav);
+				}else {					 
+					mav.addObject("errorCode", response.getErrorCode()); 
+					mav.setViewName("userEdit");
+				}
+			}
+			
+		}catch(Exception ex){
+			ex.printStackTrace();
+			mav.addObject("errorCode", "E001"); 
+		}
+		return resp;
+	}	
 
 	
 	@RequestMapping(value = "/getFaculty", method = RequestMethod.GET, headers = "Accept=application/json")
@@ -914,6 +932,223 @@ public class JSONAdminController {
 		}
 		return resObj;
 	}	
+	
+	
+	@RequestMapping(value="deleteUser/{username}/{work}", method = RequestMethod.POST)
+	public ResponseObjPaging delete(@PathVariable("username") String username,@PathVariable("work") String work,HttpServletRequest httpRequest ,@RequestBody PagingBean bean) {
+		logger.info(" Start  ");
+		ResponseObjPaging resObj =new ResponseObjPaging();
+		ModelAndView mav = new ModelAndView();		
+		mav.addObject(BuckWaConstants.PAGE_SELECT, BuckWaConstants.ADMIN_INIT);
+		try{
+			mav.setViewName("userList");
+			BuckWaRequest request = new BuckWaRequest();
+			request.put("username", username);	
+			BuckWaResponse response = userService.delete(request);
+			
+			if(response.getStatus()==BuckWaConstants.SUCCESS){					
+				mav.addObject("successCode","S004"); 		 				
+			}else {	
+				mav.addObject("errorCode", response.getErrorCode()); 
+				mav.addObject("pagingBean", bean);	
+			}	
+			
+			// Search Again
+			int offset = ServletRequestUtils.getIntParameter(httpRequest, "pager.offset", 0);	
+			bean.setOffset(offset);		 
+			request.put("pagingBean", bean);		
+			bean.put("user", new User());
+			 response = userService.getUserByOffset(request);
+			if(response.getStatus()==BuckWaConstants.SUCCESS){			
+				PagingBean beanReturn = (PagingBean)response.getResObj("pagingBean");
+				mav.addObject("pagingBean", beanReturn);	
+				resObj.setResPagingBean(beanReturn);
+				resObj.setResObj(response);
+			}else {				
+				mav.addObject("errorCode", response.getErrorCode()); 
+			}
+			
+		}catch(Exception ex){
+			ex.printStackTrace();
+			mav.addObject("errorCode", "E001"); 
+		}
+	
+		return resObj;
+	}	
+	
+	
+//	@RequestMapping(value="uploadFile", method = RequestMethod.POST)
+//	
+//	public ResponseObjPaging uploadFile(MultipartHttpServletRequest request, BindingResult result, HttpServletRequest httpRequest) {
+//	//public ResponseObjPaging uploadFile(@RequestBody User user, BindingResult result, HttpServletRequest httpRequest) {
+//			 
+//		logger.info("---- Wait For Uploading File ----");
+//		ResponseObjPaging resObj =new ResponseObjPaging();
+//		ModelAndView mav = new ModelAndView();
+//		mav.addObject(BuckWaConstants.PAGE_SELECT, BuckWaConstants.ADMIN_INIT);
+//		
+//		try {			 			 
+//			Iterator<String> itr = request.getFileNames();
+//			MultipartFile originalfile = request.getFile(itr.next());
+//			//MultipartFile originalfile = user.getPerson().getFileData();
+//			
+//			if (originalfile!=null&&originalfile.getSize() > 0) {
+//				logger.info(" originalfile size:"+originalfile.getSize()+" File Name:"+ originalfile.getOriginalFilename() );
+//				if (originalfile.getSize() > pathUtil.getMaximumImageUploadSize()) {
+//					logger.info(" Error File Size: " + originalfile.getSize()+" Greater than :"+pathUtil.getMaximumImageUploadSize());					 
+//					mav.addObject("errorCode", BuckWaConstants.MSGCODE_FILE_TOO_LARGE);
+//				}
+//				else {		
+//					
+//					//  For Upload File >>>>
+//					String uploadPath = PAMConstants.rbApp.getString("profile.picture.dir");
+//					logger.info("## File Size :" + originalfile.getSize());
+//					logger.info("## File Name Original :" + originalfile.getOriginalFilename());
+//					logger.info("## Upload Path :" + uploadPath);
+//					
+//					String fileUpload = uploadPath + originalfile.getOriginalFilename();
+//					
+//					logger.info("## File Name + Path :" + fileUpload);
+//					
+//					int step = 1 ; 
+//					boolean isnext = true;
+//					
+//					while(isnext){
+//						switch (step) {
+//						case 1 :
+//							logger.info("Step : "+step+" >>  Create New Upload Path");
+//							isnext = FileUtils.createDirectoryIfNotExist(uploadPath);
+//							if(isnext){
+//								step++; 
+//								continue;
+//							}else{
+//								isnext = false;
+//							}
+//						case 2 :
+//							logger.info("Step : "+step+" >> Save File To Server directory path");
+//							
+//							//boolean isFileNameExist = fileLocationService.checkFileNameServerExist(fileName,BuckWaConstants.WORKPERSON_TABLE);
+//							//if(!isFileNameExist){
+//								isnext = FileUtils.saveFileToDirectory(originalfile, fileUpload);
+//								if(isnext){
+//									step++; 
+//									continue;
+//								}else{
+//									isnext = false;
+//								}
+//							//}else{
+//							//	isnext = false;
+//							//	mav.addObject("errorCode", BuckWaConstants.MSGCODE_FILE_NAME_EXIST); 
+//							//}
+//						case 3 :
+//							//user.getPerson().setPicture(originalfile.getOriginalFilename());
+//							resObj.setResObj(originalfile.getOriginalFilename());
+//						default:
+//							isnext = false;
+//						}
+//					}
+//				}
+//			}
+//			else {
+//				mav.addObject("errorCode", BuckWaConstants.MSGCODE_SELECT_FILE); 
+//			}			 			
+//		}catch(Exception ex){
+//			ex.printStackTrace();
+//			mav.addObject("errorCode", BuckWaConstants.ERROR_E001); 
+//		}
+//		
+////		if (null == user.getPerson().getPersonId()) {
+////			mav.setViewName("userCreate");
+////		}
+////		else {
+////			mav.setViewName("userEdit");
+////		}
+//		
+//		return resObj;
+//	}
+//	
+	
+	
+	@RequestMapping(value = "/UploadFile_Profile", method = RequestMethod.POST)
+	public ResponseObjPaging jsonImportwork_filePOST(MultipartHttpServletRequest request, HttpServletResponse response) {
+		
+		logger.info("---- Wait For Uploading File ----");
+		ResponseObjPaging resObj =new ResponseObjPaging();
+		ModelAndView mav = new ModelAndView();
+		mav.addObject(BuckWaConstants.PAGE_SELECT, BuckWaConstants.ADMIN_INIT);
+		
+		try {			 			 
+			Iterator<String> itr = request.getFileNames();
+			MultipartFile originalfile = request.getFile(itr.next());
+			//MultipartFile originalfile = user.getPerson().getFileData();
+			
+			if (originalfile!=null&&originalfile.getSize() > 0) {
+				logger.info(" originalfile size:"+originalfile.getSize()+" File Name:"+ originalfile.getOriginalFilename() );
+					
+					
+					//  For Upload File >>>>
+					String uploadPath = PAMConstants.rbApp.getString("profile.picture.dir");
+					logger.info("## File Size :" + originalfile.getSize());
+					logger.info("## File Name Original :" + originalfile.getOriginalFilename());
+					logger.info("## Upload Path :" + uploadPath);
+					
+					String fileUpload = uploadPath + originalfile.getOriginalFilename();
+					
+					logger.info("## File Name + Path :" + fileUpload);
+					
+					int step = 1 ; 
+					boolean isnext = true;
+					
+					while(isnext){
+						switch (step) {
+						case 1 :
+							logger.info("Step : "+step+" >>  Create New Upload Path");
+							isnext = FileUtils.createDirectoryIfNotExist(uploadPath);
+							if(isnext){
+								step++; 
+								continue;
+							}else{
+								isnext = false;
+							}
+						case 2 :
+							logger.info("Step : "+step+" >> Save File To Server directory path");
+							
+							//boolean isFileNameExist = fileLocationService.checkFileNameServerExist(fileName,BuckWaConstants.WORKPERSON_TABLE);
+							//if(!isFileNameExist){
+								isnext = FileUtils.saveFileToDirectory(originalfile, fileUpload);
+								if(isnext){
+									step++; 
+									continue;
+								}else{
+									isnext = false;
+								}
+							//}else{
+							//	isnext = false;
+							//	mav.addObject("errorCode", BuckWaConstants.MSGCODE_FILE_NAME_EXIST); 
+							//}
+						case 3 :
+							logger.info("Step : "+step+" >>Set");
+							//user.getPerson().setPicture(originalfile.getOriginalFilename());
+							resObj.setResObj(originalfile.getOriginalFilename());
+						default:
+							isnext = false;
+						}
+					}
+				
+			}
+			else {
+				mav.addObject("errorCode", BuckWaConstants.MSGCODE_SELECT_FILE); 
+			}			 			
+		}catch(Exception ex){
+			ex.printStackTrace();
+			mav.addObject("errorCode", BuckWaConstants.ERROR_E001); 
+		}
+		
+
+		
+		return resObj;
+	}
+	
 	
 	@RequestMapping(value="/TestOject", method = RequestMethod.GET, headers = "Accept=application/json")
 	public List<Object> TestOject() {

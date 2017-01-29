@@ -105,13 +105,14 @@ const routes: Routes = [
     { path: 'AdminFacultyEditDepartment/:Depart_Id', component:AdminFacultyEditDepartment },//มอส
 
     { path: 'AdminAcademicKPI', component: AdminAcademicKPI },
-    { path: 'AdminAcademicKPIcreate', component: AdminAcademicKPIcreate },
-    { path: 'AdminAcademicKPIedit', component: AdminAcademicKPIedit },
+    { path: 'AdminAcademicKPIcreate/:workTypeCode/:academicYear/:facultyCode', component: AdminAcademicKPIcreate },
+    { path: 'AdminAcademicKPIedit/:academicKPIId', component: AdminAcademicKPIedit },
     { path: 'AdminAcademicYear', component: AdminAcademicYear },
     { path: 'AdminEvaluateRoundinit', component: AdminEvaluateRoundinit },
     { path: 'AdminAcademicYeareditDateEvaluateRound', component: AdminAcademicYeareditDateEvaluateRound },
     { path: 'AdminmarkRankinit', component: AdminmarkRankinit },
     { path: 'AdminmarkRankinitEditRound', component: AdminmarkRankinitEditRound },
+
 
 ];
 

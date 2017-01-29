@@ -10,9 +10,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
@@ -28,6 +31,7 @@ import com.buckwa.domain.pbp.Faculty;
 import com.buckwa.domain.pbp.PBPWorkType;
 import com.buckwa.domain.pbp.PBPWorkTypeSub;
 import com.buckwa.domain.pbp.PBPWorkTypeWrapper;
+import com.buckwa.domain.pbp3.ResponseObj;
 import com.buckwa.service.intf.pbp.AcademicKPIService;
 import com.buckwa.service.intf.pbp.AcademicUnitService;
 import com.buckwa.service.intf.pbp.FacultyService;
@@ -37,6 +41,8 @@ import com.buckwa.util.BuckWaConstants;
 import com.buckwa.util.BuckWaUtils;
 import com.buckwa.util.school.SchoolUtil;
 import com.buckwa.web.util.AcademicYearUtil;
+
+import baiwa.util.UserLoginUtil;
 
 @Controller
 @RequestMapping("/admin/pbp/academicKPI")
@@ -61,9 +67,11 @@ public class AcademicKPIController {
 	private FacultyService facultyService;	
 	
 	
-	@RequestMapping(value="init.htm", method = RequestMethod.GET)
-	public ModelAndView initList() {
+	@RequestMapping(value="init", method = RequestMethod.GET)
+	@ResponseBody
+	public ResponseObj initList() {
 		logger.info(" Start  ");
+		ResponseObj resObj =new ResponseObj();
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("academicKPIList");
 		try{
@@ -74,8 +82,8 @@ public class AcademicKPIController {
 			
 			
 			// Get Faculty Code
-			BuckWaUser buckwaUser =BuckWaUtils.getUserFromContext();
-			String facultyCode = buckwaUser.getFacultyCode();
+			//BuckWaUser buckwaUser =BuckWaUtils.getUserFromContext();
+			String facultyCode = UserLoginUtil.getCurrentFacultyCode();
 			String facultyCodeSelect ="";
 			if(facultyCode==null||facultyCode.trim().length()==0){
 				facultyCodeSelect ="01";
@@ -126,7 +134,9 @@ public class AcademicKPIController {
 					
 						academicKPIWrapper.setFacultyCodeSelect(facultyCodeSelect);
 					academicKPIWrapper.setWorkTypeName(workTypeName);	
-					mav.addObject("academicKPIWrapper", academicKPIWrapper);	
+					//mav.addObject("academicKPIWrapper", academicKPIWrapper);
+					resObj.setResObj(academicKPIWrapper);
+					resObj.setStatus("1");
 				}
 
 			}	 
@@ -136,14 +146,17 @@ public class AcademicKPIController {
 			mav.addObject("errorCode", "E001"); 
 		}
 		logger.info(" end view: "+mav.getViewName());
-		return mav;
+		return resObj;
 	}	
-	@RequestMapping(value="search.htm", method = RequestMethod.POST)
-	public ModelAndView search(@RequestParam("workTypeCode") String workTypeCode,@RequestParam("academicYear") String academicYear,@RequestParam("facultyCodeSelect") String facultyCodeSelect) {
+	
+	@RequestMapping(value="search/{workTypeCode}/{academicYear}/{facultyCodeSelect}", method = RequestMethod.GET)
+	@ResponseBody
+	public ResponseObj search(@PathVariable("workTypeCode") String workTypeCode,@PathVariable("academicYear") String academicYear,@PathVariable("facultyCodeSelect") String facultyCodeSelect) {
  
 		logger.info(" Start  academicYear:"+academicYear+"  workTypeCode:"+workTypeCode+" facultyCodeSelect:"+facultyCodeSelect);
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("academicKPIList");
+		ResponseObj resObj =new ResponseObj();
 		try{
 			BuckWaRequest request = new BuckWaRequest();
 			 
@@ -197,21 +210,23 @@ public class AcademicKPIController {
 						}					
 					}		
 				mav.addObject("academicKPIWrapper", academicKPIWrapper);	
+				resObj.setResObj(academicKPIWrapper);
 			 
 			}
 		}catch(Exception ex){
 			ex.printStackTrace();
 			mav.addObject("errorCode", "E001"); 
 		}
-		return mav;
+		return resObj;
 	}	
 	
 	
 	@RequestMapping(value="listByWorktype.htm", method = RequestMethod.GET)
-	public ModelAndView listByWorktype(@RequestParam("workTypeCode") String workTypeCode,@RequestParam("academicYear") String academicYear,@RequestParam("facultyCode") String facultyCode) {
+	public ResponseObj listByWorktype(@RequestParam("workTypeCode") String workTypeCode,@RequestParam("academicYear") String academicYear,@RequestParam("facultyCode") String facultyCode) {
 		logger.info(" Start  ");
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("academicKPIList");
+		ResponseObj resObj =new ResponseObj();
 		try{
 			BuckWaRequest request = new BuckWaRequest();
 			 
@@ -274,18 +289,21 @@ public class AcademicKPIController {
 					 
 				}				 
 				mav.addObject("academicKPIWrapper", academicKPIWrapper);	
+				resObj.setResObj(academicKPIWrapper);
 			}	 
 
 		}catch(Exception ex){
 			ex.printStackTrace();
 			mav.addObject("errorCode", "E001"); 
 		}
-		return mav;
+		return resObj;
 	}	
 	
-	@RequestMapping(value="create.htm", method = RequestMethod.GET)
-	public ModelAndView createKPI(@RequestParam("workTypeCode") String workTypeCode,@RequestParam("academicYear") String academicYear,@RequestParam("facultyCode") String facultyCode) {
+	@RequestMapping(value="create.htm/{workTypeCode}/{academicYear}/{facultyCode}", method = RequestMethod.GET)
+	@ResponseBody
+	public ResponseObj createKPI(@PathVariable("workTypeCode") String workTypeCode,@PathVariable("academicYear") String academicYear,@PathVariable("facultyCode") String facultyCode) {
 		logger.info(" Start  ");
+		ResponseObj resObj =new ResponseObj();
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("academicKPICreate");
 		try{
@@ -302,7 +320,7 @@ public class AcademicKPIController {
 			if(response.getStatus()==BuckWaConstants.SUCCESS){	
 				AcademicUnitWrapper academicUnitWrapper = (AcademicUnitWrapper)response.getResObj("academicUnitWrapper");
 				academicKPI.setAcademicUnitList(academicUnitWrapper.getAcademicUnitList());
-	 
+				resObj.setResObj(academicKPI);
 			}	 
            
 
@@ -310,26 +328,30 @@ public class AcademicKPIController {
 			ex.printStackTrace();
 			mav.addObject("errorCode", "E001"); 
 		}
-		return mav;
+		return resObj;
 	}	
 	
-	
-	@RequestMapping(value="create.htm", method = RequestMethod.POST)
-	public ModelAndView createKPI(HttpServletRequest httpRequest,@ModelAttribute AcademicKPI academicKPI, BindingResult result) {
+	//ติดไว้ก่อน
+	@RequestMapping(value="create", method = RequestMethod.POST)
+	@ResponseBody
+	public ResponseObj createKPI(@RequestBody AcademicKPI academicKPI, BindingResult result) {
 		logger.info(" Start   academicKPI:"+BeanUtils.getBeanString(academicKPI));
 		ModelAndView mav = new ModelAndView();
+		ResponseObj resObj =new ResponseObj();
 		mav.setViewName("academicKPICreate");
 		try{
 			
 			BuckWaRequest request = new BuckWaRequest(); 
 			request.put("academicKPI",academicKPI);
 			BuckWaResponse response = academicKPIService.create(request);
+			
 			if(response.getStatus()==BuckWaConstants.SUCCESS){ 
-		 
-				String url = httpRequest.getContextPath() + "/admin/pbp/academicKPI/listByWorktype.htm?workTypeCode="+academicKPI.getWorkTypeCode()+"&academicYear="+academicKPI.getAcademicYear()+"&facultyCode="+academicKPI.getFacultyCode();
-				logger.info(" Redirect URL:"+url);
-				 
-				mav.setView(new RedirectView(url));
+				resObj.setResObj(response);
+				
+//				String url = httpRequest.getContextPath() + "/admin/pbp/academicKPI/listByWorktype.htm?workTypeCode="+academicKPI.getWorkTypeCode()+"&academicYear="+academicKPI.getAcademicYear()+"&facultyCode="+academicKPI.getFacultyCode();
+//				logger.info(" Redirect URL:"+url);
+//				 
+//				mav.setView(new RedirectView(url));
 			}	
             
 
@@ -337,14 +359,16 @@ public class AcademicKPIController {
 			ex.printStackTrace();
 			mav.addObject("errorCode", "E001"); 
 		}
-		return mav;
+		return resObj;
 	}
 	
 	
-	@RequestMapping(value="edit.htm", method = RequestMethod.GET)
-	public ModelAndView editKPI(@RequestParam("academicKPIId") String academicKPIId ) {
+	@RequestMapping(value="edit/{academicKPIId}", method = RequestMethod.GET)
+	@ResponseBody
+	public ResponseObj editKPI(@PathVariable("academicKPIId") String academicKPIId ) {
 		logger.info(" Start  ");
 		ModelAndView mav = new ModelAndView();
+		ResponseObj resObj =new ResponseObj();
 		mav.setViewName("academicKPIEdit");
 		try{
 		 
@@ -363,19 +387,22 @@ public class AcademicKPIController {
 			}	
 	 
 			mav.addObject("academicKPI",academicKPI);
-	 
+			resObj.setResObj(academicKPI);
 		}catch(Exception ex){
 			ex.printStackTrace();
 			mav.addObject("errorCode", "E001"); 
 		}
-		return mav;
+		return resObj;
 	}	
 	
-	@RequestMapping(value="edit.htm", method = RequestMethod.POST)
-	public ModelAndView editKPI(HttpServletRequest httpRequest,@ModelAttribute AcademicKPI academicKPI, BindingResult result) {
+	@RequestMapping(value="edit", method = RequestMethod.POST)
+	@ResponseBody
+	public ResponseObj editKPI(@RequestBody AcademicKPI academicKPI, BindingResult result) {
 //		logger.info(" Start   editKPI:"+BeanUtils.getBeanString(academicKPI));
 		ModelAndView mav = new ModelAndView();
+		ResponseObj resObj =new ResponseObj();
 		mav.setViewName("academicKPIEdit");
+		
 		try{
 			
 			BuckWaRequest request = new BuckWaRequest(); 
@@ -385,10 +412,11 @@ public class AcademicKPIController {
 				request.put("academicKPIId",academicKPI.getAcademicKPIId());
 				 response = academicKPIService.getById(request);
 				 academicKPI = (AcademicKPI)response.getResObj("academicKPI");
-					String url = httpRequest.getContextPath() + "/admin/pbp/academicKPI/listByWorktype.htm?workTypeCode="+academicKPI.getWorkTypeCode()+"&academicYear="+academicKPI.getAcademicYear()+"&facultyCode="+academicKPI.getFacultyCode();
-				logger.info(" Redirect URL:"+url);
+//					String url = httpRequest.getContextPath() + "/admin/pbp/academicKPI/listByWorktype.htm?workTypeCode="+academicKPI.getWorkTypeCode()+"&academicYear="+academicKPI.getAcademicYear()+"&facultyCode="+academicKPI.getFacultyCode();
+//				logger.info(" Redirect URL:"+url);
 				 
-				mav.setView(new RedirectView(url));
+//				mav.setView(new RedirectView(url));
+				 resObj.setResObj(academicKPI);
 			}	
             
 
@@ -396,39 +424,43 @@ public class AcademicKPIController {
 			ex.printStackTrace();
 			mav.addObject("errorCode", "E001"); 
 		}
-		return mav;
+		return resObj;
 	}	
 	
-	@RequestMapping(value="delete.htm", method = RequestMethod.GET)
-	public ModelAndView deleteKPI(HttpServletRequest httpRequest,@RequestParam("academicKPIId") String academicKPIId ,@RequestParam("workTypeCode") String workTypeCode,@RequestParam("academicYear") String academicYear,@RequestParam("facultyCode") String facultyCode) {
+	@RequestMapping(value="delete.htm/{academicKPIId}", method = RequestMethod.GET)
+	@ResponseBody
+	public ResponseObj deleteKPI(@PathVariable("academicKPIId") String academicKPIId ) {
 		logger.info(" Start  ");
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("academicKPIList");
+		ResponseObj resObj =new ResponseObj();
 		try{
 		 
 			BuckWaRequest request = new BuckWaRequest(); 
 			 
 			request.put("academicKPIId",academicKPIId);
 			BuckWaResponse response = academicKPIService.deleteById(request); 
-			String url = httpRequest.getContextPath() + "/admin/pbp/academicKPI/listByWorktype.htm?workTypeCode="+workTypeCode+"&academicYear="+academicYear+"&facultyCode="+facultyCode;
-			logger.info(" Redirect URL:"+url);
+//			String url = httpRequest.getContextPath() + "/admin/pbp/academicKPI/listByWorktype.htm?workTypeCode="+workTypeCode+"&academicYear="+academicYear+"&facultyCode="+facultyCode;
+//			logger.info(" Redirect URL:"+url);
 			 
-			mav.setView(new RedirectView(url));
-		 
+			//mav.setView(new RedirectView(url));
+			resObj.setResObj(response);
 	 
 		}catch(Exception ex){
 			ex.printStackTrace();
 			mav.addObject("errorCode", "E001"); 
 		}
-		return mav;
+		return resObj;
 	}	
 	
 	
-	@RequestMapping(value="addNewAttribute.htm", method = RequestMethod.GET)
-	public ModelAndView addNewAttribute(HttpServletRequest httpRequest,@RequestParam("academicKPIId") String academicKPIId ) {
+	@RequestMapping(value="addNewAttribute.htm/{academicKPIId}", method = RequestMethod.GET)
+	@ResponseBody
+	public ResponseObj addNewAttribute(@PathVariable("academicKPIId") String academicKPIId ) {
 		logger.info(" Start  ");
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("academicKPIEdit");
+		ResponseObj resObj =new ResponseObj();
 		try{
 		 
 			BuckWaRequest request = new BuckWaRequest();  
@@ -463,34 +495,28 @@ public class AcademicKPIController {
 
 			}	
 	 
-			mav.addObject("academicKPI",academicKPI); 
-			String url = httpRequest.getContextPath() + "/admin/pbp/academicKPI/edit.htm?academicKPIId="+academicKPIId;
-			logger.info(" Redirect URL:"+url);
-			 
-			mav.setView(new RedirectView(url));
+			resObj.setResObj(academicKPI);
 		}catch(Exception ex){
 			ex.printStackTrace();
 			mav.addObject("errorCode", "E001"); 
 		}
-		return mav;
+		return resObj;
 	}
  
-	@RequestMapping(value="deleteAttribute.htm", method = RequestMethod.GET)
-	public ModelAndView deleteAttribute(@RequestParam("academicKPIAtributeId") String academicKPIAtributeId,@RequestParam("academicKPIId") String academicKPIId ) {
+	@RequestMapping(value="deleteAttribute.htm/{academicKPIAtributeId}/{academicKPIId}", method = RequestMethod.GET)
+	@ResponseBody
+	public ResponseObj deleteAttribute(@PathVariable("academicKPIAtributeId") String academicKPIAtributeId,@PathVariable("academicKPIId") String academicKPIId ) {
 		logger.info(" Start  ");
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("academicKPIEdit");
+		ResponseObj resObj =new ResponseObj();
 		try{
 		 
 			BuckWaRequest request = new BuckWaRequest(); 
 			
-			
-			
 			request.put("academicKPIAtributeId",academicKPIAtributeId);
 			BuckWaResponse response = academicKPIService.deleteAttributeById(request);
 			
-			
-			 
 			request.put("academicKPIId",academicKPIId);
 			 response = academicKPIService.getById(request);
 			AcademicKPI academicKPI = (AcademicKPI)response.getResObj("academicKPI");
@@ -500,16 +526,17 @@ public class AcademicKPIController {
 			if(response.getStatus()==BuckWaConstants.SUCCESS){	
 				AcademicUnitWrapper academicUnitWrapper = (AcademicUnitWrapper)response.getResObj("academicUnitWrapper");
 				academicKPI.setAcademicUnitList(academicUnitWrapper.getAcademicUnitList());
-	 
+			
 			}	
-	 
+			
 			mav.addObject("academicKPI",academicKPI);
+			resObj.setResObj(academicKPI);
 	 
 		}catch(Exception ex){
 			ex.printStackTrace();
 			mav.addObject("errorCode", "E001"); 
 		}
-		return mav;
+		return resObj;
 	}	
 	
 	

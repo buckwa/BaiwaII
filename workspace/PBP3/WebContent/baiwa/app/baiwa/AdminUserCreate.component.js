@@ -107,24 +107,15 @@ var AdminUserCreate = (function () {
     };
     AdminUserCreate.prototype.onSubmit = function () {
         this.submitted = true;
-        // if (this.model.password == this.model.passwordConfirmation) {
-        //     this.CheckPass = true;
-        // }
-        // if (this.CheckPass) {
-        // }
         console.log("GetUserSubmitted :" + this.submitted);
         this.saveUser();
     };
     AdminUserCreate.prototype.saverange = function (newValue) {
         console.log(newValue);
-        //   this.range = newValue;
-        //   this.Platform.ready().then(() => {
-        //      this.rootRef.child("users").child(this.UserID).child('range').set(this.range)
-        //   })
     };
     AdminUserCreate.prototype.saveUser = function () {
-        //Ready 
         var _this = this;
+        //Ready 
         var temp = jQuery('input[type="checkbox"]:checked');
         for (var i = 0; i < temp.length; i++) {
             // console.log("Tamp",temp[i].value);

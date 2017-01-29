@@ -146,57 +146,40 @@ export class AdminUserCreate {
 
         this.submitted = true;
 
-        // if (this.model.password == this.model.passwordConfirmation) {
-        //     this.CheckPass = true;
-        // }
 
-        // if (this.CheckPass) {
-
-        // }
-
-
-            console.log("GetUserSubmitted :" + this.submitted);
-            this.saveUser();
+        console.log("GetUserSubmitted :" + this.submitted);
+        this.saveUser();
 
     }
 
     saverange(newValue) {
-
-
         console.log(newValue);
-        //   this.range = newValue;
-        //   this.Platform.ready().then(() => {
-        //      this.rootRef.child("users").child(this.UserID).child('range').set(this.range)
-        //   })
     }
 
     public saveUser() {
         //Ready 
+        let temp: any[] = jQuery('input[type="checkbox"]:checked');
 
+        for (var i = 0; i < temp.length; i++) {
+            // console.log("Tamp",temp[i].value);
+            for (var j = 0; j < this.groupList.length; j++) {
+                if (temp[i].value == this.groupList[j].groupName) {
+                    this.groupList[j].enable = true;
 
-        let temp:any[] = jQuery('input[type="checkbox"]:checked');
-
-        for(var i =0;i<temp.length ;i++){
-                // console.log("Tamp",temp[i].value);
-                for(var j =0;j < this.groupList.length ;j++){
-                    if( temp[i].value == this.groupList[j].groupName){
-                        this.groupList[j].enable = true;
-
-                    }
                 }
+            }
         }
         this.model.groupList = this.groupList;
 
         var birthdateStr = jQuery("#birthdateStr").val();
         var workingDateStr = jQuery("#workingDateStr").val();
         var retireDateStr = jQuery("#retireDateStr").val();
-         var assignDateStr = jQuery("#assignDateStr").val();
+        var assignDateStr = jQuery("#assignDateStr").val();
 
         this.model.person.birthdateStr = birthdateStr;
         this.model.person.workingDateStr = workingDateStr;
         this.model.person.retireDateStr = retireDateStr;
         this.model.person.assignDateStr = assignDateStr;
-
 
         console.log("AdminUserCreate : Ready SaveUser");
 

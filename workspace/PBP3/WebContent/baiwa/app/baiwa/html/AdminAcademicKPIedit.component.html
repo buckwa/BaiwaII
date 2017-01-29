@@ -1,300 +1,336 @@
 <div style="width: 100%">
-<div class="col-md-4 col-lg-12">
-    <section id="blockui-element-container-dark" class="card">
-        <div class="card-block display-table" style="min-height: auto">
-<section class="card card-default">
-    <header class="card-header" style="text-align: center"><i class="font-icon font-icon-cogwheel"></i> แก้ไขภาระงาน </header>
-<div class="card-block">
-    <br>
-    <div class="row">
-        <div class="col-md-7 col-md-offset-3">
-            <div class="form-group">
-                <label for="inputEmail3" class="col-sm-4 control-label">ชื่อภาระงาน :</label>
-                <div class="col-sm-6">
-                    <input type="text" class="form-control" placeholder="Text input">
-                </div>
-            </div>
-        </div>
-    </div>
-    <br>
-    <div class="row">
-        <div class="col-md-7 col-md-offset-3">
-            <div class="form-group ">
-                <label for="inputPassword3" class="col-sm-4 control-label">คะแนน :</label>
-                <div class="col-sm-6">
-                    <input type="text" class="form-control" placeholder="Text input">
-                </div>
-            </div>
-        </div>
-    </div>
-    <br>
-    <div class="row">
-        <div class="col-md-7 col-md-offset-3">
-            <div class="form-group">
-                <label for="inputEmail3" class="col-sm-4 control-label">หน่วย :</label>
-                <div class="col-sm-6">
-                    <select class="form-control">
-                                <option>ชั่วโมงปฏิบัติการ(หน่วยกิจ)</option>
-                                <option>ชั่วโมงปฏิบัติการ</option>
-                                <option>สัปดาห์</option>
-                                </select>
-                </div>
-            </div>
-        </div>
-    </div>
-    <br>
-    <div class="row">
-        <div class="col-md-7 col-md-offset-3">
-            <div class="form-group">
-                <label for="inputEmail3" class="col-sm-4 control-label">ตัวคูณ :</label>
-                <div class="col-sm-6">
-                    <input type="text" class="form-control" placeholder="Text input">
-                </div>
-            </div>
-        </div>
-    </div>
-    <br>
-    <div class="row">
-        <div class="col-md-7 col-md-offset-3">
-            <div class="form-group">
-                <label for="inputEmail3" class="col-sm-4 control-label">ลำดับการจัดเรียง :</label>
-                <div class="col-sm-6">
-                    <input type="text" class="form-control" placeholder="Text input">
-                </div>
-            </div>
-        </div>
-    </div>
-    <br>
-    <div class="row">
-        <div class="col-md-7 col-md-offset-3">
-            <div class="form-group">
-                <label for="inputEmail3" class="col-sm-4 control-label">หมายเหตุ :</label>
-                <div class="col-sm-6">
-                    <input type="text" class="form-control" placeholder="Text input">
-                </div>
-            </div>
-        </div>
-    </div>
-    <br>
-    <div class="row">
-        <div class="col-md-7 col-md-offset-3">
-            <div class="form-group">
-                <label for="inputEmail3" class="col-sm-4 control-label">ดึงข้อมูลอัตโนมัติจากสำนักทะเบียน :</label>
-                <div class="col-sm-6">
-                    <input type="checkbox" value="">
-                </div>
-            </div>
-        </div>
-    </div>
-    <br>
-</div>
-</section>
+    <div class="col-md-4 col-lg-12">
+        <section id="blockui-element-container-dark" class="card">
+            <div class="card-block display-table" style="min-height: auto">
+                <section class="card card-default">
+                    <header class="card-header" style="text-align: center"><i class="font-icon font-icon-cogwheel"></i> แก้ไขภาระงาน </header>
+                    <div class="card-block">
+                        <br>
+                        <form (ngSubmit)="onSubmit()">
+                            <div class="row">
+                                <div class="col-md-7 col-md-offset-3">
+                                    <div class="form-group">
+                                        <label for="inputEmail3" class="col-sm-4 control-label">ชื่อภาระงาน :</label>
+                                        <div class="col-sm-6">
+                                            <input type="text" [(ngModel)]="CreateAtti.name" name="name" class="form-control" placeholder="ชื่อภาระงาน ">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-md-7 col-md-offset-3">
+                                    <div class="form-group ">
+                                        <label for="inputPassword3" class="col-sm-4 control-label">คะแนน :</label>
+                                        <div class="col-sm-6">
+                                            <input type="text" [(ngModel)]="CreateAtti.mark" name="mark" class="form-control" placeholder="คะแนน">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-md-7 col-md-offset-3">
+                                    <div class="form-group">
+                                        <label for="inputEmail3" class="col-sm-4 control-label">หน่วย :</label>
+                                        <div class="col-sm-6">
+                                            <select class="form-control" [(ngModel)]="CreateAtti.unitCode" name="unitCode">
+                                                <option  *ngFor="let item of academicUnitList;" [value]="item.code"  >{{item.name}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-md-7 col-md-offset-3">
+                                    <div class="form-group">
+                                        <label for="inputEmail3" class="col-sm-4 control-label">ตัวคูณ :</label>
+                                        <div class="col-sm-6">
+                                            <input type="text" class="form-control" [(ngModel)]="CreateAtti.multiplyValue" name="multiplyValue" class="form-control"
+                                                placeholder="ตัวคูณ">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-md-7 col-md-offset-3">
+                                    <div class="form-group">
+                                        <label for="inputEmail3" class="col-sm-4 control-label">ลำดับการจัดเรียง :</label>
+                                        <div class="col-sm-6">
+                                            <input type="text" class="form-control" [(ngModel)]="CreateAtti.orderNo" name="orderNo" class="form-control" placeholder="ลำดับการจัดเรียง">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-md-7 col-md-offset-3">
+                                    <div class="form-group">
+                                        <label for="inputEmail3" class="col-sm-4 control-label">หมายเหตุ :</label>
+                                        <div class="col-sm-6">
+                                            <input type="text" class="form-control" [(ngModel)]="CreateAtti.description" name="description" class="form-control" placeholder="หมายเหตุ ">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-md-7 col-md-offset-3">
+                                    <div class="form-group">
+                                        <label for="inputEmail3" class="col-sm-4 control-label">ดึงข้อมูลอัตโนมัติจากสำนักทะเบียน :</label>
+                                        <div class="col-sm-6">
+                                            <input type="checkbox">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                        </form>
+                    </div>
+                </section>
 
-<section class="card card-default">
-    <header class="card-header">รูปแบบการกรอกข้อมูลผู้ใช้งาน</header>
-    <div class="card-block">
-        <table id="table-edit" class="table table-bordered table-hover">
-            <thead>
-                <tr>
-                    <th>ชื่อ
-                        <div class="fa-hover col-md-3 col-md-offset-2"></div>
-                    </th>
-                    <th>ใช้ในการคำนวณ
-                        <div class="fa-hover col-md-3 col-md-offset-2"></div>
-                    </th>
-                    <th>Validate Number
-                        <div class="fa-hover col-md-3 col-md-offset-2"></div>
-                    </th>
-                    <th>ลบ
-                        <div class="fa-hover col-md-3 col-md-offset-2"></div>
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>
-                        <div class="row">
-                            <div class="col-md-6"><input type="text" class="form-control" placeholder="Text input"></div>
-                        </div>
+                <section class="card card-default">
+                    <header class="card-header">รูปแบบการกรอกข้อมูลผู้ใช้งาน <button (click)="addNewAttribute();">เพิ่ม</button> </header>
 
-                    </td>
-                    <td>
-                        <div class="row">
-                            <div class="col-md-6"><input type="checkbox" value=""></div>
-                        </div>
+                    <div class="card-block">
+                        <table id="table-edit" class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>ชื่อ
+                                        <div class="fa-hover col-md-3 col-md-offset-2"></div>
+                                    </th>
+                                    <th>ใช้ในการคำนวณ
+                                        <div class="fa-hover col-md-3 col-md-offset-2"></div>
+                                    </th>
+                                    <th>Validate Number
+                                        <div class="fa-hover col-md-3 col-md-offset-2"></div>
+                                    </th>
+                                    <th>ลบ
+                                        <div class="fa-hover col-md-3 col-md-offset-2"></div>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of academicKPIAttributeList;">
+                                    <td>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <input type="text" class="form-control" [ngModelOptions]="{standalone: true}" name="{{item.name}}" [(ngModel)]="item.name">
+                                            </div>
+                                        </div>
 
-                    </td>
-                    <td>
+                                    </td>
+                                    <td>
+                                        <div class="row">
+                                            <div class="col-md-6"><input type="checkbox" [ngModel]="item.isCalculate == 'Y'" (ngModelChange)="item.isCalculate=$event?'Y':'N'"></div>
+                                        </div>
+
+                                    </td>
+                                    <td>
+                                        <div class="row">
+                                            <div class="col-md-6"><input type="checkbox" [ngModel]="item.isValidateNumber == 'Y'" (ngModelChange)="item.isValidateNumber=$event?'Y':'N'"></div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="row">
+                                            <div class="col-md-1 col-md-offset-4">
+                                                <a class="btn btn-inline btn-danger font-icon font-icon-trash" role="button" (click)="deleteAttribute(item.academicKPIAtributeId,item.academicKPIId);"></a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <!--{{academicKPIAttributeList|json}}-->
+                    </div>
+                </section>
+
+                <section class="card card-default">
+                    <header class="card-header"> กำหนดคุณสมบัติ (เฉพาะด้านวิชาการ)</header>
+                    <div class="card-block">
+                        <table id="table-edit" class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th style="width: 30%; text-align: center">คุณสมบัติ</th>
+                                    <th style="width: 50%; text-align: center">ค่า</th>
+                                    <th style="text-align: center">Remark</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <div class="row">
+                                            <div class="col-md-6">ระดับ</div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="row">
+                                            <div class="col-xs-6 col-md-6">
+
+                                                <select class="form-control" [(ngModel)]="CreateAtti.specialP1" name="specialP1">
+                                             
+                                                    <option [value]="1">ป.ตรี </option>
+                                                    <option [value]="2">ป.โท -เอก</option>
+                                      
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                1: ป.ตรี <br>2:โท-เอก
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>
+                                        <div class="row">
+                                            <div class="col-md-6">ประเภทวิชา</div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="row">
+                                            <div class="col-xs-6 col-md-6">
+                                                <select class="form-control" [(ngModel)]="CreateAtti.specialP2" name="specialP2">
+                                              
+                                                    <option value="ท">ทฤษฎี</option>
+                                                    <option value="ป">ปฏิบัติ</option>
+                                                 </select>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                ท:ทฤษฎี <br> ป: ปฎิบัติ
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>
+                                        <div class="row">
+                                            <div class="col-md-6">ผู้ช่วยสอน (TA)</div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="row">
+                                            <div class="col-xs-6 col-md-6">
+                                                <select class="form-control" [(ngModel)]="CreateAtti.specialP3" name="specialP3">
+                                        
+                                                        <option value="1">มี</option>
+                                                        <option value="2">ไม่มี</option>
+                                                </select></div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                1: มี <br> 2: ไม่มี
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>
+                                        <div class="row">
+                                            <div class="col-md-6">Project Base Learning</div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="row">
+                                            <div class="col-xs-6 col-md-6">
+                                                <select class="form-control" [(ngModel)]="CreateAtti.specialP5" name="specialP5">                   
+                                                    <option value="1">ใช่</option>
+                                                    <option value="2">ไม่ใช่</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                1: ใช่ <br> 2: ไม่ใช่
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>
+                                        <div class="row">
+                                            <div class="col-md-6">ใช้จำนวนนักศึกษาคำนวณหรือไม่</div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="row">
+                                            <div class="col-xs-6 col-md-6">
+                                                <select class="form-control" [(ngModel)]="CreateAtti.specialP4" name="specialP4">
+                                                    <option value="1">ใช่ในการคำนวณ</option>
+                                                    <option value="2">ไม่ใช่ในการคำนวณ</option>
+                                                 </select>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                1:ใช้ในการคำนวณ <br> 2: ไม่ใช้ในการคำนวณ
+
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>
+                                        <div class="row">
+                                            <div class="col-md-6">จำนวนนักศึกษาระหว่าง</div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="row">
+                                            <div class="col-xs-8 col-md-8">
+                                                <div class="row">
+                                                    <div class="col-md-3">
+                                                        <input type="text" class="form-control" [(ngModel)]="CreateAtti.totalStudentFrom" name="totalStudentFrom">
+                                                        <label>ถึง</label>
+                                                        <input type="text" class="form-control" [(ngModel)]="CreateAtti.totalStudentTo" name="totalStudentTo">
+                                                    </div>
+
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                กำหนดช่วงจำนวนนักศึกษากรณ๊ใช้นักศึกษาในการคำนวณคะแนน
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <br>
                         <div class="row">
-                            <div class="col-md-6"><input type="checkbox" value=""></div>
-                        </div>
-                    </td>
-                    <td>
-                        <div class="row">
-                            <div class="col-md-1 col-md-offset-4">
-                                <a class="btn btn-inline btn-danger font-icon font-icon-trash" href="" role="button"></a>
+                            <div class="col-md-12" style="text-align: center">
+                                <button class="btn btn-inline btn-primary" type="submit" (click)="onSubmit();">บันทึก</button>
+                                <button class="btn btn-inline btn-primary" type="reset">ย้อนกลับ</button>
                             </div>
                         </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-</section>
-
-<section class="card card-default">
-    <header class="card-header"> กำหนดคุณสมบัติ (เฉพาะด้านวิชาการ)</header>
-    <div class="card-block">
-        <table id="table-edit" class="table table-bordered table-hover">
-            <thead>
-                <tr>
-                    <th style="width: 30%; text-align: center">คุณสมบัติ</th>
-<th style="width: 50%; text-align: center">ค่า</th>
-<th style="text-align: center">Remark</th>
-</tr>
-</thead>
-<tbody>
-    <tr>
-        <td>
-            <div class="row">
-                <div class="col-md-6">ระดับ</div>
-            </div>
-        </td>
-        <td>
-            <div class="row">
-                <div class="col-xs-6 col-md-6"><select class="form-control">
-  <option>ป.ตรี</option>
-  <option>ป.โท</option>
-  <option>ป.เอก</option>
-</select></div>
-            </div>
-        </td>
-        <td>
-            <div class="row">
-                <div class="col-md-4"></div>
-            </div>
-        </td>
-    </tr>
-
-    <tr>
-        <td>
-            <div class="row">
-                <div class="col-md-6">ประเภทวิชา</div>
-            </div>
-        </td>
-        <td>
-            <div class="row">
-                <div class="col-xs-6 col-md-6"><select class="form-control">
-  <option>ทฤษฎี</option>
-  <option>ปฏิบัติ</option>
-</select></div>
-            </div>
-        </td>
-        <td>
-            <div class="row">
-                <div class="col-md-4"></div>
-            </div>
-        </td>
-    </tr>
-
-    <tr>
-        <td>
-            <div class="row">
-                <div class="col-md-6">ผู้ช่วยสอน (TA)</div>
-            </div>
-        </td>
-        <td>
-            <div class="row">
-                <div class="col-xs-6 col-md-6"><select class="form-control">
-  <option>มี</option>
-  <option>ไม่มี</option>
-</select></div>
-            </div>
-        </td>
-        <td>
-            <div class="row">
-                <div class="col-md-6"></div>
-            </div>
-        </td>
-    </tr>
-
-    <tr>
-        <td>
-            <div class="row">
-                <div class="col-md-6">Project Base Learning</div>
-            </div>
-        </td>
-        <td>
-            <div class="row">
-                <div class="col-xs-6 col-md-6"><select class="form-control">
-  <option>ใช่</option>
-  <option>ไม่ใช่</option>
-</select></div>
-            </div>
-        </td>
-        <td>
-            <div class="row">
-                <div class="col-md-4"></div>
-            </div>
-        </td>
-    </tr>
-
-    <tr>
-        <td>
-            <div class="row">
-                <div class="col-md-6">ใช้จำนวนนักศึกษาคำนวณหรือไม่</div>
-            </div>
-        </td>
-        <td>
-            <div class="row">
-                <div class="col-xs-6 col-md-6"><select class="form-control">
-  <option>ใช่ในการคำนวณ</option>
-  <option>ไม่ใช่ในการคำนวณ</option>
-</select></div>
-            </div>
-        </td>
-        <td>
-            <div class="row">
-                <div class="col-md-4"></div>
-            </div>
-        </td>
-    </tr>
-
-    <tr>
-        <td>
-            <div class="row">
-                <div class="col-md-6">จำนวนนักศึกษาระหว่าง</div>
-            </div>
-        </td>
-        <td>
-            <div class="row">
-                <div class="col-xs-8 col-md-8">
-                    <div class="row">
-                        <div class="col-md-3"><input type="text" class="form-control" placeholder="Text input"><input type="text" class="form-control" placeholder="Text input"></div>
-                        <label>ถึง</label>
-
                     </div>
-                </div>
+                </section>
             </div>
-        </td>
-        <td>
-            <div class="row">
-                <div class="col-md-4"></div>
-            </div>
-        </td>
-    </tr>
-</tbody>
-</table>
-<br>
-<div class="row">
-    <div class="col-md-12" style="text-align: center">
-<button class="btn btn-inline btn-primary" type="submit">บันทึก</button>
-<button class="btn btn-inline btn-primary" type="submit">ย้อนกลับ</button>
-</div>
-</div>
-</div>
-</section>
-</div>
-</section>
-</div>
+        </section>
+    </div>
 </div>

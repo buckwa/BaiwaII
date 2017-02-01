@@ -373,17 +373,17 @@ public class PersonProfileDaoImpl implements PersonProfileDao {
 	
 	
 	private static final String SQL_UPDATE_PERSON = 
-		" UPDATE person " +
+		" UPDATE person_pbp " +
 		" SET thai_name = ?, " +
 		"     thai_surname = ?, " +
 		"     citizen_id = ?, " +
 		"     sex = ?, " +
-		"     birthdate = ?, " +
+		"     birth_date  = ?, " +
 		"     rate_no = ?, " +
 		"     employee_type = ?, " +
 		"     position = ?, " +
 		"     level = ?, " +
-		"     work_line = ?, " +
+		"     workline_code = ?, " +
 		"     salary = ?, " +
 		"     work_tel_no = ?, " +
 		"     belong_to = ?, " +
@@ -400,7 +400,7 @@ public class PersonProfileDaoImpl implements PersonProfileDao {
 		"     fund = ?, " +
 		"     address = ?, " +
 		"     zip_code = ?, " +
-		"     tel_no = ?, " +
+		"     work_tel_no = ?, " +
 		"     picture = ?, " +
 		"     update_by = ?, " +
 		"     update_date = CURRENT_TIMESTAMP " +

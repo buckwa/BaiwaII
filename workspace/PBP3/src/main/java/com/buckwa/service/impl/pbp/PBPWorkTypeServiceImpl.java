@@ -150,6 +150,16 @@ public class PBPWorkTypeServiceImpl implements PBPWorkTypeService {
 			String employeeType = (String)request.get("employeeType");
 			String facultyCode = (String)request.get("facultyCode");
 			
+
+			if(employeeType.equalsIgnoreCase("ข้าราชการ")){
+				employeeType ="1";
+				
+			}
+			else{
+				employeeType ="2";
+			}
+			
+			
 			PBPWorkTypeWrapper pBPWorkTypeWrapper= ( PBPWorkTypeWrapper)pBPWorkTypeDao.getCalculateByAcademicYear(academicYear,userName,round,employeeType,facultyCode);
 		 
 			 response.addResponse("pBPWorkTypeWrapper",pBPWorkTypeWrapper);

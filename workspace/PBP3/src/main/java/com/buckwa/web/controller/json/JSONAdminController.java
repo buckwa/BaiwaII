@@ -348,22 +348,22 @@ public class JSONAdminController {
 	
 	
 	@RequestMapping(value="/GetUserlist", method = RequestMethod.GET , headers = "Accept=application/json")
-	public List<PagingBean> init() {
+	public ResponseObjPaging init() {
 		logger.info(" Start  ");
 		ModelAndView mav = new ModelAndView();
 //		mav.addObject(BuckWaConstants.PAGE_SELECT, BuckWaConstants.ADMIN_INIT);
 //		mav =gotoList(mav);
-		List<PagingBean> returnList = gotoList(mav);
+		ResponseObjPaging returnList = gotoList(mav);
 		return returnList;
 	}
 	
-	private List<PagingBean> gotoList(ModelAndView mav){
+	private ResponseObjPaging gotoList(ModelAndView mav){
 		//mav.setViewName("userList");		
 		User user = new User();		
 		PagingBean bean = new PagingBean();		
 		//mav.addObjectPagingBean("pagingBean", bean);	
 		mav.addObject("user", user);	
-		List<PagingBean> returnList = new ArrayList<PagingBean>();
+		ResponseObjPaging returnList = new ResponseObjPaging();
 		PagingBean beanReturn = null ;
 		try{
 		
@@ -376,10 +376,12 @@ public class JSONAdminController {
 		BuckWaRequest request = new BuckWaRequest();
 		request.put("pagingBean", bean);		
 		bean.put("user", user);
+		returnList.setResObj(user);
 		BuckWaResponse response = userService.getUserByOffset(request);
 		if(response.getStatus()==BuckWaConstants.SUCCESS){			
 			beanReturn = (PagingBean)response.getResObj("pagingBean");
-			mav.addObject("pagingBean", beanReturn);				
+			mav.addObject("pagingBean", beanReturn);	
+			returnList.setResPagingBean(beanReturn);
 		}else {				
 			mav.addObject("errorCode", response.getErrorCode()); 
 		}
@@ -387,13 +389,49 @@ public class JSONAdminController {
 			ex.printStackTrace();
 			mav.addObject("errorCode", "E001"); 
 		}
-		returnList.add(beanReturn);
+		//returnList.add(beanReturn);
 		
 
 		return returnList;
 	}
 	
 	//เพิ่ม ข้อมูลบุคลากร
+	
+	@RequestMapping(value="searchUser", method = RequestMethod.POST )
+	public ResponseObjPaging search(@RequestBody User user) {
+		logger.info(" Start  ");
+		ResponseObjPaging returnList = new ResponseObjPaging();		
+
+		try{			
+			PagingBean bean = new PagingBean();
+			
+			bean.setOffset(0);		
+			
+			BuckWaRequest request = new BuckWaRequest();
+			request.put("pagingBean", bean);		
+			bean.put("user", user);
+			returnList.setResObj(user);
+			BuckWaResponse response = userService.getUserByOffset(request);
+			if(response.getStatus()==BuckWaConstants.SUCCESS){			
+				PagingBean beanReturn = (PagingBean)response.getResObj("pagingBean");
+				
+
+				returnList.setResPagingBean(beanReturn);
+				
+			}else {				
+				
+			}						
+		}catch(Exception ex){
+			ex.printStackTrace();
+			
+		}
+		return returnList;
+	}
+	
+	
+	
+	
+	
 	
 
 	//เพิ่ม ข้อมูลบุคลากร List 	
@@ -440,12 +478,13 @@ public class JSONAdminController {
 				logger.info("  Validate Success , Do create User ");
 				
 				BuckWaUser buckwaUser = BuckWaUtils.getUserFromContext();
-				
+				String academicYear =schoolUtil.getCurrentAcademicYear();
 				user.getPerson().setBirthdate(BuckWaDateUtils.parseDate(user.getPerson().getBirthdateStr()));
 				user.getPerson().setWorkingDate(BuckWaDateUtils.parseDate(user.getPerson().getWorkingDateStr()));
 				user.getPerson().setAssignDate(BuckWaDateUtils.parseDate(user.getPerson().getAssignDateStr()));
 				user.getPerson().setRetireDate(BuckWaDateUtils.parseDate(user.getPerson().getRetireDateStr()));
 				user.getPerson().setEmail(user.getUsername());
+				user.getPerson().setAcademicYear(academicYear);
 				user.getPerson().setCreateBy(UserLoginUtil.getCurrentUserLogin());
 				user.getPerson().setUpdateBy(UserLoginUtil.getCurrentUserLogin());
 				
@@ -469,6 +508,8 @@ public class JSONAdminController {
 		}
 		return resp;
 	}		
+	
+
 	
 
 	@RequestMapping(value="/editUser/{username}/{work}", method = RequestMethod.GET , headers = "Accept=application/json")

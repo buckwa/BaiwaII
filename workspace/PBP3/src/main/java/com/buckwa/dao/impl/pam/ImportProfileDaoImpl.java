@@ -41,24 +41,24 @@ public class ImportProfileDaoImpl implements ImportProfileDao {
 	private SchoolUtil schoolUtil;
 	@Override
 	public Long create(final Person person) {
-		logger.info(" <<<---- Insert Into Person ---->>> ");
+		logger.info(" <<<---- Insert Into Person PBP ---->>> ");
 		
 		KeyHolder keyHolder = new GeneratedKeyHolder(); 
 		
 		final StringBuilder sb = new StringBuilder();
-		sb.append(" INSERT INTO person ( ");
+		sb.append(" INSERT INTO person_pbp ( ");
 		sb.append( "  person_id,       " );
 		sb.append( "  employee_id,    " );
 		sb.append( "  citizen_id,     " );
 		sb.append( "  thai_name,      " );
 		sb.append( "  thai_surname,   " );
 		sb.append( "  sex,            " );
-		sb.append( "  birthdate,      " ); // Date
+		sb.append( "  birth_date,      " ); // Date
 		sb.append( "  rate_no,        " );
 		sb.append( "  employee_type,  " );
 		sb.append( "  position,       " );
 		sb.append( "  level,          " );
-		sb.append( "  work_line,      " );
+		sb.append( "  workline_code,   " );
 		sb.append( "  salary,         " ); // Bigdecimal
 		sb.append( "  work_tel_no,    " );
 		sb.append( "  belong_to,      " );
@@ -84,13 +84,14 @@ public class ImportProfileDaoImpl implements ImportProfileDao {
 		sb.append( "  create_by,      " );
 		sb.append( "  create_date,    " );
 		sb.append( "  update_by,      " );
-		sb.append( "  update_date   " );
+		sb.append( "  update_date,   " );
+		sb.append( "  academic_year   " );
 		sb.append( "   )   " );
 		sb.append( " VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, " );
 		sb.append( "  ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, " );
 		sb.append( "  ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, " );
 		sb.append( "  ?, ?," );
-		sb.append( " 'A',?, CURRENT_TIMESTAMP, ?, CURRENT_TIMESTAMP ) " );
+		sb.append( " 'A',?, CURRENT_TIMESTAMP, ?, CURRENT_TIMESTAMP,? ) " );
 
 		PreparedStatementCreator preparedStatementCreator = new PreparedStatementCreator() {
 			public PreparedStatement createPreparedStatement(Connection connection)throws SQLException {
@@ -129,6 +130,7 @@ public class ImportProfileDaoImpl implements ImportProfileDao {
 				ps.setString( 32, person.getPersonType());
 				ps.setString( 33, person.getCreateBy());
 				ps.setString( 34, person.getUpdateBy());
+				ps.setString( 35, person.getAcademicYear());
 				return ps;  
 			}
 		};

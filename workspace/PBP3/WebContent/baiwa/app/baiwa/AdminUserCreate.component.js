@@ -18,6 +18,7 @@ var AdminUserCreate = (function () {
         this.http = http;
         this.uploader = new ng2_file_upload_1.FileUploader({ url: URL1 });
         this.CheckPass = false;
+        this.group = [];
         this.submitted = false;
         this.model = this.ModelUser();
         this.person = this.PersonUser();
@@ -117,15 +118,13 @@ var AdminUserCreate = (function () {
         var _this = this;
         //Ready 
         var temp = jQuery('input[type="checkbox"]:checked');
+        this.model.groups = [];
         for (var i = 0; i < temp.length; i++) {
             // console.log("Tamp",temp[i].value);
-            for (var j = 0; j < this.groupList.length; j++) {
-                if (temp[i].value == this.groupList[j].groupName) {
-                    this.groupList[j].enable = true;
-                }
-            }
+            console.log('temp=', temp[i].value);
+            this.model.groups.push(temp[i].value);
+            console.log('groups=', this.model.groups);
         }
-        this.model.groupList = this.groupList;
         var birthdateStr = jQuery("#birthdateStr").val();
         var workingDateStr = jQuery("#workingDateStr").val();
         var retireDateStr = jQuery("#retireDateStr").val();

@@ -57,11 +57,12 @@ export class AdminUserEdit {
         }
 
 
-        this.getCreateUserJson();
+
         this.Datetime();
 
     }
     ngAfterViewInit() {
+        this.getCreateUserJson();
         this.makeDatePicker();
     }
 
@@ -145,6 +146,22 @@ export class AdminUserEdit {
         this.lovWorkingStatusList = this.modelUser.person.lovWorkingStatusList;
         this.evaluateRoundList = this.modelUser.person.evaluateRoundList;
 
+
+        setTimeout(()=>{
+
+            for (var i = 0; i < this.modelUser.groups.length; i++) {
+                for (var j = 0; j < this.groupList.length; j++) {
+                    if (this.modelUser.groups[i] == this.groupList[j].groupId) {
+                        let roleName = this.groupList[j].groupName;
+                        console.log("Finde Roles", roleName);
+                        jQuery("#" + roleName).attr("checked", true);
+                        break;
+                    }
+                }
+            }
+        }, 800);
+
+
         console.log("AdminUserCreate :GetUserJsonSucess !");
         console.log(this.groupList);
         //this.getEditUserJson();
@@ -168,10 +185,32 @@ export class AdminUserEdit {
     public saveUser() {
         //Ready 
 
+        let temp: any[] = jQuery('input[type="checkbox"]:checked');
+
+        this.model.groups = [];
+
+        for (var i = 0; i < temp.length; i++) {
+
+
+
+            console.log('temp=', temp[i].value)
+            this.model.groups.push(temp[i].value);
+            console.log('groups=', this.model.groups);
+        }
+
+        var birthdateStr = jQuery("#birthdateStr").val();
+        var workingDateStr = jQuery("#workingDateStr").val();
+
+
+        this.model.person.birthdateStr = birthdateStr;
+        this.model.person.workingDateStr = workingDateStr;
+
+
+
         console.log("AdminUserCreate : Ready SaveUser");
 
         var url = "../admin/json/editUserSave";//ติดไว้ก่อน
-        this.http.post(url, this.modelUser).subscribe(response => this.SaveUserJsonSucess(response),
+        this.http.post(url, this.model).subscribe(response => this.SaveUserJsonSucess(response),
             error => this.SaveUserJsonError(error), () => console.log("AdminUserCreate : Success saveUser !"));
 
 
@@ -198,53 +237,55 @@ export class AdminUserEdit {
 
 
     private makeDatePicker() {
-  
-
-     } 
 
 
-  Datetime(){
-  
+    }
+
+
+    Datetime() {
+
         jQuery("#birthdateStr").daterangepicker({
-        singleDatePicker: true,
-        showDropdowns: true,
-        locale: {
-            format: 'MM/DD/YYYY'
-        }
+            singleDatePicker: true,
+            showDropdowns: true,
+            locale: {
+                format: 'MM/DD/YYYY'
+            }
 
         });
 
-          jQuery("#workingDateStr").daterangepicker({
-        singleDatePicker: true,
-        showDropdowns: true,
-        locale: {
-            format: 'MM/DD/YYYY'
-        }
+        jQuery("#workingDateStr").daterangepicker({
+            singleDatePicker: true,
+            showDropdowns: true,
+            locale: {
+                format: 'MM/DD/YYYY'
+            }
 
         });
 
-          jQuery("#assignDateStrU").daterangepicker({
-        singleDatePicker: true,
-        showDropdowns: true,
-        locale: {
-            format: 'MM/DD/YYYY'
-        }
+        jQuery("#assignDateStrU").daterangepicker({
+            singleDatePicker: true,
+            showDropdowns: true,
+            locale: {
+                format: 'MM/DD/YYYY'
+            }
 
         });
 
-          jQuery("#retireDateStrU").daterangepicker({
-        singleDatePicker: true,
-        showDropdowns: true,
+        jQuery("#retireDateStrU").daterangepicker({
+            singleDatePicker: true,
+            showDropdowns: true,
 
-        locale: {
-            format: 'MM/DD/YYYY'
-        }
+            locale: {
+                format: 'MM/DD/YYYY'
+            }
 
         });
 
 
 
-  }
+
+
+    }
 
 
 

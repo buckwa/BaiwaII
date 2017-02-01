@@ -32,10 +32,10 @@ var AdminUserEdit = (function () {
         }
         else {
         }
-        this.getCreateUserJson();
         this.Datetime();
     };
     AdminUserEdit.prototype.ngAfterViewInit = function () {
+        this.getCreateUserJson();
         this.makeDatePicker();
     };
     AdminUserEdit.prototype.ModelUser = function () {
@@ -90,6 +90,7 @@ var AdminUserEdit = (function () {
         this.http.get(url).subscribe(function (response) { return _this.GetUserJsonSucess(response); }, function (error) { return _this.GetUserJsonError(error); }, function () { return console.log("AdminUserCreate : Success getlistByDepartment !"); });
     };
     AdminUserEdit.prototype.GetUserJsonSucess = function (response) {
+        var _this = this;
         console.log("AdminUserCreate : Ready GetUserJsonSucess");
         this.modelUser = response.json(JSON.stringify(response._body));
         this.modelUser = this.modelUser.resObj;
@@ -106,6 +107,18 @@ var AdminUserEdit = (function () {
         this.lovEducationList = this.modelUser.person.lovEducationList;
         this.lovWorkingStatusList = this.modelUser.person.lovWorkingStatusList;
         this.evaluateRoundList = this.modelUser.person.evaluateRoundList;
+        setTimeout(function () {
+            for (var i = 0; i < _this.modelUser.groups.length; i++) {
+                for (var j = 0; j < _this.groupList.length; j++) {
+                    if (_this.modelUser.groups[i] == _this.groupList[j].groupId) {
+                        var roleName = _this.groupList[j].groupName;
+                        console.log("Finde Roles", roleName);
+                        jQuery("#" + roleName).attr("checked", true);
+                        break;
+                    }
+                }
+            }
+        }, 800);
         console.log("AdminUserCreate :GetUserJsonSucess !");
         console.log(this.groupList);
         //this.getEditUserJson();
@@ -121,9 +134,20 @@ var AdminUserEdit = (function () {
     AdminUserEdit.prototype.saveUser = function () {
         //Ready 
         var _this = this;
+        var temp = jQuery('input[type="checkbox"]:checked');
+        this.model.groups = [];
+        for (var i = 0; i < temp.length; i++) {
+            console.log('temp=', temp[i].value);
+            this.model.groups.push(temp[i].value);
+            console.log('groups=', this.model.groups);
+        }
+        var birthdateStr = jQuery("#birthdateStr").val();
+        var workingDateStr = jQuery("#workingDateStr").val();
+        this.model.person.birthdateStr = birthdateStr;
+        this.model.person.workingDateStr = workingDateStr;
         console.log("AdminUserCreate : Ready SaveUser");
         var url = "../admin/json/editUserSave"; //ติดไว้ก่อน
-        this.http.post(url, this.modelUser).subscribe(function (response) { return _this.SaveUserJsonSucess(response); }, function (error) { return _this.SaveUserJsonError(error); }, function () { return console.log("AdminUserCreate : Success saveUser !"); });
+        this.http.post(url, this.model).subscribe(function (response) { return _this.SaveUserJsonSucess(response); }, function (error) { return _this.SaveUserJsonError(error); }, function () { return console.log("AdminUserCreate : Success saveUser !"); });
     };
     AdminUserEdit.prototype.SaveUserJsonSucess = function (response) {
         //Todo

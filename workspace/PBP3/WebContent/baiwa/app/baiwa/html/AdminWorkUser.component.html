@@ -1,4 +1,4 @@
-  <!--<div class="box-typical box-typical-padding"> 
+  <div class="box-typical box-typical-padding"> 
 			<section class="card card-default">
 				<header class="card-header">
 					ข้อมูลบุคลากร ประจำปีการศึกษา ประจำปีการศึกษา 2558
@@ -9,7 +9,7 @@
                             
                     	<div class="col-sm-5">
 							<p class="form-control-static">
-                                <input type="text"  class="form-control" id="name" placeholder="ชื่อผู้เข้าใช้ระบบ">
+                                <input type="text" [(ngModel)]="userModel.username" name="username" class="form-control" id="name" placeholder="ชื่อผู้เข้าใช้ระบบ">
                             </p>
 						</div>
 
@@ -19,7 +19,7 @@
                             
                     	<div class="col-sm-5">
 							<p class="form-control-static">
-                                <input type="text"  class="form-control" id="name" placeholder="ชื่อผู้เข้าใช้ระบบ">
+                                <input type="text" [(ngModel)]="userModel.firstLastName" name="firstLastName" class="form-control" id="name" placeholder="ชื่อผู้เข้าใช้ระบบ">
                             </p>
 						</div>
 
@@ -29,11 +29,9 @@
                             
                     	<div class="col-sm-5">
 							<p class="form-control-static">
-                               <select id="exampleSelect" class="form-control">
-								<option>2016</option>
-								<option>2</option>
-								<option>3</option>
-								<option>4</option>
+                               <select id="exampleSelect" [(ngModel)]="userModel.academicYear" name="academicYear" class="form-control">
+								<option   *ngFor="let Year of academicYearList;"  [value]="Year.name"  >{{Year.name}}</option>
+							
 							</select>
                             </p>
 						</div>
@@ -44,7 +42,7 @@
                             
                     	<div class="col-sm-5">
 							 <div class="form-group">
-								<button type="button" class="btn btn-rounded btn-inline btn-primary">ค้นหา</button>							
+								<button type="button" class="btn btn-rounded btn-inline btn-primary" (click)=" SearchDataUser();">ค้นหา</button>							
 								<button type="button" class="btn btn-rounded btn-inline btn-danger">ยกเลิก</button>
 							</div>
 						</div>
@@ -52,7 +50,7 @@
                     </div>
 				</div>
 			</section>
-  </div>-->
+  </div>
 
    <div class="box-typical box-typical-padding"> 
        	<div class="row table-details">
@@ -73,11 +71,6 @@
 					
 					
 					</table>
-
-
-
-
-
 						</div>
 					</div>
   </div>

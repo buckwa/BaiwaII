@@ -41,8 +41,16 @@ var AdminWorkUser = (function () {
             ]
         };
     }
+    AdminWorkUser.prototype.ModelSearch = function () {
+        return {
+            "username": "",
+            "firstLastName": "",
+            "academicYear": "",
+        };
+    };
     AdminWorkUser.prototype.ngOnInit = function () {
         this.getDatatabel1();
+        this.userModel = this.ModelSearch();
     };
     AdminWorkUser.prototype.getDatatabel1 = function () {
         var _this = this;
@@ -51,8 +59,10 @@ var AdminWorkUser = (function () {
     };
     AdminWorkUser.prototype.getTimeTableSucess = function (response) {
         this.datalist = response.json(JSON.stringify(response._body));
-        this.makeDataTable.data = this.datalist[0].currentPageItem;
-        this.page = this.datalist[0];
+        this.makeDataTable.data = this.datalist.resPagingBean.currentPageItem;
+        this.page = this.datalist.resPagingBean;
+        this.userModelSent = this.datalist.resObj;
+        this.academicYearList = this.datalist.resObj.academicYearList;
         this.timetabletable.show();
     };
     AdminWorkUser.prototype.GetPersonError = function (error) {
@@ -86,6 +96,14 @@ var AdminWorkUser = (function () {
                 location.reload();
             }
         }, this));
+    };
+    AdminWorkUser.prototype.SearchDataUser = function () {
+        var _this = this;
+        this.userModelSent.username = this.userModel.username;
+        this.userModelSent.firstLastName = this.userModel.firstLastName;
+        this.userModelSent.academicYear = this.userModel.academicYear;
+        var url = "../admin/json/searchUser";
+        this.http.post(url, this.userModelSent).subscribe(function (response) { return _this.getTimeTableSucess(response); }, function (error) { return _this.GetPersonError(error); }, function () { return console.log("callsevice done !"); });
     };
     __decorate([
         core_1.ViewChild('personTimeTable'), 

@@ -135,10 +135,10 @@ export class home implements OnInit, AfterViewInit {
 
     }
     public GetRadarPlotNewSearch(year: String) {
-        this.GetRadarPlotNew(this.user.userName, year, "1");
+        this.GetRadarPlotNew(this.user.userName, year, "2");
     }
     public GetRadarPlot() {
-        this.GetRadarPlotNew(this.user.userName, this.user.currentAcademicYear, "1");
+        this.GetRadarPlotNew(this.user.userName, this.user.currentAcademicYear, "2");
     }
     public GetRadarPlotNew(user: String, year: String, num: String) {
         var url = "../person/getRadarPlotNew/" + user + "/" + year + "/" + num;
@@ -166,7 +166,7 @@ export class home implements OnInit, AfterViewInit {
         }
 
         this.GetPersonByAcadamy(this.user.userName, this.user.currentAcademicYear);
-        this.GetRadarPlotNew(this.user.userName, this.user.currentAcademicYear, "1");
+        this.GetRadarPlotNew(this.user.userName, this.user.currentAcademicYear, "2");
         
     }
 

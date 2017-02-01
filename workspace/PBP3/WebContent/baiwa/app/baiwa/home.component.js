@@ -106,10 +106,10 @@ var home = (function () {
         console.log("GetPersonError.");
     };
     home.prototype.GetRadarPlotNewSearch = function (year) {
-        this.GetRadarPlotNew(this.user.userName, year, "1");
+        this.GetRadarPlotNew(this.user.userName, year, "2");
     };
     home.prototype.GetRadarPlot = function () {
-        this.GetRadarPlotNew(this.user.userName, this.user.currentAcademicYear, "1");
+        this.GetRadarPlotNew(this.user.userName, this.user.currentAcademicYear, "2");
     };
     home.prototype.GetRadarPlotNew = function (user, year, num) {
         var _this = this;
@@ -133,7 +133,7 @@ var home = (function () {
             this.router.navigate(['/AdminAcademicKPI']);
         }
         this.GetPersonByAcadamy(this.user.userName, this.user.currentAcademicYear);
-        this.GetRadarPlotNew(this.user.userName, this.user.currentAcademicYear, "1");
+        this.GetRadarPlotNew(this.user.userName, this.user.currentAcademicYear, "2");
     };
     home.prototype.createChart = function () {
         jQuery("#KendoChart").kendoChart({

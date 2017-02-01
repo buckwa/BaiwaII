@@ -63,28 +63,12 @@
 
                         <div *ngFor="let group of groupList;">
                             <label for="check-1">
-                                <input type="checkbox"  value="{{group.groupName}}"  >
+                                <input type="checkbox"  value="{{group.groupId}}"  >
                                 {{group.groupName}}</label>
                         </div>
                     </div>
 
                 </div>
-
-
-                <!--<div class=" form-group row">
-                    <label class="col-xs-2 form-control-label">ทดสอบ :</label>
-                    <div class="col-sm-5">
-                        <div class="form-group">
-                            <div class='input-group date datetimepicker-1'>
-                                <input type='text' id="abc" class="form-control" />
-                                <span class="input-group-addon">
-									<i class="font-icon font-icon-calend"></i>
-								</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>-->
-
 
                 <!--Person thaiName-->
                 <div class=" form-group row">
@@ -112,9 +96,9 @@
 
                     <div class="col-sm-5">
                         <div class="radio">
-                            <input type="radio" [(ngModel)]="person.sex" name="sex" id="sex-1" value="option1">
+                            <input type="radio" [(ngModel)]="person.sex" name="sex" id="sex-1" value="M">
                             <label for="sex-1">ชาย </label>
-                            <input type="radio" [(ngModel)]="person.sex" name="sex" id="sex-2" value="option2" >
+                            <input type="radio" [(ngModel)]="person.sex" name="sex" id="sex-2" value="F" >
                             <label for="sex-2">หญิง </label>
                         </div>
 
@@ -157,7 +141,7 @@
                     <div class="col-sm-5">
                         <p class="form-control-static">
                             <select class="form-control" [(ngModel)]="person.employeeType" name="employeeType" id="employeeType">
-								<option  *ngFor="let EmployeeType of lovEmployeeTypeList ;"  [value]="EmployeeType.code"  >{{EmployeeType.name}}</option>
+								<option  *ngFor="let EmployeeType of lovEmployeeTypeList ;"  [value]="EmployeeType.name"  >{{EmployeeType.name}}</option>
 	
                             </select>
                         </p>
@@ -171,7 +155,7 @@
                     <div class="col-sm-5">
                         <p class="form-control-static">
                             <select id="position" class="form-control" [(ngModel)]="person.position" name="position">
-								<option  *ngFor="let Position of lovPositionList;"  [value]="Position.code"  >{{Position.name}}</option>
+								<option  *ngFor="let Position of lovPositionList;"  [value]="Position.name"  >{{Position.name}}</option>
 
                         </select>
                         </p>
@@ -188,7 +172,7 @@
                     <div class="col-sm-5">
                         <p class="form-control-static">
                             <select id="workLine" class="form-control" [(ngModel)]="person.workLine" name="workLine">
-								<option  *ngFor="let WorkLine of lovWorkLineList;" required [value]="WorkLine.code" >{{WorkLine.name}}</option>
+								<option  *ngFor="let WorkLine of lovWorkLineList;" required [value]="WorkLine.name" >{{WorkLine.name}}</option>
 
                         </select>
                         </p>
@@ -227,7 +211,7 @@
                     <div class="col-sm-5">
                         <p class="form-control-static">
                             <select id="exampleSelect" class="form-control" [(ngModel)]="person.faculty" name="faculty">
-								<option *ngFor="let Faculty of lovFacultyList;" [value]="Faculty.code" >{{Faculty.name}}</option>
+								<option *ngFor="let Faculty of lovFacultyList;" [value]="Faculty.name" >{{Faculty.name}}</option>
 								
                         </select>
                         </p>
@@ -291,7 +275,7 @@
                     <div class="col-sm-5">
                         <p class="form-control-static">
                             <select id="exampleSelect" class="form-control" [(ngModel)]="person.maxInsignia" name="maxInsignia">
-								 <option *ngFor="let Insignia of lovInsigniaList;" [value]="Insignia.code" >{{Insignia.name}}</option>
+								 <option *ngFor="let Insignia of lovInsigniaList;" [value]="Insignia.name" >{{Insignia.name}}</option>
                         </select>
                         </p>
                     </div>
@@ -305,7 +289,7 @@
                     <div class="col-sm-5">
                         <p class="form-control-static">
                             <select id="exampleSelect" class="form-control" [(ngModel)]="person.maxEducation" name="maxEducation">
-								<option *ngFor="let Education of lovEducationList;" [value]="Education.code" >{{Education.name}}</option>
+								<option *ngFor="let Education of lovEducationList;" [value]="Education.name" >{{Education.name}}</option>
 
                         </select>
                         </p>
@@ -329,7 +313,7 @@
                     <div class="col-sm-5">
                         <p class="form-control-static">
                             <select id="exampleSelect" class="form-control" [(ngModel)]="person.marriedStatus" name="marriedStatus">
-								<option *ngFor="let Education of lovEducationList;" [value]="Education.code" >{{Education.name}}</option>
+								<option *ngFor="let Education of lovEducationList;" [value]="Education.name" >{{Education.name}}</option>
                         </select>
                         </p>
                     </div>
@@ -391,7 +375,7 @@
 
                 </div>
                 <!--person.workingStatus-->
-                <div class=" form-group row">
+                <!--<div class=" form-group row">
                     <label class="col-xs-2 form-control-label">เบอร์โทรศัพท์:     </label>
 
                     <div class="col-sm-5">
@@ -400,7 +384,7 @@
                         </p>
                     </div>
 
-                </div>
+                </div>-->
                 <!--person.workingStatus-->
                 <div class=" form-group row">
                     <label class="col-xs-2 form-control-label">สถานะภาพการทำงาน:     </label>
@@ -408,7 +392,7 @@
                     <div class="col-sm-5">
                         <p class="form-control-static">
                             <select id="exampleSelect" class="form-control" [(ngModel)]="person.workingStatus" name="workingStatus">
-								<option *ngFor="let WorkingStatus of lovWorkingStatusList;" [value]="WorkingStatus.code" >{{WorkingStatus.name}}</option>
+								<option *ngFor="let WorkingStatus of lovWorkingStatusList;" [value]="WorkingStatus.name" >{{WorkingStatus.name}}</option>
                         </select>
                         </p>
                     </div>

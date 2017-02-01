@@ -19,6 +19,18 @@ export class AdminWorkUser implements OnInit {
     public data: any;
     public datalist: any;
     public page: any;
+    public userModel: any;
+    public userModelSent: any;
+    public academicYearList: any;
+
+
+   public ModelSearch() {
+        return {
+            "username": "",
+            "firstLastName": "",
+            "academicYear": "",
+        }
+    }
 
     public makeDataTable: any = {
         "searching": true,
@@ -51,6 +63,7 @@ export class AdminWorkUser implements OnInit {
     }
     ngOnInit() {
         this.getDatatabel1();
+        this.userModel = this.ModelSearch();
 
     }
     public getDatatabel1() {
@@ -61,8 +74,13 @@ export class AdminWorkUser implements OnInit {
     }
     getTimeTableSucess(response: any) {
         this.datalist = response.json(JSON.stringify(response._body));
-        this.makeDataTable.data = this.datalist[0].currentPageItem;
-        this.page = this.datalist[0];
+        this.makeDataTable.data = this.datalist.resPagingBean.currentPageItem;
+        this.page = this.datalist.resPagingBean;
+        
+        this.userModelSent = this.datalist.resObj;
+        
+        this.academicYearList =this.datalist.resObj.academicYearList;
+
         this.timetabletable.show();
 
     }
@@ -101,7 +119,19 @@ export class AdminWorkUser implements OnInit {
             }
         }, this));
 
+    }
+    
 
+
+    SearchDataUser() {
+
+
+        this.userModelSent.username = this.userModel.username;
+        this.userModelSent.firstLastName = this.userModel.firstLastName ;
+        this.userModelSent.academicYear = this.userModel.academicYear ;
+          var url = "../admin/json/searchUser";
+          this.http.post(url,this.userModelSent).subscribe(response => this.getTimeTableSucess(response),
+          error => this.GetPersonError(error), () => console.log("callsevice done !"));
 
     }
 

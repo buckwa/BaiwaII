@@ -26,7 +26,8 @@ export class AdminUserCreate {
     public evaluateRoundList: any;
     public tampvalue: any;
     public CheckPass = false;
-
+    public groups: any;
+    public group = [];
     public model: any;
     public person: any;
     public Filename: any;
@@ -160,16 +161,26 @@ export class AdminUserCreate {
         //Ready 
         let temp: any[] = jQuery('input[type="checkbox"]:checked');
 
+        this.model.groups = [];
+
         for (var i = 0; i < temp.length; i++) {
             // console.log("Tamp",temp[i].value);
-            for (var j = 0; j < this.groupList.length; j++) {
-                if (temp[i].value == this.groupList[j].groupName) {
-                    this.groupList[j].enable = true;
 
-                }
-            }
+            console.log('temp=', temp[i].value)
+           this.model.groups.push(temp[i].value);
+            console.log('groups=', this.model.groups);
+
+//$( "#x" ).prop( "checked", false );
+
+            // for (var j = 0; j < this.groupList.length; j++) {
+            //     if (temp[i].value == this.groupList[j].groupName) {
+            //         this.groupList[j].enable = true;
+            //     }
+            // }
+
+
         }
-        this.model.groupList = this.groupList;
+
 
         var birthdateStr = jQuery("#birthdateStr").val();
         var workingDateStr = jQuery("#workingDateStr").val();

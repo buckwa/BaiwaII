@@ -15,12 +15,12 @@ export class AdminFaculty implements OnInit {
     public Department: any;
     public academicYearSelect: any;
     public academicYear: any;
-
+    public academicList: any;
 
     constructor(private router: Router,private http: Http) {
         this.Facultyname = this.facultylistdefult();
         this.Faculty = this.Facultyde();
-
+        
 
     }
     facultylistdefult() {
@@ -40,13 +40,16 @@ export class AdminFaculty implements OnInit {
     }
 
     ngOnInit() {
-        this.adminFaculty();
+
+        var year =new Date().getFullYear()+542;
+        this.adminFaculty(year);
 
     }
 
-    public adminFaculty() {
-
-        var url = "../admin/json/getFaculty";
+    public adminFaculty(year: any) {
+        //console.log(year);
+        this.academicYearSelect  = year;
+        var url = "../admin/json/getFaculty/"+year;
         return this.http.get(url).subscribe(response => this.adminFacultySucess(response),
             error => this.adminFacultyError(error), () => console.log("DepartmentName !"));
     }
@@ -55,9 +58,9 @@ export class AdminFaculty implements OnInit {
 
         this.Facultyname = response.json(JSON.stringify(response._body));
         this.Faculty = this.Facultyname[0].facultyList;
-        this.academicYearSelect  = this.Facultyname[0].academicYearSelect;
+        
         this.academicYear  = this.Facultyname[0].academicYear;
-
+        this.academicList = this.Facultyname[0].academicYearList;
         console.log("SS !");
     }
 
@@ -84,6 +87,10 @@ export class AdminFaculty implements OnInit {
 
     public AdminFacultyEditDepartment(departmentId: String){
         this.router.navigate(['/AdminFacultyEditDepartment', departmentId]);
+    }
+    public changeYear(year: String){
+        this.adminFaculty(year);
+        console.log(year);
     }
 
 }

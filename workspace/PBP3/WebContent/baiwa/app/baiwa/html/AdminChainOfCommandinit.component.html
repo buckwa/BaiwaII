@@ -2,16 +2,18 @@
     <div class="form-group row">
         <label for="exampleSelect" class="col-sm-2 form-control-label">ปีการศึกษา</label>
         <div class="col-sm-2">
-            <select id="exampleSelect" class="form-control">
-			<option  *ngFor="let item of FacultyWrappers; let i = index" >{{academicYear}}</option>
-            </select>
+         
+			 <select id="exampleSelect" class="form-control" name="name"  [(ngModel)]="academicYear"  #academic (change)="changeYear(academic.value)">
+			<option  *ngFor="let item of academicList" [value]="item.name" >{{item.name}}</option>
+
+			</select>
         </div>
     </div>
 
     <div class="form-group row">
-        <div class="pbp-header"> สายบังคับบัญชา ประจำปี {{academicYear}}
+        <div class="pbp-header"> สายบังคับบัญชา ประจำปี {{academicYearSelect}}
         </div>
-        <div class="pbp-header" >อธิการบดี  {{thaiName}} {{thaiSurname}}  <a href="javascript:void(0);" (click)="AdminChainOfCommandinitPresident()" ><span class="font-icon font-icon-cogwheel" > </span></a>
+        <div class="pbp-header" >อธิการบดี  {{thaiName}} {{thaiSurname}}  <a href="javascript:void(0);" (click)="AdminChainOfCommandinitPresident()"  *ngIf="academicYear == academicYearSelect " ><span class="font-icon font-icon-cogwheel" > </span></a>
             <span class="lsf-icon colororange" title="man"></span>
 
             <table class="table table-bordered table-hover" >
@@ -26,7 +28,7 @@
                     <td > {{item.name}} </td>
 
 
-                    <td   *ngIf="item.dean" > {{item.dean.email}} {{item.dean.thaiName}} {{item.dean.thaiSurname}} <a href="javascript:void(0);" (click)="AdminChainOfCommandinitDean(item.facultyId)" ><span class="font-icon font-icon-cogwheel" > </span></a> </td>
+                    <td   *ngIf="item.dean" > {{item.dean.email}} {{item.dean.thaiName}} {{item.dean.thaiSurname}} <a href="javascript:void(0);" (click)="AdminChainOfCommandinitDean(item.facultyId)" *ngIf="academicYear == academicYearSelect " ><span class="font-icon font-icon-cogwheel" > </span></a> </td>
                     <td   *ngIf="!item.dean" > <a href="#" ><span class="font-icon font-icon-cogwheel" > </span></a></td>
                     <td >
                         <table *ngIf="item.departmentList"  >
@@ -36,7 +38,7 @@
                                   <a href="#" data-toggle="modal"  data-target="#myModal" (click)="clickShowDepartment(items.departmentId)" >{{items.name}}</a>
                                 </td>
                                 <td   *ngIf="items.head"  >
-                                    {{items.head.email}}{{items.head.thaiName}} {{items.head.thaiSurname}} <a href="javascript:void(0);" (click)="AdminChainOfCommandinitHead(items.departmentId)" ><span class="font-icon font-icon-cogwheel" > </span></a>
+                                    {{items.head.email}}{{items.head.thaiName}} {{items.head.thaiSurname}} <a href="javascript:void(0);" (click)="AdminChainOfCommandinitHead(items.departmentId)" *ngIf="academicYear == academicYearSelect " ><span class="font-icon font-icon-cogwheel" > </span></a>
                                 </td>
                             </tr>
                         </table>

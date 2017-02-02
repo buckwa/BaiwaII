@@ -7,11 +7,11 @@
         <form (ngSubmit)="onSubmit()" #AdminEdit="ngForm">
             <div class="card-block">
                 <div class=" form-group row">
-                    <label class="col-xs-2 form-control-label">ชื่อเข้าใช้ระบบ:</label>
+                    <label class="col-xs-2 form-control-label">ชื่อเข้าใช้ระบบ:  <span style="color: Red;">*</span></label>
 
                     <div class="col-sm-5">
 
-                        <input type="text" class="form-control" [(ngModel)]="model.username" name="model.username" placeholder="ชื่อผู้เข้าใช้ระบบ">
+                        <input type="text" class="form-control" [(ngModel)]="model.username" name="model.username" placeholder="ชื่อผู้เข้าใช้ระบบ" required>
                         <!--<div class="form-tooltip-error sm">Password must be at least 6 characters</div>-->
 
                     </div>
@@ -52,21 +52,21 @@
 
                 <!--Person thaiName-->
                 <div class=" form-group row">
-                    <label class="col-xs-2 form-control-label">ชื่อ (ไทย): </label>
+                    <label class="col-xs-2 form-control-label">ชื่อ (ไทย):   <span style="color: Red;">*</span>   </label>
 
                     <div class="col-sm-5">
                         <p class="form-control-static">
-                            <input type="text" class="form-control" id="name" [(ngModel)]="person.thaiName" name="thaiName" placeholder="ชื่อ">
+                            <input type="text" class="form-control" id="name" [(ngModel)]="person.thaiName" name="thaiName" placeholder="ชื่อ" required>
                         </p>
                     </div>
 
                 </div>
                 <div class=" form-group row">
-                    <label class="col-xs-2 form-control-label">นามสกุล (ไทย):  </label>
+                    <label class="col-xs-2 form-control-label">นามสกุล (ไทย):  <span style="color: Red;">*</span>     </label>
 
                     <div class="col-sm-5">
                         <p class="form-control-static">
-                            <input type="text" class="form-control" id="name" [(ngModel)]="person.thaiSurname" name="thaiSurname" placeholder="นามสกุล ">
+                            <input type="text" class="form-control" id="name" [(ngModel)]="person.thaiSurname" name="thaiSurname" placeholder="นามสกุล " required>
                         </p>
                     </div>
 
@@ -85,23 +85,23 @@
                 </div>
                 <!--person.rateNo-->
                 <div class=" form-group row">
-                    <label class="col-xs-2 form-control-label">เลขที่อัตรา:    </label>
+                    <label class="col-xs-2 form-control-label">เลขที่อัตรา:    <span style="color: Red;">*</span>     </label>
 
                     <div class="col-sm-5">
                         <p class="form-control-static">
-                            <input type="text" class="form-control" [(ngModel)]="person.rateNo" name="rateNo" id="name" placeholder="เลขที่อัตรา">
+                            <input type="text" class="form-control" [(ngModel)]="person.rateNo" name="rateNo" id="name" placeholder="เลขที่อัตรา" required>
                         </p>
                     </div>
 
                 </div>
                 <!--person.employeeType-->
                 <div class=" form-group row">
-                    <label class="col-xs-2 form-control-label"> ประเภทข้าราชการ:    </label>
+                    <label class="col-xs-2 form-control-label"> ประเภทข้าราชการ:  <span style="color: Red;">*</span>    </label>
 
                     <div class="col-sm-5">
                         <p class="form-control-static">
-                            <select id="exampleSelect" class="form-control" [(ngModel)]="person.employeeType" name="employeeType">
-								<option  *ngFor="let EmployeeType of lovEmployeeTypeList ;" [value]="EmployeeType.name">{{EmployeeType.name}}</option>
+                            <select id="exampleSelect" class="form-control" [(ngModel)]="person.employeeType" name="employeeType" required>
+								<option  *ngFor="let EmployeeType of lovEmployeeTypeList ;" [value]="EmployeeType.name" >{{EmployeeType.name}}</option>
 	
                             </select>
                         </p>
@@ -110,12 +110,12 @@
                 </div>
                 <!--person.position-->
                 <div class=" form-group row">
-                    <label class="col-xs-2 form-control-label">ตำแหน่ง:     </label>
+                    <label class="col-xs-2 form-control-label" >ตำแหน่ง:     </label>
 
                     <div class="col-sm-5">
                         <p class="form-control-static">
-                            <select id="exampleSelect" class="form-control" [(ngModel)]="person.position" name="position">
-								<option  *ngFor="let Position of lovPositionList;" [value]="Position.name" >{{Position.name}}</option>
+                            <select  class="form-control" [(ngModel)]="person.position" name="position" >
+								<option  *ngFor="let Position of lovPositionList;" [value]="Position.name"  >{{Position.name}}</option>
 
                         </select>
                         </p>
@@ -127,30 +127,63 @@
 
                 <!--person.belongTo-->
                 <div class=" form-group row">
-                    <label class="col-xs-2 form-control-label">สังกัด:      </label>
+                    <label class="col-xs-2 form-control-label" >สังกัด:      </label>
 
                     <div class="col-sm-5">
                         <p class="form-control-static">
-                            <input type="text" class="form-control" [(ngModel)]="person.belongTo" name="belongTo" id="name" placeholder="สังกัด ">
+                            <input type="text" class="form-control" [(ngModel)]="person.belongTo" name="belongTo" id="name" placeholder="สังกัด " >
                         </p>
                     </div>
 
                 </div>
 
                 <!--person.faculty-->
-                <div class=" form-group row">
-                    <label class="col-xs-2 form-control-label">หน่วยงาน:    </label>
+                <!--<div class=" form-group row">
+                    <label class="col-xs-2 form-control-label" >หน่วยงาน:  <span style="color: Red;">*</span>  </label>
 
                     <div class="col-sm-5">
                         <p class="form-control-static">
-                            <select id="exampleSelect" class="form-control" [(ngModel)]="person.faculty" name="faculty">
-								<option *ngFor="let Faculty of lovFacultyList;" [value]="Faculty.name" >{{Faculty.name}}</option>
+                            <select id="exampleSelect" class="form-control" [(ngModel)]="person.faculty" name="faculty" required>
+								<option *ngFor="let Faculty of lovFacultyList;" [value]="Faculty.name"  >{{Faculty.name}}</option>
+								
+                        </select>
+                        </p>
+                    </div>
+
+                </div>-->
+
+                
+                <div class=" form-group row">
+                    <label class="col-xs-2 form-control-label">คณะ:<span style="color: Red;">*</span>    </label>
+
+                    <div class="col-sm-5">
+                        <p class="form-control-static">
+                            <select id="exampleSelect" class="form-control" (change)="Adddepartment($event.target.value);" [(ngModel)]="person.faculty" name="faculty" required >
+								<option *ngFor="let Faculty of Faculty;" [value]="Faculty.name"  >{{Faculty.name}}</option>
+								
+                        </select>
+                  
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <div class=" form-group row">
+                    <label class="col-xs-2 form-control-label">ภาควิชา:<span style="color: Red;">*</span>    </label>
+
+                    <div class="col-sm-5">
+                        <p class="form-control-static">
+                            <select id="exampleSelect" class="form-control" [(ngModel)]="person.department" name="department" required >
+								<option *ngFor="let Faculty of Department;" [value]="Faculty.name" >{{Faculty.name}}</option>
 								
                         </select>
                         </p>
                     </div>
 
                 </div>
+
+                
 
                 <!--person.workingDateStr-->
                 <div class=" form-group row">

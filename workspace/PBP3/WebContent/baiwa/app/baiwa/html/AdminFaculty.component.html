@@ -7,8 +7,8 @@
                         <div class="form-group row">
                             <label for="exampleSelect" class="col-sm-4 form-control-label">ปีการศึกษา</label>
                             <div class="col-sm-6">
-                                <select id="exampleSelect" class="form-control">
-									<option>{{academicYearSelect}}</option>
+                                <select id="exampleSelect" class="form-control" name="name"  [(ngModel)]="academicYearSelect"  #academic (change)="changeYear(academic.value)">
+									<option  *ngFor="let item of academicList" [value]="item.name" >{{item.name}}</option>
 
 								</select>
                             </div>
@@ -20,12 +20,12 @@
 
             <div class="card-block display-table" style="min-height: auto">
 <section class="card card-default">
-    <header class="card-header"> ข้อมูลหน่วยงานประจำปีการศึกษา {{academicYear}} </header>
+    <header class="card-header"  > ข้อมูลหน่วยงานประจำปีการศึกษา {{academicYearSelect}} </header>
     <div class="card-block">
         <table id="table-edit" class="table table-bordered table-hover">
             <thead>
                 <tr>
-                    <th>คณะ <a href="javascript:void(0);" (click)="AdminFacultyCreate(academicYear)" ><i class="fa fa-plus"></i>เพิ่มคณะ</a>
+                    <th>คณะ <a href="javascript:void(0);" (click)="AdminFacultyCreate(academicYear)" *ngIf="academicYear == academicYearSelect " ><i class="fa fa-plus"></i>เพิ่มคณะ</a>
                         <div class="fa-hover col-md-3 col-md-offset-2"></div>
                     </th>
                     <th>ภาควิชา 
@@ -38,17 +38,17 @@
                     <td>
                         <div class="row">
                             <div class="col-md-6">{{item.code}} : {{item.name}}</div>
-                            <div class="col-md-1"><a href="javascript:void(0);" (click)="AdminFacultyeditFaculty(item.facultyId)"><i class="font-icon font-icon-cogwheel"></i>แก้ไข</a>
+                            <div class="col-md-1"><a href="javascript:void(0);" (click)="AdminFacultyeditFaculty(item.facultyId)" *ngIf="academicYear == academicYearSelect " ><i class="font-icon font-icon-cogwheel"></i>แก้ไข</a>
                             </div>
                         </div>
 
                     </td>
                     <td>
                        
-                        <a href="javascript:void(0);" (click)="AdminFacultycreateDepartment(item.facultyId)" ><i class="fa fa-plus"></i>เพิ่มภาควิชา</a>
+                        <a href="javascript:void(0);" (click)="AdminFacultycreateDepartment(item.facultyId)" *ngIf="academicYear == academicYearSelect " ><i class="fa fa-plus"></i>เพิ่มภาควิชา</a>
                         <div class="row" *ngFor="let items of item.departmentList">
                             <div class="col-md-6">{{items.code}} : {{items.name}}</div>
-                            <div class="col-md-1"><a href="javascript:void(0);" (click)="AdminFacultyEditDepartment(items.departmentId)"><i class="font-icon font-icon-cogwheel"></i>แก้ไข</a>
+                            <div class="col-md-1"><a href="javascript:void(0);" (click)="AdminFacultyEditDepartment(items.departmentId)" *ngIf="academicYear == academicYearSelect "><i class="font-icon font-icon-cogwheel"></i>แก้ไข</a>
                             </div>
                         </div>
                     </td>

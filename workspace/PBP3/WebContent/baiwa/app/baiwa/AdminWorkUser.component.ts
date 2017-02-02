@@ -22,9 +22,11 @@ export class AdminWorkUser implements OnInit {
     public userModel: any;
     public userModelSent: any;
     public academicYearList: any;
+    public academicYear: any;
+    public academicYearSelect: any;
 
 
-   public ModelSearch() {
+    public ModelSearch() {
         return {
             "username": "",
             "firstLastName": "",
@@ -33,6 +35,7 @@ export class AdminWorkUser implements OnInit {
     }
 
     public makeDataTable: any = {
+
         "searching": true,
         "bPaginate": false,
         "paging": true,
@@ -50,7 +53,7 @@ export class AdminWorkUser implements OnInit {
                 data: "username",
                 className: "center",
                 "render": function (data, type, full, meta) {
-                    return '<a href="javascript:void(0);"  Action="Edit" value="' + data + '" class="editor_remove">Edit</a> / <a href="javascript:void(0);" Action="DELETE" value="' + data + '" class="editor_remove">Delete</a>';
+                    return '<a href="javascript:void(0);" Action="Edit" value="' + data + '" class="editor_remove">Edit</a> / <a href="javascript:void(0);" Action="DELETE" value="' + data + '" class="editor_remove">Delete</a>';
                 }
             }
 
@@ -58,13 +61,19 @@ export class AdminWorkUser implements OnInit {
     };
 
 
+
+
+
     constructor(private router: Router, private commonService: CommonService, private http: Http) {
 
     }
     ngOnInit() {
+        var year = new Date().getFullYear() + 542;
         this.getDatatabel1();
         this.userModel = this.ModelSearch();
-
+        this.userModel.academicYear = year;
+        this.academicYearSelect = year;
+        this.academicYear = year;
     }
     public getDatatabel1() {
         var url = "../admin/json/GetUserlist";
@@ -76,12 +85,17 @@ export class AdminWorkUser implements OnInit {
         this.datalist = response.json(JSON.stringify(response._body));
         this.makeDataTable.data = this.datalist.resPagingBean.currentPageItem;
         this.page = this.datalist.resPagingBean;
-        
+
         this.userModelSent = this.datalist.resObj;
-        
-        this.academicYearList =this.datalist.resObj.academicYearList;
+
+        this.academicYearList = this.datalist.resObj.academicYearList;
+        // this.academicYear = this.userModel.academicYear;
+
+
 
         this.timetabletable.show();
+
+
 
     }
     GetPersonError(error: any) {
@@ -94,16 +108,21 @@ export class AdminWorkUser implements OnInit {
         //
         let ele = jQuery(target);
         console.log(ele.attr("value"), ele.attr("Action"));
-        if (ele.attr("Action") == "Edit") {
-            if (ele.attr("value")) {
-                this.router.navigate(['/AdminUserEdit', ele.attr("value")]);
-            }
-        } else {
-            if (ele.attr("Action") == "DELETE") {
+        if (this.academicYear == this.userModel.academicYear) {
+
+
+            if (ele.attr("Action") == "Edit") {
                 if (ele.attr("value")) {
-                    this.DeleteDataUser(ele.attr("value"));
+                    this.router.navigate(['/AdminUserEdit', ele.attr("value")]);
+                }
+            } else {
+                if (ele.attr("Action") == "DELETE") {
+                    if (ele.attr("value")) {
+                        this.DeleteDataUser(ele.attr("value"));
+                    }
                 }
             }
+            
         }
     }
 
@@ -115,23 +134,24 @@ export class AdminWorkUser implements OnInit {
                 this.http.post(url, this.page).subscribe(response => this.getTimeTableSucess(response),
                     error => this.GetPersonError(error), () => console.log("callsevice done !"));
                 //this.router.navigate(['/AdminWorkUser']);
-                 location.reload();
+                location.reload();
             }
         }, this));
 
     }
-    
+
 
 
     SearchDataUser() {
 
-
+        this.academicYearSelect = this.userModel.academicYear;
+        this.userModel.academicYear = this.userModel.academicYear;
         this.userModelSent.username = this.userModel.username;
-        this.userModelSent.firstLastName = this.userModel.firstLastName ;
-        this.userModelSent.academicYear = this.userModel.academicYear ;
-          var url = "../admin/json/searchUser";
-          this.http.post(url,this.userModelSent).subscribe(response => this.getTimeTableSucess(response),
-          error => this.GetPersonError(error), () => console.log("callsevice done !"));
+        this.userModelSent.firstLastName = this.userModel.firstLastName;
+        this.userModelSent.academicYear = this.userModel.academicYear;
+        var url = "../admin/json/searchUser";
+        this.http.post(url, this.userModelSent).subscribe(response => this.getTimeTableSucess(response),
+            error => this.GetPersonError(error), () => console.log("callsevice done !"));
 
     }
 

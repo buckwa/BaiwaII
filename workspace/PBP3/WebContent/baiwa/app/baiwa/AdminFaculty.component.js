@@ -33,18 +33,21 @@ var AdminFaculty = (function () {
             }];
     };
     AdminFaculty.prototype.ngOnInit = function () {
-        this.adminFaculty();
+        var year = new Date().getFullYear() + 542;
+        this.adminFaculty(year);
     };
-    AdminFaculty.prototype.adminFaculty = function () {
+    AdminFaculty.prototype.adminFaculty = function (year) {
         var _this = this;
-        var url = "../admin/json/getFaculty";
+        //console.log(year);
+        this.academicYearSelect = year;
+        var url = "../admin/json/getFaculty/" + year;
         return this.http.get(url).subscribe(function (response) { return _this.adminFacultySucess(response); }, function (error) { return _this.adminFacultyError(error); }, function () { return console.log("DepartmentName !"); });
     };
     AdminFaculty.prototype.adminFacultySucess = function (response) {
         this.Facultyname = response.json(JSON.stringify(response._body));
         this.Faculty = this.Facultyname[0].facultyList;
-        this.academicYearSelect = this.Facultyname[0].academicYearSelect;
         this.academicYear = this.Facultyname[0].academicYear;
+        this.academicList = this.Facultyname[0].academicYearList;
         console.log("SS !");
     };
     AdminFaculty.prototype.adminFacultyError = function (error) {
@@ -63,6 +66,10 @@ var AdminFaculty = (function () {
     };
     AdminFaculty.prototype.AdminFacultyEditDepartment = function (departmentId) {
         this.router.navigate(['/AdminFacultyEditDepartment', departmentId]);
+    };
+    AdminFaculty.prototype.changeYear = function (year) {
+        this.adminFaculty(year);
+        console.log(year);
     };
     AdminFaculty = __decorate([
         core_1.Component({

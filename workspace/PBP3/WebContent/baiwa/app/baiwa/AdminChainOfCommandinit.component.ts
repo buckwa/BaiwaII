@@ -12,6 +12,7 @@ import { Router, ActivatedRoute, NavigationCancel  } from '@angular/router';
 export class AdminChainOfCommandinit implements OnInit {
     public FacultyWrappers: any;
     public FacultyWrapper: any;
+    public academicYearSelect: any;
     public academicYear: any;
     public facultyList: any;
     public president: any;
@@ -22,6 +23,7 @@ export class AdminChainOfCommandinit implements OnInit {
     public department: any;
     public academicPersonList: any;
     public DepartmentName: any;
+    public academicList: any;
     constructor(private http: Http,private router: Router) {
        
           this.facultyList = this.facultyListJson();
@@ -61,15 +63,18 @@ export class AdminChainOfCommandinit implements OnInit {
  
 
     ngOnInit() {
-        this.chainOfCommand();
-        
+       
+
+        var year =new Date().getFullYear()+542;
+        this.chainOfCommand(year);
        
     }
 
 
-    public chainOfCommand() {
+    public chainOfCommand(year:any) {
 
-        var url = "../admin/json/getFacultyWrapper";
+        this.academicYear  = year;
+        var url = "../admin/json/getFacultyWrapper/"+year;
         return this.http.get(url).subscribe(response => this.chainOfCommandSucess(response),
             error => this.chainOfCommandError(error), () => console.log("DepartmentName !"));
     }
@@ -79,7 +84,8 @@ export class AdminChainOfCommandinit implements OnInit {
 
         this.FacultyWrappers = response.json(JSON.stringify(response._body));
         this.FacultyWrapper = this.FacultyWrappers[0];
-        this.academicYear = this.FacultyWrapper.academicYear;
+         this.academicList = this.FacultyWrappers[0].academicYearList;
+        this.academicYearSelect = this.FacultyWrapper.academicYearSelect;
         this.thaiName = this.FacultyWrapper.president.thaiName;
         this.thaiSurname = this.FacultyWrapper.president.thaiSurname;
         //this.facultyList = this.facultyListJson();
@@ -129,6 +135,11 @@ export class AdminChainOfCommandinit implements OnInit {
     public AdminChainOfCommandinitHead(result: String){
           console.log("result :",result)
           this.router.navigate(['/AdminChainOfCommandinitHead', result]);
+    }
+
+    public changeYear(year: String){
+        this.chainOfCommand(year);
+        console.log(year);
     }
 
 }

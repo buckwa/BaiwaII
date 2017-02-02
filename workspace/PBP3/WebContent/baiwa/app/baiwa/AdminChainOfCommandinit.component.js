@@ -47,17 +47,20 @@ var AdminChainOfCommandinit = (function () {
         };
     };
     AdminChainOfCommandinit.prototype.ngOnInit = function () {
-        this.chainOfCommand();
+        var year = new Date().getFullYear() + 542;
+        this.chainOfCommand(year);
     };
-    AdminChainOfCommandinit.prototype.chainOfCommand = function () {
+    AdminChainOfCommandinit.prototype.chainOfCommand = function (year) {
         var _this = this;
-        var url = "../admin/json/getFacultyWrapper";
+        this.academicYear = year;
+        var url = "../admin/json/getFacultyWrapper/" + year;
         return this.http.get(url).subscribe(function (response) { return _this.chainOfCommandSucess(response); }, function (error) { return _this.chainOfCommandError(error); }, function () { return console.log("DepartmentName !"); });
     };
     AdminChainOfCommandinit.prototype.chainOfCommandSucess = function (response) {
         this.FacultyWrappers = response.json(JSON.stringify(response._body));
         this.FacultyWrapper = this.FacultyWrappers[0];
-        this.academicYear = this.FacultyWrapper.academicYear;
+        this.academicList = this.FacultyWrappers[0].academicYearList;
+        this.academicYearSelect = this.FacultyWrapper.academicYearSelect;
         this.thaiName = this.FacultyWrapper.president.thaiName;
         this.thaiSurname = this.FacultyWrapper.president.thaiSurname;
         //this.facultyList = this.facultyListJson();
@@ -94,6 +97,10 @@ var AdminChainOfCommandinit = (function () {
     AdminChainOfCommandinit.prototype.AdminChainOfCommandinitHead = function (result) {
         console.log("result :", result);
         this.router.navigate(['/AdminChainOfCommandinitHead', result]);
+    };
+    AdminChainOfCommandinit.prototype.changeYear = function (year) {
+        this.chainOfCommand(year);
+        console.log(year);
     };
     AdminChainOfCommandinit = __decorate([
         core_1.Component({

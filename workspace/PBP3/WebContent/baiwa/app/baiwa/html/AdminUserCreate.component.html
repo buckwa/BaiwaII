@@ -30,7 +30,7 @@
 
                 </div>
                 <div class=" form-group row">
-                    <label class="col-xs-2 form-control-label">ยืนยันรหัสผ่าน:<span style="color: Red;">*</span></label>
+                    <label class="col-xs-2 form-control-label">ยืนยันรหัสผ่าน: <span style="color: Red;">*</span> </label>
 
                     <div class="col-sm-5">
                         <p class="form-control-static">
@@ -46,7 +46,7 @@
 
                     <div class="col-sm-5">
                         <div class="radio">
-                            <input type="radio" [(ngModel)]="model.enabled"  name="enabled" id="enabled-1" value="true" checked>
+                            <input type="radio" [(ngModel)]="model.enabled"  name="enabled" id="enabled-1" value="true" checked >
                             <label for="enabled-1">Active </label>
                             <input type="radio" [(ngModel)]="model.enabled"  name="enabled" id="enabled-2" value="false">
                             <label for="enabled-2">Inactive </label>
@@ -129,7 +129,7 @@
 
                     <div class="col-sm-5">
                         <p class="form-control-static">
-                            <input type="text" class="form-control" [(ngModel)]="person.rateNo" name="rateNo" id="rateNo" required  placeholder="เลขที่อัตรา">
+                            <input type="text" class="form-control" [(ngModel)]="person.rateNo" name="rateNo" id="rateNo"   placeholder="เลขที่อัตรา" required>
                         </p>
                     </div>
 
@@ -140,7 +140,7 @@
 
                     <div class="col-sm-5">
                         <p class="form-control-static">
-                            <select class="form-control" [(ngModel)]="person.employeeType" name="employeeType" id="employeeType">
+                            <select class="form-control" [(ngModel)]="person.employeeType" name="employeeType" id="employeeType" required >
 								<option  *ngFor="let EmployeeType of lovEmployeeTypeList ;"  [value]="EmployeeType.name"  >{{EmployeeType.name}}</option>
 	
                             </select>
@@ -154,7 +154,7 @@
 
                     <div class="col-sm-5">
                         <p class="form-control-static">
-                            <select id="position" class="form-control" [(ngModel)]="person.position" name="position">
+                            <select id="position" class="form-control" [(ngModel)]="person.position" name="position" required >
 								<option  *ngFor="let Position of lovPositionList;"  [value]="Position.name"  >{{Position.name}}</option>
 
                         </select>
@@ -166,31 +166,31 @@
                 <!--ขาดระดับ-->
 
                 <!--person.workLine-->
-                <div class=" form-group row">
+                <!--<div class=" form-group row">
                     <label class="col-xs-2 form-control-label">สายงาน:<span style="color: Red;">*</span>     </label>
 
                     <div class="col-sm-5">
                         <p class="form-control-static">
-                            <select id="workLine" class="form-control" [(ngModel)]="person.workLine" name="workLine">
+                            <select id="workLine" class="form-control" [(ngModel)]="person.workLine" name="workLine" required>
 								<option  *ngFor="let WorkLine of lovWorkLineList;" required [value]="WorkLine.name" >{{WorkLine.name}}</option>
 
                         </select>
                         </p>
                     </div>
 
-                </div>
+                </div>-->
 
                 <!--person.workTelNo-->
-                <div class=" form-group row">
+                <!--<div class=" form-group row">
                     <label class="col-xs-2 form-control-label">โทรศัพท์ที่ทำงาน:<span style="color: Red;">*</span>      </label>
 
                     <div class="col-sm-5">
                         <p class="form-control-static">
-                            <input type="text" class="form-control" required [(ngModel)]="person.workTelNo" name="workTelNo" id="workTelNo" placeholder="โทรศัพท์ที่ทำงาน ">
+                            <input type="text" class="form-control" required [(ngModel)]="person.workTelNo" name="workTelNo" id="workTelNo" placeholder="โทรศัพท์ที่ทำงาน " required>
                         </p>
                     </div>
 
-                </div>
+                </div>-->
 
                 <!--person.belongTo-->
                 <div class=" form-group row">
@@ -205,12 +205,12 @@
                 </div>
 
                 <!--person.faculty-->
-                <div class=" form-group row">
+                <!--<div class=" form-group row">
                     <label class="col-xs-2 form-control-label">หน่วยงาน:<span style="color: Red;">*</span>    </label>
 
                     <div class="col-sm-5">
                         <p class="form-control-static">
-                            <select id="exampleSelect" class="form-control" [(ngModel)]="person.faculty" name="faculty">
+                            <select id="exampleSelect" class="form-control" [(ngModel)]="person.faculty" name="faculty" required >
 								<option *ngFor="let Faculty of lovFacultyList;" [value]="Faculty.name" >{{Faculty.name}}</option>
 								
                         </select>
@@ -219,29 +219,77 @@
 
                 </div>
 
-                <!--person.workingDateStr-->
+
                 <div class=" form-group row">
+                    <label class="col-xs-2 form-control-label">หน่วยงาน:<span style="color: Red;">*</span>    </label>
+
+                    <div class="col-sm-5">
+                        <p class="form-control-static">
+                            <select id="exampleSelect" class="form-control" [(ngModel)]="person.faculty" name="faculty" required >
+								<option *ngFor="let Faculty of lovFacultyList;" [value]="Faculty.name" >{{Faculty.name}}</option>
+								
+                        </select>
+                        </p>
+                    </div>
+
+                </div>-->
+
+                <div class=" form-group row">
+                    <label class="col-xs-2 form-control-label">คณะ:<span style="color: Red;">*</span>    </label>
+
+                    <div class="col-sm-5">
+                        <p class="form-control-static">
+                            <select id="exampleSelect" class="form-control" (change)="Adddepartment($event.target.value);" [(ngModel)]="person.faculty" name="faculty" required >
+								<option *ngFor="let Faculty of Faculty;" [value]="Faculty.name"  >{{Faculty.name}}</option>
+								
+                        </select>
+                  
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <div class=" form-group row">
+                    <label class="col-xs-2 form-control-label">ภาควิชา:<span style="color: Red;">*</span>    </label>
+
+                    <div class="col-sm-5">
+                        <p class="form-control-static">
+                            <select id="exampleSelect" class="form-control" [(ngModel)]="person.department" name="department" required >
+								<option *ngFor="let Faculty of Department;" [value]="Faculty.name" >{{Faculty.name}}</option>
+								
+                        </select>
+                        </p>
+                    </div>
+
+                </div>
+
+
+
+
+                <!--person.workingDateStr-->
+                <!--<div class=" form-group row">
                     <label class="col-xs-2 form-control-label">วันที่เริ่มทำงานจริง:<span style="color: Red;">*</span>     </label>
 
                     <div class="col-sm-5">
                         <div class="form-group">
                             <div class='input-group date datetimepicker-1'>
-                                <input type="text" class="form-control" required [(ngModel)]="person.workingDateStr" name="workingDateStr" id="workingDateStr" placeholder="วันที่เริ่มทำงานจริง ">
+                                <input type="text" class="form-control" required [(ngModel)]="person.workingDateStr" name="workingDateStr" id="workingDateStr" placeholder="วันที่เริ่มทำงานจริง " required>
                                 <span class="input-group-addon">
 									<i class="font-icon font-icon-calend"></i>
 								</span>
                             </div>
                         </div>
                     </div>
-                </div>
+                </div>-->
                 <!--person.assignDateStr-->
-                <div class=" form-group row">
+                <!--<div class=" form-group row">
                     <label class="col-xs-2 form-control-label">วันสั่งบรรจุ: <span style="color: Red;">*</span>     </label>
 
                     <div class="col-sm-5">
                         <div class="form-group">
                             <div class='input-group date datetimepicker-1'>
-                                <input type="text" class="form-control" required [(ngModel)]="person.assignDateStr" name="assignDateStr" id="assignDateStr" placeholder="วันสั่งบรรจุ">
+                                <input type="text" class="form-control" required [(ngModel)]="person.assignDateStr" name="assignDateStr" id="assignDateStr" placeholder="วันสั่งบรรจุ" required>
                                 <span class="input-group-addon">
 									<i class="font-icon font-icon-calend"></i>
 								</span>
@@ -249,10 +297,10 @@
                         </div>
                     </div>
 
-                </div>
+                </div>-->
 
                 <!--person.retireDateStr-->
-                <div class=" form-group row">
+                <!--<div class=" form-group row">
                     <label class="col-xs-2 form-control-label">วันเกษียณอายุ:    </label>
 
                     <div class="col-sm-5">
@@ -266,10 +314,10 @@
                         </div>
                     </div>
 
-                </div>
+                </div>-->
 
                 <!--person.maxInsignia-->
-                <div class=" form-group row">
+                <!--<div class=" form-group row">
                     <label class="col-xs-2 form-control-label">เครื่องราชการสูงสุด:     </label>
 
                     <div class="col-sm-5">
@@ -280,7 +328,7 @@
                         </p>
                     </div>
 
-                </div>
+                </div>-->
 
                 <!--person.maxEducation-->
                 <div class=" form-group row">
@@ -307,7 +355,7 @@
 
                 </div>
                 <!--person.marriedStatus-->
-                <div class=" form-group row">
+                <!--<div class=" form-group row">
                     <label class="col-xs-2 form-control-label">สถานะภาพสมรส:     </label>
 
                     <div class="col-sm-5">
@@ -317,9 +365,9 @@
                         </select>
                         </p>
                     </div>
-                </div>
+                </div>-->
                 <!--person.workNumber-->
-                <div class=" form-group row">
+                <!--<div class=" form-group row">
                     <label class="col-xs-2 form-control-label">เลขที่บัตรข้าราชการ:     </label>
 
                     <div class="col-sm-5">
@@ -328,9 +376,9 @@
                         </p>
                     </div>
 
-                </div>
+                </div>-->
                 <!--person.insureNo-->
-                <div class=" form-group row">
+                <!--<div class=" form-group row">
                     <label class="col-xs-2 form-control-label">เลขที่ กบข กสจ สปส:     </label>
 
                     <div class="col-sm-5">
@@ -339,9 +387,9 @@
                         </p>
                     </div>
 
-                </div>
+                </div>-->
                 <!--person.fund-->
-                <div class=" form-group row">
+                <!--<div class=" form-group row">
                     <label class="col-xs-2 form-control-label">การสมัครกองทุน:      </label>
 
                     <div class="col-sm-5">
@@ -350,9 +398,9 @@
                         </p>
                     </div>
 
-                </div>
+                </div>-->
                 <!--person.address-->
-                <div class=" form-group row">
+                <!--<div class=" form-group row">
                     <label class="col-xs-2 form-control-label">ที่อยู่ตามทะเบียนบ้าน:     </label>
 
                     <div class="col-sm-5">
@@ -362,9 +410,9 @@
                         </p>
                     </div>
 
-                </div>
+                </div>-->
                 <!--person.zipCode-->
-                <div class=" form-group row">
+                <!--<div class=" form-group row">
                     <label class="col-xs-2 form-control-label">รหัสไปรษณีย์:     </label>
 
                     <div class="col-sm-5">
@@ -373,7 +421,7 @@
                         </p>
                     </div>
 
-                </div>
+                </div>-->
                 <!--person.workingStatus-->
                 <!--<div class=" form-group row">
                     <label class="col-xs-2 form-control-label">เบอร์โทรศัพท์:     </label>
@@ -386,7 +434,7 @@
 
                 </div>-->
                 <!--person.workingStatus-->
-                <div class=" form-group row">
+                <!--<div class=" form-group row">
                     <label class="col-xs-2 form-control-label">สถานะภาพการทำงาน:     </label>
 
                     <div class="col-sm-5">
@@ -397,7 +445,7 @@
                         </p>
                     </div>
 
-                </div>
+                </div>-->
                 <!--person.fileData-->
                 <div class=" form-group row">
                     <label class="col-xs-2 form-control-label">รูปประวัติส่วนตัว:     </label>

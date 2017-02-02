@@ -35,7 +35,7 @@ var AdminWorkUser = (function () {
                     data: "username",
                     className: "center",
                     "render": function (data, type, full, meta) {
-                        return '<a href="javascript:void(0);"  Action="Edit" value="' + data + '" class="editor_remove">Edit</a> / <a href="javascript:void(0);" Action="DELETE" value="' + data + '" class="editor_remove">Delete</a>';
+                        return '<a href="javascript:void(0);" Action="Edit" value="' + data + '" class="editor_remove">Edit</a> / <a href="javascript:void(0);" Action="DELETE" value="' + data + '" class="editor_remove">Delete</a>';
                     }
                 }
             ]
@@ -49,8 +49,12 @@ var AdminWorkUser = (function () {
         };
     };
     AdminWorkUser.prototype.ngOnInit = function () {
+        var year = new Date().getFullYear() + 542;
         this.getDatatabel1();
         this.userModel = this.ModelSearch();
+        this.userModel.academicYear = year;
+        this.academicYearSelect = year;
+        this.academicYear = year;
     };
     AdminWorkUser.prototype.getDatatabel1 = function () {
         var _this = this;
@@ -63,6 +67,7 @@ var AdminWorkUser = (function () {
         this.page = this.datalist.resPagingBean;
         this.userModelSent = this.datalist.resObj;
         this.academicYearList = this.datalist.resObj.academicYearList;
+        // this.academicYear = this.userModel.academicYear;
         this.timetabletable.show();
     };
     AdminWorkUser.prototype.GetPersonError = function (error) {
@@ -72,15 +77,17 @@ var AdminWorkUser = (function () {
         //
         var ele = jQuery(target);
         console.log(ele.attr("value"), ele.attr("Action"));
-        if (ele.attr("Action") == "Edit") {
-            if (ele.attr("value")) {
-                this.router.navigate(['/AdminUserEdit', ele.attr("value")]);
-            }
-        }
-        else {
-            if (ele.attr("Action") == "DELETE") {
+        if (this.academicYear == this.userModel.academicYear) {
+            if (ele.attr("Action") == "Edit") {
                 if (ele.attr("value")) {
-                    this.DeleteDataUser(ele.attr("value"));
+                    this.router.navigate(['/AdminUserEdit', ele.attr("value")]);
+                }
+            }
+            else {
+                if (ele.attr("Action") == "DELETE") {
+                    if (ele.attr("value")) {
+                        this.DeleteDataUser(ele.attr("value"));
+                    }
                 }
             }
         }
@@ -99,6 +106,8 @@ var AdminWorkUser = (function () {
     };
     AdminWorkUser.prototype.SearchDataUser = function () {
         var _this = this;
+        this.academicYearSelect = this.userModel.academicYear;
+        this.userModel.academicYear = this.userModel.academicYear;
         this.userModelSent.username = this.userModel.username;
         this.userModelSent.firstLastName = this.userModel.firstLastName;
         this.userModelSent.academicYear = this.userModel.academicYear;

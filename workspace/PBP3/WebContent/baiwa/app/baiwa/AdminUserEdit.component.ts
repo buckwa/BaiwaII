@@ -35,6 +35,11 @@ export class AdminUserEdit {
     public person: any;
     public user: any;
     public modelEdit: any;
+    public Faculty: any[];
+    public Facultyname: any[];
+    public Department: any[]=[];
+
+
     submitted = false;
 
     constructor(private http: Http, private route: ActivatedRoute) {
@@ -47,7 +52,7 @@ export class AdminUserEdit {
 
 
     ngOnInit() {
-
+        this.adminFaculty();
         this.route.params.subscribe(params => this.user = params["user"]);
         if (this.user) {
             console.log("User :", this.user);
@@ -133,7 +138,9 @@ export class AdminUserEdit {
 
         this.model = this.modelUser;
         this.person = this.modelUser.person;
-
+        this.person.department = this.modelUser.person.departmentDesc;
+        this.person.faculty = this.modelUser.person.facultyDesc;
+       
         this.groupList = this.modelUser.groupList;
         this.lovSexList = this.modelUser.person.lovSexList;
         this.lovEmployeeTypeList = this.modelUser.person.lovEmployeeTypeList;
@@ -289,6 +296,56 @@ export class AdminUserEdit {
 
 
 
+
+    public adminFaculty() {
+        //console.log(year);
+        var year =new Date().getFullYear()+542;
+        var url = "../admin/json/getFaculty/"+year;
+        return this.http.get(url).subscribe(response => this.adminFacultySucess(response),
+            error => this.adminFacultyError(error), () => console.log("DepartmentName !"));
+    }
+
+    public adminFacultySucess(response: any) {
+
+        this.Facultyname = response.json(JSON.stringify(response._body));
+        this.Faculty = this.Facultyname[0].facultyList;
+        this.setdepartment();
+
+        console.log("SS !");
+    }
+
+    public adminFacultyError(error: String) {
+
+        console.log("GetadminFacultyError.")
+
+    }
+
+    public Adddepartment(faculty: String){
+
+
+        for(var i=0;i <this.Faculty.length;i++){
+            console.log("this.Faculty[i].name ",this.Faculty[i].name);
+            console.log("this.person.faculty ",faculty);
+                if(this.Faculty[i].name == faculty){
+                   this.Department = this.Faculty[i].departmentList;
+                   break;
+                }
+        }
+    }
+
+
+    public setdepartment(){
+
+
+        for(var i=0;i <this.Faculty.length;i++){
+            console.log("this.Faculty[i].name ",this.Faculty[i].name);
+            console.log("this.person.faculty ", this.person.faculty);
+                if(this.Faculty[i].name ==  this.person.faculty){
+                   this.Department = this.Faculty[i].departmentList;
+                   break;
+                }
+        }
+    }
 
 
 

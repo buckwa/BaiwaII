@@ -19,6 +19,7 @@ var AdminUserEdit = (function () {
         this.javascript = false;
         this.angular = false;
         this.csharp = false;
+        this.Department = [];
         this.submitted = false;
         this.model = this.ModelUser();
         this.person = this.PersonUser();
@@ -26,6 +27,7 @@ var AdminUserEdit = (function () {
     }
     AdminUserEdit.prototype.ngOnInit = function () {
         var _this = this;
+        this.adminFaculty();
         this.route.params.subscribe(function (params) { return _this.user = params["user"]; });
         if (this.user) {
             console.log("User :", this.user);
@@ -96,6 +98,8 @@ var AdminUserEdit = (function () {
         this.modelUser = this.modelUser.resObj;
         this.model = this.modelUser;
         this.person = this.modelUser.person;
+        this.person.department = this.modelUser.person.departmentDesc;
+        this.person.faculty = this.modelUser.person.facultyDesc;
         this.groupList = this.modelUser.groupList;
         this.lovSexList = this.modelUser.person.lovSexList;
         this.lovEmployeeTypeList = this.modelUser.person.lovEmployeeTypeList;
@@ -194,6 +198,42 @@ var AdminUserEdit = (function () {
                 format: 'MM/DD/YYYY'
             }
         });
+    };
+    AdminUserEdit.prototype.adminFaculty = function () {
+        var _this = this;
+        //console.log(year);
+        var year = new Date().getFullYear() + 542;
+        var url = "../admin/json/getFaculty/" + year;
+        return this.http.get(url).subscribe(function (response) { return _this.adminFacultySucess(response); }, function (error) { return _this.adminFacultyError(error); }, function () { return console.log("DepartmentName !"); });
+    };
+    AdminUserEdit.prototype.adminFacultySucess = function (response) {
+        this.Facultyname = response.json(JSON.stringify(response._body));
+        this.Faculty = this.Facultyname[0].facultyList;
+        this.setdepartment();
+        console.log("SS !");
+    };
+    AdminUserEdit.prototype.adminFacultyError = function (error) {
+        console.log("GetadminFacultyError.");
+    };
+    AdminUserEdit.prototype.Adddepartment = function (faculty) {
+        for (var i = 0; i < this.Faculty.length; i++) {
+            console.log("this.Faculty[i].name ", this.Faculty[i].name);
+            console.log("this.person.faculty ", faculty);
+            if (this.Faculty[i].name == faculty) {
+                this.Department = this.Faculty[i].departmentList;
+                break;
+            }
+        }
+    };
+    AdminUserEdit.prototype.setdepartment = function () {
+        for (var i = 0; i < this.Faculty.length; i++) {
+            console.log("this.Faculty[i].name ", this.Faculty[i].name);
+            console.log("this.person.faculty ", this.person.faculty);
+            if (this.Faculty[i].name == this.person.faculty) {
+                this.Department = this.Faculty[i].departmentList;
+                break;
+            }
+        }
     };
     AdminUserEdit = __decorate([
         core_1.Component({

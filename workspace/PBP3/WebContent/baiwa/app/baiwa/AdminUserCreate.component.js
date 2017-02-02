@@ -19,6 +19,7 @@ var AdminUserCreate = (function () {
         this.uploader = new ng2_file_upload_1.FileUploader({ url: URL1 });
         this.CheckPass = false;
         this.group = [];
+        this.Department = [];
         this.submitted = false;
         this.model = this.ModelUser();
         this.person = this.PersonUser();
@@ -26,6 +27,7 @@ var AdminUserCreate = (function () {
     AdminUserCreate.prototype.ngOnInit = function () {
         this.getCreateUserJson();
         this.Datetime();
+        this.adminFaculty();
         this.uploader.onBuildItemForm = function (fileItem, form) {
             form.append('academicKPIId', "1");
         };
@@ -198,6 +200,31 @@ var AdminUserCreate = (function () {
                 format: 'DD/MM/YYYY'
             }
         });
+    };
+    AdminUserCreate.prototype.adminFaculty = function () {
+        var _this = this;
+        //console.log(year);
+        var year = new Date().getFullYear() + 542;
+        var url = "../admin/json/getFaculty/" + year;
+        return this.http.get(url).subscribe(function (response) { return _this.adminFacultySucess(response); }, function (error) { return _this.adminFacultyError(error); }, function () { return console.log("DepartmentName !"); });
+    };
+    AdminUserCreate.prototype.adminFacultySucess = function (response) {
+        this.Facultyname = response.json(JSON.stringify(response._body));
+        this.Faculty = this.Facultyname[0].facultyList;
+        console.log("SS !");
+    };
+    AdminUserCreate.prototype.adminFacultyError = function (error) {
+        console.log("GetadminFacultyError.");
+    };
+    AdminUserCreate.prototype.Adddepartment = function (faculty) {
+        for (var i = 0; i < this.Faculty.length; i++) {
+            console.log("this.Faculty[i].name ", this.Faculty[i].name);
+            console.log("this.person.faculty ", faculty);
+            if (this.Faculty[i].name == faculty) {
+                this.Department = this.Faculty[i].departmentList;
+                break;
+            }
+        }
     };
     AdminUserCreate = __decorate([
         core_1.Component({

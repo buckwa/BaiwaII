@@ -31,6 +31,9 @@ export class AdminUserCreate {
     public model: any;
     public person: any;
     public Filename: any;
+    public Faculty: any[];
+    public Facultyname: any[];
+    public Department: any[]=[];
     submitted = false;
 
     constructor(private http: Http) {
@@ -41,6 +44,7 @@ export class AdminUserCreate {
     ngOnInit() {
         this.getCreateUserJson();
         this.Datetime();
+        this.adminFaculty();
         this.uploader.onBuildItemForm = (fileItem: any, form: any) => {
             form.append('academicKPIId', "1");
         };
@@ -282,6 +286,43 @@ export class AdminUserCreate {
 
 
 
+    }
+
+    public adminFaculty() {
+        //console.log(year);
+        var year =new Date().getFullYear()+542;
+        var url = "../admin/json/getFaculty/"+year;
+        return this.http.get(url).subscribe(response => this.adminFacultySucess(response),
+            error => this.adminFacultyError(error), () => console.log("DepartmentName !"));
+    }
+
+
+    public adminFacultySucess(response: any) {
+
+        this.Facultyname = response.json(JSON.stringify(response._body));
+        this.Faculty = this.Facultyname[0].facultyList;
+
+
+        console.log("SS !");
+    }
+
+    public adminFacultyError(error: String) {
+
+        console.log("GetadminFacultyError.")
+
+    }
+
+    public Adddepartment(faculty: String){
+
+
+        for(var i=0;i <this.Faculty.length;i++){
+            console.log("this.Faculty[i].name ",this.Faculty[i].name);
+            console.log("this.person.faculty ",faculty);
+                if(this.Faculty[i].name == faculty){
+                   this.Department = this.Faculty[i].departmentList;
+                   break;
+                }
+        }
     }
 
 }

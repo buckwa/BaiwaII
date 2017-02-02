@@ -62,7 +62,8 @@ public class ImportProfileDaoImpl implements ImportProfileDao {
 		sb.append( "  salary,         " ); // Bigdecimal
 		sb.append( "  work_tel_no,    " );
 		sb.append( "  belong_to,      " );
-		sb.append( "  faculty,        " );
+		sb.append( "  faculty_desc,   " );
+		sb.append( "  department_desc,   " );
 		sb.append( "  working_date,   " ); // Date
 		sb.append( "  assign_date,    " ); // Date
 		sb.append( "  retire_date,    " ); // Date
@@ -89,7 +90,7 @@ public class ImportProfileDaoImpl implements ImportProfileDao {
 		sb.append( "   )   " );
 		sb.append( " VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, " );
 		sb.append( "  ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, " );
-		sb.append( "  ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, " );
+		sb.append( "  ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, " );
 		sb.append( "  ?, ?," );
 		sb.append( " 'A',?, CURRENT_TIMESTAMP, ?, CURRENT_TIMESTAMP,? ) " );
 
@@ -111,26 +112,27 @@ public class ImportProfileDaoImpl implements ImportProfileDao {
 				ps.setString( 13, person.getWorkTelNo());
 				ps.setString( 14, person.getBelongTo());
 				ps.setString( 15, person.getFaculty());
-				ps.setDate( 16, BuckWaDateUtils.utilDateToSqlDate(person.getWorkingDate()));
-				ps.setDate( 17, BuckWaDateUtils.utilDateToSqlDate(person.getAssignDate()));
-				ps.setDate( 18, BuckWaDateUtils.utilDateToSqlDate(person.getRetireDate()));
-				ps.setString( 19, person.getMaxInsignia());
-				ps.setString( 20, person.getMaxEducation());
-				ps.setString( 21, person.getTaxNo());
-				ps.setString( 22, person.getMarriedStatus());
-				ps.setString( 23, person.getWorkNumber());
-				ps.setString( 24, person.getInsureNo());
-				ps.setString( 25, person.getFund());
-				ps.setString( 26, person.getAddress());
-				ps.setString( 27, person.getZipCode());
-				ps.setString( 28, person.getTelNo());
-				ps.setString( 29, person.getEmail());
-				ps.setString( 30, person.getWorkingStatus());
-				ps.setString( 31, person.getPicture());
-				ps.setString( 32, person.getPersonType());
-				ps.setString( 33, person.getCreateBy());
-				ps.setString( 34, person.getUpdateBy());
-				ps.setString( 35, person.getAcademicYear());
+				ps.setString( 16, person.getDepartment());
+				ps.setDate( 17, BuckWaDateUtils.utilDateToSqlDate(person.getWorkingDate()));
+				ps.setDate( 18, BuckWaDateUtils.utilDateToSqlDate(person.getAssignDate()));
+				ps.setDate( 19, BuckWaDateUtils.utilDateToSqlDate(person.getRetireDate()));
+				ps.setString( 20, person.getMaxInsignia());
+				ps.setString( 21, person.getMaxEducation());
+				ps.setString( 22, person.getTaxNo());
+				ps.setString( 23, person.getMarriedStatus());
+				ps.setString( 24, person.getWorkNumber());
+				ps.setString( 25, person.getInsureNo());
+				ps.setString( 26, person.getFund());
+				ps.setString( 27, person.getAddress());
+				ps.setString( 28, person.getZipCode());
+				ps.setString( 29, person.getTelNo());
+				ps.setString( 30, person.getEmail());
+				ps.setString( 31, person.getWorkingStatus());
+				ps.setString( 32, person.getPicture());
+				ps.setString( 33, person.getPersonType());
+				ps.setString( 34, person.getCreateBy());
+				ps.setString( 35, person.getUpdateBy());
+				ps.setString( 36, person.getAcademicYear());
 				return ps;  
 			}
 		};

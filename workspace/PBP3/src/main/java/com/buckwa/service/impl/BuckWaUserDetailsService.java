@@ -39,7 +39,7 @@ public class BuckWaUserDetailsService implements UserDetailsService {
         		  throw new Exception();
         	}
        	 List<GrantedAuthority> authorities = getAuthorities(username);     	 
-         String sql = "SELECT user_id,username, password FROM buckwauser  WHERE  username = '"+username+"' and enable =1 ";      
+         String sql = "SELECT user_id,username, password FROM buckwauser  WHERE  username = '"+username+"' and enable =1  AND academic_year='2559'";      
          logger.info(" loadUserByUsername:"+sql);
 	        SqlRowSet rs = jdbcTemplate.queryForRowSet(sql);	       
 	        while (rs.next()) {
@@ -152,7 +152,7 @@ public class BuckWaUserDetailsService implements UserDetailsService {
 	       
 	       // Get First Last Name
 	       
-	       String sqlFirstLastName = "  select  CONCAT(CONCAT(p.thai_name,' '), p.thai_surname) AS firstLastName from person_pbp p where email= '"+username+"'";
+	       String sqlFirstLastName = "  select  CONCAT(CONCAT(p.thai_name,' '), p.thai_surname) AS firstLastName from person_pbp p where email= '"+username+"'  AND academic_year='2559'";
 	       logger.info(" Get First Last SQL:"+sqlFirstLastName);
 	       String fl = jdbcTemplate.queryForObject(sqlFirstLastName,String.class);	
 	       logger.info(" Get First Last result:"+fl);

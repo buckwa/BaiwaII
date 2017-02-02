@@ -387,7 +387,8 @@ public class PersonProfileDaoImpl implements PersonProfileDao {
 		"     salary = ?, " +
 		"     work_tel_no = ?, " +
 		"     belong_to = ?, " +
-		"     faculty = ?, " +
+		"     faculty_desc = ?, " +
+		"     department_desc = ?, " +
 		"     working_date = ?, " +
 		"     assign_date = ?, " +
 		"     retire_date = ?, " +
@@ -423,6 +424,7 @@ public class PersonProfileDaoImpl implements PersonProfileDao {
 			domain.getWorkTelNo(),
 			domain.getBelongTo(),
 			domain.getFaculty(),
+			domain.getDepartment(),
 			domain.getWorkingDate(),
 			domain.getAssignDate(),
 			domain.getRetireDate(),
@@ -724,6 +726,8 @@ public class PersonProfileDaoImpl implements PersonProfileDao {
 			//domain.setPicture(rs.getString("picture"));
 			domain.setPersonType(rs.getString("person_type"));
 			domain.setStatus(rs.getString("status"));
+			domain.setPosition(rs.getString("position"));
+			domain.setBelongTo(rs.getString("belong_to"));
 			domain.setDepartmentDesc(rs.getString("department_desc"));
 			domain.setTitleName(rs.getString("title_name"));
 			domain.setAcademicRank(rs.getString("academic_rank"));
@@ -731,7 +735,7 @@ public class PersonProfileDaoImpl implements PersonProfileDao {
 			domain.setRegId(rs.getString("reg_id"));
 			domain.setWorkingDate(rs.getDate("working_date"));
 			domain.setBirthdate(rs.getDate("birth_date"));
-			
+
 			//logger.info(" ### picture:"+rs.getString("picture"));
 			logger.info(" ###   "+rs.getString("email")+":"+rs.getString("thai_name")+" "+rs.getString("thai_surname")+" : "+rs.getString("faculty_desc")+" :"+rs.getString("department_desc"));
 			return domain;

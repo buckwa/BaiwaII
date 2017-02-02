@@ -242,7 +242,7 @@ public class AdminUserDaoImpl implements AdminUserDao {
 		}	
  
 		
-		sb.append(" LIMIT " + pagingBean.getLimitItemFrom() + ","	+ pagingBean.getMaxPageItems());
+		//sb.append(" LIMIT " + pagingBean.getLimitItemFrom() + ","	+ pagingBean.getMaxPageItems());
  
 		logger.info("sql:"+sb.toString());
 		
@@ -448,7 +448,7 @@ public class AdminUserDaoImpl implements AdminUserDao {
 				domain.setEmail(rs.getString("email"));
 				domain.setUser_id(rs.getInt("user_id"));
 				domain.setSignatureImagePath(rs	.getString("signature_image_path"));
-				 domain.setRegId(rs.getString("reg_id"));
+				domain.setRegId(rs.getString("reg_id"));
 				//domain.setLeaveAccumulate(rs.getInt("leave_accumulate"));
 				return domain;
 			}

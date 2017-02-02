@@ -83,9 +83,9 @@ public class JSONAdminController {
 	@Autowired
     private PathUtil pathUtil;
 
-	
-	@RequestMapping(value = "/getFacultyWrapper", method = RequestMethod.GET, headers = "Accept=application/json")
-	public List<FacultyWrapper> initList() {
+
+	@RequestMapping(value = "/getFacultyWrapper/{year}", method = RequestMethod.GET, headers = "Accept=application/json")
+	public List<FacultyWrapper> initList(@PathVariable String year) {
 
 		logger.info(" Start  ");
 		ModelAndView mav = new ModelAndView();
@@ -97,7 +97,7 @@ public class JSONAdminController {
 		try{
 			BuckWaRequest request = new BuckWaRequest();
 			String academicYear =schoolUtil.getCurrentAcademicYear();
-			request.put("academicYear",academicYear);
+			request.put("academicYear",year);
 			response = facultyService.getByAcademicYear(request);
 			
 			if(response.getStatus()==BuckWaConstants.SUCCESS){	
@@ -596,8 +596,8 @@ public class JSONAdminController {
 	}	
 
 	
-	@RequestMapping(value = "/getFaculty", method = RequestMethod.GET, headers = "Accept=application/json")
-	public List<FacultyWrapper> faculty() {
+	@RequestMapping(value = "/getFaculty/{year}", method = RequestMethod.GET, headers = "Accept=application/json")
+	public List<FacultyWrapper> faculty(@PathVariable String year) {
 		logger.info(" Start  ");
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("facultyList");
@@ -606,7 +606,7 @@ public class JSONAdminController {
 
 			BuckWaRequest request = new BuckWaRequest();
 			String academicYear = schoolUtil.getCurrentAcademicYear();
-			request.put("academicYear", academicYear);
+			request.put("academicYear", year);
 			BuckWaResponse response = facultyService.getByAcademicYear(request);
 			if (response.getStatus() == BuckWaConstants.SUCCESS) {
 				FacultyWrapper facultyWrapper = (FacultyWrapper) response.getResObj("facultyWrapper");
@@ -626,7 +626,7 @@ public class JSONAdminController {
 	}
 
 	@RequestMapping(value="/editFaculty/{facultyId}", method = RequestMethod.GET, headers = "Accept=application/json")
-	public List<Faculty> faculty(@PathVariable String facultyId) {
+	public List<Faculty> facultyedit(@PathVariable String facultyId) {
 		logger.info(" Start  ");
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("facultyEdit");

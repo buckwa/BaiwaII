@@ -12,23 +12,41 @@ export class personReport  {
     public json: any;
     public nameDepart: any;
     public mean1: any;
-
+    public user:any;
+    public academicYearList :any;
+    public currentAcademicYear :any;
 
     constructor(private commonService: CommonService, private http: Http) {
         this.libPath = "/PBP3/baiwa/libs/";
 
     }
     ngOnInit() {
-        this.DepartmentName();
         
+        this.GetUserSession();
         
        
     }
     ngAfterViewInit() {
         
     }
-    public DepartmentName(){
-        var url = "../person/DepartmentName";
+
+    public GetUserSession() {
+        var url = "../person/getUserSession";
+        return this.http.get(url).subscribe(response => this.GetuserSucess(response),
+            error => this.GetPersonError(error), () => console.log("editdone !"));
+    }
+
+    public GetuserSucess(response: any) {
+        this.user = response.json(JSON.stringify(response._body));
+        this.academicYearList = this.user.academicYearList;
+        this.currentAcademicYear = this.user.currentAcademicYear;
+
+        this.DepartmentName(this.currentAcademicYear);
+    }
+    
+    public DepartmentName(year: any){
+        var url = "../person/DepartmentName/"+year ;
+        this.currentAcademicYear = year;
         return this.http.get(url).subscribe(response => this.GetkendoSucess(response),
         error => this.GetDepartmentNameError(error), () => console.log("DepartmentName !"));
     }
@@ -47,7 +65,7 @@ export class personReport  {
     
         
     public NameDepartment(){
-        var url = "../person/getRadarPlotNewByYear/2558";
+        var url = "../person/getRadarPlotNewByYear/"+this.currentAcademicYear;
         return this.http.get(url).subscribe(response => this.GetkendoGridSucess(response),
         error => this.GetPersonError(error), () => console.log("getRadarPlotNewByYear1 !"));
     }
@@ -64,12 +82,12 @@ export class personReport  {
 
     public kendoChart() {
 
-
+        var year =this.currentAcademicYear ; 
         jQuery("#KendoChart").kendoChart({
                  dataSource: {
                      transport: {
                          read: {
-                         	 url: "../person/getBarchart",
+                         	 url: "../person/getBarchart/"+year ,
                              dataType: "json"
                          }
                      } 
@@ -101,6 +119,9 @@ export class personReport  {
 
     }
 
+    public changeYear(year: any){
 
+        this.DepartmentName(year);
+    }
 
 }

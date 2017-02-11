@@ -309,6 +309,8 @@ export class AdminUserEdit {
 
         this.Facultyname = response.json(JSON.stringify(response._body));
         this.Faculty = this.Facultyname[0].facultyList;
+
+
         this.setdepartment();
 
         console.log("SS !");
@@ -337,7 +339,7 @@ export class AdminUserEdit {
     public setdepartment(){
 
 
-        for(var i=0;i <this.Faculty.length;i++){
+        for(var i=0;i <=this.Faculty.length;i++){
             console.log("this.Faculty[i].name ",this.Faculty[i].name);
             console.log("this.person.faculty ", this.person.faculty);
                 if(this.Faculty[i].name ==  this.person.faculty){

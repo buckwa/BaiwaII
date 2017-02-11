@@ -226,7 +226,7 @@ var AdminUserEdit = (function () {
         }
     };
     AdminUserEdit.prototype.setdepartment = function () {
-        for (var i = 0; i < this.Faculty.length; i++) {
+        for (var i = 0; i <= this.Faculty.length; i++) {
             console.log("this.Faculty[i].name ", this.Faculty[i].name);
             console.log("this.person.faculty ", this.person.faculty);
             if (this.Faculty[i].name == this.person.faculty) {

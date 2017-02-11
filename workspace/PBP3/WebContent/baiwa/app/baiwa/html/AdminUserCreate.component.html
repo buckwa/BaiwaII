@@ -141,7 +141,18 @@
                     <div class="col-sm-5">
                         <p class="form-control-static">
                             <select class="form-control" [(ngModel)]="person.employeeType" name="employeeType" id="employeeType" required >
-								<option  *ngFor="let EmployeeType of lovEmployeeTypeList ;"  [value]="EmployeeType.name"  >{{EmployeeType.name}}</option>
+								<!--<option  *ngFor="let EmployeeType of lovEmployeeTypeList ;"  [value]="EmployeeType.name"  >{{EmployeeType.name}}</option>-->
+                            	<option value="ข้าราชการ">ข้าราชการ</option>
+                                <option value="พนง.งบประมาณ">พนง.งบประมาณ</option>
+                                <option value="พนง.รายได้">พนง.รายได้</option>
+                                <option value="พนง.เปลี่ยนสถานภาพ">พนง.เปลี่ยนสถานภาพ</option>
+                                <option value="พนักงานสถาบันเงินงบประมาณ">พนักงานสถาบันเงินงบประมาณ</option>
+                                <option value="พนักงานสถาบันเปลี่ยนสถานภาพฯ">พนักงานสถาบันเปลี่ยนสถานภาพฯ</option>
+                                <option value="ลจ.ต่างชาติ">ลจ.ต่างชาติ</option>
+                                <option value="ลูกจ้างรายเดือนด้วยเงินรายได้">ลูกจ้างรายเดือนด้วยเงินรายได้</option>
+                                <option value="สายสนับสนุนวิชาการ">สายสนับสนุนวิชาการ</option>
+
+                                
 	
                             </select>
                         </p>
@@ -154,9 +165,36 @@
 
                     <div class="col-sm-5">
                         <p class="form-control-static">
-                            <select id="position" class="form-control" [(ngModel)]="person.position" name="position" required >
-								<option  *ngFor="let Position of lovPositionList;"  [value]="Position.name"  >{{Position.name}}</option>
-
+                            <select id="position" class="form-control" [(ngModel)]="person.academicRank" name="position" required >
+								<!--<option  *ngFor="let Position of lovPositionList;"  [value]="Position.name"  >{{Position.name}}</option>-->
+                                <option value="ผู้ช่วยศาสตราจารย์">ผู้ช่วยศาสตราจารย์</option>
+                                <option value="รองศาสตราจารย์">รองศาสตราจารย์</option>
+                                <option value="ศาสตราจารย์">ศาสตราจารย์</option>
+                                <option value="อาจารย์">อาจารย์</option>
+                                <option value="รองศาสตราจารย์(รอ ศาสตราจารย์)">รองศาสตราจารย์(รอ ศาสตราจารย์)</option>
+                                <option value="วิศวกร">วิศวกร</option>
+                                <option value="นักวิจัย">นักวิจัย</option>
+                                <option value="นักวิทยาศาสตร์">นักวิทยาศาสตร์</option>
+                                <option value="เจ้าหน้าที่บริหารงานทั่วไป">เจ้าหน้าที่บริหารงานทั่วไป</option>
+                                <option value="เจ้าหน้าที่วิจัย">เจ้าหน้าที่วิจัย</option>
+                                <option value="บรรณารักษ์">บรรณารักษ์</option>
+                                <option value="พนักงานเก็บเอกสาร">พนักงานเก็บเอกสาร</option>
+                                <option value="ผู้ปฏิบัติการสอน">ผู้ปฏิบัติการสอน</option>
+                                <option value="ผู้ปฏิบัติงานบริหาร">ผู้ปฏิบัติงานบริหาร</option>
+                                <option value="นักวิชาการคอมพิวเตอร์">นักวิชาการคอมพิวเตอร์</option>
+                                <option value="นักประชาสัมพันธ์">นักประชาสัมพันธ์</option>
+                                <option value="นักวิชาการศึกษา">นักวิชาการศึกษา</option>
+                                <option value="พนักงานบริการ">พนักงานบริการ</option>
+                                <option value="พนักงานสถานที่">พนักงานสถานที่</option>
+                                <option value="นักวิชาการโสตทัศนศึกษา">นักวิชาการโสตทัศนศึกษา</option>
+                                <option value="ช่างอิเล็คทรอนิคส์">ช่างอิเล็คทรอนิคส์</option>
+                                <option value="ช่างเทคนิค">ช่างเทคนิค</option>
+                                <option value="ช่างปูน">ช่างปูน</option>
+                                <option value="พนักงานขับรถงานเกษตรและก่อสร้าง">พนักงานขับรถงานเกษตรและก่อสร้าง</option>
+<!--<option value="อาจารย์"></option>
+<option value="ผู้ช่วยศาสตราจารย์"></option>
+<option value="รองศาสตราจารย์"></option>
+<option value="ศาสตราจารย์"></option>-->
                         </select>
                         </p>
                     </div>
@@ -239,7 +277,7 @@
 
                     <div class="col-sm-5">
                         <p class="form-control-static">
-                            <select id="exampleSelect" class="form-control" (change)="Adddepartment($event.target.value);" [(ngModel)]="person.faculty" name="faculty" required >
+                            <select id="Faculty" class="form-control" (change)="Adddepartment($event.target.value);" [(ngModel)]="person.faculty" name="faculty" required >
 								<option *ngFor="let Faculty of Faculty;" [value]="Faculty.name"  >{{Faculty.name}}</option>
 								
                         </select>
@@ -255,7 +293,7 @@
 
                     <div class="col-sm-5">
                         <p class="form-control-static">
-                            <select id="exampleSelect" class="form-control" [(ngModel)]="person.department" name="department" required >
+                            <select id="Department" class="form-control" [(ngModel)]="person.department" name="department" required >
 								<option *ngFor="let Faculty of Department;" [value]="Faculty.name" >{{Faculty.name}}</option>
 								
                         </select>
@@ -268,7 +306,7 @@
 
 
                 <!--person.workingDateStr-->
-                <!--<div class=" form-group row">
+                <div class=" form-group row">
                     <label class="col-xs-2 form-control-label">วันที่เริ่มทำงานจริง:<span style="color: Red;">*</span>     </label>
 
                     <div class="col-sm-5">
@@ -281,7 +319,7 @@
                             </div>
                         </div>
                     </div>
-                </div>-->
+                </div>
                 <!--person.assignDateStr-->
                 <!--<div class=" form-group row">
                     <label class="col-xs-2 form-control-label">วันสั่งบรรจุ: <span style="color: Red;">*</span>     </label>
@@ -333,18 +371,25 @@
                 <!--person.maxEducation-->
                 <div class=" form-group row">
                     <label class="col-xs-2 form-control-label">คุณวุฒิการศึกษา ณ วันที่บรรจุ:     </label>
-
                     <div class="col-sm-5">
                         <p class="form-control-static">
-                            <select id="exampleSelect" class="form-control" [(ngModel)]="person.maxEducation" name="maxEducation">
-								<option *ngFor="let Education of lovEducationList;" [value]="Education.name" >{{Education.name}}</option>
-
+                            <select id="maxEducation" class="form-control" [(ngModel)]="person.maxEducation" name="maxEducation">
+								<!--<option *ngFor="let Education of lovEducationList;" [value]="Education.name" >{{Education.name}}</option>-->
+                                <option value="- ไม่มีข้อมูล -" >- ไม่มีข้อมูล -</option>
+                                <option value="ป.เอก" >ปริญญาเอก</option>
+                                <option value="ปริญญาโท-เอก" >ปริญญาโท-เอก</option>
+                                <option value="ป.โท" >ปริญญาโท</option>
+                                <option value="ป.ตรี" >ปริญญาตรี</option>
+                                <option value="ประกาศนียบัตรวิชาชีพชั้นสูง" >ประกาศนียบัตรวิชาชีพชั้นสูง</option>
+                                <option value="อนุปริญญา" >อนุปริญญา</option>
+                                <option value="ประกาศนียบัตรวิชาชีพ" >ประกาศนียบัตรวิชาชีพ</option>
+                                <option value="มัธยมศึกษาตอนปลาย" >มัธยมศึกษาตอนปลาย</option>
                         </select>
                         </p>
                     </div>
                 </div>
                 <!--person.taxNo-->
-                <div class=" form-group row">
+                <!--<div class=" form-group row">
                     <label class="col-xs-2 form-control-label">บัตรผู้เสียภาษี:     </label>
 
                     <div class="col-sm-5">
@@ -353,7 +398,7 @@
                         </p>
                     </div>
 
-                </div>
+                </div>-->
                 <!--person.marriedStatus-->
                 <!--<div class=" form-group row">
                     <label class="col-xs-2 form-control-label">สถานะภาพสมรส:     </label>
@@ -447,14 +492,14 @@
 
                 </div>-->
                 <!--person.fileData-->
-                <div class=" form-group row">
+                <!--<div class=" form-group row">
                     <label class="col-xs-2 form-control-label">รูปประวัติส่วนตัว:     </label>
 
                     <div class="col-sm-5">
                         <p class="form-control-static">
-                            <label class="control-label">Select File</label>
+                            <label class="control-label">Select File</label>-->
                             <!--path="person.fileData" id="image" type="file" cssClass="input" -->
-                            <input ng2FileSelect [uploader]="uploader" multiple type="file" multiple class="file-loading form-control" [(ngModel)]="person.fileData"
+                            <!--<input ng2FileSelect [uploader]="uploader" multiple type="file" multiple class="file-loading form-control" [(ngModel)]="person.fileData"
                                 name="workingStatus" (change)="onChangefile($event)">
                             <button type="button" class="btn btn-rounded btn-inline btn-warning" (click)="uploadFileAll()" [disabled]="!uploader.getNotUploadedItems().length">อัพโหลด</button>
                         </p>
@@ -471,7 +516,7 @@
                         </p>
                     </div>
 
-                </div>
+                </div>-->
                 <div class=" form-group row">
                     <label class="col-xs-2 form-control-label"></label>
 

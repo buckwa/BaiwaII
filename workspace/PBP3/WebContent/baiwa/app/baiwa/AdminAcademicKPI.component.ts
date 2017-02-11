@@ -19,6 +19,7 @@ export class AdminAcademicKPI implements OnInit {
     public facultyList: any;
     public academicKPIList: any;
     public searchAtti: any;
+    public academicYearSelect: any;
 
     public ModelSearch() {
         return {
@@ -29,6 +30,9 @@ export class AdminAcademicKPI implements OnInit {
     }
 
     ngOnInit() {
+        var year =new Date().getFullYear()+542;
+        this.academicYearSelect = year;
+
         this.searchAtti = this.ModelSearch();
 
     }
@@ -57,6 +61,11 @@ export class AdminAcademicKPI implements OnInit {
         this.academicYearList = this.model.academicYearList;
         this.pBPWorkTypeList = this.model.pBPWorkTypeList;
         this.facultyList = this.model.facultyList;
+
+
+        this.searchAtti.facultyCode  = this.model.facultyCodeSelect;
+        this.searchAtti.academicYear =this.model.academicYear;
+        this.searchAtti.workTypeCode =this.model.workTypeCode;
         console.log(" List Success  !");
     }
     public GetlistKPIJsonError(error: any) {
@@ -78,6 +87,11 @@ export class AdminAcademicKPI implements OnInit {
         this.workTypeName = this.model.workTypeName;
         this.academicYear = this.model.academicYear;
         this.academicKPIList = this.model.academicKPIList;
+
+
+        this.searchAtti.facultyCode  = this.model.facultyCodeSelect;
+        this.searchAtti.academicYear =this.model.academicYear;
+        this.searchAtti.workTypeCode =this.model.workTypeCode;
 
         // this.academicYearList = this.model.academicYearList;
         // this.pBPWorkTypeList =this.model.pBPWorkTypeList ;
@@ -109,7 +123,7 @@ export class AdminAcademicKPI implements OnInit {
         console.log(" GetDeleteKPI !");
     }
     public getTimeTableSucess() {
- location.reload();
+        location.reload();
 
     }
 }

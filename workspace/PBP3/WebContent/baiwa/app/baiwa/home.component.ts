@@ -14,7 +14,7 @@ const URL1 = 'http://localhost:8080/PBP3/pam/person/uploadPersonProfilePicture2'
 
 @Component({
     templateUrl: 'app/baiwa/html/home.component.html',
-    
+
 })
 export class home implements OnInit, AfterViewInit {
 
@@ -31,12 +31,13 @@ export class home implements OnInit, AfterViewInit {
     public imageProfilePath: any;
     sanitizedUrl;
     tmpUrl;
-    public messageList:any[];
-    totalMessage:any;
-    public maxVal:any;
+    public messageList: any[];
+    totalMessage: any;
+    public maxVal: any;
+    public currentAcademicYear: any;
 
     public uploader: FileUploader = new FileUploader({ url: URL1 });
-    constructor(private router: Router,private commonService: CommonService, private http: Http, private sanitizer: DomSanitizer) {
+    constructor(private router: Router, private commonService: CommonService, private http: Http, private sanitizer: DomSanitizer) {
         this.libPath = "/PBP3/baiwa/libs/";
         this.profile = this.defaultProfile();
         this.work = this.defaultWork();
@@ -45,8 +46,9 @@ export class home implements OnInit, AfterViewInit {
 
     }
     ngOnInit() {
-        
+
         this.GetUserSession();
+
         this.uploader.queue;
 
         this.uploader.onBuildItemForm = (fileItem: any, form: any) => {
@@ -58,7 +60,7 @@ export class home implements OnInit, AfterViewInit {
 
     }
     ngAfterViewInit() {
-        
+
     }
 
     public defaultProfile() {
@@ -86,12 +88,12 @@ export class home implements OnInit, AfterViewInit {
             "mean": ""
         }];
     }
-    defaultMessage(){
+    defaultMessage() {
         return [{
-            "createBy":"",
-            "messageDetail":"",
-            "messageId":"",
-            "topicId":""
+            "createBy": "",
+            "messageDetail": "",
+            "messageId": "",
+            "topicId": ""
         }]
     }
 
@@ -105,15 +107,15 @@ export class home implements OnInit, AfterViewInit {
             this.sumasix = parseFloat(this.sumasix) + parseFloat(this.work[i].axisValue);
             this.sumasix2 = parseFloat(this.sumasix2) + parseFloat(this.work[i].axisValue2);
 
-            if (this.work[i].axisValue > this.work[i].axisValue2 && this.work[i].axisValue > maxVal){
+            if (this.work[i].axisValue > this.work[i].axisValue2 && this.work[i].axisValue > maxVal) {
                 maxVal = this.work[i].axisValue;
-            }else if (this.work[i].axisValue < this.work[i].axisValue2 &&this.work[i].axisValue2> maxVal ){
-                maxVal = this.work[i].axisValue2 ;
+            } else if (this.work[i].axisValue < this.work[i].axisValue2 && this.work[i].axisValue2 > maxVal) {
+                maxVal = this.work[i].axisValue2;
             }
         }
         this.maxVal = maxVal;
     }
-    public GetPersonByAcadamy(user: String,  year: String) {
+    public GetPersonByAcadamy(user: String, year: String) {
         var url = "../person/getPersonByAcademicYear/" + user + "/" + year
         this.http.get(url).subscribe(response => this.GetPersonSucess(response),
             error => this.GetPersonError(error), () => console.log("editdone !")
@@ -135,10 +137,11 @@ export class home implements OnInit, AfterViewInit {
 
     }
     public GetRadarPlotNewSearch(year: String) {
-        this.GetRadarPlotNew(this.user.userName, year, "2");
+        this.GetRadarPlotNew(this.user.userName, year, this.profile.evaluateRound);
+        this.currentAcademicYear = year;
     }
     public GetRadarPlot() {
-        this.GetRadarPlotNew(this.user.userName, this.user.currentAcademicYear, "2");
+        this.GetRadarPlotNew(this.user.userName, this.currentAcademicYear, this.profile.evaluateRound);
     }
     public GetRadarPlotNew(user: String, year: String, num: String) {
         var url = "../person/getRadarPlotNew/" + user + "/" + year + "/" + num;
@@ -160,14 +163,17 @@ export class home implements OnInit, AfterViewInit {
     }
     public GetuserSucess(response: any) {
         this.user = response.json(JSON.stringify(response._body));
+        this.currentAcademicYear = this.user.currentAcademicYear;
+        this.GetPersonByAcadamy(this.user.userName, this.currentAcademicYear);
 
-        if(this.user.isAdmin==true){
-             this.router.navigate(['/AdminAcademicKPI']);
+        if (this.user.isAdmin == true) {
+            this.router.navigate(['/AdminAcademicKPI']);
         }
 
-        this.GetPersonByAcadamy(this.user.userName, this.user.currentAcademicYear);
-        this.GetRadarPlotNew(this.user.userName, this.user.currentAcademicYear, "2");
-        
+
+        setTimeout(() => this.GetRadarPlotNew(this.user.userName, this.currentAcademicYear, this.profile.evaluateRound), 250);
+
+
     }
 
     public createChart(): void {
@@ -210,7 +216,7 @@ export class home implements OnInit, AfterViewInit {
                     visible: true,
                 },
                 min: 0,
-                max:  this.maxVal
+                max: this.maxVal
             },
             tooltip: {
                 visible: true,
@@ -245,7 +251,7 @@ export class home implements OnInit, AfterViewInit {
 
     public UploadPicture(item: any) {
         item.upload();
-        if (!item.isSuccess){
+        if (!item.isSuccess) {
             jQuery("#myModal").modal('hide');
             //this.getImageLocal(this.personId);
             window.location.reload();
@@ -289,9 +295,9 @@ export class home implements OnInit, AfterViewInit {
         });
     }
 
-    public getImageLocal(personID:String){
-       // var data = {'profileImg' : profileImg}
-        let url = "../person/getImageFile/"+personID;
+    public getImageLocal(personID: String) {
+        // var data = {'profileImg' : profileImg}
+        let url = "../person/getImageFile/" + personID;
 
         this.getImage(url).subscribe(imageData => {
             console.log("imageReturn :" + imageData.image);
@@ -302,47 +308,47 @@ export class home implements OnInit, AfterViewInit {
 
         // the below will throw not implemented error
         this.http.get(url).subscribe(image => {
-            console.log("imageUrl :"+image.url);
+            console.log("imageUrl :" + image.url);
             console.log(image.arrayBuffer());
         });
     }
-     public recalculate(){
+    public recalculate() {
         this.commonService.loading();
         var url = "../person/recalculate";
         return this.http.get(url).subscribe(response => this.recalsucess(response),
             error => this.recalError(error), () => console.log("editdone !")
         );
     }
-    recalsucess(response:any){
+    recalsucess(response: any) {
         this.commonService.unLoading();
         console.log("recal sucess");
         window.location.reload();
     }
-    recalError(error:any){
+    recalError(error: any) {
         this.commonService.unLoading();
         console.log("recal error");
     }
-    getMessage(){
+    getMessage() {
         var url = "../person/getUserMassage";
-      
-        this.http.post(url,this.profile).subscribe(response => this.GetMessageSucess(response),
+
+        this.http.post(url, this.profile).subscribe(response => this.GetMessageSucess(response),
             error => this.GetPersonError(error), () => console.log("editdone !")
         );
 
     }
-    GetMessageSucess(response:any){
-        this.messageList =  response.json(JSON.stringify(response._body));
+    GetMessageSucess(response: any) {
+        this.messageList = response.json(JSON.stringify(response._body));
 
     }
-    countMessage(){
+    countMessage() {
         var url = "../person/countMessage";
-         this.http.get(url).subscribe(response => this.countMessageSucess(response),
+        this.http.get(url).subscribe(response => this.countMessageSucess(response),
             error => this.GetPersonError(error), () => console.log("editdone !")
         );
 
     }
-    countMessageSucess(response:any){
-        this.totalMessage =  response.json(JSON.stringify(response._body));
+    countMessageSucess(response: any) {
+        this.totalMessage = response.json(JSON.stringify(response._body));
 
     }
 

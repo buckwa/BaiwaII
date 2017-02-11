@@ -60,6 +60,7 @@ import { AdminEvaluateRoundinit } from './baiwa/AdminEvaluateRoundinit.component
 import { AdminAcademicYeareditDateEvaluateRound } from './baiwa/AdminAcademicYeareditDateEvaluateRound.component';
 import { AdminmarkRankinit } from './baiwa/AdminmarkRankinit.component';
 import { AdminmarkRankinitEditRound } from './baiwa/AdminmarkRankinitEditRound.component';
+import { AdminpBPWorkTypeinit } from './baiwa/AdminpBPWorkTypeinit.component';
 
 const routes: Routes = [
 
@@ -112,7 +113,7 @@ const routes: Routes = [
     { path: 'AdminAcademicYeareditDateEvaluateRound', component: AdminAcademicYeareditDateEvaluateRound },
     { path: 'AdminmarkRankinit', component: AdminmarkRankinit },
     { path: 'AdminmarkRankinitEditRound', component: AdminmarkRankinitEditRound },
-
+    { path: 'AdminpBPWorkTypeinit', component: AdminpBPWorkTypeinit },
 
 ];
 
@@ -175,6 +176,7 @@ const routes: Routes = [
         AdminAcademicYeareditDateEvaluateRound,//มอส
         AdminmarkRankinit,//มอส
         AdminmarkRankinitEditRound,//มอส
+        AdminpBPWorkTypeinit,
 
     ],
     providers: [

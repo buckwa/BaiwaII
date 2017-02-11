@@ -142,9 +142,17 @@ var AdminUserCreate = (function () {
     };
     AdminUserCreate.prototype.SaveUserJsonSucess = function (response) {
         //Todo
-        alert("บันทึกเรียบร้อย !");
-        window.location.href = '#/AdminWorkUser';
-        console.log("AdminUserCreate : Ready SaveUserJsonSucess !");
+        this.resule = response.json(JSON.stringify(response._body));
+        this.resule = this.resule.description;
+        if (this.resule != "E002") {
+            alert("บันทึกเรียบร้อย !");
+            window.location.href = '#/AdminWorkUser';
+            console.log("AdminUserCreate : Ready SaveUserJsonSucess !");
+        }
+        else {
+            alert("ชื่อผู้ใช้ระบบซ้ำ  !");
+        }
+        //console.log( this.resule)
     };
     AdminUserCreate.prototype.SaveUserJsonError = function (response) {
         //Todo

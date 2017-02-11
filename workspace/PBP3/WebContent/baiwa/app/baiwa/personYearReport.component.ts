@@ -6,23 +6,23 @@ declare var jQuery: any;
 @Component({
     templateUrl: 'app/baiwa/html/personYearReport.component.html'
 })
-export class personYearReport  {
-    user:any;
-    year:any;
-    acdemicyear:any;
+export class personYearReport {
+    user: any;
+    year: any;
+    acdemicyear: any;
 
- public libPath: string;
+    public libPath: string;
 
-    constructor(private http:Http) {
+    constructor(private http: Http) {
         this.libPath = "/PBP3/baiwa/libs/";
 
     }
     ngOnInit() {
 
-       this.GetUserSession();
+        this.GetUserSession();
     }
     ngAfterViewInit() {
-        
+
     }
     public GetUserSession() {
         var url = "../person/getUserSession";
@@ -37,17 +37,17 @@ export class personYearReport  {
         this.acdemicyear = this.user.currentAcademicYear;
         return true;
     }
-    GetPersonError(error:any){
+    GetPersonError(error: any) {
 
     }
-        changYear(value:any){
+    changYear(value: any) {
         this.acdemicyear = value;
-        console.log("change year"+value);
+        console.log("change year" + value);
         //this.year = this.repositories.find(repository => repository.name === this.selectedRepositoryName);
 
     }
-    clickDownload(){
-        window.location.href='../report/printReportYear.htm?year='+this.acdemicyear+'&round=undefined';
+    clickDownload() {
+        window.location.href = '../report/printReportYear.htm?year=' + this.acdemicyear + '&round=undefined';
     }
 
 

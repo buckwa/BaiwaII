@@ -34,6 +34,8 @@ export class AdminUserCreate {
     public Faculty: any[];
     public Facultyname: any[];
     public Department: any[]=[];
+    public resule: any;
+
     submitted = false;
 
     constructor(private http: Http) {
@@ -208,10 +210,19 @@ export class AdminUserCreate {
 
     public SaveUserJsonSucess(response: any) {
         //Todo
+        this.resule = response.json(JSON.stringify(response._body));
+        this.resule = this.resule.description;
+        if(this.resule != "E002"){
+            alert("บันทึกเรียบร้อย !");
+            window.location.href = '#/AdminWorkUser';
+            console.log("AdminUserCreate : Ready SaveUserJsonSucess !");
+        }else{
+            alert("ชื่อผู้ใช้ระบบซ้ำ  !");
+        }
 
-        alert("บันทึกเรียบร้อย !");
-        window.location.href = '#/AdminWorkUser';
-        console.log("AdminUserCreate : Ready SaveUserJsonSucess !");
+        //console.log( this.resule)
+
+
     }
 
     public SaveUserJsonError(response: any) {

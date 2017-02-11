@@ -32,6 +32,8 @@ var personReportInit = (function () {
     };
     personReportInit.prototype.GetUserSessionSucess = function (response) {
         this.user = response.json(JSON.stringify(response._body));
+        this.academicYearList = this.user.academicYearList;
+        this.currentAcademicYear = this.user.currentAcademicYear;
         this.kendoGrid(this.user.currentAcademicYear);
     };
     personReportInit.prototype.GetUserSessionError = function (error) {
@@ -40,6 +42,7 @@ var personReportInit = (function () {
     personReportInit.prototype.kendoGrid = function (year) {
         var _this = this;
         var url = "../person/getRadarPlotNewByYear/" + year;
+        this.currentAcademicYear = year;
         this.url = url;
         return this.http.get(url).subscribe(function (response) { return _this.GetkendoGridSucess(response); }, function (error) { return _this.GetPersonError(error); }, function () { return console.log("getRadarPlotNewByYear1 !"); });
     };
@@ -61,9 +64,10 @@ var personReportInit = (function () {
         console.log("GetPersonError.");
     };
     personReportInit.prototype.creatChart = function () {
+        var Year = this.currentAcademicYear;
         jQuery("#chartKendo").kendoChart({
             title: {
-                text: "คะแนนประจำปี  "
+                text: "คะแนนประจำปี  " + Year,
             },
             dataSource: {
                 transport: {
@@ -97,6 +101,9 @@ var personReportInit = (function () {
             }
         });
         console.log("getRadarPlotNewByYear2 !");
+    };
+    personReportInit.prototype.changeYear = function (year) {
+        this.kendoGrid(year);
     };
     personReportInit = __decorate([
         core_1.Component({

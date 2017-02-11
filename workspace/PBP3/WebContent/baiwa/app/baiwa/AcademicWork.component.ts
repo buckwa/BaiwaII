@@ -25,6 +25,9 @@ export class AcademicWork implements OnInit, AfterViewInit {
     public fileWork: any[];
     public tmpUrl: any;
     public codeKpi: string;
+    public academicYearList :any;
+    public currentAcademicYear :any;
+    public profile:any;
     fielPath;
     public f: File;
     chFilework: boolean;
@@ -82,13 +85,22 @@ export class AcademicWork implements OnInit, AfterViewInit {
     }
     public GetUserSessionSucess(response: any) {
         this.user = response.json(JSON.stringify(response._body));
-        this.GetAcademicWork(this.user.userName, this.user.currentAcademicYear, "1");
+        this.academicYearList = this.user.academicYearList;
+        this.currentAcademicYear = this.user.currentAcademicYear;
+
+        this.GetPersonByAcadamy(this.user.userName, this.user.currentAcademicYear);
+         setTimeout(() => this.GetAcademicWork(this.user.userName, this.currentAcademicYear, this.profile.evaluateRound), 250);
+
 
     }
     public GetUserSessionError(error: String) {
         console.log("GetPersonError.")
 
     }
+
+
+
+
 
     public GetAcademicWork(user: String, year: String, round: String) {
         this.commonService.loading();
@@ -101,6 +113,7 @@ export class AcademicWork implements OnInit, AfterViewInit {
         this.academy = response.json(JSON.stringify(response._body));
         this.academyList = this.academy.pBPWorkTypeList;
         //this.kpiuserList =this.academy.pBPWorkTypeList.academicKPIUserMappingList;
+        this.kpiuserList =[];
         for (var i = 0; i < this.academy.pBPWorkTypeList.length; i++) {
             this.kpiuserList.push(this.academy.pBPWorkTypeList[i].academicKPIUserMappingList)
         }
@@ -237,6 +250,25 @@ export class AcademicWork implements OnInit, AfterViewInit {
         console.log("deleteError!")
     }
 
+     public GetPersonByAcadamy(user: String,  year: String) {
+        var url = "../person/getPersonByAcademicYear/" + user + "/" + year
+        this.http.get(url).subscribe(response => this.GetPersonSucess(response),
+            error => this.GetPersonError(error), () => console.log("editdone !")
+        );
+    }
+    public GetPersonSucess(response: any) {
+        this.profile = response.json(JSON.stringify(response._body));
+
+    }
+    public GetPersonError(error: String) {
+        console.log("GetPersonError.")
+
+    }
+
+    public changeYear(year: any){
+
+        this.GetAcademicWork(this.user.userName, year, this.profile.evaluateRound);
+    }
 
 
 }

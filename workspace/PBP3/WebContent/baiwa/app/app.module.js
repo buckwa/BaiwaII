@@ -64,6 +64,7 @@ var AdminEvaluateRoundinit_component_1 = require('./baiwa/AdminEvaluateRoundinit
 var AdminAcademicYeareditDateEvaluateRound_component_1 = require('./baiwa/AdminAcademicYeareditDateEvaluateRound.component');
 var AdminmarkRankinit_component_1 = require('./baiwa/AdminmarkRankinit.component');
 var AdminmarkRankinitEditRound_component_1 = require('./baiwa/AdminmarkRankinitEditRound.component');
+var AdminpBPWorkTypeinit_component_1 = require('./baiwa/AdminpBPWorkTypeinit.component');
 var routes = [
     { path: 'home', component: home_component_1.home },
     { path: 'importwork', component: importwork_component_1.importwork },
@@ -111,6 +112,7 @@ var routes = [
     { path: 'AdminAcademicYeareditDateEvaluateRound', component: AdminAcademicYeareditDateEvaluateRound_component_1.AdminAcademicYeareditDateEvaluateRound },
     { path: 'AdminmarkRankinit', component: AdminmarkRankinit_component_1.AdminmarkRankinit },
     { path: 'AdminmarkRankinitEditRound', component: AdminmarkRankinitEditRound_component_1.AdminmarkRankinitEditRound },
+    { path: 'AdminpBPWorkTypeinit', component: AdminpBPWorkTypeinit_component_1.AdminpBPWorkTypeinit },
 ];
 var AppModule = (function () {
     function AppModule() {
@@ -175,6 +177,7 @@ var AppModule = (function () {
                 AdminAcademicYeareditDateEvaluateRound_component_1.AdminAcademicYeareditDateEvaluateRound,
                 AdminmarkRankinit_component_1.AdminmarkRankinit,
                 AdminmarkRankinitEditRound_component_1.AdminmarkRankinitEditRound,
+                AdminpBPWorkTypeinit_component_1.AdminpBPWorkTypeinit,
             ],
             providers: [
                 Common_service_1.CommonService,

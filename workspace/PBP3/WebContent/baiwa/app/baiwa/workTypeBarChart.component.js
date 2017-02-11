@@ -18,13 +18,28 @@ var workTypeBarChart = (function () {
         this.libPath = "/PBP3/baiwa/libs/";
     }
     workTypeBarChart.prototype.ngOnInit = function () {
-        this.DepartmentName();
+        this.GetUserSession();
     };
     workTypeBarChart.prototype.ngAfterViewInit = function () {
     };
-    workTypeBarChart.prototype.DepartmentName = function () {
+    workTypeBarChart.prototype.GetUserSession = function () {
         var _this = this;
-        var url = "../person/MinMaxBean";
+        var url = "../person/getUserSession";
+        return this.http.get(url).subscribe(function (response) { return _this.GetuserSucess(response); }, function (error) { return _this.GetPersonError(error); }, function () { return console.log("editdone !"); });
+    };
+    workTypeBarChart.prototype.GetuserSucess = function (response) {
+        this.user = response.json(JSON.stringify(response._body));
+        this.academicYearList = this.user.academicYearList;
+        this.currentAcademicYear = this.user.currentAcademicYear;
+        this.DepartmentName(this.currentAcademicYear);
+    };
+    workTypeBarChart.prototype.GetPersonError = function (error) {
+        console.log("GetPersonError.");
+    };
+    workTypeBarChart.prototype.DepartmentName = function (Year) {
+        var _this = this;
+        this.currentAcademicYear = Year;
+        var url = "../person/MinMaxBean/" + Year;
         return this.http.get(url).subscribe(function (response) { return _this.GetkendoSucess(response); }, function (error) { return _this.GetDepartmentNameError(error); }, function () { return console.log("DepartmentName !"); });
     };
     workTypeBarChart.prototype.GetkendoSucess = function (response) {
@@ -46,11 +61,12 @@ var workTypeBarChart = (function () {
         var endMin = startMin + 2;
         var startMax = this.json.maxValue1;
         var endMax = startMax + 2;
+        var year = this.currentAcademicYear;
         jQuery("#chart1").kendoChart({
             dataSource: {
                 transport: {
                     read: {
-                        url: "../person/getWorkTypeBarchart/1",
+                        url: "../person/getWorkTypeBarchart/1/" + year,
                         cache: false,
                         dataType: "json"
                     }
@@ -96,11 +112,12 @@ var workTypeBarChart = (function () {
         }
         var startMax = this.json.maxValue2;
         var endMax = startMax + 2;
+        var year = this.currentAcademicYear;
         jQuery("#chart2").kendoChart({
             dataSource: {
                 transport: {
                     read: {
-                        url: "../person/getWorkTypeBarchart/2",
+                        url: "../person/getWorkTypeBarchart/2/" + year,
                         dataType: "json"
                     }
                 }
@@ -145,11 +162,12 @@ var workTypeBarChart = (function () {
         }
         var startMax = this.json.maxValue3;
         var endMax = startMax + 2;
+        var year = this.currentAcademicYear;
         jQuery("#chart3").kendoChart({
             dataSource: {
                 transport: {
                     read: {
-                        url: "../person/getWorkTypeBarchart/3",
+                        url: "../person/getWorkTypeBarchart/3/" + year,
                         dataType: "json"
                     }
                 }
@@ -193,11 +211,12 @@ var workTypeBarChart = (function () {
         }
         var startMax = this.json.maxValue4;
         var endMax = startMax + 2;
+        var year = this.currentAcademicYear;
         jQuery("#chart4").kendoChart({
             dataSource: {
                 transport: {
                     read: {
-                        url: "../person/getWorkTypeBarchart/4",
+                        url: "../person/getWorkTypeBarchart/4/" + year,
                         dataType: "json"
                     }
                 }
@@ -241,11 +260,12 @@ var workTypeBarChart = (function () {
         }
         var startMax = this.json.maxValue5;
         var endMax = startMax + 2;
+        var year = this.currentAcademicYear;
         jQuery("#chart5").kendoChart({
             dataSource: {
                 transport: {
                     read: {
-                        url: "../person/getWorkTypeBarchart/5",
+                        url: "../person/getWorkTypeBarchart/5/" + year,
                         dataType: "json"
                     }
                 }
@@ -275,6 +295,9 @@ var workTypeBarChart = (function () {
                 template: "#= series.name #: #= value #"
             }
         });
+    };
+    workTypeBarChart.prototype.changeYear = function (year) {
+        this.DepartmentName(year);
     };
     workTypeBarChart = __decorate([
         core_1.Component({

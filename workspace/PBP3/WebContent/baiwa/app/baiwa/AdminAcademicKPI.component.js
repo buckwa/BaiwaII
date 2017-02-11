@@ -27,6 +27,8 @@ var AdminAcademicKPI = (function () {
         };
     };
     AdminAcademicKPI.prototype.ngOnInit = function () {
+        var year = new Date().getFullYear() + 542;
+        this.academicYearSelect = year;
         this.searchAtti = this.ModelSearch();
     };
     AdminAcademicKPI.prototype.getlistKPI = function () {
@@ -45,6 +47,9 @@ var AdminAcademicKPI = (function () {
         this.academicYearList = this.model.academicYearList;
         this.pBPWorkTypeList = this.model.pBPWorkTypeList;
         this.facultyList = this.model.facultyList;
+        this.searchAtti.facultyCode = this.model.facultyCodeSelect;
+        this.searchAtti.academicYear = this.model.academicYear;
+        this.searchAtti.workTypeCode = this.model.workTypeCode;
         console.log(" List Success  !");
     };
     AdminAcademicKPI.prototype.GetlistKPIJsonError = function (error) {
@@ -63,6 +68,9 @@ var AdminAcademicKPI = (function () {
         this.workTypeName = this.model.workTypeName;
         this.academicYear = this.model.academicYear;
         this.academicKPIList = this.model.academicKPIList;
+        this.searchAtti.facultyCode = this.model.facultyCodeSelect;
+        this.searchAtti.academicYear = this.model.academicYear;
+        this.searchAtti.workTypeCode = this.model.workTypeCode;
         // this.academicYearList = this.model.academicYearList;
         // this.pBPWorkTypeList =this.model.pBPWorkTypeList ;
         // this.facultyList = this.model.facultyList;

@@ -9,12 +9,11 @@
 				<div class="form-group row">
 					<label for="exampleSelect" class="col-sm-3 form-control-label">ปีการศึกษา</label>
 					<div class="col-sm-5">
-						<select id="SelectYearList" (change)="GetRadarPlotNewSearch($event.target.value)" class="form-control">
-							<option *ngFor="let a of profile.academicYearList " >{{a.name}}</option>
+						<select id="SelectYearList"  [(ngModel)]="currentAcademicYear" (change)="GetRadarPlotNewSearch($event.target.value)" class="form-control">
+							<option *ngFor="let a of profile.academicYearList " [value]="a.name" >{{a.name}}</option>
 						</select>
 					</div>
 				</div>
-
 
 			</header>
 

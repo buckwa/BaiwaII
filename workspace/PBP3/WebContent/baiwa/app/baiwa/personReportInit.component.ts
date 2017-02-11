@@ -16,6 +16,9 @@ export class personReportInit {
     public user: any;
     public json2: any;
     public maxVal: any;
+    public academicYearList :any;
+    public currentAcademicYear :any;
+
     public url;
     constructor(private commonService: CommonService, private http: Http, private sanitizer: DomSanitizer) {
         this.libPath = "/PBP3/baiwa/libs/";
@@ -37,6 +40,9 @@ export class personReportInit {
     }
     public GetUserSessionSucess(response: any) {
         this.user = response.json(JSON.stringify(response._body));
+        this.academicYearList = this.user.academicYearList;
+        this.currentAcademicYear = this.user.currentAcademicYear;
+
         this.kendoGrid(this.user.currentAcademicYear);
 
     }
@@ -47,6 +53,7 @@ export class personReportInit {
 
     public kendoGrid(year: any) {
         var url = "../person/getRadarPlotNewByYear/" + year;
+        this.currentAcademicYear =year;
         this.url  = url;
         return this.http.get(url).subscribe(response => this.GetkendoGridSucess(response),
             error => this.GetPersonError(error), () => console.log("getRadarPlotNewByYear1 !"));
@@ -73,12 +80,12 @@ export class personReportInit {
 
     }
 
-
-
     public creatChart() {
+        
+        var Year = this.currentAcademicYear ;
         jQuery("#chartKendo").kendoChart({
             title: {
-                text: "คะแนนประจำปี  "
+                text: "คะแนนประจำปี  "+Year,
             },
             dataSource: {
                 transport: {
@@ -114,6 +121,9 @@ export class personReportInit {
         console.log("getRadarPlotNewByYear2 !");
     }
 
+    public changeYear(year: any){
 
+        this.kendoGrid(year);
+    }
 
 }

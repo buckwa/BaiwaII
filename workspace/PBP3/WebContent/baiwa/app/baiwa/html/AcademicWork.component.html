@@ -4,9 +4,9 @@
 
         <label for="exampleSelect" class="col-sm-1 form-control-label">ปีการศึกษา</label>
         <div class="col-sm-2">
-            <select id="exampleSelect" class="form-control">
-			        <option value="2558" selected="selected">2558</option>
-			            </select>
+            <select id="exampleSelect" class="form-control"  [(ngModel)]="currentAcademicYear" #academic (change)="changeYear(academic.value)" >
+			        <option *ngFor="let item of academicYearList;"  [value]="item.name"  >{{item.name}}</option>
+			</select>
         </div>
 
         <div class="col-sm-4 text-center ">สถานะ : <img width="25px" src="/PBP3/baiwa/libs/img/wait.png" /> รออนุมัติ &nbsp;<img width="25px" src="/PBP3/baiwa/libs/img/co_wait.png"
@@ -23,7 +23,7 @@
                 <thead>
                     <tr>
                         <th colspan="7">
-                            <div class="text-center">ผลงานประจำปี</div>
+                            <div class="text-center">ผลงานประจำปี {{currentAcademicYear}}</div>
                         </th>
 
                     </tr>

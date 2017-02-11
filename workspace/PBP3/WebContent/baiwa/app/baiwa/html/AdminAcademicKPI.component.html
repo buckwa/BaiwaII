@@ -3,7 +3,7 @@
         <section id="blockui-element-container-dark" class="card">
             <div class="card-block display-table" style="min-height: auto">
                 <section class="card card-default">
-                    <header class="card-header" style="text-align: center"><i class="glyphicon glyphicon-th-list"></i> ข้อมูลประเภทภาระงาน คณะ {{facultyName}} ประจำปีการศึกษา {{academicYear}}
+                    <header class="card-header" style="text-align: center"><i class="glyphicon glyphicon-th-list"></i> ข้อมูลประเภทภาระงาน คณะ {{facultyName}} ประจำปีการศึกษา {{academicYear}} 
                     </header>
                     <div class="card-block">
                         <br>
@@ -67,8 +67,7 @@
                     </header>
                     <br>
                     <div class="form-group" style="width: 99%; text-align: right">
-                        <a class="btn btn-inline btn-primary" (click)="GetCreateKPI();" role="button">เพิ่มภาระงาน
-    </a>
+                        <a class="btn btn-inline btn-primary" (click)="GetCreateKPI();" role="button" *ngIf="academicYearSelect==academicYear" >เพิ่มภาระงาน  </a>
                     </div>
                     <div class="card-block">
                         <table id="table-edit" class="table table-bordered table-hover">
@@ -83,10 +82,10 @@
                                     <th>Remark
                                         <div class="fa-hover col-md-3 col-md-offset-2"></div>
                                     </th>
-                                    <th>แก้ไข
+                                    <th *ngIf=" academicYearSelect == academicYear ">แก้ไข
                                         <div class="fa-hover col-md-3 col-md-offset-2"></div>
                                     </th>
-                                    <th>ลบ
+                                    <th  *ngIf=" academicYearSelect == academicYear " >ลบ
                                         <div class="fa-hover col-md-3 col-md-offset-2"></div>
                                     </th>
                                     <th>ลำดับการจัดเรียง
@@ -119,12 +118,12 @@
 
 
                                     </td>
-                                    <td>
+                                    <td *ngIf="academicYearSelect==academicYear">
 
                                         <a class="btn btn-inline btn-warning font-icon font-icon-cogwheel" (click)="GetUpdateKPI(item.academicKPIId);" role="button"></a>
 
                                     </td>
-                                    <td>
+                                    <td *ngIf="academicYearSelect==academicYear" >
 
                                         <a class="btn btn-inline btn-danger font-icon font-icon-trash" (click)="GetDeleteKPI(item.academicKPIId);" role="button"></a>
 

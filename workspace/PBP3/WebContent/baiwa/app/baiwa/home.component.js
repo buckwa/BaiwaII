@@ -106,10 +106,11 @@ var home = (function () {
         console.log("GetPersonError.");
     };
     home.prototype.GetRadarPlotNewSearch = function (year) {
-        this.GetRadarPlotNew(this.user.userName, year, "2");
+        this.GetRadarPlotNew(this.user.userName, year, this.profile.evaluateRound);
+        this.currentAcademicYear = year;
     };
     home.prototype.GetRadarPlot = function () {
-        this.GetRadarPlotNew(this.user.userName, this.user.currentAcademicYear, "2");
+        this.GetRadarPlotNew(this.user.userName, this.currentAcademicYear, this.profile.evaluateRound);
     };
     home.prototype.GetRadarPlotNew = function (user, year, num) {
         var _this = this;
@@ -128,12 +129,14 @@ var home = (function () {
         return this.http.get(url).subscribe(function (response) { return _this.GetuserSucess(response); }, function (error) { return _this.GetPersonError(error); }, function () { return console.log("editdone !"); });
     };
     home.prototype.GetuserSucess = function (response) {
+        var _this = this;
         this.user = response.json(JSON.stringify(response._body));
+        this.currentAcademicYear = this.user.currentAcademicYear;
+        this.GetPersonByAcadamy(this.user.userName, this.currentAcademicYear);
         if (this.user.isAdmin == true) {
             this.router.navigate(['/AdminAcademicKPI']);
         }
-        this.GetPersonByAcadamy(this.user.userName, this.user.currentAcademicYear);
-        this.GetRadarPlotNew(this.user.userName, this.user.currentAcademicYear, "2");
+        setTimeout(function () { return _this.GetRadarPlotNew(_this.user.userName, _this.currentAcademicYear, _this.profile.evaluateRound); }, 250);
     };
     home.prototype.createChart = function () {
         jQuery("#KendoChart").kendoChart({

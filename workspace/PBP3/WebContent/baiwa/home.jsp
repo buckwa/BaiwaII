@@ -226,8 +226,8 @@
 									<div class="dropdown-menu" aria-labelledby="dd-header-form-builder">
 	                                <a class="dropdown-item" href="javascript:void(0);"><span class="font-icon font-icon-users"></span>เกณฑ์คะแนน</a>
 	                                <a class="dropdown-item" href="javascript:void(0);t"><span class="font-icon font-icon-users"></span>หน่วยนับ</a>
-	                                <a class="dropdown-item" href="javascript:void(0);"><span class="font-icon font-icon-users"></span>ประเภทภาระงาน</a>
-	                                <a class="dropdown-item" href="javascript:void(0);"><span class="font-icon font-icon-users"></span>ภาระงานประจำปี</a>
+	                                <a class="dropdown-item" href="#/AdminpBPWorkTypeinit"><span class="font-icon font-icon-users"></span>ประเภทภาระงาน</a>
+	                                <a class="dropdown-item" href="#/AdminAcademicKPI"><span class="font-icon font-icon-users"></span>ภาระงานประจำปี</a>
 	                            </div>
 	                        </div>
 	                        

@@ -65,8 +65,12 @@ var AcademicWork = (function () {
         return this.http.get(url).subscribe(function (response) { return _this.GetUserSessionSucess(response); }, function (error) { return _this.GetUserSessionError(error); }, function () { return console.log("editdoneUser !"); });
     };
     AcademicWork.prototype.GetUserSessionSucess = function (response) {
+        var _this = this;
         this.user = response.json(JSON.stringify(response._body));
-        this.GetAcademicWork(this.user.userName, this.user.currentAcademicYear, "1");
+        this.academicYearList = this.user.academicYearList;
+        this.currentAcademicYear = this.user.currentAcademicYear;
+        this.GetPersonByAcadamy(this.user.userName, this.user.currentAcademicYear);
+        setTimeout(function () { return _this.GetAcademicWork(_this.user.userName, _this.currentAcademicYear, _this.profile.evaluateRound); }, 250);
     };
     AcademicWork.prototype.GetUserSessionError = function (error) {
         console.log("GetPersonError.");
@@ -81,6 +85,7 @@ var AcademicWork = (function () {
         this.academy = response.json(JSON.stringify(response._body));
         this.academyList = this.academy.pBPWorkTypeList;
         //this.kpiuserList =this.academy.pBPWorkTypeList.academicKPIUserMappingList;
+        this.kpiuserList = [];
         for (var i = 0; i < this.academy.pBPWorkTypeList.length; i++) {
             this.kpiuserList.push(this.academy.pBPWorkTypeList[i].academicKPIUserMappingList);
         }
@@ -197,6 +202,20 @@ var AcademicWork = (function () {
     };
     AcademicWork.prototype.deleteError = function () {
         console.log("deleteError!");
+    };
+    AcademicWork.prototype.GetPersonByAcadamy = function (user, year) {
+        var _this = this;
+        var url = "../person/getPersonByAcademicYear/" + user + "/" + year;
+        this.http.get(url).subscribe(function (response) { return _this.GetPersonSucess(response); }, function (error) { return _this.GetPersonError(error); }, function () { return console.log("editdone !"); });
+    };
+    AcademicWork.prototype.GetPersonSucess = function (response) {
+        this.profile = response.json(JSON.stringify(response._body));
+    };
+    AcademicWork.prototype.GetPersonError = function (error) {
+        console.log("GetPersonError.");
+    };
+    AcademicWork.prototype.changeYear = function (year) {
+        this.GetAcademicWork(this.user.userName, year, this.profile.evaluateRound);
     };
     AcademicWork = __decorate([
         core_1.Component({

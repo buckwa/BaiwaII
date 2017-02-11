@@ -18,13 +18,25 @@ var personReport = (function () {
         this.libPath = "/PBP3/baiwa/libs/";
     }
     personReport.prototype.ngOnInit = function () {
-        this.DepartmentName();
+        this.GetUserSession();
     };
     personReport.prototype.ngAfterViewInit = function () {
     };
-    personReport.prototype.DepartmentName = function () {
+    personReport.prototype.GetUserSession = function () {
         var _this = this;
-        var url = "../person/DepartmentName";
+        var url = "../person/getUserSession";
+        return this.http.get(url).subscribe(function (response) { return _this.GetuserSucess(response); }, function (error) { return _this.GetPersonError(error); }, function () { return console.log("editdone !"); });
+    };
+    personReport.prototype.GetuserSucess = function (response) {
+        this.user = response.json(JSON.stringify(response._body));
+        this.academicYearList = this.user.academicYearList;
+        this.currentAcademicYear = this.user.currentAcademicYear;
+        this.DepartmentName(this.currentAcademicYear);
+    };
+    personReport.prototype.DepartmentName = function (year) {
+        var _this = this;
+        var url = "../person/DepartmentName/" + year;
+        this.currentAcademicYear = year;
         return this.http.get(url).subscribe(function (response) { return _this.GetkendoSucess(response); }, function (error) { return _this.GetDepartmentNameError(error); }, function () { return console.log("DepartmentName !"); });
     };
     personReport.prototype.GetkendoSucess = function (response) {
@@ -38,7 +50,7 @@ var personReport = (function () {
     };
     personReport.prototype.NameDepartment = function () {
         var _this = this;
-        var url = "../person/getRadarPlotNewByYear/2558";
+        var url = "../person/getRadarPlotNewByYear/" + this.currentAcademicYear;
         return this.http.get(url).subscribe(function (response) { return _this.GetkendoGridSucess(response); }, function (error) { return _this.GetPersonError(error); }, function () { return console.log("getRadarPlotNewByYear1 !"); });
     };
     personReport.prototype.GetkendoGridSucess = function (response) {
@@ -48,11 +60,12 @@ var personReport = (function () {
         console.log("GetPersonError.");
     };
     personReport.prototype.kendoChart = function () {
+        var year = this.currentAcademicYear;
         jQuery("#KendoChart").kendoChart({
             dataSource: {
                 transport: {
                     read: {
-                        url: "../person/getBarchart",
+                        url: "../person/getBarchart/" + year,
                         dataType: "json"
                     }
                 }
@@ -81,6 +94,9 @@ var personReport = (function () {
                 template: "#= series.name #: #= value #"
             }
         });
+    };
+    personReport.prototype.changeYear = function (year) {
+        this.DepartmentName(year);
     };
     personReport = __decorate([
         core_1.Component({

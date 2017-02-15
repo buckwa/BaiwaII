@@ -127,7 +127,7 @@ export class home implements OnInit, AfterViewInit {
         //this.imageProfilePath = this.sanitize(this.profile.picture)
         this.imgUpload = this.profile.picture;
         this.personId = this.profile.personId;
-        this.getImageLocal(this.personId);
+        this.getImageLocal(this.profile.personId);
         this.getMessage();
         this.countMessage();
 

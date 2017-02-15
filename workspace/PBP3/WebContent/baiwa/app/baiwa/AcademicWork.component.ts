@@ -104,7 +104,7 @@ export class AcademicWork implements OnInit, AfterViewInit {
 
     public GetAcademicWork(user: String, year: String, round: String) {
         this.commonService.loading();
-        var url = "../person/getAcademicWork/" + user + "/" + year + "/" + round
+        var url = "../person/getAcademicWork/" + user + "/"+year+"/" + round
         return this.http.get(url).subscribe(response => this.GetUserAcademicSucess(response),
             error => this.GetUserSessionError(error), () => console.log("editdoneUser !"));
 

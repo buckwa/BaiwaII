@@ -499,6 +499,7 @@ public class JSONAdminController {
 
 				}else {
 					resp.setStatus("1");
+					resp.setResObj(response);
 					resp.setDescription(response.getErrorCode());
 				}								
 			}								
@@ -1197,7 +1198,16 @@ public class JSONAdminController {
 		List<Object> returnList = new ArrayList<Object>();
 		logger.info(" Test kab  ");
 		Person user =new Person();
-		returnList.add(user);
+		
+		String reportPath = PAMConstants.rbApp.getString("report.path");	
+		logger.info("reportPath :" + reportPath);
+		String reportFile =  reportPath+"person_yearly_report.jasper";	
+		logger.info("reportFile :" + reportFile);
+		String subReportFileName = reportPath+"person_yearly_report_detail.jrxml";	
+		logger.info("subReportFileName :" + subReportFileName);
+		//params.put("SUBREPORT_DIR", reportPath);
+		
+		returnList.add(reportPath);
 		
 		return returnList;
 	}

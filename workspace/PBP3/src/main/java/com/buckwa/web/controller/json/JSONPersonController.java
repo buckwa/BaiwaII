@@ -10,9 +10,14 @@ import java.io.InputStream;
 import java.math.BigDecimal;
 import java.net.URISyntaxException;
 import java.net.URLEncoder;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 import java.util.StringTokenizer;
 
 import javax.imageio.ImageIO;
@@ -30,6 +35,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -89,10 +95,13 @@ import com.buckwa.util.BuckWaUtils;
 import com.buckwa.util.FileUtils;
 import com.buckwa.util.PAMConstants;
 import com.buckwa.util.school.SchoolUtil;
+import com.buckwa.web.controller.pbp.report.ReportYearPersonController;
+import com.buckwa.web.controller.pbp.report.ReportYearPersonController.PersonReport;
 import com.buckwa.web.util.AcademicYearUtil;
 
 import baiwa.util.BaiwaConstants;
 import baiwa.util.UserLoginUtil;
+import eu.bitwalker.useragentutils.UserAgent;
 
 @RestController
 @RequestMapping("/person")
@@ -452,13 +461,13 @@ public class JSONPersonController {
 	}
 
 	
-	@RequestMapping(value = "/DepartmentName", method = RequestMethod.GET, headers = "Accept=application/json")
-	public ReportMeanMax radarPlotNewByYear2(HttpServletRequest httpRequest) {
+	@RequestMapping(value = "/DepartmentName/{year}", method = RequestMethod.GET, headers = "Accept=application/json")
+	public ReportMeanMax radarPlotNewByYear2(HttpServletRequest httpRequest,@PathVariable String year) {
 	 
 		ReportMeanMax resp = new ReportMeanMax();
 		try {
 			
-			String academicYear =UserLoginUtil.getCurrentAcademicYear(); // --*
+			String academicYear =year; // --*
 			String userName = UserLoginUtil.getCurrentUserLogin(); // --*
 			
 			
@@ -493,14 +502,14 @@ public class JSONPersonController {
 		return resp;
 	}
 	
-	@RequestMapping(value = "/MinMaxBean", method = RequestMethod.GET, headers = "Accept=application/json")
-	public ReportMeanMax MinMaxBean(HttpServletRequest httpRequest) {
+	@RequestMapping(value = "/MinMaxBean/{year}", method = RequestMethod.GET, headers = "Accept=application/json")
+	public ReportMeanMax MinMaxBean(HttpServletRequest httpRequest,@PathVariable String year) {
 	 
 
 		ReportMeanMax resp = new ReportMeanMax();
 		try {
 			
-			String academicYear =UserLoginUtil.getCurrentAcademicYear(); // --*
+			String academicYear =year; // --*
 			String userName = UserLoginUtil.getCurrentUserLogin(); // --*
 			
 			
@@ -592,8 +601,8 @@ public class JSONPersonController {
 	
 	
 	
-	@RequestMapping(value = "/getBarchart", method = RequestMethod.GET, headers = "Accept=application/json")
-	public List<RadarPlotReport> getWorkTypeBarChartReport() {
+	@RequestMapping(value = "/getBarchart/{year}", method = RequestMethod.GET, headers = "Accept=application/json")
+	public List<RadarPlotReport> getWorkTypeBarChartReport2(@PathVariable String year) {
 		System.out.println(" ### getBarchart ###");
 
 		List<RadarPlotReport> returnList = new ArrayList<RadarPlotReport>();
@@ -603,7 +612,7 @@ public class JSONPersonController {
 			BuckWaRequest request = new BuckWaRequest();
 
 			String userName =  UserLoginUtil.getCurrentUserLogin();
-			String academicYear =  UserLoginUtil.getCurrentAcademicYear();
+			String academicYear =  year;
 
 			request.put("username", userName);
 			request.put("academicYear", academicYear);
@@ -758,8 +767,8 @@ public class JSONPersonController {
 	 * returnList; }
 	 */
 
-	@RequestMapping(value = "/getWorkTypeBarchart/{worktypecode}", method = RequestMethod.GET, headers = "Accept=application/json")
-	public List<RadarPlotReport> getWorkTypeBarChartReport(@PathVariable String worktypecode) {
+	@RequestMapping(value = "/getWorkTypeBarchart/{worktypecode}/{year}", method = RequestMethod.GET, headers = "Accept=application/json")
+	public List<RadarPlotReport> getWorkTypeBarChartReport(@PathVariable String worktypecode,@PathVariable String year) {
 
 		List<RadarPlotReport> returnList = new ArrayList();
 		ModelAndView mav = new ModelAndView();
@@ -771,7 +780,7 @@ public class JSONPersonController {
 			// String academicYear = schoolUtil.getCurrentAcademicYear();
 
 			String userName = UserLoginUtil.getCurrentUserLogin();
-			String academicYear = "2558";
+			String academicYear = year;
 
 			request.put("username", userName);
 			request.put("academicYear", academicYear);
@@ -1784,6 +1793,7 @@ public class JSONPersonController {
 
 		return response;
 	}
+	
 	
 	
 }

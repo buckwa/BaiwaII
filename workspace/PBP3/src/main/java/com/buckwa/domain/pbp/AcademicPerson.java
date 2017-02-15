@@ -158,13 +158,13 @@ public class AcademicPerson extends BaseDomain  {
 	}
 
 	public String getEmployeeTypeNo() {
-		String evalType = "1";
+		String evalType = "2";
 		
-		if(employeeType.equalsIgnoreCase("ข้าราชการ")){
-			
-		}else{
-			evalType ="2";
-		}
+//		if(employeeType.equalsIgnoreCase("ข้าราชการ")){
+//			
+//		}else{
+//			evalType ="2";
+//		}
 		return evalType;
 	}
 

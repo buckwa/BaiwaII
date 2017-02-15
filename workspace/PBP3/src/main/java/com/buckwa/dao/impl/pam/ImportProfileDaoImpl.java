@@ -56,7 +56,7 @@ public class ImportProfileDaoImpl implements ImportProfileDao {
 		sb.append( "  birth_date,      " ); // Date
 		sb.append( "  rate_no,        " );
 		sb.append( "  employee_type,  " );
-		sb.append( "  position,       " );
+		sb.append( "  academic_rank,  " );
 		sb.append( "  level,          " );
 		sb.append( "  workline_code,   " );
 		sb.append( "  salary,         " ); // Bigdecimal
@@ -105,7 +105,7 @@ public class ImportProfileDaoImpl implements ImportProfileDao {
 				ps.setDate( 6 , BuckWaDateUtils.utilDateToSqlDate(person.getBirthdate()));
 				ps.setString( 7 , person.getRateNo());
 				ps.setString( 8 , person.getEmployeeType());
-				ps.setString( 9 , person.getPosition());
+				ps.setString( 9 , person.getAcademicRank());
 				ps.setString( 10, person.getLevel());
 				ps.setString( 11, person.getWorkLine());
 				ps.setBigDecimal( 12, person.getSalary());

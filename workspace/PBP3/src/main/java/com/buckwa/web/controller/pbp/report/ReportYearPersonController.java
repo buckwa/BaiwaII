@@ -291,6 +291,8 @@ public class ReportYearPersonController{
 		}
 	}
 	
+
+	
 	
 	private String getSumPoint(List<PersonReport> reportList, String type){
 		BigDecimal sum = BigDecimal.ZERO;

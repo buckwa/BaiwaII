@@ -208,7 +208,82 @@ public class AcademicKPIController {
 						
 						 
 						}					
-					}		
+					}	
+					
+				mav.addObject("academicKPIWrapper", academicKPIWrapper);	
+				resObj.setResObj(academicKPIWrapper);
+			 
+			}
+		}catch(Exception ex){
+			ex.printStackTrace();
+			mav.addObject("errorCode", "E001"); 
+		}
+		return resObj;
+	}	
+	
+	@RequestMapping(value="initApproveByKPI/{workTypeCode}/{academicYear}/{facultyCodeSelect}/{department_desc}", method = RequestMethod.GET)
+	@ResponseBody
+	public ResponseObj intAcademicByKPI(@PathVariable("department_desc") String department_desc,@PathVariable("workTypeCode") String workTypeCode,@PathVariable("academicYear") String academicYear,@PathVariable("facultyCodeSelect") String facultyCodeSelect) {
+ 
+		logger.info(" Start  academicYear:"+academicYear+"  workTypeCode:"+workTypeCode+" facultyCodeSelect:"+facultyCodeSelect);
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("academicKPIList");
+		ResponseObj resObj =new ResponseObj();
+		try{
+			BuckWaRequest request = new BuckWaRequest();
+			 
+			request.put("academicYear",academicYear);
+			request.put("workTypeCode",workTypeCode);
+			request.put("facultyCode",facultyCodeSelect);
+			request.put("department_desc",department_desc);
+			
+			BuckWaResponse response = academicKPIService.getByAcademicYearWorkTypeCodeFacultyCodeByinitApprove(request);
+			if(response.getStatus()==BuckWaConstants.SUCCESS){	
+				AcademicKPIWrapper academicKPIWrapper = (AcademicKPIWrapper)response.getResObj("academicKPIWrapper");			 
+				academicKPIWrapper.setAcademicYear(academicYear);
+				academicKPIWrapper.setFacultyCodeSelect(facultyCodeSelect);
+				request.put("academicYear",academicYear);
+				// response = pBPWorkTypeService.getByAcademicYear(request);
+				 response = pBPWorkTypeService.getByAcademicYearFacultyCode(request);
+				if(response.getStatus()==BuckWaConstants.SUCCESS){	
+					PBPWorkTypeWrapper pBPWorkTypeWrapper = (PBPWorkTypeWrapper)response.getResObj("pBPWorkTypeWrapper");
+					academicKPIWrapper.setpBPWorkTypeList(pBPWorkTypeWrapper.getpBPWorkTypeList());
+				} 
+				request.put("workTypeCode",workTypeCode);
+	 			 
+				
+				academicKPIWrapper.setAcademicYearList(academicYearUtil.getAcademicYearList());
+				 response = facultyService.getFacultyListByAcademicYear(request);
+					if(response.getStatus()==BuckWaConstants.SUCCESS){	
+						 List<Faculty> facultyList = ( List<Faculty>)response.getResObj("facultyList");
+						 for(Faculty ftmp:facultyList){
+							 if(facultyCodeSelect.equalsIgnoreCase(ftmp.getCode())){
+								 academicKPIWrapper.setFacultyName(ftmp.getName());
+							 }
+							 
+						 }
+						 academicKPIWrapper.setFacultyList(facultyList);
+					}
+					
+					 response = pBPWorkTypeService.getByAcademicYearFacultyCode(request);
+					if(response.getStatus()==BuckWaConstants.SUCCESS){	
+						PBPWorkTypeWrapper pBPWorkTypeWrapper = (PBPWorkTypeWrapper)response.getResObj("pBPWorkTypeWrapper");
+						List<PBPWorkType> workTypeList = pBPWorkTypeWrapper.getpBPWorkTypeList();
+						academicKPIWrapper.setpBPWorkTypeList(workTypeList);
+						if(workTypeList!=null&&workTypeList.size()>0){
+						 
+							for(PBPWorkType workTypeTmp:workTypeList){
+								if(workTypeCode.equalsIgnoreCase(workTypeTmp.getCode())){
+									
+									academicKPIWrapper.setWorkTypeName(workTypeTmp.getName());
+									academicKPIWrapper.setWorkTypeCode(workTypeTmp.getCode());
+								}
+							}
+						
+						 
+						}					
+					}	
+					
 				mav.addObject("academicKPIWrapper", academicKPIWrapper);	
 				resObj.setResObj(academicKPIWrapper);
 			 

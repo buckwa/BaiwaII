@@ -11,6 +11,7 @@ public interface HeadService {
 	
 	public BuckWaResponse getDepartmentMarkByDepCode(BuckWaRequest request);
 	
+	public BuckWaResponse getByUserAcademicYearNew(BuckWaRequest request);
 	public BuckWaResponse getByUserAcademicYear(BuckWaRequest request);
 	public BuckWaResponse getDepartmentMarkByUser(BuckWaRequest request);
 	
@@ -22,7 +23,7 @@ public interface HeadService {
 	
 	public BuckWaResponse getDepartmentMean(BuckWaRequest request);
 	public BuckWaResponse getDepartmentMeanByWorkTypeCode(BuckWaRequest request);
-	
+
 	public BuckWaResponse getByHeadAcademicYearCount(BuckWaRequest request);
 }
 

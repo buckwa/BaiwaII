@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<fontFamilies>
+
+	<fontFamily name="ANGSA">
+		<normal>report/fonts/ANGSA.TTF</normal>
+		<bold>report/fonts/ANGSAB.TTF</bold>
+		<italic>report/fonts/ANGSAI.TTF</italic>
+		<boldItalic>report/fonts/ANGSAZ.TTF</boldItalic>
+		<pdfEncoding>Identity-H</pdfEncoding>
+		<pdfEmbedded>true</pdfEmbedded>
+	</fontFamily>
+
+
+
+</fontFamilies>

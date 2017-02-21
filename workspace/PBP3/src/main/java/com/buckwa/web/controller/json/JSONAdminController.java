@@ -465,7 +465,7 @@ public class JSONAdminController {
 	//นำไป Save    ยังค้าง   Validate 
 	@RequestMapping(value="/createuserSave", method = RequestMethod.POST)
 	public ResponseObj submitCreate(@RequestBody User user, BindingResult result) {		
-		logger.info(" Start  ");
+		logger.info(" Start ");
 		ModelAndView mav = new ModelAndView();
 		ResponseObj resp = new ResponseObj();
 

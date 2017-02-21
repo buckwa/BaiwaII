@@ -86,13 +86,14 @@ public class ImportProfileDaoImpl implements ImportProfileDao {
 		sb.append( "  create_date,    " );
 		sb.append( "  update_by,      " );
 		sb.append( "  update_date,   " );
-		sb.append( "  academic_year   " );
+		sb.append( "  academic_year,   " );
+		sb.append( "  reg_id   " );
 		sb.append( "   )   " );
 		sb.append( " VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, " );
 		sb.append( "  ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, " );
 		sb.append( "  ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, " );
 		sb.append( "  ?, ?," );
-		sb.append( " 'A',?, CURRENT_TIMESTAMP, ?, CURRENT_TIMESTAMP,? ) " );
+		sb.append( " 'A',?, CURRENT_TIMESTAMP, ?, CURRENT_TIMESTAMP,?,? ) " );
 
 		PreparedStatementCreator preparedStatementCreator = new PreparedStatementCreator() {
 			public PreparedStatement createPreparedStatement(Connection connection)throws SQLException {
@@ -133,6 +134,7 @@ public class ImportProfileDaoImpl implements ImportProfileDao {
 				ps.setString( 34, person.getCreateBy());
 				ps.setString( 35, person.getUpdateBy());
 				ps.setString( 36, person.getAcademicYear());
+				ps.setString( 37, person.getRegId());
 				return ps;  
 			}
 		};

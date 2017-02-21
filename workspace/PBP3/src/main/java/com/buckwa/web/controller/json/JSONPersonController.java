@@ -1249,6 +1249,7 @@ public class JSONPersonController {
 		System.out.println("-----getImageFile By personID----" + personId);
 		try {
 			String path = PAMConstants.rbApp.getString("project.root.dir") + "profile_picture/" + personId + ".jpg";
+			String path2 = PAMConstants.rbApp.getString("project.root.dir") + "profile_picture/NoPicture.jpg";
 			// String path = personId;
 			System.out.println("Path File Image :" + path);
 			try {
@@ -1259,7 +1260,7 @@ public class JSONPersonController {
 			} catch (IOException e) {
 
 				System.out.println("cannot find image :");
-				BufferedImage image2 = ImageIO.read(new File("../WebContent/baiwa/libs/img/default.jpg"));
+				BufferedImage image2 = ImageIO.read(new File(path2));
 				ImageIO.write(image2, "jpeg", jpegOutputStream);
 			}
 

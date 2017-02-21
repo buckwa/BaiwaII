@@ -96,6 +96,36 @@ public class HeadServiceImpl implements HeadService {
 		return response;
 	}
 	
+	
+	@Override	
+	public BuckWaResponse getByUserAcademicYearNew(BuckWaRequest request) {
+		BuckWaResponse response = new BuckWaResponse();
+		
+		// String headUserName ,String academicYear,String status
+		try{				 
+			
+			String headUserName = (String)request.get("headUserName");
+			String academicYear = (String)request.get("academicYear");
+			String status = (String)request.get("status");
+			String code = (String)request.get("code");
+			String facultyCode = (String)request.get("facultyCode");
+			String department_desc = (String)request.get("department_desc");
+			String employeeType = (String)request.get("employeeType");
+			
+			AcademicKPIUserMappingWrapper academicKPIUserMappingWrapper= ( AcademicKPIUserMappingWrapper)headDao.getByUserAcademicYearNew(headUserName,academicYear,status,code,facultyCode,department_desc,employeeType);
+		 
+			 response.addResponse("academicKPIUserMappingWrapper",academicKPIUserMappingWrapper);
+ 	
+		}catch(Exception ex){
+			ex.printStackTrace();
+			response.setStatus(BuckWaConstants.FAIL);
+			response.setErrorCode("E001");			
+		}
+	 
+		return response;
+	}
+	
+	
 	@Override	
 	public BuckWaResponse getDepartmentMark(BuckWaRequest request) {
 		BuckWaResponse response = new BuckWaResponse();

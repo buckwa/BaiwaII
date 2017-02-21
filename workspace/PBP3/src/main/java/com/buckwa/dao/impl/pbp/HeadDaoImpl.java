@@ -561,6 +561,162 @@ public class HeadDaoImpl implements HeadDao {
 	}
 	
 	
+	
+	@Override
+	public AcademicKPIUserMappingWrapper getByUserAcademicYearNew( String headUserName ,String academicYear,String status,String code,String facultyCode,String department_desc ,String employeeType ){	  
+		
+		AcademicKPIUserMappingWrapper   academicKPIUserMappingWrapper = new AcademicKPIUserMappingWrapper(); 
+		// Get Department belong to head
+				
+				Department department=new Department();
+				AcademicPerson personTmp =new AcademicPerson();
+				List<AcademicPerson> newAcademicPersonList = new ArrayList();
+				
+				
+				 //String employeeType = personTmp.getEmployeeTypeNo();
+				
+				String sqlRound =" select *  from academic_evaluate_round where academic_year  ='"+academicYear+"' and evaluate_type='"+employeeType+"'"   ;  
+				
+				
+				
+				logger.info(" sqlRound:"+sqlRound);
+				 AcademicYearEvaluateRound  academicYearEvaluateRound   = this.jdbcTemplate.queryForObject(sqlRound,	new AcademicYearEvaluateRoundMapper() );	
+				
+				// logger.info(" academicYearEvaluateRound:"+BeanUtils.getBeanString(academicYearEvaluateRound));
+				
+				 long startTime =0l;
+				 long endTime =0l;
+				 
+				 Timestamp startTimeStamp = null;
+				 Timestamp endTimeStamp = null;
+				 String round ="1";
+				 if(employeeType.equalsIgnoreCase("1")){
+					 
+					 long round1EndLong = academicYearEvaluateRound.getRound1EndDate().getTime();
+					 
+						 logger.info(" round 1 Start From:"+academicYearEvaluateRound.getRound1StartDate()+" to "+academicYearEvaluateRound.getRound1EndDate()+" doday :"+new Timestamp(System.currentTimeMillis()) +" so use round 1");
+						 startTime = academicYearEvaluateRound.getRound1StartDate().getTime();
+						 startTimeStamp = academicYearEvaluateRound.getRound1StartDate();
+						 
+						 round ="2";
+
+						 endTime = academicYearEvaluateRound.getRound2EndDate().getTime();
+						 endTimeStamp = academicYearEvaluateRound.getRound2EndDate();
+						 
+				 }else{
+					 
+					 startTime = academicYearEvaluateRound.getRound1StartDate().getTime();
+					 startTimeStamp = academicYearEvaluateRound.getRound1StartDate();
+					 
+					 endTime = academicYearEvaluateRound.getRound1EndDate().getTime();
+					 endTimeStamp = academicYearEvaluateRound.getRound1EndDate(); 
+					 
+				 }
+						 
+				 logger.info(" Employee Type:"+employeeType+ " Start Date:"+startTimeStamp+"   End Date:"+endTimeStamp +" round:"+round);
+			 	
+				 
+				//String kpiMapping = " select * from academic_kpi_user_mapping where user_name='"+personTmp.getEmail()+"'  and  academic_year='"+academicYear+"'";
+				//String kpiMapping = " select * from academic_kpi_user_mapping where user_name='"+personTmp.getEmail()+"'  and  academic_year='"+academicYear+"' and create_date BETWEEN '"+startTimeStamp+"' AND '"+endTimeStamp+"' AND academic_kpi_code='"+code+"'  "; 
+				
+				
+				StringBuilder kpiMapping = new StringBuilder();
+				
+				
+				kpiMapping.append(" SELECT  academic_kpi_user_mapping.* ");
+				kpiMapping.append(" FROM academic_kpi_user_mapping ");
+				kpiMapping.append(" INNER JOIN academic_kpi ");
+				kpiMapping.append(" ON academic_kpi.academic_kpi_id = academic_kpi_user_mapping.academic_kpi_id  ");
+				kpiMapping.append(" INNER JOIN person_pbp ");
+				kpiMapping.append(" ON academic_kpi_user_mapping.user_name = person_pbp.email ");
+				kpiMapping.append(" WHERE academic_kpi.academic_year = '"+academicYear+"' ");		
+				kpiMapping.append(" AND academic_kpi_user_mapping.create_date BETWEEN '"+startTimeStamp+"' AND '"+endTimeStamp+"' ");	
+				kpiMapping.append(" AND academic_kpi_user_mapping.academic_year =   '"+academicYear+"' ");
+				kpiMapping.append(" AND person_pbp.academic_year =   '"+academicYear+"' ");
+				kpiMapping.append(" AND department_desc =   '"+department_desc+"' ");
+				kpiMapping.append(" AND academic_kpi.faculty_code = '"+facultyCode+"' ");
+				if("A".equalsIgnoreCase(status)){
+					kpiMapping.append(" AND academic_kpi_user_mapping.status = 'APPROVED' ");
+				}else{
+					kpiMapping.append(" AND academic_kpi_user_mapping.status != 'APPROVED' ");
+				}
+				
+				kpiMapping.append(" AND academic_kpi_user_mapping.academic_kpi_id = '"+code+"' ");
+
+				
+				logger.info("  getByHeadAcademicYear kpiMapping:"+kpiMapping.toString());
+				List<AcademicKPIUserMapping> academicKPIUserMappingList  = this.jdbcTemplate.query(kpiMapping.toString(),	new AcademicKPIUserMappingMapper() );
+
+				
+				if(academicKPIUserMappingList!=null&&academicKPIUserMappingList.size()>0){
+					
+					for(AcademicKPIUserMapping mappingTmp:academicKPIUserMappingList){
+						  
+						
+						
+						String sqlkpi =" select *  from academic_kpi where academic_kpi_id ="+mappingTmp.getAcademicKPIId() ; 
+						logger.info(" sqlkpi:"+sqlkpi);
+						 
+						
+						try{
+							 AcademicKPI  academicKPI  = this.jdbcTemplate.queryForObject(sqlkpi,	new AcademicKPIMapper() );
+							 mappingTmp.setAcademicKPI(academicKPI);
+							 
+							 
+								String sqlAttributeValue =" select *  from academic_kpi_attribute_value where kpi_user_mapping_id ="+mappingTmp.getKpiUserMappingId() ; 
+								List<AcademicKPIAttributeValue> academicKPIAttributeValueList = new ArrayList();
+								try{
+									logger.info(" sqlAttributeValue:"+sqlAttributeValue);
+									academicKPIAttributeValueList = this.jdbcTemplate.query(sqlAttributeValue,	new AcademicKPIAttributeValueMapper() );
+									
+								}catch (org.springframework.dao.EmptyResultDataAccessException ex){
+									ex.printStackTrace();
+								} 
+								
+								mappingTmp.setAcademicKPIAttributeValueList(academicKPIAttributeValueList);
+
+								String sqlAttribute  =" select *  from academic_kpi_attribute  where academic_kpi_id ="+mappingTmp.getAcademicKPIId()+" and academic_year='"+mappingTmp.getAcademicYear()+"'" ; 
+								
+								List<AcademicKPIAttribute> academicKPIAttributeList = new ArrayList();
+								try{
+									logger.info(" sqlAttribute:"+sqlAttribute);
+									academicKPIAttributeList = this.jdbcTemplate.query(sqlAttribute,	new AcademicKPIAttributeMapper() );
+									
+								}catch (org.springframework.dao.EmptyResultDataAccessException ex){
+									ex.printStackTrace();
+								} 									
+								
+								mappingTmp.setAcademicKPIAttributeList(academicKPIAttributeList);
+							 
+						}catch (org.springframework.dao.EmptyResultDataAccessException ex){
+							ex.printStackTrace();
+						} 
+						
+						
+						personTmp.setAcademicKPIUserMappingList(academicKPIUserMappingList);
+						newAcademicPersonList.add(personTmp);
+								
+						
+					}
+					
+					department.setAcademicPersonList(newAcademicPersonList);
+					
+					
+
+					
+				}
+				
+
+				
+				academicKPIUserMappingWrapper.setDepartment(department);
+				
+				return academicKPIUserMappingWrapper;
+	}
+	
+	
+	
+	
+	
 	@Override
 	public AcademicKPIUserMappingWrapper listApproveByAcademicYear( String headUserName ,String academicYear,String status,String userName){	  
 		

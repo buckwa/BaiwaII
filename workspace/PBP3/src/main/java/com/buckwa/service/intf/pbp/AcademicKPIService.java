@@ -24,7 +24,7 @@ public interface AcademicKPIService {
 	public BuckWaResponse getAllByAcademicYear(BuckWaRequest request);
 	public BuckWaResponse getAllByAcademicYearFacultyCode(BuckWaRequest request);
 
-	
+	public BuckWaResponse getByAcademicYearWorkTypeCodeFacultyCodeByinitApprove(BuckWaRequest request);
 	
 }
 

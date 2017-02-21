@@ -257,6 +257,91 @@ public class AcademicKPIDaoImpl implements AcademicKPIDao {
 		return academicKPIWrapper;
 	}
 	
+	@Override
+	public AcademicKPIWrapper getByAcademicYearWorkTypeCodeFacultyCodeByinitApprove( String getByAcademicYear,String workTypeCode,String facultyCode ,String department_desc) {		 		
+		String sql =" select *  from academic_kpi where academic_year ='"+getByAcademicYear+"' and work_type_code='"+workTypeCode+"' and faculty_code='"+facultyCode+"' order by order_no asc " ; 
+		logger.info("getByAcademicYearWorkTypeCodeFacultyCode  sql:"+sql);
+		List<AcademicKPI> academicKPIList  =null;
+		
+		try{
+			academicKPIList = this.jdbcTemplate.query(sql,	new AcademicKPIMapperByKPI() );	
+			
+
+			
+
+			
+			System.out.println(" Test "+academicKPIList.get(0).getSummary_App());
+			if(academicKPIList != null){
+				
+				for (AcademicKPI academicKPI : academicKPIList) {
+					logger.info("getAcademicKPIId  Ok:"+academicKPI.getAcademicKPIId());
+					StringBuilder sql_a = new StringBuilder();
+					sql_a.append(" SELECT  COUNT(1) AS total ");
+					sql_a.append(" FROM academic_kpi_user_mapping ");
+					sql_a.append(" INNER JOIN academic_kpi ");
+					sql_a.append(" ON academic_kpi.academic_kpi_id = academic_kpi_user_mapping.academic_kpi_id  ");
+					sql_a.append(" INNER JOIN person_pbp ");
+					sql_a.append(" ON academic_kpi_user_mapping.user_name = person_pbp.email ");
+					sql_a.append(" WHERE academic_kpi.academic_year = '"+getByAcademicYear+"' ");
+					sql_a.append(" AND academic_kpi_user_mapping.academic_year =   '"+getByAcademicYear+"' ");
+					sql_a.append(" AND person_pbp.academic_year =   '"+getByAcademicYear+"' ");
+					sql_a.append(" AND department_desc =   '"+department_desc+"' ");
+					sql_a.append(" AND academic_kpi_user_mapping.work_type_code = '"+workTypeCode+"' ");
+					sql_a.append(" AND academic_kpi.faculty_code = '"+facultyCode+"' ");
+					sql_a.append(" AND academic_kpi_user_mapping.status = 'APPROVED' ");
+					sql_a.append(" AND academic_kpi_user_mapping.academic_kpi_id = '"+academicKPI.getAcademicKPIId()+"' ");
+
+					int total = this.jdbcTemplate.queryForObject(sql_a.toString(), Integer.class);	
+					logger.info("Total Appover  sql:"+ total);
+					academicKPI.setSummary_App(total);
+					
+					StringBuilder sql_co = new StringBuilder();
+					sql_co.append(" SELECT  COUNT(1) AS total ");
+					sql_co.append(" FROM academic_kpi_user_mapping ");
+					sql_co.append(" INNER JOIN academic_kpi ");
+					sql_co.append(" ON academic_kpi.academic_kpi_id = academic_kpi_user_mapping.academic_kpi_id  ");
+					sql_co.append(" INNER JOIN person_pbp ");
+					sql_co.append(" ON academic_kpi_user_mapping.user_name = person_pbp.email ");
+					sql_co.append(" WHERE academic_kpi.academic_year = '"+getByAcademicYear+"' ");
+					sql_co.append(" AND academic_kpi_user_mapping.academic_year =   '"+getByAcademicYear+"' ");
+					sql_co.append(" AND person_pbp.academic_year =   '"+getByAcademicYear+"' ");
+					sql_co.append(" AND department_desc =   '"+department_desc+"' ");
+					sql_co.append(" AND academic_kpi.faculty_code = '"+facultyCode+"' ");
+					sql_co.append(" AND academic_kpi_user_mapping.status != 'APPROVED' ");
+					sql_co.append(" AND academic_kpi_user_mapping.academic_kpi_id = '"+academicKPI.getAcademicKPIId()+"' ");
+
+					total = this.jdbcTemplate.queryForObject(sql_co.toString(), Integer.class);	
+					logger.info("Total Appover  sql:"+ total);
+					academicKPI.setSummary_Co(total);
+					
+//					StringBuilder sql_c = new StringBuilder();
+//					sql_c.append(" SELECT  COUNT(1) AS total ");
+//					sql_c.append(" FROM academic_kpi_user_mapping ");
+//					sql_c.append(" INNER JOIN academic_kpi ");
+//					sql_c.append(" ON academic_kpi.code = academic_kpi_user_mapping.academic_kpi_code ");
+//					sql_c.append(" WHERE academic_kpi.academic_year = '"+getByAcademicYear+"' ");
+//					sql_c.append(" AND academic_kpi_user_mapping.work_type_code = '"+workTypeCode+"' ");
+//					sql_c.append(" AND academic_kpi.faculty_code = '"+facultyCode+"' ");
+//					sql_c.append(" AND academic_kpi_user_mapping.status = 'CREATE' ");
+//					sql_c.append(" AND academic_kpi_user_mapping.academic_kpi_code = '"+academicKPI.getCode()+"' ");
+//
+//					total = this.jdbcTemplate.queryForObject(sql_c.toString(), Integer.class);	
+//					logger.info("Total Appover  sql:"+ total);
+//					academicKPI.setSummary_Cr(total);
+					
+					
+				}
+			}
+			
+			logger.info("SS");	
+			
+		}catch (org.springframework.dao.EmptyResultDataAccessException ex){
+			ex.printStackTrace();
+		} 
+		AcademicKPIWrapper academicKPIWrapper = new AcademicKPIWrapper();  
+		academicKPIWrapper.setAcademicKPIList(academicKPIList);
+		return academicKPIWrapper;
+	}
 	
  
 
@@ -703,6 +788,61 @@ public class AcademicKPIDaoImpl implements AcademicKPIDao {
 			
 			try{
 			domain.setUnitDesc(schoolUtil.getUnitDescMyCode(rs.getString("unit_code"), rs.getString("academic_year")));
+		}catch(org.springframework.dao.EmptyResultDataAccessException ex){
+			ex.printStackTrace();
+		}
+		 
+		return domain;
+    }
+	}
+	
+	
+	private class AcademicKPIMapperByKPI implements RowMapper<AcademicKPI> {   						
+        @Override
+		public AcademicKPI mapRow(ResultSet rs, int rowNum) throws SQLException {
+        	AcademicKPI domain = new AcademicKPI(); 
+        	domain.setAcademicKPIId(rs.getLong("academic_kpi_id"));
+			domain.setName(rs.getString("name"));		
+			domain.setCode(rs.getString("code"));	
+			domain.setWorkTypeCode(rs.getString("work_type_code"));
+			domain.setDescription(rs.getString("description"));	
+			domain.setStatus(rs.getString("status"));	
+			domain.setAcademicYear(rs.getString("academic_year"));
+			domain.setMark(rs.getBigDecimal("mark"));
+			domain.setUnitCode(rs.getString("unit_code"));
+			domain.setMultiplyValue(rs.getString("rule_code"));
+			domain.setOrderNo(rs.getString("order_no"));
+			
+			domain.setSpecialP1(rs.getString("special_p1"));
+			domain.setSpecialP2(rs.getString("special_p2"));
+			domain.setSpecialP3(rs.getString("special_p3"));
+			domain.setSpecialP4(rs.getString("special_p4"));
+			domain.setTotalStudentFrom(rs.getString("total_student_from"));
+			domain.setTotalStudentTo(rs.getString("total_student_to"));
+			domain.setFromRegis(rs.getString("from_reg"));
+			domain.setFacultyCode(rs.getString("faculty_code"));
+			//logger.info(" ###### Multiply Value:"+rs.getString("rule_code"));
+			
+			try{
+			domain.setUnitDesc(schoolUtil.getUnitDescMyCode(rs.getString("unit_code"), rs.getString("academic_year")));
+		}catch(org.springframework.dao.EmptyResultDataAccessException ex){
+			ex.printStackTrace();
+		}
+		 
+		return domain;
+    }
+	}
+	
+	private class AcademicKPIMapperByKPICount implements RowMapper<AcademicKPI> {   						
+        @Override
+		public AcademicKPI mapRow(ResultSet rs, int rowNum) throws SQLException {
+        	AcademicKPI domain = new AcademicKPI(); 
+        	domain.setSummary_App(rs.getInt("Count_kpi"));
+			
+			//logger.info(" ###### Multiply Value:"+rs.getString("rule_code"));
+			
+			try{
+			//domain.setUnitDesc(schoolUtil.getUnitDescMyCode(rs.getString("unit_code"), rs.getString("academic_year")));
 		}catch(org.springframework.dao.EmptyResultDataAccessException ex){
 			ex.printStackTrace();
 		}

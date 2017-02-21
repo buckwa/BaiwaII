@@ -31,5 +31,6 @@ public interface AcademicKPIDao {
 	public AcademicKPIWrapper getAllByAcademicYear( String getByAcademicYear) ;
 	public AcademicKPIWrapper getAllByAcademicYearFacultyCode( String getByAcademicYear,String facultyCode) ;	
 	
-	
+	public AcademicKPIWrapper getByAcademicYearWorkTypeCodeFacultyCodeByinitApprove(String academicYear,String typeCode,String facultyCode,String department_desc);
+
 }

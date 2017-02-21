@@ -220,6 +220,28 @@ public class AcademicKPIServiceImpl implements AcademicKPIService {
 		return response;
 	}
 	
+	@Override	
+	public BuckWaResponse getByAcademicYearWorkTypeCodeFacultyCodeByinitApprove(BuckWaRequest request) {
+		BuckWaResponse response = new BuckWaResponse();
+		try{				 
+			
+			String academicYear = (String)request.get("academicYear");
+			String workTypeCode = (String)request.get("workTypeCode");
+			String facultyCode = (String)request.get("facultyCode");
+			String department_desc = (String)request.get("department_desc");
+
+			AcademicKPIWrapper academicKPIWrapper= ( AcademicKPIWrapper)academicKPIDao.getByAcademicYearWorkTypeCodeFacultyCodeByinitApprove(academicYear,workTypeCode,facultyCode,department_desc);
+		 
+			 response.addResponse("academicKPIWrapper",academicKPIWrapper);
+ 	
+		}catch(Exception ex){
+			ex.printStackTrace();
+			response.setStatus(BuckWaConstants.FAIL);
+			response.setErrorCode("E001");			
+		}
+	 
+		return response;
+	}
 	
 	
 	@Override

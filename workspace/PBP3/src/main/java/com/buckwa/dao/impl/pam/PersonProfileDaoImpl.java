@@ -272,7 +272,7 @@ public class PersonProfileDaoImpl implements PersonProfileDao {
 				"   p.birth_date, " +
 				"   p.reg_id, " +
 				"   p.faculty_desc,  " +
-				"   belong_to  " +
+				"   citizen_id  " +
 				" FROM person_pbp p "+
 				" INNER JOIN buckwauser b ON p.email = b.USERNAME ";
 		StringBuilder sql = new StringBuilder();
@@ -380,6 +380,7 @@ public class PersonProfileDaoImpl implements PersonProfileDao {
 		"     sex = ?, " +
 		"     birth_date  = ?, " +
 		"     rate_no = ?, " +
+		"     reg_id = ?, " +
 		"     employee_type = ?, " +
 		"     academic_rank = ?, " +
 		"     level = ?, " +
@@ -416,6 +417,7 @@ public class PersonProfileDaoImpl implements PersonProfileDao {
 			domain.getSex(),
 			domain.getBirthdate(),
 			domain.getRateNo(),
+			domain.getRegId(),
 			domain.getEmployeeType(),
 			domain.getAcademicRank(),
 			domain.getLevel(),
@@ -727,7 +729,7 @@ public class PersonProfileDaoImpl implements PersonProfileDao {
 			domain.setPersonType(rs.getString("person_type"));
 			domain.setStatus(rs.getString("status"));
 //			domain.setPosition(rs.getString("academic_rank"));
-			domain.setBelongTo(rs.getString("belong_to"));
+			domain.setCitizenId(rs.getString("citizen_id"));
 			domain.setDepartmentDesc(rs.getString("department_desc"));
 			domain.setTitleName(rs.getString("title_name"));
 			domain.setAcademicRank(rs.getString("academic_rank"));

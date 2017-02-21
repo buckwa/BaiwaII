@@ -26,6 +26,10 @@ public class AcademicKPI extends BaseDomain {
 	private String specialP5;
 	private String totalStudentFrom;
 	private String totalStudentTo;
+	
+	private int summary_App;
+	private int summary_Co;
+	private int summary_Cr;
 
 	private String multiplyValue;
 
@@ -282,5 +286,31 @@ public class AcademicKPI extends BaseDomain {
 	public void setIndex(String index) {
 		this.index = index;
 	}
+
+	public int getSummary_App() {
+		return summary_App;
+	}
+
+	public void setSummary_App(int summary_App) {
+		this.summary_App = summary_App;
+	}
+
+	public int getSummary_Co() {
+		return summary_Co;
+	}
+
+	public void setSummary_Co(int summary_Co) {
+		this.summary_Co = summary_Co;
+	}
+
+	public int getSummary_Cr() {
+		return summary_Cr;
+	}
+
+	public void setSummary_Cr(int summary_Cr) {
+		this.summary_Cr = summary_Cr;
+	}
+
+	
 
 }

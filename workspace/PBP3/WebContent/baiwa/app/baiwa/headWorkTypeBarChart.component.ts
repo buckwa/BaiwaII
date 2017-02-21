@@ -21,7 +21,7 @@ export class headWorkTypeBarChart implements OnInit {
 
     }
     public DepartmentName() {
-        var url = "../person/MinMaxBean";
+        var url = "../person/MinMaxBean/2558";
         return this.http.get(url).subscribe(response => this.GetkendoSucess(response),
             error => this.GetDepartmentNameError(error), () => console.log("DepartmentName !"));
     }

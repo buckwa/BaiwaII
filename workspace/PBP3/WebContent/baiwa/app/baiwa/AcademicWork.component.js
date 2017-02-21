@@ -14,7 +14,7 @@ var http_1 = require('@angular/http');
 var ng2_file_upload_1 = require('ng2-file-upload');
 var platform_browser_1 = require('@angular/platform-browser');
 var Rx_1 = require('rxjs/Rx');
-var URL1 = 'http://localhost:8080/PBP3/person/importwork_file';
+var URL1 = '/PBP3/person/importwork_file';
 var AcademicWork = (function () {
     function AcademicWork(commonService, http, sanitizer) {
         this.commonService = commonService;

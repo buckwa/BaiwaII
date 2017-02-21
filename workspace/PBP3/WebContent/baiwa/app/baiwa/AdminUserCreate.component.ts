@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import {CommonService} from './../service/Common.service';
 import { Http, Headers, Response } from '@angular/http';
 import { FileSelectDirective, FileDropDirective, FileUploader } from 'ng2-file-upload';
+import { Router, ActivatedRoute, NavigationCancel  } from '@angular/router';
 declare var jQuery: any;
 
 const URL1 = 'http://localhost:8080/PBP3/admin/json/UploadFile_Profile';
@@ -38,7 +39,7 @@ export class AdminUserCreate {
 
     submitted = false;
 
-    constructor(private http: Http) {
+    constructor(private router: Router,private http: Http ) {
         this.model = this.ModelUser();
         this.person = this.PersonUser();
 
@@ -334,6 +335,9 @@ export class AdminUserCreate {
                    break;
                 }
         }
+    }
+    public back() {
+      this.router.navigate(['/AdminWorkUser']);
     }
 
 }

@@ -155,15 +155,24 @@
 
                 </div>
 
-
-
-                <!--person.belongTo-->
                 <div class=" form-group row">
-                    <label class="col-xs-2 form-control-label" >สังกัด:      </label>
+                    <label class="col-xs-2 form-control-label">Reg ID:<span style="color: Red;">*</span>      </label>
 
                     <div class="col-sm-5">
                         <p class="form-control-static">
-                            <input type="text" class="form-control" [(ngModel)]="person.belongTo" name="belongTo" id="name" placeholder="สังกัด " >
+                            <input type="text" class="form-control" required [(ngModel)]="person.regId" name="regId" id="workTelNo" placeholder="โทรศัพท์ที่ทำงาน " required>
+                        </p>
+                    </div>
+
+                </div>
+
+                <!--person.belongTo-->
+                <div class=" form-group row">
+                    <label class="col-xs-2 form-control-label" >เลขบัตรประชาชน:      </label>
+
+                    <div class="col-sm-5">
+                        <p class="form-control-static">
+                            <input type="text" class="form-control" [(ngModel)]="person.citizenId" name="citizenId" id="name" placeholder="เลขบัตรประชาชน " >
                         </p>
                     </div>
 
@@ -265,7 +274,7 @@
                     <div class="col-sm-5">
                         <div class="form-group">
                             <button type="submit" class="btn btn-rounded btn-inline btn-primary">บันทึก</button>
-                            <button type="reset" class="btn btn-rounded btn-inline btn-danger">ยกเลิก</button>
+                            <button type="button" (click)="back();" class="btn btn-rounded btn-inline btn-danger">ยกเลิก</button>
                         </div>
                     </div>
 

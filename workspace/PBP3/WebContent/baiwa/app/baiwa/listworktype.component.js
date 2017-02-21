@@ -12,7 +12,7 @@ var core_1 = require('@angular/core');
 var Common_service_1 = require('./../service/Common.service');
 var http_1 = require('@angular/http');
 var ng2_file_upload_1 = require('ng2-file-upload');
-var URL = 'http://localhost:8080/PBP3/person/importwork_file';
+var URL = '/PBP3/person/importwork_file';
 var listworktype = (function () {
     function listworktype(commonService, http) {
         this.commonService = commonService;
@@ -192,6 +192,7 @@ var listworktype = (function () {
     listworktype.prototype.exitModal = function () {
         this.statusActiveUpload = false;
         this.uploader.clearQueue();
+        this.uploadalert = false;
         this.savealert = false;
         this.valid = true;
     };

@@ -3,7 +3,7 @@ import {CommonService} from './../service/Common.service';
 import { Http, Headers, Response } from '@angular/http';
 import { FileSelectDirective, FileDropDirective, FileUploader } from 'ng2-file-upload';
 declare var jQuery: any;
-const URL = 'http://localhost:8080/PBP3/person/importwork_file';
+const URL = '/PBP3/person/importwork_file';
 
 @Component({
     templateUrl: 'app/baiwa/html/listworktype.component.html'
@@ -269,7 +269,7 @@ export class listworktype implements OnInit, AfterViewInit {
 
              this.statusActiveUpload =  false;
              this.uploader.clearQueue();
-
+            this.uploadalert = false;
             this.savealert = false;
             this.valid = true;
 

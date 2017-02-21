@@ -3,7 +3,7 @@ import {CommonService} from './../service/Common.service';
 import { Http, Headers, Response } from '@angular/http';
 import { FileSelectDirective, FileDropDirective, FileUploader } from 'ng2-file-upload';
 
-const URL = 'http://localhost:8080/PBP3/person/uploadMultiFile';
+const URL = '/PBP3/person/uploadMultiFile';
 
 // class FileSelectDirective
 @Directive({ selector: '[ng2FileSelect]' })

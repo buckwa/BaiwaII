@@ -13,7 +13,8 @@ var http_1 = require('@angular/http');
 var router_1 = require('@angular/router');
 //Dev  Amuletkill !
 var AdminUserEdit = (function () {
-    function AdminUserEdit(http, route) {
+    function AdminUserEdit(router, http, route) {
+        this.router = router;
         this.http = http;
         this.route = route;
         this.javascript = false;
@@ -235,12 +236,15 @@ var AdminUserEdit = (function () {
             }
         }
     };
+    AdminUserEdit.prototype.back = function () {
+        this.router.navigate(['/AdminWorkUser']);
+    };
     AdminUserEdit = __decorate([
         core_1.Component({
             selector: 'input-controls',
             templateUrl: 'app/baiwa/html/AdminUserEdit.component.html'
         }), 
-        __metadata('design:paramtypes', [http_1.Http, router_1.ActivatedRoute])
+        __metadata('design:paramtypes', [router_1.Router, http_1.Http, router_1.ActivatedRoute])
     ], AdminUserEdit);
     return AdminUserEdit;
 }());

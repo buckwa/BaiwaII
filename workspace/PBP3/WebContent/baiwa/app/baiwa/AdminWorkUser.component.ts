@@ -131,15 +131,23 @@ export class AdminWorkUser implements OnInit {
             if (isOk) {
                 //action
                 var url = "../admin/json/deleteUser/" + Username + "/work";
-                this.http.post(url, this.page).subscribe(response => this.getTimeTableSucess(response),
-                    error => this.GetPersonError(error), () => console.log("callsevice done !"));
+
+                 this.http.post(url, this.page).subscribe(response => this.getTimeTableSucessDelete(response),
+                    error => this.GetPersonError(error), () => console.log("callsevice done !"))
+               
+
+
                 //this.router.navigate(['/AdminWorkUser']);
-                location.reload();
+               
             }
         }, this));
 
     }
+    getTimeTableSucessDelete(response: any) {
+        
+    location.reload();
 
+    }
 
 
     SearchDataUser() {

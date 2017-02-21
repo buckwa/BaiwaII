@@ -98,11 +98,12 @@ var AdminWorkUser = (function () {
             if (isOk) {
                 //action
                 var url = "../admin/json/deleteUser/" + Username + "/work";
-                this.http.post(url, this.page).subscribe(function (response) { return _this.getTimeTableSucess(response); }, function (error) { return _this.GetPersonError(error); }, function () { return console.log("callsevice done !"); });
-                //this.router.navigate(['/AdminWorkUser']);
-                location.reload();
+                this.http.post(url, this.page).subscribe(function (response) { return _this.getTimeTableSucessDelete(response); }, function (error) { return _this.GetPersonError(error); }, function () { return console.log("callsevice done !"); });
             }
         }, this));
+    };
+    AdminWorkUser.prototype.getTimeTableSucessDelete = function (response) {
+        location.reload();
     };
     AdminWorkUser.prototype.SearchDataUser = function () {
         var _this = this;

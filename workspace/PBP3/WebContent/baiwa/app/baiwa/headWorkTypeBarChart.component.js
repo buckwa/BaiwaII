@@ -19,7 +19,7 @@ var headWorkTypeBarChart = (function () {
     };
     headWorkTypeBarChart.prototype.DepartmentName = function () {
         var _this = this;
-        var url = "../person/MinMaxBean";
+        var url = "../person/MinMaxBean/2558";
         return this.http.get(url).subscribe(function (response) { return _this.GetkendoSucess(response); }, function (error) { return _this.GetDepartmentNameError(error); }, function () { return console.log("DepartmentName !"); });
     };
     headWorkTypeBarChart.prototype.GetkendoSucess = function (response) {

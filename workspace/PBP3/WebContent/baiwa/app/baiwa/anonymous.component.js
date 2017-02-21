@@ -22,6 +22,7 @@ var anonymous = (function () {
     anonymous.prototype.getjSonSucess = function (response) {
         this.listKpi = response.json(JSON.stringify(response._body));
         this.pBPWorkTypeList = this.listKpi.pBPWorkTypeWrapper.pBPWorkTypeList;
+        this.facultyCode = this.pBPWorkTypeList[0].facultyCode;
         this.acadamicRound = this.listKpi.academicYearWrapper.academicYearEvaluateRoundList;
         console.log("getsucess" + response);
     };

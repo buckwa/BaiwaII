@@ -61,10 +61,16 @@ var AdminChainOfCommandinitHead = (function () {
         this.presidents = response.json(JSON.stringify(response._body));
         this.president = this.presidents.resObj;
         this.academicYear = this.president.academicYear;
-        this.head = this.president.head;
         this.department = this.president.department.name;
-        this.thainame = this.head.thaiName;
-        this.thaiSurname = this.head.thaiSurname;
+        this.head = this.president.head;
+        if (this.head != null) {
+            this.thainame = this.head.thaiName;
+            this.thaiSurname = this.head.thaiSurname;
+        }
+        else {
+            this.thainame = '';
+            this.thaiSurname = '';
+        }
         this.resPagingBean = this.presidents.resPagingBean;
         this.currentPageItem = this.presidents.resPagingBean.currentPageItem;
         this.makeDataTable.data = this.currentPageItem;

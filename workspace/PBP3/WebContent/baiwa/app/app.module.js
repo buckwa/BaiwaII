@@ -35,6 +35,7 @@ var notificationsDetail_component_1 = require('./baiwa/notificationsDetail.compo
 var barChart_component_1 = require('./baiwa/barChart.component');
 var headWorkTypeBarChart_component_1 = require('./baiwa/headWorkTypeBarChart.component');
 var initApprove_component_1 = require('./baiwa/initApprove.component');
+var initApproveByKPI_component_1 = require('./baiwa/initApproveByKPI.component');
 var approvework_component_1 = require('./baiwa/approvework.component');
 var FacultyReport_component_1 = require('./baiwa/FacultyReport.component');
 var deanBarChart_component_1 = require('./baiwa/deanBarChart.component');
@@ -65,6 +66,7 @@ var AdminAcademicYeareditDateEvaluateRound_component_1 = require('./baiwa/AdminA
 var AdminmarkRankinit_component_1 = require('./baiwa/AdminmarkRankinit.component');
 var AdminmarkRankinitEditRound_component_1 = require('./baiwa/AdminmarkRankinitEditRound.component');
 var AdminpBPWorkTypeinit_component_1 = require('./baiwa/AdminpBPWorkTypeinit.component');
+var approveworkByKPI_component_1 = require('./baiwa/approveworkByKPI.component');
 var routes = [
     { path: 'home', component: home_component_1.home },
     { path: 'importwork', component: importwork_component_1.importwork },
@@ -86,6 +88,7 @@ var routes = [
     { path: 'barchart', component: barChart_component_1.barChart },
     { path: 'headWorkTypeBarChart', component: headWorkTypeBarChart_component_1.headWorkTypeBarChart },
     { path: 'initApprove', component: initApprove_component_1.InitApporve },
+    { path: 'initApproveByKPI', component: initApproveByKPI_component_1.initApproveByKPI },
     { path: 'approvework/:email/:rond', component: approvework_component_1.approvework },
     { path: 'facultyReport', component: FacultyReport_component_1.FacultyReport },
     { path: 'deanBarChart', component: deanBarChart_component_1.deanBarChart },
@@ -113,6 +116,7 @@ var routes = [
     { path: 'AdminmarkRankinit', component: AdminmarkRankinit_component_1.AdminmarkRankinit },
     { path: 'AdminmarkRankinitEditRound', component: AdminmarkRankinitEditRound_component_1.AdminmarkRankinitEditRound },
     { path: 'AdminpBPWorkTypeinit', component: AdminpBPWorkTypeinit_component_1.AdminpBPWorkTypeinit },
+    { path: 'approveworkByKPI/:code/:status', component: approveworkByKPI_component_1.approveworkByKPI },
 ];
 var AppModule = (function () {
     function AppModule() {
@@ -150,6 +154,7 @@ var AppModule = (function () {
                 barChart_component_1.barChart,
                 headWorkTypeBarChart_component_1.headWorkTypeBarChart,
                 initApprove_component_1.InitApporve,
+                initApproveByKPI_component_1.initApproveByKPI,
                 approvework_component_1.approvework,
                 FacultyReport_component_1.FacultyReport,
                 deanBarChart_component_1.deanBarChart,
@@ -178,6 +183,7 @@ var AppModule = (function () {
                 AdminmarkRankinit_component_1.AdminmarkRankinit,
                 AdminmarkRankinitEditRound_component_1.AdminmarkRankinitEditRound,
                 AdminpBPWorkTypeinit_component_1.AdminpBPWorkTypeinit,
+                approveworkByKPI_component_1.approveworkByKPI,
             ],
             providers: [
                 Common_service_1.CommonService,

@@ -10,7 +10,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('@angular/core');
 var ng2_file_upload_1 = require('ng2-file-upload');
-var URL = 'http://localhost:8080/PBP3/person/uploadMultiFile';
+var URL = '/PBP3/person/uploadMultiFile';
 // class FileSelectDirective
 var importwork = (function () {
     // 555+

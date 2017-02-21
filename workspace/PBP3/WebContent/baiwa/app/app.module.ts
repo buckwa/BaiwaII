@@ -25,6 +25,7 @@ import { notificationsDetail} from './baiwa/notificationsDetail.component';//ย
 import { barChart} from './baiwa/barChart.component';
 import { headWorkTypeBarChart} from './baiwa/headWorkTypeBarChart.component';
 import { InitApporve} from './baiwa/initApprove.component';
+import { initApproveByKPI} from './baiwa/initApproveByKPI.component';
 import { approvework} from './baiwa/approvework.component';
 import { FacultyReport} from './baiwa/FacultyReport.component';
 import { deanBarChart } from './baiwa/deanBarChart.component';
@@ -61,6 +62,8 @@ import { AdminAcademicYeareditDateEvaluateRound } from './baiwa/AdminAcademicYea
 import { AdminmarkRankinit } from './baiwa/AdminmarkRankinit.component';
 import { AdminmarkRankinitEditRound } from './baiwa/AdminmarkRankinitEditRound.component';
 import { AdminpBPWorkTypeinit } from './baiwa/AdminpBPWorkTypeinit.component';
+import { approveworkByKPI } from './baiwa/approveworkByKPI.component';
+
 
 const routes: Routes = [
 
@@ -85,6 +88,7 @@ const routes: Routes = [
     { path: 'barchart',component:barChart},
     { path: 'headWorkTypeBarChart' , component:headWorkTypeBarChart},
     { path: 'initApprove' , component:InitApporve},
+    { path: 'initApproveByKPI' , component:initApproveByKPI},
     { path: 'approvework/:email/:rond', component:approvework},
     { path: 'facultyReport' , component:FacultyReport},
     { path: 'deanBarChart' , component:deanBarChart},
@@ -114,6 +118,7 @@ const routes: Routes = [
     { path: 'AdminmarkRankinit', component: AdminmarkRankinit },
     { path: 'AdminmarkRankinitEditRound', component: AdminmarkRankinitEditRound },
     { path: 'AdminpBPWorkTypeinit', component: AdminpBPWorkTypeinit },
+    { path: 'approveworkByKPI/:code/:status', component: approveworkByKPI },
 
 ];
 
@@ -149,6 +154,7 @@ const routes: Routes = [
         barChart,
         headWorkTypeBarChart,
         InitApporve,
+        initApproveByKPI,
         approvework,
         FacultyReport,
         deanBarChart,
@@ -177,6 +183,7 @@ const routes: Routes = [
         AdminmarkRankinit,//มอส
         AdminmarkRankinitEditRound,//มอส
         AdminpBPWorkTypeinit,
+        approveworkByKPI,
 
     ],
     providers: [

@@ -11,10 +11,12 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require('@angular/core');
 var http_1 = require('@angular/http');
 var ng2_file_upload_1 = require('ng2-file-upload');
+var router_1 = require('@angular/router');
 var URL1 = 'http://localhost:8080/PBP3/admin/json/UploadFile_Profile';
 //Dev  Amuletkill !
 var AdminUserCreate = (function () {
-    function AdminUserCreate(http) {
+    function AdminUserCreate(router, http) {
+        this.router = router;
         this.http = http;
         this.uploader = new ng2_file_upload_1.FileUploader({ url: URL1 });
         this.CheckPass = false;
@@ -234,11 +236,14 @@ var AdminUserCreate = (function () {
             }
         }
     };
+    AdminUserCreate.prototype.back = function () {
+        this.router.navigate(['/AdminWorkUser']);
+    };
     AdminUserCreate = __decorate([
         core_1.Component({
             templateUrl: 'app/baiwa/html/AdminUserCreate.component.html'
         }), 
-        __metadata('design:paramtypes', [http_1.Http])
+        __metadata('design:paramtypes', [router_1.Router, http_1.Http])
     ], AdminUserCreate);
     return AdminUserCreate;
 }());

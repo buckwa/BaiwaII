@@ -9,7 +9,7 @@ import {MaxLengthPipe} from './../maxLength.pipe';
 import { Router, ActivatedRoute, NavigationCancel  } from '@angular/router';
 declare var jQuery: any;
 
-const URL1 = 'http://localhost:8080/PBP3/pam/person/uploadPersonProfilePicture2';
+const URL1 = '/PBP3/pam/person/uploadPersonProfilePicture2';
 
 
 @Component({
@@ -303,7 +303,7 @@ export class home implements OnInit, AfterViewInit {
             console.log("imageReturn :" + imageData.image);
             this.tmpUrl = URL.createObjectURL(new Blob([imageData]));
             this.imageProfilePath = this.sanitize(this.tmpUrl);
-        });
+        } );
 
 
         // the below will throw not implemented error
@@ -312,6 +312,10 @@ export class home implements OnInit, AfterViewInit {
             console.log(image.arrayBuffer());
         });
     }
+
+
+
+
     public recalculate() {
         this.commonService.loading();
         var url = "../person/recalculate";

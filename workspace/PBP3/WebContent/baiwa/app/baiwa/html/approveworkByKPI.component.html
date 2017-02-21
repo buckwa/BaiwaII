@@ -1,0 +1,148 @@
+<section class="card card-default">
+    <header class="card-header" style="text-align: center"><i class="glyphicon glyphicon-th-list"></i> ผลงาน
+    </header>
+    <div class="card-block">
+        <table class="table table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th>ผลงาน</th>
+                    <th>สถานะ</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of academicKPIUserMappingList; let i = index">
+
+                    <td width="80%"><a href="#" data-toggle="modal" (click)="ClickGetPointKPI(item.kpiUserMappingId,i)" data-target="#myModal"
+                            data-backdrop="static" data-keyboard="false">{{item.academicKPIAttributeValueList[0].value}}</a>
+                    </td>
+                    <td width="20%" *ngIf="item.status =='APPROVED'" style="color:green">อนุมัติแล้ว</td>
+                    <td width="20%" *ngIf="item.status !='APPROVED'" style="color:red">รออนุมัติ</td>
+
+                </tr>
+            </tbody>
+        </table>
+
+    <div class="text-center">
+        <input class="btn btn-primary" value="ย้อนกลับ" type="button" style=" margin-top: 1cm;" (click)="blackpage()">
+    </div>
+
+    </div>
+</section>
+
+
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog " style=" width: 80%;">
+        <div class="modal-content">
+            <form>
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">รายละเอียดภาระงาน</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+
+                        <div class="col-lg-6  col-md-12">
+
+
+
+                            <div class="form-group row" style="margin-bottom: 2px;">
+                                <label class="col-sm-3 form-control-label">ชื่อภาระงาน:</label>
+                                <div class="col-sm-9">
+                                    <p class="form-control-static">{{pointKPI.name}}</p>
+                                </div>
+                            </div>
+
+                            <div class="form-group row" style="margin-bottom: 2px;">
+                                <label class="col-sm-3 form-control-label">หมายเหตุ:</label>
+                                <div class="col-sm-9">
+                                    <p class="form-control-static">{{pointKPI.description}}</p>
+                                </div>
+                            </div>
+
+                            <div class="form-group row" style="margin-bottom: 2px;">
+                                <label class="col-sm-3 form-control-label">คะแนน KPI:</label>
+                                <div class="col-sm-9">
+                                    <p class="form-control-static">{{academicKPI.mark}} คะแนน/ {{academicKPI.unitDesc}}</p>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group row" style="margin-bottom: 2px;" *ngFor="let a of pointLPIList ">
+                                <label class="col-sm-3 form-control-label">{{a.name}}</label>
+                                <div class="col-sm-9">
+                                    <p class="form-control-static">{{a.value}}</p>
+                                    <!--{{item.name}}-->
+                                </div>
+                            </div>
+
+                            <div class="form-group row" style="margin-bottom: 2px;">
+                                <label class="col-sm-3 form-control-label">ตัวคูณ</label>
+                                <div class="col-sm-9">
+                                    <p class="form-control-static">{{pointKPI.calResultStr}}</p>
+                                </div>
+                            </div>
+
+
+
+
+                        </div>
+                        <div class="col-lg-6  col-md-12">
+                            <!-- <h5 class="m-t-lg with-border"> แนบเอกสารประกอบการพิจารณา :</h5> -->
+
+
+                            <div class="col-md-12">
+                                <div class="row">
+
+                                    <div class="col-md-12">
+
+                                        <h5 style="    margin-bottom: 10px;"> แนบเอกสารประกอบการพิจารณา :</h5>
+
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th width="50%">
+                                                        <div class="text-center">Name</div>
+                                                    </th>
+
+                                                    <th>
+                                                        <div class="text-center"></div>
+                                                    </th>
+
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr [hidden]="chFilework == ture" *ngFor="let item of fileWork">
+
+                                                    <td width="100%"><strong><a href="../person/downloadAttachFile/{{item.attachFileId}}">{{item.fileName}}</a></strong></td>
+
+
+
+                                                </tr>
+                                                <tr [hidden]="chFilework == false">
+                                                    <td colspan="3" class="text-center">ไม่มีเอกสารแนบ</td>
+                                                </tr>
+                                            </tbody>
+
+                                        </table>
+
+                                    </div>
+                                    <div class="row cok-md-12">
+                                         <div class="text-center">
+                                             <button type="button" class="btn btn-inline btn-success " *ngIf="!statusKpi" (click)="approveKPIWork(pointKPI.kpiUserMappingId)"> Apperove</button>
+                                             <button type="button" class="btn btn-inline btn-success " *ngIf="statusKpi" (click)="unapproveKPIWork(pointKPI.kpiUserMappingId)"> UnApperove</button>
+                                             </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="modal-upload-bottom">
+                    <button type="button" class="btn btn-rounded btn-default" data-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-rounded" >Done</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

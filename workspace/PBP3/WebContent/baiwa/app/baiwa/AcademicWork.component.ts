@@ -6,7 +6,7 @@ import {DomSanitizer} from '@angular/platform-browser';
 import {Observable} from 'rxjs/Rx';
 declare var jQuery: any;
 
-const URL1 = 'http://localhost:8080/PBP3/person/importwork_file';
+const URL1 = '/PBP3/person/importwork_file';
 
 
 @Component({

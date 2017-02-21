@@ -2,6 +2,8 @@ import { Component, OnInit, ViewChild, AfterViewInit  } from '@angular/core';
 import {CommonService} from './../service/Common.service';
 import { Http, Headers, Response } from '@angular/http';
 import { Router, ActivatedRoute, NavigationCancel  } from '@angular/router';
+
+
 declare var jQuery: any;
 
 //Dev  Amuletkill !
@@ -42,7 +44,7 @@ export class AdminUserEdit {
 
     submitted = false;
 
-    constructor(private http: Http, private route: ActivatedRoute) {
+    constructor(private router: Router,private http: Http, private route: ActivatedRoute) {
         this.model = this.ModelUser();
         this.person = this.PersonUser();
 
@@ -349,6 +351,8 @@ export class AdminUserEdit {
         }
     }
 
-
+    public back() {
+      this.router.navigate(['/AdminWorkUser']);
+    }
 
 }

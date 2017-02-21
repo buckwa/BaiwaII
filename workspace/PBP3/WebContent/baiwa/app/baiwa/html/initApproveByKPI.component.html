@@ -1,0 +1,99 @@
+<!--.box-typical-->
+
+<div style="width: 100%">
+    <div class="col-md-4 col-lg-12">
+        <section id="blockui-element-container-dark" class="card">
+            <div class="card-block display-table" style="min-height: auto">
+                <section class="card card-default">
+                    <header class="card-header" style="text-align: center"><i class="glyphicon glyphicon-th-list"></i> ข้อมูลประเภทภาระงาน คณะ {{facultyName}} ประจำปีการศึกษา {{academicYear}}
+                    </header>
+                    <div class="card-block">
+
+                        <br>
+                        <div class="row">
+                            <div class="col-md-6 col-md-offset-3">
+                                <div class="form-group ">
+                                    <label for="inputPassword3" class="col-sm-3 control-label">ภาระงานด้าน :</label>
+                                    <div class="col-sm-6">
+                                        <select class="form-control" [(ngModel)]="workTypeCode">
+                                            <option *ngFor="let item of pBPWorkTypeList;" [value]="item.code" >{{item.name}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+
+                        <br>
+                        <div class="row">
+                            <div class="col-md-6 col-md-offset-3">
+                                <div class="form-group">
+                                    <div class="col-sm-offset-2 col-sm-10">
+                                        <button type="submit" class="btn btn-inline btn-info" (click)="GetSearchKpI();">ค้นหา</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                    </div>
+                </section>
+            </div>
+
+            <div class="card-block display-table" style="min-height: auto">
+                <section class="card card-default">
+                    <header class="card-header" style="text-align: center"><i class="font-icon font-icon-notebook"></i> ภาระงานด้าน {{workTypeName}}
+                    </header>
+                    <br>
+                    <div class="form-group" style="width: 99%; text-align: right">
+                        <a class="btn btn-inline btn-primary" (click)="GetCreateKPI();" role="button" *ngIf="academicYearSelect==academicYear">เพิ่มภาระงาน  </a>
+                    </div>
+                    <div class="card-block">
+
+                        <table class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+
+                                    <th>ภาระงาน</th>
+                                    <th>คะแนน</th>
+                                    <th class="table-icon-cell" width="8%">
+                                        อนุมัติ
+                                    </th>
+                                    <th class="table-icon-cell" width="8%">
+                                        รออนุมัติ
+                                    </th>
+
+
+                                </tr>
+                            </thead>
+
+
+                            <tbody>
+                                <tr *ngFor="let item of academicKPIList;">
+                                    <td>
+                                        {{item.name}}
+                                    </td>
+                                    <td class="color-blue-grey-lighter">
+                                        {{item.mark}} คะแนน/ {{item.unitDesc}}
+                                    </td>
+                                    <td class="table-icon-cell">
+                                        <a href="javascript:void(0)" (click)="clickA(item.academicKPIId,item.summary_App)" >
+                                            <i class="font-icon font-icon-check-circle"></i> {{item.summary_App}}
+                                        </a>
+                                    </td>
+                                    <td class="table-icon-cell">
+                                        <a href="javascript:void(0)" (click)="clickC(item.academicKPIId,item.summary_Co)">
+                                            <i class="font-icon font-icon-del"></i> {{item.summary_Co}}
+                                        </a>
+                                    </td>
+
+                                </tr>
+
+                            </tbody>
+                        </table>
+
+                    </div>
+                </section>
+            </div>
+        </section>
+    </div>
+</div>

@@ -130,7 +130,7 @@
 	                                <a class="dropdown-item" href="#/AcademicWork"><i class="fa fa-book"></i>&nbsp;&nbsp;ผลงานประจำปี</a>
 	                                <a class="dropdown-item" href="#/ListByWorkType"><i class="fa fa-upload"></i>&nbsp;&nbsp;นำเข้าผลงาน</a>
 	                                 <sec:authorize access="!hasAuthority('ROLE_HEAD')&&!hasAuthority('ROLE_DEAN')">
-		                                <a class="dropdown-item" href="#/work"><i class="fa fa-edit"></i>&nbsp;&nbsp;แก้ไขผลงาน</a>
+<!-- 		                                <a class="dropdown-item" href="#/work"><i class="fa fa-edit"></i>&nbsp;&nbsp;แก้ไขผลงาน</a> -->
 			                        </sec:authorize>
 	                            </div>
 	                        </div>
@@ -168,10 +168,11 @@
 	                                <span class="font-icon"><i class="fa fa-sitemap"></i>&nbsp;หัวหน้าภาควิชา</span>
 	                            </a>
 									<div class="dropdown-menu" aria-labelledby="dd-header-form-builder">
-	                                <a class="dropdown-item" href="#/initApprove"><span class="font-icon font-icon-users"></span>อนุมัติผลงาน</a>
+	                                <a class="dropdown-item" href="#/initApproveByKPI"><span class="font-icon font-icon-users"></span>อนุมัติผลงาน</a>
 	                                <a class="dropdown-item" href="#/"><span class="font-icon font-icon-users"></span>คำนวนคะแนนให้เป็นปัจจุบัน</a>
 	                                <a class="dropdown-item" href="#/barchart"><span class="font-icon font-icon-users"></span>ระดับคะแนนในภาควิชา</a>
 	                                <a class="dropdown-item" href="#/headWorkTypeBarChart"><span class="font-icon font-icon-users"></span>ระดับคะแนนแต่ละด้านในภาควิชา</a>
+<!-- 	                                <a class="dropdown-item" href="#/initApproveByKPI"><span class="font-icon font-icon-users"></span> กำลังทดสอบ</a> -->
 	                            </div>
 	                        </div>
 	                        </sec:authorize>

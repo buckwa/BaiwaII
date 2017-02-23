@@ -56,8 +56,8 @@ public class JSONHeadController {
 	@Autowired
 	private AcademicKPIUserMappingService academicKPIUserMappingService;
 
-	@RequestMapping(value = "/getBarchart", method = RequestMethod.GET, headers = "Accept=application/json")
-	public List<RadarPlotReport> getWorkTypeBarChartReport() {
+	@RequestMapping(value = "/getBarchart/{year}", method = RequestMethod.GET, headers = "Accept=application/json")
+	public List<RadarPlotReport> getWorkTypeBarChartReport1(@PathVariable String year) {
 
 		List<RadarPlotReport> returnList = new ArrayList<RadarPlotReport>();
 		ModelAndView mav = new ModelAndView();
@@ -66,10 +66,10 @@ public class JSONHeadController {
 			BuckWaRequest request = new BuckWaRequest();
 
 			String userName = UserLoginUtil.getCurrentUserLogin();
-			String academicYear = UserLoginUtil.getCurrentAcademicYear();
+			//String academicYear = "2558";//UserLoginUtil.getCurrentAcademicYear();
 
 			request.put("username", userName);
-			request.put("academicYear", "2558");
+			request.put("academicYear", year);
 			BuckWaResponse response = facultyService.getDepartmentByHeadUserNameandYear(request);
 
 			if (response.getStatus() == BuckWaConstants.SUCCESS) {
@@ -78,14 +78,14 @@ public class JSONHeadController {
 				if (department != null) {
 
 					request.put("department", department);
-					request.put("academicYear", academicYear);
+					request.put("academicYear", year);
 					response = headService.getReportWorkTypeDepartment(request);
 
 					if (response.getStatus() == BuckWaConstants.SUCCESS) {
 						List<DepartmentWorkTypeReport> reportWorkTypeDepartmentList = (List<DepartmentWorkTypeReport>) response.getResObj("departmentWorkTypeReportList");
 
 						request.put("username", userName);
-						request.put("academicYear", academicYear);
+						request.put("academicYear", year);
 						response = personProfileService.getByUsername(request);
 						if (response.getStatus() == BuckWaConstants.SUCCESS) {
 							Person person = (Person) response.getResObj("person");
@@ -122,8 +122,8 @@ public class JSONHeadController {
 		return returnList;
 	}
 
-	@RequestMapping(value = "/getWorkTypeBarchart/{worktypecode}", method = RequestMethod.GET, headers = "Accept=application/json")
-	public List<RadarPlotReport> getWorkTypeBarChartReport(@PathVariable String worktypecode) {
+	@RequestMapping(value = "/getWorkTypeBarchart/{worktypecode}/{year}", method = RequestMethod.GET, headers = "Accept=application/json")
+	public List<RadarPlotReport> getWorkTypeBarChartReport(@PathVariable String worktypecode,@PathVariable String year) {
 
 		List<RadarPlotReport> returnList = new ArrayList<RadarPlotReport>();
 		ModelAndView mav = new ModelAndView();
@@ -132,10 +132,10 @@ public class JSONHeadController {
 			BuckWaRequest request = new BuckWaRequest();
 
 			String userName = UserLoginUtil.getCurrentUserLogin();
-			String academicYear = UserLoginUtil.getCurrentAcademicYear();
+			String academicYear = year;//UserLoginUtil.getCurrentAcademicYear();
 
 			request.put("username", userName);
-			request.put("academicYear", "2558");
+			request.put("academicYear", academicYear);
 			BuckWaResponse response = facultyService.getDepartmentByHeadUserNameandYear(request);
 
 			if (response.getStatus() == BuckWaConstants.SUCCESS) {
@@ -144,14 +144,14 @@ public class JSONHeadController {
 				if (department != null) {
 
 					request.put("department", department);
-					request.put("academicYear", "2558");
+					request.put("academicYear",academicYear);
 					response = headService.getReportWorkTypeDepartment(request);
 
 					if (response.getStatus() == BuckWaConstants.SUCCESS) {
 						List<DepartmentWorkTypeReport> reportWorkTypeDepartmentList = (List<DepartmentWorkTypeReport>) response.getResObj("departmentWorkTypeReportList");
 
 						request.put("username", userName);
-						request.put("academicYear", "2558");
+						request.put("academicYear", academicYear);
 						response = personProfileService.getByUsername(request);
 						if (response.getStatus() == BuckWaConstants.SUCCESS) {
 							Person person = (Person) response.getResObj("person");

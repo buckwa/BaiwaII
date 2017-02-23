@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -32,6 +33,7 @@ import com.buckwa.domain.pbp.Department;
 import com.buckwa.domain.pbp.Faculty;
 import com.buckwa.domain.pbp.PBPWorkType;
 import com.buckwa.domain.pbp.PBPWorkTypeWrapper;
+import com.buckwa.domain.pbp3.ResponseObj;
 import com.buckwa.domain.validator.pbp.ReplyPBPMessageValidator;
 import com.buckwa.domain.webboard.Message;
 import com.buckwa.service.intf.pam.PersonProfileService;
@@ -58,6 +60,8 @@ import com.googlecode.charts4j.RadarChart;
 import com.googlecode.charts4j.RadarPlot;
 import com.googlecode.charts4j.RadialAxisLabels;
 import com.googlecode.charts4j.Shape;
+
+import baiwa.util.UserLoginUtil;
 
 @Controller
 @RequestMapping("/head/pbp")
@@ -555,16 +559,22 @@ public class HeadController {
 //		return mav;
 //	}	
 	
-	@RequestMapping(value="markDepartmentRecal.htm", method = RequestMethod.GET)
-	public ModelAndView markDepartmentRecal() {
+	@RequestMapping(value="markDepartmentRecal", method = RequestMethod.GET, headers = "Accept=application/json")
+	@ResponseBody
+	public ResponseObj markDepartmentRecal() {
 		logger.info(" Start  ");
+		ResponseObj respon = new ResponseObj();
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("markDepartmentRecal");
 		try{
 			BuckWaRequest request = new BuckWaRequest(); 
 			 
-			String headUserName = BuckWaUtils.getUserNameFromContext();
-			String academicYear =schoolUtil.getCurrentAcademicYear(); 
+//			String headUserName = BuckWaUtils.getUserNameFromContext();
+//			String academicYear =schoolUtil.getCurrentAcademicYear(); 
+			
+			String headUserName = UserLoginUtil.getCurrentUserLogin();
+			String academicYear = UserLoginUtil.getCurrentAcademicYear();
+			
 			request.put("headUserName",headUserName);
 			request.put("academicYear",academicYear);
 			request.put("status",""); 
@@ -731,17 +741,21 @@ public class HeadController {
 		        chart.addConcentricAxisLabels(contrentricAxisLabels);
 		        String url = chart.toURLString();		  
 		        logger.info(" radarURL :"+url);  
-		        department.setRadarURL(url)	;	  
-				mav.addObject("department", department);	
+		        department.setRadarURL(url)	;	
+		        
+		        respon.setResObj(department);
+				mav.addObject("department", department);
+				//response.setResObj(department);
 			}
 			
-			//response.setSuccessCode("S100");	
-			mav.addObject("successCode", "S100"); 
+			respon.setStatus("S100");
+
 		}catch(Exception ex){
 			ex.printStackTrace();
-			mav.addObject("errorCode", "E001"); 
+			respon.setStatus("E001");
+
 		}
-		return mav;
+		return respon;
 	}		
 	
 	

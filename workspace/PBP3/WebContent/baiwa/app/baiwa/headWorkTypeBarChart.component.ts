@@ -13,15 +13,34 @@ export class headWorkTypeBarChart implements OnInit {
     public json: any;
     public nameDepart: any;
     public mean1: any;
+    public academicYearList: any;
+    public currentAcademicYear: any;
+    public user: any;
 
     constructor(private http: Http) {
     }
     ngOnInit() {
-        this.DepartmentName();
+        this.GetUserSession();
+
 
     }
-    public DepartmentName() {
-        var url = "../person/MinMaxBean/2558";
+
+    public GetUserSession() {
+        var url = "../person/getUserSession";
+        return this.http.get(url).subscribe(response => this.GetuserSucess(response),
+            error => this.GetDepartmentNameError(error), () => console.log("editdone !"));
+    }
+
+    public GetuserSucess(response: any) {
+        this.user = response.json(JSON.stringify(response._body));
+        this.academicYearList = this.user.academicYearList;
+        this.currentAcademicYear = this.user.currentAcademicYear;
+
+        this.DepartmentName(this.currentAcademicYear);
+    }
+
+    public DepartmentName(year: any) {
+        var url = "../person/MinMaxBean/" + year;
         return this.http.get(url).subscribe(response => this.GetkendoSucess(response),
             error => this.GetDepartmentNameError(error), () => console.log("DepartmentName !"));
     }
@@ -42,7 +61,9 @@ export class headWorkTypeBarChart implements OnInit {
 
     }
     getChart1() {
-        var start= this.json.mean1;
+
+        var year = this.currentAcademicYear;
+        var start = this.json.mean1;
         var end = start + 2;
         var startMin = this.json.minValue1;
         var endMin = startMin + 2;
@@ -52,7 +73,7 @@ export class headWorkTypeBarChart implements OnInit {
             dataSource: {
                 transport: {
                     read: {
-                        url: "../head/getWorkTypeBarchart/1",
+                        url: "../head/getWorkTypeBarchart/1/"+year,
                         dataType: "json"
                     }
                 },
@@ -91,6 +112,7 @@ export class headWorkTypeBarChart implements OnInit {
         });
     }
     getChart2() {
+        var year = this.currentAcademicYear;
         var start = this.json.mean2;
         var end = start + 2;
         if (start == 0.00) {
@@ -109,7 +131,7 @@ export class headWorkTypeBarChart implements OnInit {
             dataSource: {
                 transport: {
                     read: {
-                        url: "../head/getWorkTypeBarchart/2",
+                        url: "../head/getWorkTypeBarchart/2/"+year,
                         dataType: "json"
                     }
                 },
@@ -139,7 +161,7 @@ export class headWorkTypeBarChart implements OnInit {
                     { from: startMin, to: endMin, color: "red" }
                 ]
             }
-            
+
             ,
             tooltip: {
                 visible: true,
@@ -148,6 +170,7 @@ export class headWorkTypeBarChart implements OnInit {
         });
     }
     getChart3() {
+        var year = this.currentAcademicYear;
         var start = this.json.mean3;
         var end = start + 2;
         if (start == 0.00) {
@@ -166,7 +189,7 @@ export class headWorkTypeBarChart implements OnInit {
             dataSource: {
                 transport: {
                     read: {
-                        url: "../head/getWorkTypeBarchart/3",
+                        url: "../head/getWorkTypeBarchart/3/"+year,
                         dataType: "json"
                     }
                 },
@@ -196,8 +219,8 @@ export class headWorkTypeBarChart implements OnInit {
                     { from: startMin, to: endMin, color: "red" }
                 ]
             }
-            
-            
+
+
             ,
             tooltip: {
                 visible: true,
@@ -208,7 +231,7 @@ export class headWorkTypeBarChart implements OnInit {
 
     }
     getChart4() {
-
+        var year = this.currentAcademicYear;
         var start = this.json.mean4;
         var end = start + 2;
         if (start == 0.00) {
@@ -228,7 +251,7 @@ export class headWorkTypeBarChart implements OnInit {
             dataSource: {
                 transport: {
                     read: {
-                        url: "../head/getWorkTypeBarchart/4",
+                        url: "../head/getWorkTypeBarchart/4/"+year,
                         dataType: "json"
                     }
                 }
@@ -265,7 +288,7 @@ export class headWorkTypeBarChart implements OnInit {
 
     }
     getChart5() {
-
+        var year = this.currentAcademicYear;
         var start = this.json.mean5;
         var end = start + 2;
         if (start == 0.00) {
@@ -286,7 +309,7 @@ export class headWorkTypeBarChart implements OnInit {
             dataSource: {
                 transport: {
                     read: {
-                        url: "../head/getWorkTypeBarchart/5",
+                        url: "../head/getWorkTypeBarchart/5/"+year,
                         dataType: "json"
                     }
                 }
@@ -323,6 +346,9 @@ export class headWorkTypeBarChart implements OnInit {
 
     }
 
+    public changeYear(year: any) {
 
+        this.DepartmentName(year);
+    }
 
 }

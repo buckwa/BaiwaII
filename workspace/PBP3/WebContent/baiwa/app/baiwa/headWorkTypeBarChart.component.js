@@ -15,11 +15,22 @@ var headWorkTypeBarChart = (function () {
         this.http = http;
     }
     headWorkTypeBarChart.prototype.ngOnInit = function () {
-        this.DepartmentName();
+        this.GetUserSession();
     };
-    headWorkTypeBarChart.prototype.DepartmentName = function () {
+    headWorkTypeBarChart.prototype.GetUserSession = function () {
         var _this = this;
-        var url = "../person/MinMaxBean/2558";
+        var url = "../person/getUserSession";
+        return this.http.get(url).subscribe(function (response) { return _this.GetuserSucess(response); }, function (error) { return _this.GetDepartmentNameError(error); }, function () { return console.log("editdone !"); });
+    };
+    headWorkTypeBarChart.prototype.GetuserSucess = function (response) {
+        this.user = response.json(JSON.stringify(response._body));
+        this.academicYearList = this.user.academicYearList;
+        this.currentAcademicYear = this.user.currentAcademicYear;
+        this.DepartmentName(this.currentAcademicYear);
+    };
+    headWorkTypeBarChart.prototype.DepartmentName = function (year) {
+        var _this = this;
+        var url = "../person/MinMaxBean/" + year;
         return this.http.get(url).subscribe(function (response) { return _this.GetkendoSucess(response); }, function (error) { return _this.GetDepartmentNameError(error); }, function () { return console.log("DepartmentName !"); });
     };
     headWorkTypeBarChart.prototype.GetkendoSucess = function (response) {
@@ -35,6 +46,7 @@ var headWorkTypeBarChart = (function () {
         console.log("GetDepartmentNameError.");
     };
     headWorkTypeBarChart.prototype.getChart1 = function () {
+        var year = this.currentAcademicYear;
         var start = this.json.mean1;
         var end = start + 2;
         var startMin = this.json.minValue1;
@@ -45,7 +57,7 @@ var headWorkTypeBarChart = (function () {
             dataSource: {
                 transport: {
                     read: {
-                        url: "../head/getWorkTypeBarchart/1",
+                        url: "../head/getWorkTypeBarchart/1/" + year,
                         dataType: "json"
                     }
                 },
@@ -81,6 +93,7 @@ var headWorkTypeBarChart = (function () {
         });
     };
     headWorkTypeBarChart.prototype.getChart2 = function () {
+        var year = this.currentAcademicYear;
         var start = this.json.mean2;
         var end = start + 2;
         if (start == 0.00) {
@@ -97,7 +110,7 @@ var headWorkTypeBarChart = (function () {
             dataSource: {
                 transport: {
                     read: {
-                        url: "../head/getWorkTypeBarchart/2",
+                        url: "../head/getWorkTypeBarchart/2/" + year,
                         dataType: "json"
                     }
                 },
@@ -133,6 +146,7 @@ var headWorkTypeBarChart = (function () {
         });
     };
     headWorkTypeBarChart.prototype.getChart3 = function () {
+        var year = this.currentAcademicYear;
         var start = this.json.mean3;
         var end = start + 2;
         if (start == 0.00) {
@@ -149,7 +163,7 @@ var headWorkTypeBarChart = (function () {
             dataSource: {
                 transport: {
                     read: {
-                        url: "../head/getWorkTypeBarchart/3",
+                        url: "../head/getWorkTypeBarchart/3/" + year,
                         dataType: "json"
                     }
                 },
@@ -185,6 +199,7 @@ var headWorkTypeBarChart = (function () {
         });
     };
     headWorkTypeBarChart.prototype.getChart4 = function () {
+        var year = this.currentAcademicYear;
         var start = this.json.mean4;
         var end = start + 2;
         if (start == 0.00) {
@@ -201,7 +216,7 @@ var headWorkTypeBarChart = (function () {
             dataSource: {
                 transport: {
                     read: {
-                        url: "../head/getWorkTypeBarchart/4",
+                        url: "../head/getWorkTypeBarchart/4/" + year,
                         dataType: "json"
                     }
                 }
@@ -233,6 +248,7 @@ var headWorkTypeBarChart = (function () {
         });
     };
     headWorkTypeBarChart.prototype.getChart5 = function () {
+        var year = this.currentAcademicYear;
         var start = this.json.mean5;
         var end = start + 2;
         if (start == 0.00) {
@@ -249,7 +265,7 @@ var headWorkTypeBarChart = (function () {
             dataSource: {
                 transport: {
                     read: {
-                        url: "../head/getWorkTypeBarchart/5",
+                        url: "../head/getWorkTypeBarchart/5/" + year,
                         dataType: "json"
                     }
                 }
@@ -279,6 +295,9 @@ var headWorkTypeBarChart = (function () {
                 template: "#= series.name #: #= value #"
             }
         });
+    };
+    headWorkTypeBarChart.prototype.changeYear = function (year) {
+        this.DepartmentName(year);
     };
     headWorkTypeBarChart = __decorate([
         core_1.Component({

@@ -63,7 +63,7 @@ import { AdminmarkRankinit } from './baiwa/AdminmarkRankinit.component';
 import { AdminmarkRankinitEditRound } from './baiwa/AdminmarkRankinitEditRound.component';
 import { AdminpBPWorkTypeinit } from './baiwa/AdminpBPWorkTypeinit.component';
 import { approveworkByKPI } from './baiwa/approveworkByKPI.component';
-
+import { markDepartmentRecalInit } from './baiwa/markDepartmentRecalInit.component';
 
 const routes: Routes = [
 
@@ -119,7 +119,7 @@ const routes: Routes = [
     { path: 'AdminmarkRankinitEditRound', component: AdminmarkRankinitEditRound },
     { path: 'AdminpBPWorkTypeinit', component: AdminpBPWorkTypeinit },
     { path: 'approveworkByKPI/:code/:status', component: approveworkByKPI },
-
+    { path: 'markDepartmentRecalInit', component: markDepartmentRecalInit },
 ];
 
 @NgModule({
@@ -184,6 +184,7 @@ const routes: Routes = [
         AdminmarkRankinitEditRound,//มอส
         AdminpBPWorkTypeinit,
         approveworkByKPI,
+        markDepartmentRecalInit
 
     ],
     providers: [

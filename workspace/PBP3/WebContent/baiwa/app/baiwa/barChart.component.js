@@ -15,11 +15,22 @@ var barChart = (function () {
         this.http = http;
     }
     barChart.prototype.ngOnInit = function () {
-        this.DepartmentName();
+        this.GetUserSession();
     };
-    barChart.prototype.DepartmentName = function () {
+    barChart.prototype.GetUserSession = function () {
         var _this = this;
-        var url = "../person/DepartmentName";
+        var url = "../person/getUserSession";
+        return this.http.get(url).subscribe(function (response) { return _this.GetuserSucess(response); }, function (error) { return _this.GetDepartmentNameError(error); }, function () { return console.log("editdone !"); });
+    };
+    barChart.prototype.GetuserSucess = function (response) {
+        this.user = response.json(JSON.stringify(response._body));
+        this.academicYearList = this.user.academicYearList;
+        this.currentAcademicYear = this.user.currentAcademicYear;
+        this.DepartmentName(this.currentAcademicYear);
+    };
+    barChart.prototype.DepartmentName = function (year) {
+        var _this = this;
+        var url = "../person/DepartmentName/" + year;
         return this.http.get(url).subscribe(function (response) { return _this.GetkendoSucess(response); }, function (error) { return _this.GetDepartmentNameError(error); }, function () { return console.log("DepartmentName !"); });
     };
     barChart.prototype.GetkendoSucess = function (response) {
@@ -32,11 +43,12 @@ var barChart = (function () {
         console.log("GetDepartmentNameError.");
     };
     barChart.prototype.getbarChart = function () {
+        var year = this.currentAcademicYear;
         jQuery("#KendoChart").kendoChart({
             dataSource: {
                 transport: {
                     read: {
-                        url: "../head/getBarchart",
+                        url: "../head/getBarchart/" + year,
                         dataType: "json"
                     }
                 }
@@ -77,7 +89,7 @@ var barChart = (function () {
             dataSource: {
                 transport: {
                     read: {
-                        url: "../head/getBarchart",
+                        url: "../head/getBarchart/" + year,
                         dataType: "Json"
                     }
                 }
@@ -92,7 +104,8 @@ var barChart = (function () {
             },
             columns: [
                 { field: "axisName", title: "บุคลากร" },
-                { field: "axisValue", title: "คะแนน",
+                {
+                    field: "axisValue", title: "คะแนน",
                     headerAttributes: { style: "text-align:right" },
                     attributes: { class: "text-right" }
                 }
@@ -100,6 +113,9 @@ var barChart = (function () {
         });
     };
     barChart.prototype.sortMaxVal = function () {
+    };
+    barChart.prototype.changeYear = function (year) {
+        this.DepartmentName(year);
     };
     barChart = __decorate([
         core_1.Component({

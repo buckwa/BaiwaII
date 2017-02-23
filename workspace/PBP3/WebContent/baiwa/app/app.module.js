@@ -67,6 +67,7 @@ var AdminmarkRankinit_component_1 = require('./baiwa/AdminmarkRankinit.component
 var AdminmarkRankinitEditRound_component_1 = require('./baiwa/AdminmarkRankinitEditRound.component');
 var AdminpBPWorkTypeinit_component_1 = require('./baiwa/AdminpBPWorkTypeinit.component');
 var approveworkByKPI_component_1 = require('./baiwa/approveworkByKPI.component');
+var markDepartmentRecalInit_component_1 = require('./baiwa/markDepartmentRecalInit.component');
 var routes = [
     { path: 'home', component: home_component_1.home },
     { path: 'importwork', component: importwork_component_1.importwork },
@@ -117,6 +118,7 @@ var routes = [
     { path: 'AdminmarkRankinitEditRound', component: AdminmarkRankinitEditRound_component_1.AdminmarkRankinitEditRound },
     { path: 'AdminpBPWorkTypeinit', component: AdminpBPWorkTypeinit_component_1.AdminpBPWorkTypeinit },
     { path: 'approveworkByKPI/:code/:status', component: approveworkByKPI_component_1.approveworkByKPI },
+    { path: 'markDepartmentRecalInit', component: markDepartmentRecalInit_component_1.markDepartmentRecalInit },
 ];
 var AppModule = (function () {
     function AppModule() {
@@ -184,6 +186,7 @@ var AppModule = (function () {
                 AdminmarkRankinitEditRound_component_1.AdminmarkRankinitEditRound,
                 AdminpBPWorkTypeinit_component_1.AdminpBPWorkTypeinit,
                 approveworkByKPI_component_1.approveworkByKPI,
+                markDepartmentRecalInit_component_1.markDepartmentRecalInit
             ],
             providers: [
                 Common_service_1.CommonService,

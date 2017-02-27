@@ -169,7 +169,7 @@
 	                            </a>
 									<div class="dropdown-menu" aria-labelledby="dd-header-form-builder">
 	                                <a class="dropdown-item" href="#/initApproveByKPI"><span class="font-icon font-icon-users"></span>อนุมัติผลงาน</a>
-	                                <a class="dropdown-item" href="#/"><span class="font-icon font-icon-users"></span>คำนวนคะแนนให้เป็นปัจจุบัน</a>
+	                                <a class="dropdown-item" href="#/markDepartmentRecalInit"><span class="font-icon font-icon-users"></span>คำนวนคะแนนให้เป็นปัจจุบัน</a>
 	                                <a class="dropdown-item" href="#/barchart"><span class="font-icon font-icon-users"></span>ระดับคะแนนในภาควิชา</a>
 	                                <a class="dropdown-item" href="#/headWorkTypeBarChart"><span class="font-icon font-icon-users"></span>ระดับคะแนนแต่ละด้านในภาควิชา</a>
 <!-- 	                                <a class="dropdown-item" href="#/initApproveByKPI"><span class="font-icon font-icon-users"></span> กำลังทดสอบ</a> -->

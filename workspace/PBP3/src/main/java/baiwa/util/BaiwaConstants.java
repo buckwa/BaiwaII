@@ -3,6 +3,7 @@ package baiwa.util;
 public class BaiwaConstants {
 	
 	public static final String ROLE_USER = "ROLE_USER";
+	public static final String ROLE_ADM = "ROLE_ADM";
 	
 	public static final String LOGIN_URL = "/login.htm";
 	public static final String LOGIN_SUCCESS_URL = "/home.htm";

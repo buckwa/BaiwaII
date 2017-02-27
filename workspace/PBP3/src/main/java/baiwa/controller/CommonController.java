@@ -64,21 +64,26 @@ public class CommonController {
 		ModelAndView mav = new ModelAndView();
 		logger.info("home");
 		String user ="";
-//		
-//		// check if user is login
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		if (!(auth instanceof AnonymousAuthenticationToken)) {
-			UserDetails userDetail = (UserDetails) auth.getPrincipal();
-			mav.addObject("username", userDetail.getUsername());
-			user = userDetail.getUsername();
-			
-		}
-		//System.out.println("UserSession : " + user);
-		logger.info("UserSession : " + user);
-		Person person = new Person();
+
 
 		try {
 
+			
+			
+//			
+//			// check if user is login
+			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+			if (!(auth instanceof AnonymousAuthenticationToken)) {
+				UserDetails userDetail = (UserDetails) auth.getPrincipal();
+				mav.addObject("username", userDetail.getUsername());
+				user = userDetail.getUsername();
+				
+			}
+			//System.out.println("UserSession : " + user);
+			logger.info("UserSession : " + user);
+			Person person = new Person();
+			
+			
 //			BuckWaRequest request = new BuckWaRequest();
 //			request.put("username", UserLoginUtil.getCurrentUserLogin());
 //			request.put("academicYear", UserLoginUtil.getCurrentAcademicYear());

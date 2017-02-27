@@ -2,7 +2,6 @@ package baiwa.config;
 
 import java.util.Arrays;
 
-import org.apache.tomcat.util.security.MD5Encoder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,14 +9,11 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
-import org.springframework.security.authentication.encoding.LdapShaPasswordEncoder;
 import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.ldap.DefaultSpringSecurityContextSource;
 
 import baiwa.util.BaiwaConstants;
@@ -35,6 +31,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+		System.out.println("Nomal");
 		auth.authenticationProvider(authenticationProvider);
 	}
  
@@ -85,23 +82,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //			.formLogin();
 //	}
 
-	@Override
-	public void configure(AuthenticationManagerBuilder auth) throws Exception {
-		System.out.println("Ldap");
-		auth
-			.ldapAuthentication()
-				.userDnPatterns("uid={0}")
-				.groupSearchBase("ou=groups")
-				.contextSource(contextSource())
-				.passwordCompare()
-					.passwordEncoder(new LdapShaPasswordEncoder())
-					.passwordAttribute("userPassword");
-	}
-
-	@Bean
-	public DefaultSpringSecurityContextSource contextSource() {
-		return  new DefaultSpringSecurityContextSource(Arrays.asList("ldap://161.246.34.181/"), "dc=kmitl,dc=ac,dc=th");
-	}
+//	@Override
+//	public void configure(AuthenticationManagerBuilder auth) throws Exception {
+//		System.out.println("Ldap");
+//		auth.authenticationProvider(authenticationProvider)
+//			.ldapAuthentication()
+//			.userSearchFilter("(uid={0})")
+//				.contextSource(contextSource());
+//	}
+//
+//	@Bean
+//	public DefaultSpringSecurityContextSource contextSource() {
+//		return  new DefaultSpringSecurityContextSource(Arrays.asList("ldap://161.246.34.181:389"), "dc=kmitl,dc=ac,dc=th");
+//	}
 	
   
   @Override

@@ -10,6 +10,7 @@ declare var jQuery: any;
 export class approveworkByKPI implements OnInit {
     public sub:any;
     public code:any;
+    public codeNew:any;
     public status:any;
     public academicKPIUserMappingList:any[];
     public pointKPI: any;
@@ -21,9 +22,13 @@ export class approveworkByKPI implements OnInit {
     public person:any;
     public academicKPI:any;
     public indexKPI:any;
+    public Model:any;
 
     public user: any;
     public profile: any;
+    public replyMessage: any;
+
+    public messageList: any[];
 
         constructor(private route: ActivatedRoute,private http:Http,private commonService: CommonService){
          this.pointKPI = this.setdefualtpoitkpi();
@@ -134,12 +139,33 @@ export class approveworkByKPI implements OnInit {
     }
     public ClickGetPointKPI(Code: string,indexKPI:string) {
         this.indexKPI = indexKPI;
-        var url = "../person/getImportWork/" + Code
+        this.codeNew = Code;
+        var url = "../person/getImportWorkNew/" + Code
         return this.http.get(url).subscribe(response => this.GetKPISucess(response),
             error => this.getkpiworkeror(error), () => console.log("editdoneUser !"));
     }
+
+    public ClickGetPointKPINew(Code: string,indexKPI:string) {
+        this.indexKPI = indexKPI;
+        var url = "../person/getImportWorkNew/" + Code
+        return this.http.get(url).subscribe(response => this.GetKPISucessNew(response),
+            error => this.getkpiworkeror(error), () => console.log("editdoneUser !"));
+    }
+    
+    public GetKPISucessNew(response: any) {
+        this.Model = response.json(JSON.stringify(response._body));
+        this.pointKPI = this.Model.academicKPIUserMapping;
+
+        if(this.pointKPI.messageList !=null){
+            this.messageList = this.pointKPI.messageList ;
+        }
+        
+
+    }
+
     public GetKPISucess(response: any) {
-        this.pointKPI = response.json(JSON.stringify(response._body));
+        this.Model = response.json(JSON.stringify(response._body));
+        this.pointKPI = this.Model.academicKPIUserMapping;
         this.pointLPIList = this.pointKPI.academicKPIAttributeValueList;
         this.fileWork = this.pointKPI.academicKPIAttachFileList;
         this.academicKPI = this.pointKPI.academicKPI;
@@ -153,7 +179,10 @@ export class approveworkByKPI implements OnInit {
         } else {
             this.statusKpi = false;
         }
-
+        if(this.pointKPI.messageList !=null && this.status =='C' ){
+            this.messageList = this.pointKPI.messageList ;
+        }
+        
 
     }
     approveKPIWork(KPIId:string){
@@ -187,4 +216,23 @@ export class approveworkByKPI implements OnInit {
 
         console.log("ApproveSucess!");
     }
+
+    public sentReplyPBPMessage(){
+        if(this.replyMessage!=null){
+        this.Model.replyMessage = this.replyMessage;
+        var url = "../head/pbp/replyMessage";//ติดไว้ก่อน
+        this.http.post(url, this.Model).subscribe(response => this.ReplyPBPMessageSucess(response),
+            error => this.ReplyPBPMessageError(error), () => console.log("AdminUserCreate : Success saveUser !"));
+        }
+    }
+    
+    ReplyPBPMessageSucess(response:any){
+        var temp = response.json(JSON.stringify(response._body));
+        this.ClickGetPointKPINew(this.codeNew ,this.indexKPI);
+    }
+    ReplyPBPMessageError(response:any){
+        console.log("Error!");
+      
+    }
+
 }

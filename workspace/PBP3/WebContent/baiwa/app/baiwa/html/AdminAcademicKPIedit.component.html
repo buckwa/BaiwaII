@@ -10,7 +10,7 @@
                             <div class="row">
                                 <div class="col-md-7 col-md-offset-3">
                                     <div class="form-group">
-                                        <label for="inputEmail3" class="col-sm-4 control-label">ชื่อภาระงาน :</label>
+                                        <label for="inputEmail3" class="col-sm-5 control-label">ชื่อภาระงาน :</label>
                                         <div class="col-sm-6">
                                             <input type="text" [(ngModel)]="CreateAtti.name" name="name" class="form-control" placeholder="ชื่อภาระงาน ">
                                         </div>
@@ -21,7 +21,7 @@
                             <div class="row">
                                 <div class="col-md-7 col-md-offset-3">
                                     <div class="form-group ">
-                                        <label for="inputPassword3" class="col-sm-4 control-label">คะแนน :</label>
+                                        <label for="inputPassword3" class="col-sm-5 control-label">คะแนน :</label>
                                         <div class="col-sm-6">
                                             <input type="text" [(ngModel)]="CreateAtti.mark" name="mark" class="form-control" placeholder="คะแนน">
                                         </div>
@@ -32,7 +32,7 @@
                             <div class="row">
                                 <div class="col-md-7 col-md-offset-3">
                                     <div class="form-group">
-                                        <label for="inputEmail3" class="col-sm-4 control-label">หน่วย :</label>
+                                        <label for="inputEmail3" class="col-sm-5 control-label">หน่วย :</label>
                                         <div class="col-sm-6">
                                             <select class="form-control" [(ngModel)]="CreateAtti.unitCode" name="unitCode">
                                                 <option  *ngFor="let item of academicUnitList;" [value]="item.code"  >{{item.name}}</option>
@@ -45,7 +45,7 @@
                             <div class="row">
                                 <div class="col-md-7 col-md-offset-3">
                                     <div class="form-group">
-                                        <label for="inputEmail3" class="col-sm-4 control-label">ตัวคูณ :</label>
+                                        <label for="inputEmail3" class="col-sm-5 control-label">ตัวคูณ :</label>
                                         <div class="col-sm-6">
                                             <input type="text" class="form-control" [(ngModel)]="CreateAtti.multiplyValue" name="multiplyValue" class="form-control"
                                                 placeholder="ตัวคูณ">
@@ -57,7 +57,7 @@
                             <div class="row">
                                 <div class="col-md-7 col-md-offset-3">
                                     <div class="form-group">
-                                        <label for="inputEmail3" class="col-sm-4 control-label">ลำดับการจัดเรียง :</label>
+                                        <label for="inputEmail3" class="col-sm-5 control-label">ลำดับการจัดเรียง :</label>
                                         <div class="col-sm-6">
                                             <input type="text" class="form-control" [(ngModel)]="CreateAtti.orderNo" name="orderNo" class="form-control" placeholder="ลำดับการจัดเรียง">
                                         </div>
@@ -68,7 +68,7 @@
                             <div class="row">
                                 <div class="col-md-7 col-md-offset-3">
                                     <div class="form-group">
-                                        <label for="inputEmail3" class="col-sm-4 control-label">หมายเหตุ :</label>
+                                        <label for="inputEmail3" class="col-sm-5 control-label">หมายเหตุ :</label>
                                         <div class="col-sm-6">
                                             <input type="text" class="form-control" [(ngModel)]="CreateAtti.description" name="description" class="form-control" placeholder="หมายเหตุ ">
                                         </div>
@@ -79,9 +79,9 @@
                             <div class="row">
                                 <div class="col-md-7 col-md-offset-3">
                                     <div class="form-group">
-                                        <label for="inputEmail3" class="col-sm-4 control-label">ดึงข้อมูลอัตโนมัติจากสำนักทะเบียน :</label>
+                                        <label for="inputEmail3" class="col-sm-5 control-label">ดึงข้อมูลอัตโนมัติจากสำนักทะเบียน :</label>
                                         <div class="col-sm-6">
-                                            <input type="checkbox">
+                                            <input type="checkbox" [ngModel]="CreateAtti.fromRegis == 'Y'" [ngModelOptions]="{standalone: true}" (ngModelChange)="CreateAtti.fromRegis=$event?'Y':'N'" >
                                         </div>
                                     </div>
                                 </div>
@@ -325,7 +325,7 @@
                         <div class="row">
                             <div class="col-md-12" style="text-align: center">
                                 <button class="btn btn-inline btn-primary" type="submit" (click)="onSubmit();">บันทึก</button>
-                                <button class="btn btn-inline btn-primary" type="reset">ย้อนกลับ</button>
+                                <button class="btn btn-inline btn-primary" (click)="back();" type="reset">ย้อนกลับ</button>
                             </div>
                         </div>
                     </div>

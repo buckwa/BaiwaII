@@ -111,11 +111,26 @@ var approveworkByKPI = (function () {
     approveworkByKPI.prototype.ClickGetPointKPI = function (Code, indexKPI) {
         var _this = this;
         this.indexKPI = indexKPI;
-        var url = "../person/getImportWork/" + Code;
+        this.codeNew = Code;
+        var url = "../person/getImportWorkNew/" + Code;
         return this.http.get(url).subscribe(function (response) { return _this.GetKPISucess(response); }, function (error) { return _this.getkpiworkeror(error); }, function () { return console.log("editdoneUser !"); });
     };
+    approveworkByKPI.prototype.ClickGetPointKPINew = function (Code, indexKPI) {
+        var _this = this;
+        this.indexKPI = indexKPI;
+        var url = "../person/getImportWorkNew/" + Code;
+        return this.http.get(url).subscribe(function (response) { return _this.GetKPISucessNew(response); }, function (error) { return _this.getkpiworkeror(error); }, function () { return console.log("editdoneUser !"); });
+    };
+    approveworkByKPI.prototype.GetKPISucessNew = function (response) {
+        this.Model = response.json(JSON.stringify(response._body));
+        this.pointKPI = this.Model.academicKPIUserMapping;
+        if (this.pointKPI.messageList != null) {
+            this.messageList = this.pointKPI.messageList;
+        }
+    };
     approveworkByKPI.prototype.GetKPISucess = function (response) {
-        this.pointKPI = response.json(JSON.stringify(response._body));
+        this.Model = response.json(JSON.stringify(response._body));
+        this.pointKPI = this.Model.academicKPIUserMapping;
         this.pointLPIList = this.pointKPI.academicKPIAttributeValueList;
         this.fileWork = this.pointKPI.academicKPIAttachFileList;
         this.academicKPI = this.pointKPI.academicKPI;
@@ -130,6 +145,9 @@ var approveworkByKPI = (function () {
         }
         else {
             this.statusKpi = false;
+        }
+        if (this.pointKPI.messageList != null && this.status == 'C') {
+            this.messageList = this.pointKPI.messageList;
         }
     };
     approveworkByKPI.prototype.approveKPIWork = function (KPIId) {
@@ -159,6 +177,21 @@ var approveworkByKPI = (function () {
         }
         jQuery("#myModal").modal('hide');
         console.log("ApproveSucess!");
+    };
+    approveworkByKPI.prototype.sentReplyPBPMessage = function () {
+        var _this = this;
+        if (this.replyMessage != null) {
+            this.Model.replyMessage = this.replyMessage;
+            var url = "../head/pbp/replyMessage"; //ติดไว้ก่อน
+            this.http.post(url, this.Model).subscribe(function (response) { return _this.ReplyPBPMessageSucess(response); }, function (error) { return _this.ReplyPBPMessageError(error); }, function () { return console.log("AdminUserCreate : Success saveUser !"); });
+        }
+    };
+    approveworkByKPI.prototype.ReplyPBPMessageSucess = function (response) {
+        var temp = response.json(JSON.stringify(response._body));
+        this.ClickGetPointKPINew(this.codeNew, this.indexKPI);
+    };
+    approveworkByKPI.prototype.ReplyPBPMessageError = function (response) {
+        console.log("Error!");
     };
     approveworkByKPI = __decorate([
         core_1.Component({

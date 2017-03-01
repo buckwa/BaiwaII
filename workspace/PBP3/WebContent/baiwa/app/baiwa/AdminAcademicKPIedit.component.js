@@ -107,7 +107,7 @@ var AdminAcademicKPIedit = (function () {
         this.model.totalStudentFrom = this.CreateAtti.totalStudentFrom;
         this.model.totalStudentTo = this.CreateAtti.totalStudentTo;
         this.model.fromRegis = this.CreateAtti.fromRegis;
-        this.model.academicKPIAttributeList = this.CreateAtti.academicKPIAttributeList;
+        this.model.academicKPIAttributeList = this.academicKPIAttributeList;
         this.SentCreateKPI();
     };
     AdminAcademicKPIedit.prototype.SentCreateKPI = function () {
@@ -138,6 +138,9 @@ var AdminAcademicKPIedit = (function () {
         this.modelAttribute = this.modelAttribute.resObj;
         this.academicKPIAttributeList = this.modelAttribute.academicKPIAttributeList;
         location.reload();
+    };
+    AdminAcademicKPIedit.prototype.back = function () {
+        this.router.navigate(['/AdminAcademicKPI']);
     };
     AdminAcademicKPIedit = __decorate([
         core_1.Component({

@@ -79,7 +79,7 @@
                                     <th>คะแนน
                                         <div class="fa-hover col-md-3 col-md-offset-2"></div>
                                     </th>
-                                    <th>Remark
+                                    <th   >Remark
                                         <div class="fa-hover col-md-3 col-md-offset-2"></div>
                                     </th>
                                     <th *ngIf=" academicYearSelect == academicYear ">แก้ไข
@@ -107,9 +107,9 @@
 
 
                                     </td>
-                                    <td>
+                                    <td  >
 
-                                        <div *ngIf="item.fromRegis != 'Y' ">
+                                        <div *ngIf="item.fromRegis != 'Y' " style='width: 150px;'>
                                             {{item.description}}
                                         </div>
                                         <div *ngIf="item.fromRegis == 'Y' ">

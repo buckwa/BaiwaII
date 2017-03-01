@@ -82,6 +82,9 @@ var AdminAcademicKPIcreate = (function () {
         alert("Success !");
         this.router.navigate(['/AdminAcademicKPI']);
     };
+    AdminAcademicKPIcreate.prototype.back = function () {
+        this.router.navigate(['/AdminAcademicKPI']);
+    };
     AdminAcademicKPIcreate = __decorate([
         core_1.Component({
             templateUrl: 'app/baiwa/html/AdminAcademicKPIcreate.component.html'

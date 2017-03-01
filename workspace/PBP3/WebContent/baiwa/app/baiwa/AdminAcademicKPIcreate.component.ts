@@ -113,4 +113,8 @@ export class AdminAcademicKPIcreate implements OnInit {
         this.router.navigate(['/AdminAcademicKPI']);
     }
 
+    public back() {
+      this.router.navigate(['/AdminAcademicKPI']);
+    }
+
 }

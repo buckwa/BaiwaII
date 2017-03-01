@@ -15,8 +15,8 @@
                                 <div class="form-group ">
                                     <label for="inputPassword3" class="col-sm-3 control-label">ภาระงานด้าน :</label>
                                     <div class="col-sm-6">
-                                        <select class="form-control" [(ngModel)]="workTypeCode">
-                                            <option *ngFor="let item of pBPWorkTypeList;" [value]="item.code" >{{item.name}}</option>
+                                        <select class="form-control" [(ngModel)]="workTypeCode" (change)="GetSearchKpI()">
+                                            <option *ngFor="let item of pBPWorkTypeList;"  [value]="item.code" >{{item.name}}</option>
                                         </select>
                                     </div>
                                 </div>
@@ -25,7 +25,7 @@
                         <br>
 
                         <br>
-                        <div class="row">
+                        <!--<div class="row">
                             <div class="col-md-6 col-md-offset-3">
                                 <div class="form-group">
                                     <div class="col-sm-offset-2 col-sm-10">
@@ -33,7 +33,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div>-->
                         <br>
                     </div>
                 </section>

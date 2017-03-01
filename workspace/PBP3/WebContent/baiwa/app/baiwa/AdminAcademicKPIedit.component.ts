@@ -142,7 +142,7 @@ export class AdminAcademicKPIedit implements OnInit {
         this.model.totalStudentFrom = this.CreateAtti.totalStudentFrom;
         this.model.totalStudentTo = this.CreateAtti.totalStudentTo;
         this.model.fromRegis = this.CreateAtti.fromRegis;
-        this.model.academicKPIAttributeList = this.CreateAtti.academicKPIAttributeList;
+        this.model.academicKPIAttributeList = this.academicKPIAttributeList;
         this.SentCreateKPI();
 
     }
@@ -187,6 +187,10 @@ export class AdminAcademicKPIedit implements OnInit {
 
         location.reload();
 
+    }
+
+    public back() {
+      this.router.navigate(['/AdminAcademicKPI']);
     }
 
 }

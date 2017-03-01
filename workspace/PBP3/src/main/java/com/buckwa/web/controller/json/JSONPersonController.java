@@ -1065,6 +1065,29 @@ public class JSONPersonController {
 		}
 		return kpiUserMapping;
 	}
+	
+	
+	@RequestMapping(value = "/getImportWorkNew/{kpiUserMappingId}", method = RequestMethod.GET, headers = "Accept=application/json")
+	public AcademicKPIUserMappingWrapper getImportWorkNew(@PathVariable String kpiUserMappingId) {
+
+		logger.info(" Start  kpiUserMappingId:" + kpiUserMappingId);
+		AcademicKPIUserMappingWrapper kpiUserMapping = new AcademicKPIUserMappingWrapper();
+		try {
+			BuckWaRequest request = new BuckWaRequest();
+			request.put("kpiUserMappingId", kpiUserMappingId);
+			BuckWaResponse response = academicKPIUserMappingService.getById(request);
+			if (response.getStatus() == BuckWaConstants.SUCCESS) {
+				AcademicKPIUserMappingWrapper academicKPIUserMappingWrapper = (AcademicKPIUserMappingWrapper) response
+						.getResObj("academicKPIUserMappingWrapper");
+
+				kpiUserMapping = academicKPIUserMappingWrapper;
+			}
+		} catch (Exception ex) {
+			ex.printStackTrace();
+
+		}
+		return kpiUserMapping;
+	}
 
 	@RequestMapping(value = "/importwork", method = RequestMethod.POST)
 	public ResponseObj jsonImportworkPOST(@RequestBody AcademicKPI academicKPI) {

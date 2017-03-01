@@ -251,7 +251,7 @@ public class AcademicKPIServiceImpl implements AcademicKPIService {
 		try{	
 			AcademicKPI academicKPI = (AcademicKPI)request.get("academicKPI");		
 			
-			boolean isExist = academicKPIDao.isExistCreate(academicKPI);
+			boolean isExist = false;//academicKPIDao.isExistCreate(academicKPI);
 			if(isExist){
 				response.setStatus(BuckWaConstants.FAIL);
 				response.setErrorCode("E002");		

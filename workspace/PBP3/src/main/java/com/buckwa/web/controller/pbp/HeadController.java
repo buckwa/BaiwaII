@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -791,6 +792,44 @@ public class HeadController {
 			mav.addObject("errorCode", "E001"); 
 		}
 		return mav;
+	}	
+	
+	@RequestMapping(value="replyMessage", method = RequestMethod.POST)
+	@ResponseBody
+	public ResponseObj replyMessageNew( @RequestBody AcademicKPIUserMappingWrapper academicKPIUserMappingWrapper , BindingResult result) {
+		ModelAndView mav = new ModelAndView();
+		ResponseObj resObj =new ResponseObj();
+		try{			
+			logger.info(" ## replyMessage:"+academicKPIUserMappingWrapper.getReplyMessage());
+			 
+			new ReplyPBPMessageValidator().validate(academicKPIUserMappingWrapper, result);			
+			if (result.hasErrors()) {				
+				mav.setViewName("viewImportWork");
+			}else {					
+				BuckWaRequest request = new BuckWaRequest(); 
+				Message newMessage = new Message();
+				newMessage.setMessageDetail(academicKPIUserMappingWrapper.getReplyMessage());
+				newMessage.setTopicId(academicKPIUserMappingWrapper.getAcademicKPIUserMapping().getKpiUserMappingId());
+				newMessage.setStatus("1");				
+				newMessage.setCreateBy(UserLoginUtil.getCurrentFullThaiName());
+				request.put("message", newMessage);
+				logger.info(" replyMessage newMessage:"+BeanUtils.getBeanString(newMessage));
+				BuckWaResponse response = webboardTopicService.replyPBPMessage(request);
+				if(response.getStatus()==BuckWaConstants.SUCCESS){		 
+					mav.addObject("successCode", response.getSuccessCode()); 
+					
+					academicKPIUserMappingWrapper.setReplyMessage("");
+					resObj.setResObj(response);
+					mav = viewWork(academicKPIUserMappingWrapper.getAcademicKPIUserMapping().getKpiUserMappingId()+"");	
+				}else {
+					mav.addObject("errorCode", response.getErrorCode());  
+				}				
+			}							
+		}catch(Exception ex){
+			ex.printStackTrace();
+			mav.addObject("errorCode", "E001"); 
+		}
+		return resObj;
 	}	
 	
 	

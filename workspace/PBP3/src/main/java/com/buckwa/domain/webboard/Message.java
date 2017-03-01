@@ -37,13 +37,15 @@ public class Message extends BaseDomain{
 		this.imagePath = imagePath;
 	}
 
-	public String getStatusMessage() {
-		if (this.statusMessage == true ||this.statusMessage.equals("1")){
-			return "1";
-		}else {
-			return "0";
-			
-		}
+	public Boolean getStatusMessage() {
+
+		return statusMessage;
+//		if (this.statusMessage == true ||this.statusMessage.equals("1")){
+//			return "1";
+//		}else {
+//			return "0";
+//
+//		}
 	}
 	public void setStatusMessage(Boolean statusMessage) {
 		this.statusMessage = statusMessage;

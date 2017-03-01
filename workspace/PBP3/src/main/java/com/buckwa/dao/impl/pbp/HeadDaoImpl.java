@@ -624,6 +624,7 @@ public class HeadDaoImpl implements HeadDao {
 				
 				
 				kpiMapping.append(" SELECT  academic_kpi_user_mapping.* ");
+				kpiMapping.append("  , person_pbp.thai_name,  person_pbp.thai_surname ");
 				kpiMapping.append(" FROM academic_kpi_user_mapping ");
 				kpiMapping.append(" INNER JOIN academic_kpi ");
 				kpiMapping.append(" ON academic_kpi.academic_kpi_id = academic_kpi_user_mapping.academic_kpi_id  ");
@@ -645,7 +646,7 @@ public class HeadDaoImpl implements HeadDao {
 
 				
 				logger.info("  getByHeadAcademicYear kpiMapping:"+kpiMapping.toString());
-				List<AcademicKPIUserMapping> academicKPIUserMappingList  = this.jdbcTemplate.query(kpiMapping.toString(),	new AcademicKPIUserMappingMapper() );
+				List<AcademicKPIUserMapping> academicKPIUserMappingList  = this.jdbcTemplate.query(kpiMapping.toString(),	new AcademicKPIUserMappingMapperNew() );
 
 				
 				if(academicKPIUserMappingList!=null&&academicKPIUserMappingList.size()>0){
@@ -1628,6 +1629,27 @@ public class HeadDaoImpl implements HeadDao {
 		return domain;
     }
 	}
+	
+	private class AcademicKPIUserMappingMapperNew implements RowMapper<AcademicKPIUserMapping> {   						
+        @Override
+		public AcademicKPIUserMapping mapRow(ResultSet rs, int rowNum) throws SQLException {
+        	AcademicKPIUserMapping domain = new AcademicKPIUserMapping(); 
+        	
+        	
+        	domain.setKpiUserMappingId(rs.getLong("kpi_user_mapping_id"));
+        	domain.setAcademicKPIId(rs.getLong("academic_kpi_id"));
+			domain.setName(rs.getString("name"));		 
+			domain.setWorkTypeCode(rs.getString("work_type_code"));  
+			domain.setAcademicYear(rs.getString("academic_year"));
+			domain.setAcademicKPICode(rs.getString("academic_kpi_code"));
+			domain.setStatus(rs.getString("status"));
+			domain.setThaiName(rs.getString("thai_name"));
+			domain.setThaiSurname(rs.getString("thai_surname"));
+		 
+		return domain;
+    }
+	}
+	
 	
 	private class AcademicKPIAttributeValueMapper implements RowMapper<AcademicKPIAttributeValue> {   						
         @Override

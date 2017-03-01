@@ -15,13 +15,15 @@ public class AcademicKPIUserMapping   extends BaseDomain{
 	private String academicKPICode;
 	private String workTypeCode;
 	private String calResultStr;
+
 	private List<AcademicKPIAttributeValue>  academicKPIAttributeValueList;
 	private List<AcademicKPIAttachFile> academicKPIAttachFileList;
 	
 	private String isCoTeach;
 	private String fromSource;
 	private String fromSourceText;
-	
+	private String thaiName;
+	private String thaiSurname;
 	
 	 
 	
@@ -166,6 +168,17 @@ public class AcademicKPIUserMapping   extends BaseDomain{
 	}
 	
 	
-	
+	public String getThaiName() {
+		return thaiName;
+	}
+	public void setThaiName(String thaiName) {
+		this.thaiName = thaiName;
+	}
+	public String getThaiSurname() {
+		return thaiSurname;
+	}
+	public void setThaiSurname(String thaiSurname) {
+		this.thaiSurname = thaiSurname;
+	}
 
 }

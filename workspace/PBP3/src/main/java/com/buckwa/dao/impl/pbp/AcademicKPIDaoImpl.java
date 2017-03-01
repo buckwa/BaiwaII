@@ -371,6 +371,8 @@ public class AcademicKPIDaoImpl implements AcademicKPIDao {
 				PreparedStatement ps = connection.prepareStatement("" +						
 						"  insert into academic_kpi (name, code,work_type_code,mark,academic_year,unit_code,rule_code,order_no,description,faculty_code) values (?,?, ?,?,?,?,?,?,?,?)" +
 					 "", Statement.RETURN_GENERATED_KEYS);   
+				
+				logger.info("SQL : "+finalDomain.getMark());	
 				ps.setString(1,finalDomain.getName());
 				ps.setInt(2,nexCode);
 				ps.setInt(3,new Integer(finalDomain.getWorkTypeCode()));	
@@ -747,8 +749,8 @@ public class AcademicKPIDaoImpl implements AcademicKPIDao {
 		if(academicKPIAttributeList!=null&&academicKPIAttributeList.size()>0){
 			for(AcademicKPIAttribute tmp:academicKPIAttributeList){
 				logger.info(" checkValue:"+tmp.getIsCalculate());
-				String isCheckFlage = "on".equalsIgnoreCase(tmp.getIsCalculate())?"Y":"N";
-				String isCheckFlage2 = "on".equalsIgnoreCase(tmp.getIsValidateNumber())?"Y":"N";
+				String isCheckFlage = "Y".equalsIgnoreCase(tmp.getIsCalculate())?"Y":"N";
+				String isCheckFlage2 = "Y".equalsIgnoreCase(tmp.getIsValidateNumber())?"Y":"N";
 				logger.info("  Name :"+tmp.getName()+" isCal:"+isCheckFlage+" isValidateNumber:"+isCheckFlage2);
 				this.jdbcTemplate.update(
 						"update    academic_kpi_attribute set name=?, is_calculate=?,is_validate_number=?  where kpi_attribute_id=? ",

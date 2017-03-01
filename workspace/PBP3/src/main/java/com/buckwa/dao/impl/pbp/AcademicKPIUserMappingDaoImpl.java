@@ -129,9 +129,9 @@ public class AcademicKPIUserMappingDaoImpl implements AcademicKPIUserMappingDao 
 						// Get Message
 						
 						StringBuffer sbmessage = new StringBuffer();
-						sbmessage.append(" select   \n");
-						sbmessage.append(" * from webboard_message r  \n");
-						sbmessage.append(" where 1=1 and topic_id="+mappingTmp.getKpiUserMappingId());	
+						sbmessage.append(" select  ");
+						sbmessage.append(" * from webboard_message r  ");
+				sbmessage.append(" where 1=1 and topic_id=" + mappingTmp.getKpiUserMappingId());	
 				 
 						String sql =sbmessage.toString();		
 						//logger.info(" sql sbmessage:"+sql);			

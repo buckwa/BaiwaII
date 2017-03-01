@@ -31,7 +31,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-		System.out.println("Nomal");
 		auth.authenticationProvider(authenticationProvider);
 	}
  
@@ -63,38 +62,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
    *    Only "ADMIN" role can access url under /admin/** 
    *    Only "USER" role can access url under /**
    */
-//  @Override
-//  protected void configure(HttpSecurity http) throws Exception {
-//    http.authorizeRequests().antMatchers("/").permitAll(); 
-//    http.authorizeRequests().antMatchers("/imgs/**").permitAll(); 
-//    http.authorizeRequests().antMatchers("/theme/**").permitAll(); 
-//    http.authorizeRequests().antMatchers("/admin/**").hasRole("ADMIN");
-//    http.authorizeRequests().antMatchers("/**").hasRole("USER").and().formLogin();
-//  }
-//  
-  
-//	@Override
-//	protected void configure(HttpSecurity http) throws Exception {
-//		http
-//			.authorizeRequests()
-//				.anyRequest().fullyAuthenticated()
-//				.and()
-//			.formLogin();
-//	}
-
-//	@Override
-//	public void configure(AuthenticationManagerBuilder auth) throws Exception {
-//		System.out.println("Ldap");
-//		auth.authenticationProvider(authenticationProvider)
-//			.ldapAuthentication()
-//			.userSearchFilter("(uid={0})")
-//				.contextSource(contextSource());
-//	}
-//
-//	@Bean
-//	public DefaultSpringSecurityContextSource contextSource() {
-//		return  new DefaultSpringSecurityContextSource(Arrays.asList("ldap://161.246.34.181:389"), "dc=kmitl,dc=ac,dc=th");
-//	}
 	
   
   @Override

@@ -10,6 +10,8 @@ declare var jQuery: any;
 
 export class AdminAcademicKPI implements OnInit {
 
+    public workTypeCode: any;
+    public facultyCode: any;
     public model: any;
     public facultyName: any;
     public workTypeName: any;
@@ -28,18 +30,42 @@ export class AdminAcademicKPI implements OnInit {
             "facultyCode": "",
         }
     }
-
     ngOnInit() {
+        
+        this.route.params.subscribe(params => this.workTypeCode = params["workTypeCode"]);
+        if (this.workTypeCode) {
+            console.log("workTypeCode :", this.workTypeCode);
+            //this.editcar(this.para_carId);
+        }
+        this.route.params.subscribe(params => this.academicYear = params["academicYear"]);
+        if (this.academicYear) {
+            console.log("academicYear :", this.academicYear);
+            //this.editcar(this.para_carId);
+        }
+        this.route.params.subscribe(params => this.facultyCode = params["facultyCode"]);
+        if (this.facultyCode) {
+            console.log("facultyCode :", this.facultyCode);
+            //this.editcar(this.para_carId);
+        }
+
         var year =new Date().getFullYear()+542;
         this.academicYearSelect = year;
 
         this.searchAtti = this.ModelSearch();
-
+        if(this.facultyCode=='0' && this.academicYear=='0' && this.workTypeCode=='0'){
+            this.getlistKPI();
+        }else{
+            this.GetSearchKpINew(this.facultyCode,this.academicYear,this.workTypeCode);
+        }
+        
     }
 
-    constructor(private commonService: CommonService, private router: Router, private http: Http) {
+    constructor(private commonService: CommonService, private router: Router, private http: Http, private route: ActivatedRoute) {
 
-        this.getlistKPI();
+        //this.getlistKPI();
+        //this.GetSearchKpI();
+// if()
+        
     }
 
     public getlistKPI() {
@@ -103,7 +129,7 @@ export class AdminAcademicKPI implements OnInit {
         console.log(" GetCreateKPI !");
     }
     public GetUpdateKPI(academicKPIId: any) {
-        this.router.navigate(['/AdminAcademicKPIedit', academicKPIId]);
+        this.router.navigate(['/AdminAcademicKPIedit', academicKPIId , this.searchAtti.workTypeCode, this.searchAtti.academicYear, this.searchAtti.facultyCode]);
         console.log(" GetUpdateKPI !");
     }
 
@@ -122,6 +148,13 @@ export class AdminAcademicKPI implements OnInit {
 
         console.log(" GetDeleteKPI !");
     }
+
+    public GetSearchKpINew(facultyCode: any,academicYear: any,workTypeCode: any) {
+        var url = "../admin/pbp/academicKPI/search/" + workTypeCode + "/" + academicYear + "/" + facultyCode;
+        this.http.get(url).subscribe(response => this.GetlistKPISucess(response),
+            error => this.GetlistKPIJsonError(error), () => console.log(" Sent Success !"));
+    }
+
     public getTimeTableSucess() {
         location.reload();
 

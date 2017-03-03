@@ -64,6 +64,22 @@ export class AdminAcademicKPIedit implements OnInit {
             //this.editcar(this.para_carId);
         }
 
+        this.route.params.subscribe(params => this.workTypeCode = params["workTypeCode"]);
+        if (this.workTypeCode) {
+            console.log("workTypeCode :", this.workTypeCode);
+            //this.editcar(this.para_carId);
+        }
+        this.route.params.subscribe(params => this.academicYear = params["academicYear"]);
+        if (this.academicYear) {
+            console.log("academicYear :", this.academicYear);
+            //this.editcar(this.para_carId);
+        }
+        this.route.params.subscribe(params => this.facultyCode = params["facultyCode"]);
+        if (this.facultyCode) {
+            console.log("facultyCode :", this.facultyCode);
+            //this.editcar(this.para_carId);
+        }
+
         this.SetUpdateKPI();
     }
 
@@ -158,7 +174,7 @@ export class AdminAcademicKPIedit implements OnInit {
     public CreateSuccess(response: any) {
 
         alert("Success !");
-        this.router.navigate(['/AdminAcademicKPI']);
+        this.router.navigate(['/AdminAcademicKPI',this.workTypeCode,this.academicYear,this.facultyCode]);
     }
 
     onChange(event) {
@@ -190,7 +206,7 @@ export class AdminAcademicKPIedit implements OnInit {
     }
 
     public back() {
-      this.router.navigate(['/AdminAcademicKPI']);
+      this.router.navigate(['/AdminAcademicKPI',this.workTypeCode,this.academicYear,this.facultyCode]);
     }
 
 }

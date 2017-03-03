@@ -109,9 +109,9 @@ const routes: Routes = [
     { path: 'AdminFacultyeditFaculty/:FacultyID', component: AdminFacultyeditFaculty },//มอส
     { path: 'AdminFacultyEditDepartment/:Depart_Id', component:AdminFacultyEditDepartment },//มอส
 
-    { path: 'AdminAcademicKPI', component: AdminAcademicKPI },
+    { path: 'AdminAcademicKPI/:workTypeCode/:academicYear/:facultyCode', component: AdminAcademicKPI },
     { path: 'AdminAcademicKPIcreate/:workTypeCode/:academicYear/:facultyCode', component: AdminAcademicKPIcreate },
-    { path: 'AdminAcademicKPIedit/:academicKPIId', component: AdminAcademicKPIedit },
+    { path: 'AdminAcademicKPIedit/:academicKPIId/:workTypeCode/:academicYear/:facultyCode', component: AdminAcademicKPIedit },
     { path: 'AdminAcademicYear', component: AdminAcademicYear },
     { path: 'AdminEvaluateRoundinit', component: AdminEvaluateRoundinit },
     { path: 'AdminAcademicYeareditDateEvaluateRound', component: AdminAcademicYeareditDateEvaluateRound },

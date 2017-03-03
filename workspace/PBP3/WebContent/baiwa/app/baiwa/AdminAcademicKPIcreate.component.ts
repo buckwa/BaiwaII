@@ -110,11 +110,11 @@ export class AdminAcademicKPIcreate implements OnInit {
     public CreateSuccess(response:any) {
 
         alert("Success !");
-        this.router.navigate(['/AdminAcademicKPI']);
+        this.router.navigate(['/AdminAcademicKPI',this.workTypeCode,this.academicYear,this.facultyCode]);
     }
 
     public back() {
-      this.router.navigate(['/AdminAcademicKPI']);
+      this.router.navigate(['/AdminAcademicKPI',this.workTypeCode,this.academicYear,this.facultyCode]);
     }
 
 }

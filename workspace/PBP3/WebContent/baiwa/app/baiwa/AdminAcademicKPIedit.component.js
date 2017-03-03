@@ -52,6 +52,18 @@ var AdminAcademicKPIedit = (function () {
         if (this.academicKPIId) {
             console.log("academicKPIId :", this.academicKPIId);
         }
+        this.route.params.subscribe(function (params) { return _this.workTypeCode = params["workTypeCode"]; });
+        if (this.workTypeCode) {
+            console.log("workTypeCode :", this.workTypeCode);
+        }
+        this.route.params.subscribe(function (params) { return _this.academicYear = params["academicYear"]; });
+        if (this.academicYear) {
+            console.log("academicYear :", this.academicYear);
+        }
+        this.route.params.subscribe(function (params) { return _this.facultyCode = params["facultyCode"]; });
+        if (this.facultyCode) {
+            console.log("facultyCode :", this.facultyCode);
+        }
         this.SetUpdateKPI();
     };
     AdminAcademicKPIedit.prototype.onSubmit = function () {
@@ -117,7 +129,7 @@ var AdminAcademicKPIedit = (function () {
     };
     AdminAcademicKPIedit.prototype.CreateSuccess = function (response) {
         alert("Success !");
-        this.router.navigate(['/AdminAcademicKPI']);
+        this.router.navigate(['/AdminAcademicKPI', this.workTypeCode, this.academicYear, this.facultyCode]);
     };
     AdminAcademicKPIedit.prototype.onChange = function (event) {
         var isChecked = event.currentTarget.checked;
@@ -140,7 +152,7 @@ var AdminAcademicKPIedit = (function () {
         location.reload();
     };
     AdminAcademicKPIedit.prototype.back = function () {
-        this.router.navigate(['/AdminAcademicKPI']);
+        this.router.navigate(['/AdminAcademicKPI', this.workTypeCode, this.academicYear, this.facultyCode]);
     };
     AdminAcademicKPIedit = __decorate([
         core_1.Component({

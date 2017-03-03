@@ -167,7 +167,7 @@ export class home implements OnInit, AfterViewInit {
         this.GetPersonByAcadamy(this.user.userName, this.currentAcademicYear);
 
         if (this.user.isAdmin == true) {
-            this.router.navigate(['/AdminAcademicKPI']);
+            this.router.navigate(['/AdminAcademicKPI',"0","0","0"]);
         }
 
 

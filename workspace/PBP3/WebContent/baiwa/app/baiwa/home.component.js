@@ -134,7 +134,7 @@ var home = (function () {
         this.currentAcademicYear = this.user.currentAcademicYear;
         this.GetPersonByAcadamy(this.user.userName, this.currentAcademicYear);
         if (this.user.isAdmin == true) {
-            this.router.navigate(['/AdminAcademicKPI']);
+            this.router.navigate(['/AdminAcademicKPI', "0", "0", "0"]);
         }
         setTimeout(function () { return _this.GetRadarPlotNew(_this.user.userName, _this.currentAcademicYear, _this.profile.evaluateRound); }, 250);
     };

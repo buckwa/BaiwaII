@@ -13,11 +13,14 @@ var Common_service_1 = require('./../service/Common.service');
 var http_1 = require('@angular/http');
 var router_1 = require('@angular/router');
 var AdminAcademicKPI = (function () {
-    function AdminAcademicKPI(commonService, router, http) {
+    function AdminAcademicKPI(commonService, router, http, route) {
+        //this.getlistKPI();
+        //this.GetSearchKpI();
+        // if()
         this.commonService = commonService;
         this.router = router;
         this.http = http;
-        this.getlistKPI();
+        this.route = route;
     }
     AdminAcademicKPI.prototype.ModelSearch = function () {
         return {
@@ -27,9 +30,28 @@ var AdminAcademicKPI = (function () {
         };
     };
     AdminAcademicKPI.prototype.ngOnInit = function () {
+        var _this = this;
+        this.route.params.subscribe(function (params) { return _this.workTypeCode = params["workTypeCode"]; });
+        if (this.workTypeCode) {
+            console.log("workTypeCode :", this.workTypeCode);
+        }
+        this.route.params.subscribe(function (params) { return _this.academicYear = params["academicYear"]; });
+        if (this.academicYear) {
+            console.log("academicYear :", this.academicYear);
+        }
+        this.route.params.subscribe(function (params) { return _this.facultyCode = params["facultyCode"]; });
+        if (this.facultyCode) {
+            console.log("facultyCode :", this.facultyCode);
+        }
         var year = new Date().getFullYear() + 542;
         this.academicYearSelect = year;
         this.searchAtti = this.ModelSearch();
+        if (this.facultyCode == '0' && this.academicYear == '0' && this.workTypeCode == '0') {
+            this.getlistKPI();
+        }
+        else {
+            this.GetSearchKpINew(this.facultyCode, this.academicYear, this.workTypeCode);
+        }
     };
     AdminAcademicKPI.prototype.getlistKPI = function () {
         var _this = this;
@@ -81,7 +103,7 @@ var AdminAcademicKPI = (function () {
         console.log(" GetCreateKPI !");
     };
     AdminAcademicKPI.prototype.GetUpdateKPI = function (academicKPIId) {
-        this.router.navigate(['/AdminAcademicKPIedit', academicKPIId]);
+        this.router.navigate(['/AdminAcademicKPIedit', academicKPIId, this.searchAtti.workTypeCode, this.searchAtti.academicYear, this.searchAtti.facultyCode]);
         console.log(" GetUpdateKPI !");
     };
     AdminAcademicKPI.prototype.GetDeleteKPI = function (academicKPIId) {
@@ -95,6 +117,11 @@ var AdminAcademicKPI = (function () {
         }, this));
         console.log(" GetDeleteKPI !");
     };
+    AdminAcademicKPI.prototype.GetSearchKpINew = function (facultyCode, academicYear, workTypeCode) {
+        var _this = this;
+        var url = "../admin/pbp/academicKPI/search/" + workTypeCode + "/" + academicYear + "/" + facultyCode;
+        this.http.get(url).subscribe(function (response) { return _this.GetlistKPISucess(response); }, function (error) { return _this.GetlistKPIJsonError(error); }, function () { return console.log(" Sent Success !"); });
+    };
     AdminAcademicKPI.prototype.getTimeTableSucess = function () {
         location.reload();
     };
@@ -102,7 +129,7 @@ var AdminAcademicKPI = (function () {
         core_1.Component({
             templateUrl: 'app/baiwa/html/AdminAcademicKPI.component.html'
         }), 
-        __metadata('design:paramtypes', [Common_service_1.CommonService, router_1.Router, http_1.Http])
+        __metadata('design:paramtypes', [Common_service_1.CommonService, router_1.Router, http_1.Http, router_1.ActivatedRoute])
     ], AdminAcademicKPI);
     return AdminAcademicKPI;
 }());

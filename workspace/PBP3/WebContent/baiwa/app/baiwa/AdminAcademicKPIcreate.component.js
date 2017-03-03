@@ -80,10 +80,10 @@ var AdminAcademicKPIcreate = (function () {
     };
     AdminAcademicKPIcreate.prototype.CreateSuccess = function (response) {
         alert("Success !");
-        this.router.navigate(['/AdminAcademicKPI']);
+        this.router.navigate(['/AdminAcademicKPI', this.workTypeCode, this.academicYear, this.facultyCode]);
     };
     AdminAcademicKPIcreate.prototype.back = function () {
-        this.router.navigate(['/AdminAcademicKPI']);
+        this.router.navigate(['/AdminAcademicKPI', this.workTypeCode, this.academicYear, this.facultyCode]);
     };
     AdminAcademicKPIcreate = __decorate([
         core_1.Component({

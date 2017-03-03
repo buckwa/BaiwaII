@@ -1,12 +1,8 @@
 package baiwa.service;
 
-import java.util.HashSet;
 import java.util.Hashtable;
-import java.util.Map;
 
 import javax.naming.Context;
-import javax.naming.directory.DirContext;
-import javax.naming.directory.InitialDirContext;
 import javax.naming.ldap.InitialLdapContext;
 import javax.naming.ldap.LdapContext;
 
@@ -15,25 +11,25 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.ldap.support.LdapUtils;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.LockedException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 
-import baiwa.config.ADAuthenticator;
 import baiwa.dao.UserAttemptDao;
-import baiwa.entity.UserAttempt;
 
 @Component("LdapAuthenticationProvider")
 public class LdapAuthenticationProvider extends DaoAuthenticationProvider {
 
-	@Autowired
-	@Qualifier("userDetailsService")
-	@Override
-	public void setUserDetailsService(UserDetailsService userDetailsService) {
-		super.setUserDetailsService(userDetailsService);
-	}
+	 @Autowired
+	 @Qualifier("userDetailsService")
+	 @Override
+	 public void setUserDetailsService(UserDetailsService userDetailsService) {
+	  super.setUserDetailsService(userDetailsService);
+	 }
 
 //	@Autowired
 //	@Qualifier("passwordEncoder")
@@ -51,7 +47,7 @@ public class LdapAuthenticationProvider extends DaoAuthenticationProvider {
 	public boolean authenticate_2(Object userDn, Object credentials) {
 		LdapContext ctxGC = null;
 		try {
-
+			logger.info("กำลัง2");
 	        Hashtable<String,String> env = new Hashtable<String,String>();
 			env.put(Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.ldap.LdapCtxFactory");
 			env.put(Context.PROVIDER_URL, "ldap://161.246.34.181:389/dc=kmitl,dc=ac,dc=th");
@@ -76,12 +72,12 @@ public class LdapAuthenticationProvider extends DaoAuthenticationProvider {
 	public boolean authenticate_1(Object userDn, Object credentials) {
 		LdapContext ctxGC = null;
 		try {
-
+			logger.info("กำลัง1");
 	        Hashtable<String,String> env = new Hashtable<String,String>();
 			env.put(Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.ldap.LdapCtxFactory");
-			env.put(Context.PROVIDER_URL, "ldap://161.246.52.221/dc=kmitl,dc=ac,dc=th");
+			env.put(Context.PROVIDER_URL, "ldap://161.246.34.43:389/dc=kmitl,dc=ac,dc=th");
 
-	        env.put(Context.SECURITY_PRINCIPAL, "uid="+userDn+",ou=per,ou=eng,ou=bkk,dc=kmitl,dc=ac,dc=th");
+	        env.put(Context.SECURITY_PRINCIPAL, "mail="+userDn+",ou=per,ou=eng,ou=bkk,ou=People,dc=kmitl,dc=ac,dc=th");
 	        env.put(Context.SECURITY_CREDENTIALS, credentials.toString());
 	        
 			ctxGC = new InitialLdapContext(env, null);
@@ -104,20 +100,39 @@ public class LdapAuthenticationProvider extends DaoAuthenticationProvider {
 		Authentication auth = null ;
 		try {
 			
+			 boolean authenResult = false;
 			boolean Result = authenticate_2(authentication.getPrincipal(),authentication.getCredentials());
 			
 			if(Result){
-					auth = super.authenticate(authentication);
+					//auth = super.authenticate(authentication);
+				
+				authenResult =true;
+				logger.info("ผ่าน2");
 			}else{
 				boolean Result2 = authenticate_1(authentication.getPrincipal(),authentication.getCredentials());
 				if(Result2){
-					auth = super.authenticate(authentication);
+
+					authenResult =true;
+					logger.info("ผ่าน1");
 				}
 			}
 
 
-			return auth;
+			//return auth;
+			
+			if(authenResult){
+				 UserDetails user = this.getUserDetailsService().loadUserByUsername(authentication.getPrincipal().toString());
+				    if(user != null){
+				    	logger.info("กำลังเข้าระบบ");
+				        Authentication token = new UsernamePasswordAuthenticationToken(user, authentication.getCredentials(), user.getAuthorities());
 
+				        return token;
+				    }
+			}else{
+			
+
+			    return null;
+			}
 		} catch (BadCredentialsException e) {
 
 			// invalid login, update to ADM_USER_ATTEMPT.ATTEMPTS
@@ -143,6 +158,7 @@ public class LdapAuthenticationProvider extends DaoAuthenticationProvider {
 			logger.error(e.getMessage(), e);
 			throw new LockedException(error);
 		}
+		return auth;
 	}
 
 }

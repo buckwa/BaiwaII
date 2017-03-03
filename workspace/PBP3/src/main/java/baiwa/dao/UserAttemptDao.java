@@ -28,6 +28,9 @@ public class UserAttemptDao {
 	
 	public UserAttempt findByUsername (String username){
 		username = username+"@kmitl.ac.th";
+		
+		logger.info("user +Email =" + username);
+		
 //		StringBuilder sql = new StringBuilder();
 //		sql.append(" SELECT user_id , USERNAME, password ");
 //		sql.append(" FROM buckwauser ");
@@ -39,6 +42,7 @@ public class UserAttemptDao {
 				+ " INNER JOIN buckwauser d ON d.username = a.email "
 				+ " WHERE  a.email = ? "
 				+ " ORDER BY b.academic_year DESC LIMIT 1 " ;
+		logger.info("sql" + sql);
 		UserAttempt  userAttempt = null;
 		try {
 		userAttempt = (UserAttempt)jdbcTemplate.queryForObject(sql,new Object[] { username 

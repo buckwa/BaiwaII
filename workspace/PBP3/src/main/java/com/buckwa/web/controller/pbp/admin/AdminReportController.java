@@ -119,7 +119,7 @@ public class AdminReportController {
 			
 			BuckWaRequest request = new BuckWaRequest();
 			//String academicYear =schoolUtil.getCurrentAcademicYear();
-			request.put("academicYear",academicYear);
+			request.put("academicYear","2558");
 			BuckWaResponse response = facultyService.getAllMarkByAcademicYear(request);
 			if(response.getStatus()==BuckWaConstants.SUCCESS){	
 				FacultyWrapper facultyWrapper = (FacultyWrapper)response.getResObj("facultyWrapper");
@@ -188,7 +188,7 @@ public class AdminReportController {
 				            aRow.getCell(8).setCellValue(personTmp.getMark3());	
 				            aRow.getCell(9).setCellValue(personTmp.getMark4());	
 				            aRow.getCell(10).setCellValue(personTmp.getMark5());	
-				            aRow.getCell(11).setCellValue(personTmp.getTotalMark()+"");	
+				            aRow.getCell(11).setCellValue("");	
 				            
 						}
 

@@ -141,7 +141,7 @@ public class FacultyDaoImpl implements FacultyDao {
 	
 	@Override
 	public FacultyWrapper getAllMarkByAcademicYear( String academicYear) {		 		
-		String sql =" select *  from faculty where academic_year ='"+academicYear+"'" ; 
+		String sql =" select *  from faculty where academic_year ='"+academicYear+"' " ; 
 		logger.info(" sql:"+sql);
 		List<Faculty> facultyList  =null;
 		

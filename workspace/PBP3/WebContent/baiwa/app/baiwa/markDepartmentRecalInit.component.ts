@@ -69,7 +69,7 @@ export class markDepartmentRecalInit  {
      public ClickActionSucess(response: any){
           this.commonService.unLoading();
         this.model = response.json(JSON.stringify(response._body));
-        alert("เรียบร้อย");
+        alert("คำนวณเสร็จสิ้น");
     } 
 
     public GetActionUserSessionError(error: String) {

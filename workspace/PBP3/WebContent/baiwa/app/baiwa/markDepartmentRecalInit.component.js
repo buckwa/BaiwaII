@@ -44,7 +44,7 @@ var markDepartmentRecalInit = (function () {
     markDepartmentRecalInit.prototype.ClickActionSucess = function (response) {
         this.commonService.unLoading();
         this.model = response.json(JSON.stringify(response._body));
-        alert("เรียบร้อย");
+        alert("คำนวณเสร็จสิ้น");
     };
     markDepartmentRecalInit.prototype.GetActionUserSessionError = function (error) {
         this.commonService.unLoading();

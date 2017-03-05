@@ -15,7 +15,7 @@
                                 <div class="form-group ">
                                     <label for="inputPassword3" class="col-sm-3 control-label">ภาระงานด้าน :</label>
                                     <div class="col-sm-6">
-                                        <select class="form-control" [(ngModel)]="workTypeCode" (change)="GetSearchKpI()">
+                                        <select class="form-control" [(ngModel)]="workTypeCode" (ngModelChange)="GetSearchKpI()">
                                             <option *ngFor="let item of pBPWorkTypeList;"  [value]="item.code" >{{item.name}}</option>
                                         </select>
                                     </div>

@@ -9,6 +9,7 @@ import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.ldap.userdetails.LdapUserDetailsImpl;
 import org.springframework.security.web.WebAttributes;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -73,7 +74,10 @@ public class CommonController {
 //			
 //			// check if user is login
 			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+//			LdapUserDetailsImpl test =(LdapUserDetailsImpl) auth.getPrincipal();
+//			logger.info("DN : " + test.getDn()); ;
 			if (!(auth instanceof AnonymousAuthenticationToken)) {
+
 				UserDetails userDetail = (UserDetails) auth.getPrincipal();
 				mav.addObject("username", userDetail.getUsername());
 				user = userDetail.getUsername();

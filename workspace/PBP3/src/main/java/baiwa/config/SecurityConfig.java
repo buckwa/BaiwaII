@@ -26,7 +26,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
  
 
   	@Autowired
-	@Qualifier("LdapAuthenticationProvider")
+	@Qualifier("authenticationProvider")
 	private AuthenticationProvider authenticationProvider;
 	
 	@Autowired
@@ -62,7 +62,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
    *    Only "ADMIN" role can access url under /admin/** 
    *    Only "USER" role can access url under /**
    */
-	
+
   
   @Override
  	protected void configure(HttpSecurity http) throws Exception {
@@ -79,7 +79,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
  				"/index.jsp"
  			).permitAll()
  			//.antMatchers("/admin/**").hasRole("ADMIN")
- 			.anyRequest().hasAuthority(BaiwaConstants.ROLE_USER)
+ 			//.anyRequest().hasAuthority(BaiwaConstants.ROLE_USER)
  		.and()
  		.formLogin()
  			.loginPage(BaiwaConstants.LOGIN_URL).permitAll()

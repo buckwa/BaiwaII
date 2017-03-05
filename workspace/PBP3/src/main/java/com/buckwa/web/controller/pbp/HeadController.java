@@ -760,7 +760,7 @@ public class HeadController {
 	}		
 	
 	
-	@RequestMapping(value="replyMessage.htm", method = RequestMethod.POST)
+	@RequestMapping(value="OlereplyMessage.htm", method = RequestMethod.POST)
 	public ModelAndView replyMessage(HttpServletRequest httpRequest, @ModelAttribute AcademicKPIUserMappingWrapper academicKPIUserMappingWrapper , BindingResult result) {
 		ModelAndView mav = new ModelAndView();
 		try{			

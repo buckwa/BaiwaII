@@ -76,8 +76,7 @@ public class LdapAuthenticationProvider extends DaoAuthenticationProvider {
 	        Hashtable<String,String> env = new Hashtable<String,String>();
 			env.put(Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.ldap.LdapCtxFactory");
 			env.put(Context.PROVIDER_URL, "ldap://161.246.34.43:389/dc=kmitl,dc=ac,dc=th");
-
-	        env.put(Context.SECURITY_PRINCIPAL, "mail="+userDn+",ou=per,ou=eng,ou=bkk,ou=People,dc=kmitl,dc=ac,dc=th");
+	        env.put(Context.SECURITY_PRINCIPAL, "uid="+userDn+",emp=staff,ou=people,dc=kmitl,dc=ac,dc=th");
 	        env.put(Context.SECURITY_CREDENTIALS, credentials.toString());
 	        
 			ctxGC = new InitialLdapContext(env, null);
@@ -101,19 +100,19 @@ public class LdapAuthenticationProvider extends DaoAuthenticationProvider {
 		try {
 			
 			 boolean authenResult = false;
-			boolean Result = authenticate_2(authentication.getPrincipal(),authentication.getCredentials());
+			boolean Result = authenticate_1(authentication.getPrincipal(),authentication.getCredentials());
 			
 			if(Result){
 					//auth = super.authenticate(authentication);
 				
 				authenResult =true;
-				logger.info("ผ่าน2");
+				logger.info("ผ่าน1");
 			}else{
-				boolean Result2 = authenticate_1(authentication.getPrincipal(),authentication.getCredentials());
+				boolean Result2 = authenticate_2(authentication.getPrincipal(),authentication.getCredentials());
 				if(Result2){
 
 					authenResult =true;
-					logger.info("ผ่าน1");
+					logger.info("ผ่าน2");
 				}
 			}
 

@@ -101,16 +101,23 @@ var home = (function () {
         this.getImageLocal(this.profile.personId);
         this.getMessage();
         this.countMessage();
+        this.evaluateRoundValue = this.profile.evaluateRound;
+        if (this.profile.employeeType == 'ข้าราชการ') {
+            this.evaluateRoundList = this.profile.evaluateRoundList;
+        }
     };
     home.prototype.GetPersonError = function (error) {
         console.log("GetPersonError.");
     };
     home.prototype.GetRadarPlotNewSearch = function (year) {
-        this.GetRadarPlotNew(this.user.userName, year, this.profile.evaluateRound);
+        this.GetRadarPlotNew(this.user.userName, year, this.evaluateRoundValue);
         this.currentAcademicYear = year;
     };
+    home.prototype.changeRound = function () {
+        this.GetRadarPlotNew(this.user.userName, this.currentAcademicYear, this.evaluateRoundValue);
+    };
     home.prototype.GetRadarPlot = function () {
-        this.GetRadarPlotNew(this.user.userName, this.currentAcademicYear, this.profile.evaluateRound);
+        this.GetRadarPlotNew(this.user.userName, this.currentAcademicYear, this.evaluateRoundValue);
     };
     home.prototype.GetRadarPlotNew = function (user, year, num) {
         var _this = this;
@@ -136,7 +143,7 @@ var home = (function () {
         if (this.user.isAdmin == true) {
             this.router.navigate(['/AdminAcademicKPI', "0", "0", "0"]);
         }
-        setTimeout(function () { return _this.GetRadarPlotNew(_this.user.userName, _this.currentAcademicYear, _this.profile.evaluateRound); }, 250);
+        setTimeout(function () { return _this.GetRadarPlotNew(_this.user.userName, _this.currentAcademicYear, _this.evaluateRoundValue); }, 250);
     };
     home.prototype.createChart = function () {
         jQuery("#KendoChart").kendoChart({
@@ -203,11 +210,22 @@ var home = (function () {
         this.updateImg = false;
     };
     home.prototype.UploadPicture = function (item) {
-        item.upload();
-        if (!item.isSuccess) {
-            jQuery("#myModal").modal('hide');
-            //this.getImageLocal(this.personId);
-            window.location.reload();
+        //2436579
+        var size = item.file.size;
+        if (size < 1000000) {
+            item.upload();
+            if (!item.isSuccess) {
+                jQuery("#myModal").modal('hide');
+                //this.getImageLocal(this.personId);
+                console.log("uploadsucess");
+                window.location.reload();
+            }
+            else {
+                console.log("uploadFali");
+            }
+        }
+        else {
+            alert("ไม่สามารถ อัพโหลดรูปภาพได้ เนื่องจากมีขนาดไฟล์ มากกว่า 1 MB");
         }
         //this.uploader.clearQueue()
         console.log("uploadsucess");
@@ -274,7 +292,7 @@ var home = (function () {
     home.prototype.getMessage = function () {
         var _this = this;
         var url = "../person/getUserMassage";
-        this.http.post(url, this.profile).subscribe(function (response) { return _this.GetMessageSucess(response); }, function (error) { return _this.GetPersonError(error); }, function () { return console.log("editdone !"); });
+        this.http.post(url, this.profile).subscribe(function (response) { return _this.GetMessageSucess(response); }, function (error) { return _this.ErrorMessage(error); }, function () { return console.log("editdone !"); });
     };
     home.prototype.GetMessageSucess = function (response) {
         this.messageList = response.json(JSON.stringify(response._body));
@@ -282,10 +300,13 @@ var home = (function () {
     home.prototype.countMessage = function () {
         var _this = this;
         var url = "../person/countMessage";
-        this.http.get(url).subscribe(function (response) { return _this.countMessageSucess(response); }, function (error) { return _this.GetPersonError(error); }, function () { return console.log("editdone !"); });
+        this.http.get(url).subscribe(function (response) { return _this.countMessageSucess(response); }, function (error) { return _this.ErrorMessage(error); }, function () { return console.log("editdone !"); });
     };
     home.prototype.countMessageSucess = function (response) {
         this.totalMessage = response.json(JSON.stringify(response._body));
+    };
+    home.prototype.ErrorMessage = function (response) {
+        console.log("Error :" + response);
     };
     home = __decorate([
         core_1.Component({

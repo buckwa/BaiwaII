@@ -43,6 +43,8 @@ export class personReportInit {
         this.academicYearList = this.user.academicYearList;
         this.currentAcademicYear = this.user.currentAcademicYear;
 
+
+
         this.kendoGrid(this.user.currentAcademicYear);
 
     }

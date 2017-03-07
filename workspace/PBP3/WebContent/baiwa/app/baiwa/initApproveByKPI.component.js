@@ -39,7 +39,7 @@ var initApproveByKPI = (function () {
     initApproveByKPI.prototype.academicKPI = function () {
         var _this = this;
         this.commonService.loading();
-        var url = "../admin/pbp/academicKPI/initApproveByKPI/1/" + this.user.currentAcademicYear + "/" + this.user.facultyCode + "/" + this.user.departmentName;
+        var url = "../admin/pbp/academicKPI/initApproveByKPI2/1/" + this.user.currentAcademicYear + "/" + this.user.facultyCode + "/" + this.user.departmentName;
         this.http.get(url).subscribe(function (response) { return _this.GetlistKPISucess(response); }, function (error) { return _this.GetlistKPIJsonError(error); }, function () { return console.log(" Sent Success !"); });
     };
     initApproveByKPI.prototype.GetlistKPISucess = function (response) {
@@ -62,7 +62,7 @@ var initApproveByKPI = (function () {
     initApproveByKPI.prototype.GetSearchKpI = function () {
         var _this = this;
         this.commonService.loading();
-        var url = "../admin/pbp/academicKPI/initApproveByKPI/" + this.workTypeCode + "/" + this.user.currentAcademicYear + "/" + this.user.facultyCode + "/" + this.user.departmentName;
+        var url = "../admin/pbp/academicKPI/initApproveByKPI2/" + this.workTypeCode + "/" + this.user.currentAcademicYear + "/" + this.user.facultyCode + "/" + this.user.departmentName;
         this.http.get(url).subscribe(function (response) { return _this.GetSearchKPISucess(response); }, function (error) { return _this.GetlistKPIJsonError(error); }, function () { return console.log(" Sent Success !"); });
     };
     initApproveByKPI.prototype.GetSearchKPISucess = function (response) {

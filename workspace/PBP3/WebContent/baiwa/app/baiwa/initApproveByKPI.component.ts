@@ -63,7 +63,7 @@ export class initApproveByKPI implements OnInit {
 
     academicKPI() {
         this.commonService.loading();
-        var url = "../admin/pbp/academicKPI/initApproveByKPI/1/" + this.user.currentAcademicYear + "/" + this.user.facultyCode + "/" + this.user.departmentName;
+        var url = "../admin/pbp/academicKPI/initApproveByKPI2/1/" + this.user.currentAcademicYear + "/" + this.user.facultyCode + "/" + this.user.departmentName;
         this.http.get(url).subscribe(response => this.GetlistKPISucess(response),
             error => this.GetlistKPIJsonError(error), () => console.log(" Sent Success !"));
     }
@@ -92,7 +92,7 @@ export class initApproveByKPI implements OnInit {
 
     public GetSearchKpI() {
         this.commonService.loading();
-        var url = "../admin/pbp/academicKPI/initApproveByKPI/" + this.workTypeCode + "/" + this.user.currentAcademicYear + "/" + this.user.facultyCode + "/" + this.user.departmentName;
+        var url = "../admin/pbp/academicKPI/initApproveByKPI2/" + this.workTypeCode + "/" + this.user.currentAcademicYear + "/" + this.user.facultyCode + "/" + this.user.departmentName;
         this.http.get(url).subscribe(response => this.GetSearchKPISucess(response),
             error => this.GetlistKPIJsonError(error), () => console.log(" Sent Success !"));
     }

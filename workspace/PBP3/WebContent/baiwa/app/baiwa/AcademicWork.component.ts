@@ -25,13 +25,20 @@ export class AcademicWork implements OnInit, AfterViewInit {
     public fileWork: any[];
     public tmpUrl: any;
     public codeKpi: string;
-    public academicYearList :any;
-    public currentAcademicYear :any;
-    public profile:any;
+    public academicYearList: any;
+    public currentAcademicYear: any;
+    public profile: any;
+    public evaluateRoundList: any;
+    public evaluateRoundValue: any;
+    public Model: any;
+    public status: any;
+    public result: any;
     fielPath;
     public f: File;
     chFilework: boolean;
+    public replyMessage: any;
 
+    public messageList: any[];
     public uploader: FileUploader = new FileUploader({ url: URL1 });
 
     constructor(private commonService: CommonService, private http: Http, private sanitizer: DomSanitizer) {
@@ -58,8 +65,8 @@ export class AcademicWork implements OnInit, AfterViewInit {
             "name": "",
             "kpiUserMappingId": "",
             "calResultStr": "",
-            "academicKPI":{
-                "unitDesc":""
+            "academicKPI": {
+                "unitDesc": ""
             },
             "academicKPIAttributeValueList": [{}]
         }
@@ -88,8 +95,15 @@ export class AcademicWork implements OnInit, AfterViewInit {
         this.academicYearList = this.user.academicYearList;
         this.currentAcademicYear = this.user.currentAcademicYear;
 
+
+
         this.GetPersonByAcadamy(this.user.userName, this.user.currentAcademicYear);
-         setTimeout(() => this.GetAcademicWork(this.user.userName, this.currentAcademicYear, this.profile.evaluateRound), 250);
+
+
+
+        setTimeout(() => this.GetAcademicWork(this.user.userName, this.currentAcademicYear, this.evaluateRoundValue), 250);
+
+
 
 
     }
@@ -104,7 +118,7 @@ export class AcademicWork implements OnInit, AfterViewInit {
 
     public GetAcademicWork(user: String, year: String, round: String) {
         this.commonService.loading();
-        var url = "../person/getAcademicWork/" + user + "/"+year+"/" + round
+        var url = "../person/getAcademicWork/" + user + "/" + year + "/" + round
         return this.http.get(url).subscribe(response => this.GetUserAcademicSucess(response),
             error => this.GetUserSessionError(error), () => console.log("editdoneUser !"));
 
@@ -113,7 +127,7 @@ export class AcademicWork implements OnInit, AfterViewInit {
         this.academy = response.json(JSON.stringify(response._body));
         this.academyList = this.academy.pBPWorkTypeList;
         //this.kpiuserList =this.academy.pBPWorkTypeList.academicKPIUserMappingList;
-        this.kpiuserList =[];
+        this.kpiuserList = [];
         for (var i = 0; i < this.academy.pBPWorkTypeList.length; i++) {
             this.kpiuserList.push(this.academy.pBPWorkTypeList[i].academicKPIUserMappingList)
         }
@@ -124,12 +138,13 @@ export class AcademicWork implements OnInit, AfterViewInit {
         this.uploader.clearQueue();
         this.mark = mark;
         this.codeKpi = Code;
-        var url = "../person/getImportWork/" + Code
+        var url = "../person/getImportWorkNew/" + Code
         return this.http.get(url).subscribe(response => this.GetKPISucess(response),
             error => this.GetUserSessionError(error), () => console.log("editdoneUser !"));
     }
     public GetKPISucess(response: any) {
-        this.pointKPI = response.json(JSON.stringify(response._body));
+        this.Model = response.json(JSON.stringify(response._body));
+        this.pointKPI = this.Model.academicKPIUserMapping;
         this.pointLPIList = this.pointKPI.academicKPIAttributeValueList;
         this.fileWork = this.pointKPI.academicKPIAttachFileList;
         if (this.fileWork.length == 0) {
@@ -145,7 +160,9 @@ export class AcademicWork implements OnInit, AfterViewInit {
             this.statusKpi = false;
         }
 
-
+        if (this.pointKPI.messageList != null && this.pointKPI.status != "APPROVED") {
+            this.messageList = this.pointKPI.messageList;
+        }
     }
 
     public mapKpi() {
@@ -236,11 +253,11 @@ export class AcademicWork implements OnInit, AfterViewInit {
             console.log("isOk", isOk);
             if (isOk) {
                 this.http.get(url).subscribe(response => this.deletesucess(response),
-            error => this.deleteError(), () => console.log("editdoneUser !"));
-            } 
+                    error => this.deleteError(), () => console.log("editdoneUser !"));
+            }
         }, this));
     }
-        
+
     public deletesucess(response: any) {
 
         console.log("deletesucess!")
@@ -250,7 +267,7 @@ export class AcademicWork implements OnInit, AfterViewInit {
         console.log("deleteError!")
     }
 
-     public GetPersonByAcadamy(user: String,  year: String) {
+    public GetPersonByAcadamy(user: String, year: String) {
         var url = "../person/getPersonByAcademicYear/" + user + "/" + year
         this.http.get(url).subscribe(response => this.GetPersonSucess(response),
             error => this.GetPersonError(error), () => console.log("editdone !")
@@ -258,6 +275,12 @@ export class AcademicWork implements OnInit, AfterViewInit {
     }
     public GetPersonSucess(response: any) {
         this.profile = response.json(JSON.stringify(response._body));
+        this.evaluateRoundValue = this.profile.evaluateRound;
+
+        if (this.profile.employeeType == 'ข้าราชการ') {
+            this.evaluateRoundList = this.profile.evaluateRoundList;
+
+        }
 
     }
     public GetPersonError(error: String) {
@@ -265,10 +288,103 @@ export class AcademicWork implements OnInit, AfterViewInit {
 
     }
 
-    public changeYear(year: any){
+    public changeYear(year: any) {
 
-        this.GetAcademicWork(this.user.userName, year, this.profile.evaluateRound);
+        this.GetAcademicWork(this.user.userName, year, this.evaluateRoundValue);
+    }
+    public changeRound() {
+
+        this.GetAcademicWork(this.user.userName, this.currentAcademicYear, this.evaluateRoundValue);
     }
 
+
+    public sentReplyPBPMessage() {
+        if (this.replyMessage != null) {
+            this.Model.replyMessage = this.replyMessage;
+            var url = "../head/pbp/replyMessage";//ติดไว้ก่อน
+            this.http.post(url, this.Model).subscribe(response => this.ReplyPBPMessageSucess(response),
+                error => this.ReplyPBPMessageError(error), () => console.log("AdminUserCreate : Success saveUser !"));
+        }
+    }
+
+    ReplyPBPMessageSucess(response: any) {
+        var temp = response.json(JSON.stringify(response._body));
+        this.ClickGetPointKPINew(this.codeKpi, this.mark);
+    }
+    ReplyPBPMessageError(response: any) {
+        console.log("Error!");
+
+    }
+
+
+    public ClickGetPointKPINew(Code: String, indexKPI: String) {
+        this.mark = indexKPI;
+        var url = "../person/getImportWorkNew/" + Code
+        return this.http.get(url).subscribe(response => this.GetKPISucessNew(response),
+            error => this.ReplyPBPMessageError(error), () => console.log("editdoneUser !"));
+    }
+
+    public GetKPISucessNew(response: any) {
+        this.Model = response.json(JSON.stringify(response._body));
+        this.pointKPI = this.Model.academicKPIUserMapping;
+
+        if (this.pointKPI.messageList != null) {
+            this.messageList = this.pointKPI.messageList;
+        }
+
+
+    }
+
+    public clickedDeteleImport() {
+
+        this.commonService.confirm("Are you sure you want to delete?", jQuery.proxy(function (isOk: any) {
+            if (isOk) {
+                //action 
+                var url = "../pam/person/deleteImportWork/" + this.codeKpi
+                return this.http.get(url).subscribe(response => this.GetSSDeteleImport(response),
+                    error => this.GetERRDeteleImport(error), () => console.log("editdoneUser !"));
+
+            }
+        }, this));
+
+
+    }
+
+    GetSSDeteleImport(response: any) {
+        this.result = response.json(JSON.stringify(response._body));
+        location.reload();
+
+    }
+
+    GetERRDeteleImport(response: any) {
+        console.log("Error!");
+    }
+
+    clickedEditImport(){
+    this.Model.academicKPIAttributeValueList = this.pointLPIList;
+    var url = "../pam/person/editImportwork";
+    this.http.post(url, this.Model).subscribe(response => this.EditSuccess(response),
+    error => this.EditError(error), () => console.log("AdminUserCreate : Success saveUser !"));        
+
+
+    }
+
+    public EditSuccess(response: any) {
+        this.result = response.json(JSON.stringify(response._body));
+        
+        if(this.result.status=='S001'){
+             alert("Success !");
+             location.reload();
+        }else{
+             alert("Error !");
+        }
+       
+    }
+
+    public EditError(response: any) {
+
+        alert("Error !");
+       
+    }
 
 }

@@ -7,10 +7,17 @@
 
 
 				<div class="form-group row">
-					<label for="exampleSelect" class="col-sm-3 form-control-label">ปีการศึกษา</label>
-					<div class="col-sm-5">
-						<select id="SelectYearList"  [(ngModel)]="currentAcademicYear" (change)="GetRadarPlotNewSearch($event.target.value)" class="form-control">
+					<label for="exampleSelect" class="col-sm-2 form-control-label">ปีการศึกษา</label>
+					<div class="col-sm-2">
+						<select id="SelectYearList" [(ngModel)]="currentAcademicYear" (ngModelChange)="changeRound()" class="form-control">
 							<option *ngFor="let a of profile.academicYearList " [value]="a.name" >{{a.name}}</option>
+						</select>
+					</div>
+
+					<label for="exampleSelect2" class="col-sm-2 form-control-label" *ngIf="evaluateRoundList">รอบ</label >      
+					<div class="col-sm-2" *ngIf="evaluateRoundList">
+						<select id="exampleSelect2" class="form-control"  [(ngModel)]="evaluateRoundValue"  (ngModelChange)="changeRound()" >
+								<option *ngFor="let item of evaluateRoundList;"  [value]="item.name"  >{{item.name}}</option>
 						</select>
 					</div>
 				</div>
@@ -122,7 +129,7 @@
 
 
 			<div class="friends-list stripped" *ngFor="let item of messageList; let i = index ">
-				<article class="friends-list-item" *ngIf="i < 7 && item.statusMessage !='0' ">
+				<article class="friends-list-item" *ngIf="i < 7  ">
 					<div class="user-card-row" >
 						<div class="tbl-row">
 							<div class="tbl-cell">
@@ -138,8 +145,8 @@
 				
 			</div>
 
-			<div class="see-all" *ngIf="messageList.length >= 7">
-				<a href="#/notificationsList">See All ( {{ totalMessage - 7 }} )</a>
+			<div class="see-all" *ngIf="messageList.length ">
+				<a href="#/notificationsList">See All ( {{ totalMessage  }} )</a>
 			</div>
 
 		</section>
@@ -169,10 +176,11 @@
 									{{i+1}}&nbsp;{{item.axisName}}
 								</td>
 								<td class="text-center">
-									{{item.axisValue }}
+									{{item.axisValue2}}
 								</td>
 								<td class="text-center">
-									{{item.axisValue2}}
+									
+									{{item.axisValue }}
 								</td>
 
 							</tr>
@@ -183,11 +191,12 @@
 									<h5><b>รวม</b></h5>
 								</td>
 								<td class="text-center">
-									<h5><b>{{sumasix }}</b></h5>
+									<h5><b>{{sumasix2 }}</b></h5>
 
 								</td>
 								<td class="text-center">
-									<h5><b>{{sumasix2 }}</b></h5>
+									<h5><b>{{sumasix }}</b></h5>
+									
 
 								</td>
 							</tr>
@@ -228,6 +237,7 @@
 						<div ng-if="!updateImg" class="row" *ngFor="let item of uploader.queue; let i = index ">
 							<div class="col-md-12">
 								<div class="text-center">
+									
 									<img src="" imgPreview [image]="item?._file" style="width:300px;padding:10px;" />
 								</div>
 							</div>
@@ -296,7 +306,7 @@
 					<div class="row">
 
 						<div class="col-md-12" *ngIf="imgUpload">
-
+							*ขนาดไม่เกิน 1MB เป็นต้น
 							<input type="file" class="form-control" ng2FileSelect [uploader]="uploader" (change)="changeUpload()" /><br/>
 						</div>
 					</div>

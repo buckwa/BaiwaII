@@ -2,16 +2,22 @@
     <div class="col-lg-12 col-md-12 box-typical box-typical-padding">
 
 
-        <label for="exampleSelect" class="col-sm-1 form-control-label">ปีการศึกษา</label>
-        <div class="col-sm-2">
+        <label for="exampleSelect" class="col-md-1 form-control-label">ปีการศึกษา</label>
+        <div class="col-md-1">
             <select id="exampleSelect" class="form-control"  [(ngModel)]="currentAcademicYear" #academic (change)="changeYear(academic.value)" >
 			        <option *ngFor="let item of academicYearList;"  [value]="item.name"  >{{item.name}}</option>
+			</select>
+        </div>
+        <label for="exampleSelect2" class="col-md-1 form-control-label" *ngIf="evaluateRoundList">รอบ</label >      
+        <div class="col-md-1" *ngIf="evaluateRoundList">
+            <select id="exampleSelect2" class="form-control"  [(ngModel)]="evaluateRoundValue"  (ngModelChange)="changeRound()" >
+			        <option *ngFor="let item of evaluateRoundList;"  [value]="item.name"  >{{item.name}}</option>
 			</select>
         </div>
 
         <div class="col-sm-4 text-center ">สถานะ : <img width="25px" src="/PBP3/baiwa/libs/img/wait.png" /> รออนุมัติ &nbsp;<img width="25px" src="/PBP3/baiwa/libs/img/co_wait.png"
             />&nbsp; รออนุมัติสอนร่วม &nbsp; <img width="25px" src="/PBP3/baiwa/libs/img/sucess.png" />&nbsp;อนุมัติ </div>
-        <div class="col-sm-5 text-center"><b>ช่องทาง</b>: A&nbsp;:นำเข้าอัตโนมัติจากสำนักทะเบียน&nbsp; M:นำเข้าเอง</div>
+        <div class="col-sm-4 text-center"><b>ช่องทาง</b>: A&nbsp;:นำเข้าอัตโนมัติจากสำนักทะเบียน&nbsp; M:นำเข้าเอง</div>
 
     </div>
 </div>
@@ -101,14 +107,16 @@
                             <td width="12%">
                                 <div class="text-center">{{item2.fromSourceText}}&nbsp;|
                                     <img width="25px" [hidden]="item2.status !='APPROVED' " src="/PBP3/baiwa/libs/img/sucess.png" />
-                                    <img width="25px" [hidden]="item2.status =='APPROVED' " src="/PBP3/baiwa/libs/img/wait.png" />
+                                    <img width="25px" [hidden]="item2.status !='CREATE_CO_TEACH' " src="/PBP3/baiwa/libs/img/co_wait.png" />
+                                    <img width="25px" [hidden]="item2.status !='CREATE' " src="/PBP3/baiwa/libs/img/wait.png" />
                                 </div>
                             </td>
                             <td width="6%">
                                 <div class="text-center">{{kpival[i][j]}}</div>
                             </td>
                             <td width="14%">
-                                <div class="text-center">{{item2.totalInMapping}}|<b><span style="color:green;">{{item2.totalInMapping}}</span></b></div>
+                                <div class="text-center" [hidden]="item2.status !='APPROVED' " >{{item2.totalInMapping}}|<b><span style="color:green;">{{item2.totalInMapping}}</span></b></div>
+                                <div class="text-center"  [hidden]="item2.status =='APPROVED' " >{{item2.totalInMapping}}|<b><span style="color:red;">0.00</span></b></div>
                             </td>
                              <td [attr.rowspan]="kpiuserList[i].length" *ngIf="j==0" style="vertical-align:top">{{item1.totalInWorkType}}</td>
                             
@@ -154,7 +162,7 @@
                             <div class="form-group row" style="margin-bottom: 2px;">
                                 <label class="col-sm-3 form-control-label">คะแนน KPI:</label>
                                 <div class="col-sm-9">
-                                    <p class="form-control-static">{{mark}} คะแนน/ {{pointKPI.academicKPI.unitDesc}}"</p>
+                                    <p class="form-control-static">{{mark}} คะแนน/ {{pointKPI.academicKPI.unitDesc}}</p>
                                 </div>
                             </div>
 
@@ -162,12 +170,18 @@
                             <div class="form-group row" style="margin-bottom: 2px;" *ngFor="let a of pointLPIList ">
                                 <label class="col-sm-3 form-control-label">{{a.name}}</label>
                                 <div class="col-sm-9">
-                                    <p class="form-control-static"><input type="text" [ngModelOptions]="{standalone: true}" name="{{a.name}}" [(ngModel)]="a.value"
+
+                                    <p class="form-control-static" *ngIf="statusKpi" ><input type="text" [ngModelOptions]="{standalone: true}" name="{{a.name}}" [(ngModel)]="a.value"
                                             class="form-control" id="inputPassword" value="{{a.value}}" placeholder="{{a.name}}"
-                                            required="required" readOnly="true"></p>
+                                            required="required" readOnly="true" ></p>
+                                    <p class="form-control-static"  *ngIf="!statusKpi" ><input type="text" [ngModelOptions]="{standalone: true}" name="{{a.name}}" [(ngModel)]="a.value"
+                                            class="form-control" id="inputPassword" value="{{a.value}}" placeholder="{{a.name}}"
+                                            required="required" ></p>
                                     <!--{{item.name}}-->
                                 </div>
                             </div>
+
+
 
                             <div class="form-group row" style="margin-bottom: 2px;">
                                 <label class="col-sm-3 form-control-label">ตัวคูณ</label>
@@ -176,7 +190,14 @@
                                 </div>
                             </div>
 
-
+				<div class="form-group row" style="margin-bottom: 2px;" *ngIf="!statusKpi">
+						<label class="col-sm-3 form-control-label"></label>
+						<div class="col-sm-9 text-center ">
+								
+							<button  type="submit" class="btn " (click)=" clickedEditImport()" >บันทึก</button>
+                            <button  type="submit" class="btn  btn-danger" (click)=" clickedDeteleImport()" >ลบ</button>
+						</div>
+					</div>
 
 
                         </div>
@@ -287,6 +308,53 @@
 
 
                         </div>
+
+
+
+
+                        <div class="row"  *ngIf="!statusKpi" >
+                            <div class="col-md-12">
+                                <div class="line"></div>
+                                <h5 style="    margin-bottom: 10px;"> ข้อความ :</h5>
+
+                                <section class="chat-area">
+                                    <div class="chat-dialog-area scrollable-block">
+
+                                        <div class="chat-message" *ngFor="let item of messageList" >
+                                           
+                                            <div class="chat-message-photo">
+                                                <img src="/PBP3/baiwa/libs/img/avatar-2-64.png" alt="">
+                                            </div>
+                                            <div class="chat-message-header">
+                                                <div class="tbl-row">
+                                                    <div class="tbl-cell tbl-cell-name">{{item.createBy}}</div>
+                                                    <div class="tbl-cell tbl-cell-date">{{item.createDateTimeStr}}</div>
+                                                </div>
+                                            </div>
+                                            <div class="chat-message-content">
+                                                <div class="chat-message-txt">{{item.messageDetail}}</div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <!--.chat-dialog-area-->
+
+                                </section>
+                                <!--.chat-area-->
+
+                                <div class="chat-area-bottom">
+                                    <form class="write-message">
+                                        <div class="form-group">
+                                            <textarea rows="1" [(ngModel)]="replyMessage" name="replyMessage" class="form-control" placeholder="Type a message" ></textarea>
+                                            <button type="submit" (click)="sentReplyPBPMessage()" class="btn btn-rounded">ส่ง</button>
+                                        </div>
+                                    </form>
+                                </div>
+                                <!--.chat-area-bottom-->
+
+                            </div>
+                        </div>
+
 
                     </div>
                 </div>

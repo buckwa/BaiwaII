@@ -29,6 +29,8 @@ export class home implements OnInit, AfterViewInit {
     public imgUpload: boolean;
     public updateImg: boolean;
     public imageProfilePath: any;
+    public evaluateRoundList: any;
+    public evaluateRoundValue: any;
     sanitizedUrl;
     tmpUrl;
     public messageList: any[];
@@ -50,7 +52,9 @@ export class home implements OnInit, AfterViewInit {
         this.GetUserSession();
 
         this.uploader.queue;
-
+        
+        
+        
         this.uploader.onBuildItemForm = (fileItem: any, form: any) => {
 
             console.log("PersonId :" + this.personId);
@@ -130,18 +134,35 @@ export class home implements OnInit, AfterViewInit {
         this.getImageLocal(this.profile.personId);
         this.getMessage();
         this.countMessage();
+        
+        this.evaluateRoundValue = this.profile.evaluateRound;
+
+        if (this.profile.employeeType == 'ข้าราชการ') {
+            this.evaluateRoundList = this.profile.evaluateRoundList;
+            
+        }
 
     }
     public GetPersonError(error: String) {
         console.log("GetPersonError.")
 
     }
+
+
     public GetRadarPlotNewSearch(year: String) {
-        this.GetRadarPlotNew(this.user.userName, year, this.profile.evaluateRound);
+        this.GetRadarPlotNew(this.user.userName, year, this.evaluateRoundValue);
         this.currentAcademicYear = year;
     }
+
+    public changeRound() {
+
+        this.GetRadarPlotNew(this.user.userName, this.currentAcademicYear , this.evaluateRoundValue);
+
+    }
+
+
     public GetRadarPlot() {
-        this.GetRadarPlotNew(this.user.userName, this.currentAcademicYear, this.profile.evaluateRound);
+        this.GetRadarPlotNew(this.user.userName, this.currentAcademicYear, this.evaluateRoundValue);
     }
     public GetRadarPlotNew(user: String, year: String, num: String) {
         var url = "../person/getRadarPlotNew/" + user + "/" + year + "/" + num;
@@ -171,7 +192,7 @@ export class home implements OnInit, AfterViewInit {
         }
 
 
-        setTimeout(() => this.GetRadarPlotNew(this.user.userName, this.currentAcademicYear, this.profile.evaluateRound), 250);
+        setTimeout(() => this.GetRadarPlotNew(this.user.userName, this.currentAcademicYear, this.evaluateRoundValue), 250);
 
 
     }
@@ -250,12 +271,23 @@ export class home implements OnInit, AfterViewInit {
     }
 
     public UploadPicture(item: any) {
-        item.upload();
-        if (!item.isSuccess) {
+        
+        //2436579
+        var size =item.file.size;
+        if(size < 1000000){
+            item.upload();
+             if (!item.isSuccess) {
             jQuery("#myModal").modal('hide');
             //this.getImageLocal(this.personId);
+              console.log("uploadsucess");
             window.location.reload();
+             }else{
+             console.log("uploadFali");
         }
+        }else{
+            alert("ไม่สามารถ อัพโหลดรูปภาพได้ เนื่องจากมีขนาดไฟล์ มากกว่า 1 MB");
+        }
+       
         //this.uploader.clearQueue()
         console.log("uploadsucess");
     }
@@ -336,7 +368,7 @@ export class home implements OnInit, AfterViewInit {
         var url = "../person/getUserMassage";
 
         this.http.post(url, this.profile).subscribe(response => this.GetMessageSucess(response),
-            error => this.GetPersonError(error), () => console.log("editdone !")
+            error => this.ErrorMessage(error), () => console.log("editdone !")
         );
 
     }
@@ -347,12 +379,17 @@ export class home implements OnInit, AfterViewInit {
     countMessage() {
         var url = "../person/countMessage";
         this.http.get(url).subscribe(response => this.countMessageSucess(response),
-            error => this.GetPersonError(error), () => console.log("editdone !")
+            error => this.ErrorMessage(error), () => console.log("editdone !")
         );
 
     }
     countMessageSucess(response: any) {
         this.totalMessage = response.json(JSON.stringify(response._body));
+
+    }
+
+    ErrorMessage(response: any ){
+        console.log("Error :"+response)
 
     }
 

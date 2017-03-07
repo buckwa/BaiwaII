@@ -70,7 +70,7 @@ var AcademicWork = (function () {
         this.academicYearList = this.user.academicYearList;
         this.currentAcademicYear = this.user.currentAcademicYear;
         this.GetPersonByAcadamy(this.user.userName, this.user.currentAcademicYear);
-        setTimeout(function () { return _this.GetAcademicWork(_this.user.userName, _this.currentAcademicYear, _this.profile.evaluateRound); }, 250);
+        setTimeout(function () { return _this.GetAcademicWork(_this.user.userName, _this.currentAcademicYear, _this.evaluateRoundValue); }, 250);
     };
     AcademicWork.prototype.GetUserSessionError = function (error) {
         console.log("GetPersonError.");
@@ -97,11 +97,12 @@ var AcademicWork = (function () {
         this.uploader.clearQueue();
         this.mark = mark;
         this.codeKpi = Code;
-        var url = "../person/getImportWork/" + Code;
+        var url = "../person/getImportWorkNew/" + Code;
         return this.http.get(url).subscribe(function (response) { return _this.GetKPISucess(response); }, function (error) { return _this.GetUserSessionError(error); }, function () { return console.log("editdoneUser !"); });
     };
     AcademicWork.prototype.GetKPISucess = function (response) {
-        this.pointKPI = response.json(JSON.stringify(response._body));
+        this.Model = response.json(JSON.stringify(response._body));
+        this.pointKPI = this.Model.academicKPIUserMapping;
         this.pointLPIList = this.pointKPI.academicKPIAttributeValueList;
         this.fileWork = this.pointKPI.academicKPIAttachFileList;
         if (this.fileWork.length == 0) {
@@ -116,6 +117,9 @@ var AcademicWork = (function () {
         }
         else {
             this.statusKpi = false;
+        }
+        if (this.pointKPI.messageList != null && this.pointKPI.status != "APPROVED") {
+            this.messageList = this.pointKPI.messageList;
         }
     };
     AcademicWork.prototype.mapKpi = function () {
@@ -210,12 +214,83 @@ var AcademicWork = (function () {
     };
     AcademicWork.prototype.GetPersonSucess = function (response) {
         this.profile = response.json(JSON.stringify(response._body));
+        this.evaluateRoundValue = this.profile.evaluateRound;
+        if (this.profile.employeeType == 'ข้าราชการ') {
+            this.evaluateRoundList = this.profile.evaluateRoundList;
+        }
     };
     AcademicWork.prototype.GetPersonError = function (error) {
         console.log("GetPersonError.");
     };
     AcademicWork.prototype.changeYear = function (year) {
-        this.GetAcademicWork(this.user.userName, year, this.profile.evaluateRound);
+        this.GetAcademicWork(this.user.userName, year, this.evaluateRoundValue);
+    };
+    AcademicWork.prototype.changeRound = function () {
+        this.GetAcademicWork(this.user.userName, this.currentAcademicYear, this.evaluateRoundValue);
+    };
+    AcademicWork.prototype.sentReplyPBPMessage = function () {
+        var _this = this;
+        if (this.replyMessage != null) {
+            this.Model.replyMessage = this.replyMessage;
+            var url = "../head/pbp/replyMessage"; //ติดไว้ก่อน
+            this.http.post(url, this.Model).subscribe(function (response) { return _this.ReplyPBPMessageSucess(response); }, function (error) { return _this.ReplyPBPMessageError(error); }, function () { return console.log("AdminUserCreate : Success saveUser !"); });
+        }
+    };
+    AcademicWork.prototype.ReplyPBPMessageSucess = function (response) {
+        var temp = response.json(JSON.stringify(response._body));
+        this.ClickGetPointKPINew(this.codeKpi, this.mark);
+    };
+    AcademicWork.prototype.ReplyPBPMessageError = function (response) {
+        console.log("Error!");
+    };
+    AcademicWork.prototype.ClickGetPointKPINew = function (Code, indexKPI) {
+        var _this = this;
+        this.mark = indexKPI;
+        var url = "../person/getImportWorkNew/" + Code;
+        return this.http.get(url).subscribe(function (response) { return _this.GetKPISucessNew(response); }, function (error) { return _this.ReplyPBPMessageError(error); }, function () { return console.log("editdoneUser !"); });
+    };
+    AcademicWork.prototype.GetKPISucessNew = function (response) {
+        this.Model = response.json(JSON.stringify(response._body));
+        this.pointKPI = this.Model.academicKPIUserMapping;
+        if (this.pointKPI.messageList != null) {
+            this.messageList = this.pointKPI.messageList;
+        }
+    };
+    AcademicWork.prototype.clickedDeteleImport = function () {
+        this.commonService.confirm("Are you sure you want to delete?", jQuery.proxy(function (isOk) {
+            var _this = this;
+            if (isOk) {
+                //action 
+                var url = "../pam/person/deleteImportWork/" + this.codeKpi;
+                return this.http.get(url).subscribe(function (response) { return _this.GetSSDeteleImport(response); }, function (error) { return _this.GetERRDeteleImport(error); }, function () { return console.log("editdoneUser !"); });
+            }
+        }, this));
+    };
+    AcademicWork.prototype.GetSSDeteleImport = function (response) {
+        this.result = response.json(JSON.stringify(response._body));
+        location.reload();
+    };
+    AcademicWork.prototype.GetERRDeteleImport = function (response) {
+        console.log("Error!");
+    };
+    AcademicWork.prototype.clickedEditImport = function () {
+        var _this = this;
+        this.Model.academicKPIAttributeValueList = this.pointLPIList;
+        var url = "../pam/person/editImportwork";
+        this.http.post(url, this.Model).subscribe(function (response) { return _this.EditSuccess(response); }, function (error) { return _this.EditError(error); }, function () { return console.log("AdminUserCreate : Success saveUser !"); });
+    };
+    AcademicWork.prototype.EditSuccess = function (response) {
+        this.result = response.json(JSON.stringify(response._body));
+        if (this.result.status == 'S001') {
+            alert("Success !");
+            location.reload();
+        }
+        else {
+            alert("Error !");
+        }
+    };
+    AcademicWork.prototype.EditError = function (response) {
+        alert("Error !");
     };
     AcademicWork = __decorate([
         core_1.Component({

@@ -64,7 +64,7 @@ public class HeadApproveSummaryDao  {
 		HeadApp.setIs_approve(domain.getStatus());//มี
 		HeadApp.setIs_from_reg("N"); 
 		HeadApp.setWork_name(domain.getWork_name());//มี
-		
+		HeadApp.setWork_type_code(domain.getWorkTypeCode());//มี
 		KeyHolder keyHolder = new GeneratedKeyHolder(); 		
 		jdbcTemplate.update(new PreparedStatementCreator() {  
 			public PreparedStatement createPreparedStatement(Connection connection)throws SQLException {  
@@ -83,8 +83,9 @@ public class HeadApproveSummaryDao  {
 						"  full_name,  " +
 						"  is_approve,  " +
 						"  is_from_reg,   " +
-						"  work_name)  " +
-						"  VALUES (?, ?, ?, ?, ?, ?,?, ?,?, ?, ?,?, ?, ? )  " +
+						"  work_name,  " +
+						"  work_type_code)  " +
+						"  VALUES (?, ?, ?, ?, ?, ?,?, ?,?, ?, ?,?, ?, ? , ?)  " +
 					 "", Statement.RETURN_GENERATED_KEYS);   
 				ps.setString(1, HeadApp.getAcademic_year());
 				ps.setString(2, HeadApp.getFac_code()); 
@@ -100,6 +101,7 @@ public class HeadApproveSummaryDao  {
 				ps.setString(12, HeadApp.getIs_approve());
 				ps.setString(13, HeadApp.getIs_from_reg());
 				ps.setString(14, HeadApp.getWork_name());
+				ps.setString(15, HeadApp.getWork_type_code());
 				return ps;  
 				}
 			}, 	keyHolder); 	

@@ -18,10 +18,19 @@ public class HeadApproveSummary {
 	String is_approve;
 	String is_from_reg;
 	String work_name;
-	
+	String work_type_code;
 	int total_A;
+
 	int total_C;
 	
+	
+	
+	public String getWork_type_code() {
+		return work_type_code;
+	}
+	public void setWork_type_code(String work_type_code) {
+		this.work_type_code = work_type_code;
+	}
 
 	public int getTotal_A() {
 		return total_A;

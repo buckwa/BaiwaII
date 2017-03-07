@@ -275,15 +275,15 @@ public class AcademicKPIDaoImpl implements AcademicKPIDao {
 					StringBuilder sql_a = new StringBuilder();
 					sql_a.append(" SELECT COUNT(approve_summary_id)   ");
 					sql_a.append(" FROM head_approve_summary  ");
-					sql_a.append("  WHERE is_approve = 'APPROVED' AND kpi_id = "+headApps.getKpi_id()+" ");
+					sql_a.append("  WHERE is_approve = 'APPROVED' AND kpi_id = '"+headApps.getKpi_id()+"' ");
 
 					int total = this.jdbcTemplate.queryForObject(sql_a.toString(), Integer.class);	
 					logger.info("Total Appover  Sql:"+ total);
 					headApps.setTotal_A(total);
 					
 					StringBuilder sql_co = new StringBuilder();
-					sql_co.append(" SELECT  COUNT(1) AS total ");
-					sql_co.append(" FROM academic_kpi_user_mapping ");
+					sql_co.append(" SELECT COUNT(approve_summary_id) ");
+					sql_co.append(" FROM head_approve_summary ");
 					sql_co.append(" WHERE is_approve != 'APPROVED' AND kpi_id = "+headApps.getKpi_id()+" ");
 
 					total = this.jdbcTemplate.queryForObject(sql_co.toString(), Integer.class);	

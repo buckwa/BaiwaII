@@ -622,28 +622,35 @@ public class HeadDaoImpl implements HeadDao {
 				
 				StringBuilder kpiMapping = new StringBuilder();
 				
-				
-				kpiMapping.append(" SELECT  academic_kpi_user_mapping.* ");
-				kpiMapping.append("  , person_pbp.thai_name,  person_pbp.thai_surname ");
-				kpiMapping.append(" FROM academic_kpi_user_mapping ");
-				kpiMapping.append(" INNER JOIN academic_kpi ");
-				kpiMapping.append(" ON academic_kpi.academic_kpi_id = academic_kpi_user_mapping.academic_kpi_id  ");
-				kpiMapping.append(" INNER JOIN person_pbp ");
-				kpiMapping.append(" ON academic_kpi_user_mapping.user_name = person_pbp.email ");
-				kpiMapping.append(" WHERE academic_kpi.academic_year = '"+academicYear+"' ");		
-				kpiMapping.append(" AND academic_kpi_user_mapping.create_date BETWEEN '"+startTimeStamp+"' AND '"+endTimeStamp+"' ");	
-				kpiMapping.append(" AND academic_kpi_user_mapping.academic_year =   '"+academicYear+"' ");
-				kpiMapping.append(" AND person_pbp.academic_year =   '"+academicYear+"' ");
-				kpiMapping.append(" AND department_desc =   '"+department_desc+"' ");
-				kpiMapping.append(" AND academic_kpi.faculty_code = '"+facultyCode+"' ");
 				if("A".equalsIgnoreCase(status)){
-					kpiMapping.append(" AND academic_kpi_user_mapping.status = 'APPROVED' ");
+					kpiMapping.append(" SELECT * FROM head_approve_summary   WHERE is_approve = 'APPROVED' AND kpi_id = '"+code+"'  ");
 				}else{
-					kpiMapping.append(" AND academic_kpi_user_mapping.status != 'APPROVED' ");
+					kpiMapping.append(" SELECT * FROM head_approve_summary   WHERE is_approve != 'APPROVED' AND kpi_id = '"+code+"'  ");
 				}
+		
 				
-				kpiMapping.append(" AND academic_kpi_user_mapping.academic_kpi_id = '"+code+"' ");
-
+//				kpiMapping.append(" SELECT  academic_kpi_user_mapping.* ");
+//				kpiMapping.append("  , person_pbp.thai_name,  person_pbp.thai_surname ");
+//				kpiMapping.append(" FROM academic_kpi_user_mapping ");
+//				kpiMapping.append(" INNER JOIN academic_kpi ");
+//				kpiMapping.append(" ON academic_kpi.academic_kpi_id = academic_kpi_user_mapping.academic_kpi_id  ");
+//				kpiMapping.append(" INNER JOIN person_pbp ");
+//				kpiMapping.append(" ON academic_kpi_user_mapping.user_name = person_pbp.email ");
+//				kpiMapping.append(" WHERE academic_kpi.academic_year = '"+academicYear+"' ");		
+//				kpiMapping.append(" AND academic_kpi_user_mapping.create_date BETWEEN '"+startTimeStamp+"' AND '"+endTimeStamp+"' ");	
+//				kpiMapping.append(" AND academic_kpi_user_mapping.academic_year =   '"+academicYear+"' ");
+//				kpiMapping.append(" AND person_pbp.academic_year =   '"+academicYear+"' ");
+//				kpiMapping.append(" AND department_desc =   '"+department_desc+"' ");
+//				kpiMapping.append(" AND academic_kpi.faculty_code = '"+facultyCode+"' ");
+//				if("A".equalsIgnoreCase(status)){
+//					kpiMapping.append(" AND academic_kpi_user_mapping.status = 'APPROVED' ");
+//				}else{
+//					kpiMapping.append(" AND academic_kpi_user_mapping.status != 'APPROVED' ");
+//				}
+//				
+//				kpiMapping.append(" AND academic_kpi_user_mapping.academic_kpi_id = '"+code+"' ");
+//
+//				
 				
 				logger.info("  getByHeadAcademicYear kpiMapping:"+kpiMapping.toString());
 				List<AcademicKPIUserMapping> academicKPIUserMappingList  = this.jdbcTemplate.query(kpiMapping.toString(),	new AcademicKPIUserMappingMapperNew() );
@@ -1637,14 +1644,13 @@ public class HeadDaoImpl implements HeadDao {
         	
         	
         	domain.setKpiUserMappingId(rs.getLong("kpi_user_mapping_id"));
-        	domain.setAcademicKPIId(rs.getLong("academic_kpi_id"));
-			domain.setName(rs.getString("name"));		 
+        	domain.setAcademicKPIId(rs.getLong("kpi_id"));
+			domain.setName(rs.getString("full_name"));		 
 			domain.setWorkTypeCode(rs.getString("work_type_code"));  
 			domain.setAcademicYear(rs.getString("academic_year"));
-			domain.setAcademicKPICode(rs.getString("academic_kpi_code"));
-			domain.setStatus(rs.getString("status"));
-			domain.setThaiName(rs.getString("thai_name"));
-			domain.setThaiSurname(rs.getString("thai_surname"));
+			domain.setStatus(rs.getString("is_approve"));
+//			domain.setThaiName(rs.getString("full_name"));
+			//domain.setThaiSurname(rs.getString("thai_surname"));
 		 
 		return domain;
     }

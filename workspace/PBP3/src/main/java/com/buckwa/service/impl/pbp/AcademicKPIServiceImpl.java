@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.buckwa.dao.impl.pbp.HeadApproveSummaryDao;
 import com.buckwa.dao.intf.pbp.AcademicKPIDao;
 import com.buckwa.domain.common.BuckWaRequest;
 import com.buckwa.domain.common.BuckWaResponse;
@@ -35,6 +36,9 @@ public class AcademicKPIServiceImpl implements AcademicKPIService {
 	
 	@Autowired
 	private FileLocationService fileLocationService;
+	
+	@Autowired
+	private HeadApproveSummaryDao headApproveSummaryDao;
 	
 	@Autowired
     private PathUtil pathUtil;
@@ -244,6 +248,30 @@ public class AcademicKPIServiceImpl implements AcademicKPIService {
 	}
 	
 	
+	@Override	
+	public BuckWaResponse getByAcademicYearWork2(BuckWaRequest request) {
+		BuckWaResponse response = new BuckWaResponse();
+		try{				 
+			
+			String academicYear = (String)request.get("academicYear");
+			String workTypeCode = (String)request.get("workTypeCode");
+			String facultyCode = (String)request.get("facultyCode");
+			String department_desc = (String)request.get("department_desc");
+
+			AcademicKPIWrapper academicKPIWrapper= ( AcademicKPIWrapper)academicKPIDao.getByAcademicYearWorkTypeCodeFacultyCodeByinitApprove(academicYear,workTypeCode,facultyCode,department_desc);
+		 
+			 response.addResponse("academicKPIWrapper",academicKPIWrapper);
+ 	
+		}catch(Exception ex){
+			ex.printStackTrace();
+			response.setStatus(BuckWaConstants.FAIL);
+			response.setErrorCode("E001");			
+		}
+	 
+		return response;
+	}
+	
+	
 	@Override
 	@Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW)
 	public BuckWaResponse create(BuckWaRequest request) {
@@ -280,6 +308,9 @@ public class AcademicKPIServiceImpl implements AcademicKPIService {
 			AcademicKPIUserMapping academicKPIUserMapping = (AcademicKPIUserMapping) request.get("academicKPIUserMapping");
 
 			Long academicKPIId = academicKPIDao.importwork(academicKPIUserMapping);
+			
+			headApproveSummaryDao.HeadApproveInsert(academicKPIUserMapping,academicKPIId.intValue());
+			
 			response.addResponse("academicKPIId", academicKPIId);
 			response.setSuccessCode(BuckWaConstants.MSGCODE_IMPORT_SUCESS);
 

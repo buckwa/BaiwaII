@@ -31,38 +31,38 @@ public class PersonDetailService {
 		
 		return userSession;
 	}
-	public List<Message> getMessageByUser(String username){
+	public List<Message> getMessageByUser(String username, String year){
 		List<Message> messagelist = new ArrayList<>();
 		
-		messagelist = personDetialDao.getMessageByUser(username);
+		messagelist = personDetialDao.getMessageByUser(username,year);
 		
 		return messagelist;
 		
 	}
-	public List<Message> getMessageByKPIId(String username, String kpiId){
+	public List<Message> getMessageByKPIId(String username, String kpiId, String year){
 		List<Message> messagelist = new ArrayList<>();
 		
-		messagelist = personDetialDao.getMessageByKPIId(username,kpiId);
+		messagelist = personDetialDao.getMessageByKPIId(username,kpiId,year);
 		
 		return messagelist;
 	}
-	public List<Message> getMessageByHead(String username,String Department){
+	public List<Message> getMessageByHead(String username,String Department,String year){
 		List<Message> messagelist = new ArrayList<>();
 		System.out.println("GetMessageByHead is " +username+" and department is"+ Department );
 		
-		messagelist = personDetialDao.getMessageByHead(username,Department);
+		messagelist = personDetialDao.getMessageByHead(username,Department,year);
 		
 		return messagelist;
 	}
-	public int countMessage (String criteria){
-		int totaMessage = personDetialDao.countMessage(criteria);
+	public int countMessage (String criteria, String year){
+		int totaMessage = personDetialDao.countMessage(criteria,year);
 		return totaMessage;
 	}
 	
-	public List<Message> getMessageByHeadAll(PagingMessage request){
+	public List<Message> getMessageByHeadAll(PagingMessage request, String year){
 		List<Message> messagelist = new ArrayList<>();
 		
-		messagelist = personDetialDao.getMessageByHeadAll(request);
+		messagelist = personDetialDao.getMessageByHeadAll(request,year);
 		
 		return messagelist;
 		

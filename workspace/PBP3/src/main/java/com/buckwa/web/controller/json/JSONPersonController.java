@@ -1098,7 +1098,11 @@ public class JSONPersonController {
 
 			// String userName = BuckWaUtils.getUserNameFromContext();
 			String academicYear = schoolUtil.getCurrentAcademicYear();
-
+			String FacultyC = UserLoginUtil.getCurrentFacultyCode();
+			String FacultyN = UserLoginUtil.getCurrentFacultyName();
+			String dep_Code = UserLoginUtil.getCurrentDepartmentCode();
+			String dep_name = UserLoginUtil.getCurrentDepartmentName();
+			String thaiName = UserLoginUtil.getCurrentFullThaiName();
 			AcademicKPIUserMapping academicKPIUserMapping = new AcademicKPIUserMapping();
 			academicKPIUserMapping.setUserName(UserLoginUtil.getCurrentUserLogin());
 			academicKPIUserMapping.setAcademicYear(academicYear);
@@ -1107,7 +1111,12 @@ public class JSONPersonController {
 			academicKPIUserMapping.setWorkTypeCode(academicKPI.getWorkTypeCode());
 			academicKPIUserMapping.setName(academicKPI.getName());
 			academicKPIUserMapping.setRatio(academicKPI.getRatio());
-
+			academicKPIUserMapping.setFac_code(FacultyC);
+			academicKPIUserMapping.setFac_name(FacultyN);
+			academicKPIUserMapping.setDep_code(dep_Code);
+			academicKPIUserMapping.setDep_name(dep_name);
+			academicKPIUserMapping.setThaiName(thaiName);
+			
 			List<AcademicKPIAttribute> academicKPIAttributeList = academicKPI.getAcademicKPIAttributeList();
 
 			List<AcademicKPIAttributeValue> academicKPIAttributeValueList = new ArrayList<AcademicKPIAttributeValue>();
@@ -1125,7 +1134,8 @@ public class JSONPersonController {
 				// value:"+tmp.getValue());
 				academicKPIAttributeValueList.add(valueTmp);
 			}
-
+			academicKPIUserMapping.setWork_name(academicKPIAttributeList.get(0).getValue());
+			
 			academicKPIUserMapping.setAcademicKPIAttributeValueList(academicKPIAttributeValueList);
 
 			academicKPIUserMapping.setStatus("CREATE");
@@ -1657,14 +1667,15 @@ public class JSONPersonController {
 		try {
 			Boolean role = UserLoginUtil.isRole(BuckWaConstants.ROLE_HEAD);
 			String user = UserLoginUtil.getCurrentUserLogin();
+			String year = UserLoginUtil.getCurrentAcademicYear();
 			//String facultyCode = UserLoginUtil.getCurrentFacultyCode();
 			String department = UserLoginUtil.getCurrentDepartmentCode();
 			if (role){
 				logger.info("UserMessage is Role : "+ BuckWaConstants.ROLE_HEAD);
-				messagelist = personDetailService.getMessageByHead(user,request.getDepartmentDesc());
+				messagelist = personDetailService.getMessageByHead(user,request.getDepartmentDesc(),year);
 				
 			}else {
-				messagelist = personDetailService.getMessageByUser(user);
+				messagelist = personDetailService.getMessageByUser(user,year);
 				
 			}
 			
@@ -1686,9 +1697,9 @@ public class JSONPersonController {
 			logger.info(" getUserSession ");
 			// getUsername login.
 			String user = UserLoginUtil.getCurrentUserLogin();
-
+			String year = UserLoginUtil.getCurrentAcademicYear();
 			//System.out.println("  :" + user+" and FacultyCode :" +facultyCode +" AcademicYear :" +UserLoginUtil.getCurrentAcademicYear()+ " DepartmentCode :"+UserLoginUtil.getCurrentDepartmentCode()+" FacultyName: "+UserLoginUtil.getCurrentFacultyName()  );
-			messagelisg = personDetailService.getMessageByKPIId(user,kpi_mapping_id);
+			messagelisg = personDetailService.getMessageByKPIId(user,kpi_mapping_id,year);
 
 			
 		} catch (Exception ex) {
@@ -1742,14 +1753,15 @@ public class JSONPersonController {
 		try {
 			Boolean role = UserLoginUtil.isRole(BuckWaConstants.ROLE_HEAD);
 			String user = UserLoginUtil.getCurrentUserLogin();
+			String year = UserLoginUtil.getCurrentAcademicYear();
 			//String facultyCode = UserLoginUtil.getCurrentFacultyCode();
 			String department = UserLoginUtil.getCurrentDepartmentName();
 			if (role){
 				logger.info("UserMessage is Role : "+ BuckWaConstants.ROLE_HEAD);
-				totalMessage = personDetailService.countMessage(department);
+				totalMessage = personDetailService.countMessage(department,year);
 				
 			}else {
-				totalMessage = personDetailService.countMessage(user);
+				totalMessage = personDetailService.countMessage(user,year);
 				
 			}
 			
@@ -1768,6 +1780,7 @@ public class JSONPersonController {
 		try {
 			Boolean role = UserLoginUtil.isRole(BuckWaConstants.ROLE_HEAD);
 			String user = UserLoginUtil.getCurrentUserLogin();
+			String year = UserLoginUtil.getCurrentAcademicYear();
 			//String facultyCode = UserLoginUtil.getCurrentFacultyCode();
 			String department = UserLoginUtil.getCurrentDepartmentName();
 			PagingMessage request = new PagingMessage();
@@ -1778,10 +1791,10 @@ public class JSONPersonController {
 			System.out.println("Pageing "+ request.getPageStrart()+","+ request.getPageEnd());
 			if (role){
 				logger.info("UserMessage is Role : "+ BuckWaConstants.ROLE_HEAD);
-				messagelist = personDetailService.getMessageByHeadAll(request);
+				messagelist = personDetailService.getMessageByHeadAll(request,year);
 				
 			}else {
-				messagelist = personDetailService.getMessageByUser(user);
+				messagelist = personDetailService.getMessageByUser(user,year);
 				
 			}
 			

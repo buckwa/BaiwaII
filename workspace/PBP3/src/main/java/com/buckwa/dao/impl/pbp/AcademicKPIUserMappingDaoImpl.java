@@ -182,11 +182,13 @@ public class AcademicKPIUserMappingDaoImpl implements AcademicKPIUserMappingDao 
 	
 	@Override
 	public void approve( String id,String approveBy) {		 		
-		String sql =" update   academic_kpi_user_mapping set status='APPROVED',approve_by ='"+approveBy+"' , approve_date_time =CURRENT_TIMESTAMP  where kpi_user_mapping_id ="+id+"" ; 
+		String sql =" update   academic_kpi_user_mapping set status='APPROVED',approve_by ='"+approveBy+"'   where kpi_user_mapping_id ="+id+"" ; 
 		logger.info(" sql:"+sql);
 		this.jdbcTemplate.update(sql); 
 	 
-	  
+		String sql2 =" update   head_approve_summary set is_approve='APPROVED',approve_by ='"+approveBy+"'   where kpi_user_mapping_id ="+id+"" ; 
+		logger.info(" sql2:"+sql2);
+		this.jdbcTemplate.update(sql2); 
 	}
 	
 	@Override
@@ -200,6 +202,28 @@ public class AcademicKPIUserMappingDaoImpl implements AcademicKPIUserMappingDao 
 			this.jdbcTemplate.update(sql); 			
 		}
 
+	 
+	  
+	}
+	
+	@Override
+	public void update2( AcademicKPIUserMappingWrapper academicKPIUserMappingWrapper,String filename) {		 
+		
+		String Name ="";
+		String AcademicKPIMappingId ="";
+		List<AcademicKPIAttributeValue> academicKPIAttributeValueList =academicKPIUserMappingWrapper.getAcademicKPIUserMapping().getAcademicKPIAttributeValueList();
+		for(final AcademicKPIAttributeValue tmp:academicKPIAttributeValueList){
+			String sql =" update   academic_kpi_attribute_value set value='"+tmp.getValue()+"' where name ='"+tmp.getName()+"' and kpi_user_mapping_id ="+tmp.getAcademicKPIMappingId()+"" ; 
+			logger.info(" sql update :"+sql);
+			this.jdbcTemplate.update(sql); 
+			Name=tmp.getName();
+			AcademicKPIMappingId = tmp.getAcademicKPIMappingId().toString();
+		}
+
+			String sql2 =" update   head_approve_summary set work_name ='"+filename+"' where kpi_user_mapping_id ="+AcademicKPIMappingId+"" ; 
+			logger.info(" sql update :"+sql2);
+			this.jdbcTemplate.update(sql2); 			
+		
 	 
 	  
 	}
@@ -229,13 +253,16 @@ public class AcademicKPIUserMappingDaoImpl implements AcademicKPIUserMappingDao 
 		String sql =" delete from   academic_kpi_user_mapping   where kpi_user_mapping_id ="+id+"" ; 
 		String sqlAttributeValue =" delete from   academic_kpi_attribute_value   where kpi_user_mapping_id ="+id+"" ; 
 		String sqlAttachFile =" delete from   academic_kpi_attach_file   where academic_kpi_user_id ="+id+"" ; 
-
+		String sqlHeadApp =" delete from   head_approve_summary   where kpi_user_mapping_id ="+id+"" ; 
+		
 		logger.info(" sql:"+sql);
 		logger.info(" sqlAttributeValue:"+sqlAttributeValue);
 		logger.info(" sqlAttachFile:"+sqlAttachFile);
+		logger.info(" sqlHeadApp:"+sqlHeadApp);
 		this.jdbcTemplate.update(sql); 
 		this.jdbcTemplate.update(sqlAttributeValue); 
 		this.jdbcTemplate.update(sqlAttachFile); 
+		this.jdbcTemplate.update(sqlHeadApp); 
 	  
 	}
 	
@@ -248,6 +275,10 @@ public class AcademicKPIUserMappingDaoImpl implements AcademicKPIUserMappingDao 
 		logger.info(" sql:"+sql);
  
 		this.jdbcTemplate.update(sql); 
+		
+		String sql2 =" update   head_approve_summary set is_approve='CREATE'  where kpi_user_mapping_id ="+id+"" ; 
+		logger.info(" sql2:"+sql2);
+		this.jdbcTemplate.update(sql2); 
 	  
 	}
 	

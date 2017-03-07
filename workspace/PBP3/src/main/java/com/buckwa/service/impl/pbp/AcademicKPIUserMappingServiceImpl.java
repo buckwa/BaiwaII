@@ -62,9 +62,10 @@ public class AcademicKPIUserMappingServiceImpl implements AcademicKPIUserMapping
 	public BuckWaResponse update(BuckWaRequest request) {
 		BuckWaResponse response = new BuckWaResponse();
 		try{				 
-			
+			String filename =  (String) request.get("filename");
 			AcademicKPIUserMappingWrapper academicKPIUserMappingWrapper =  (AcademicKPIUserMappingWrapper)request.get("academicKPIUserMappingWrapper");
-			 academicKPIUserMappingDao.update(academicKPIUserMappingWrapper); 
+			// academicKPIUserMappingDao.update(academicKPIUserMappingWrapper); 
+			 academicKPIUserMappingDao.update2(academicKPIUserMappingWrapper,filename); 
 			 response.setSuccessCode("S002");	
 		}catch(Exception ex){
 			ex.printStackTrace();

@@ -6,6 +6,7 @@ public class AcademicKPIWrapper {
 
 	private List<PBPWorkType> pBPWorkTypeList;
 	private List<AcademicKPI> academicKPIList;
+	private List<HeadApproveSummary> headApprove;
 	private PBPWorkType pBPWorkType;
 
 	private String academicYear;
@@ -126,6 +127,14 @@ public class AcademicKPIWrapper {
 
 	public void setWorkTypeName(String workTypeName) {
 		this.workTypeName = workTypeName;
+	}
+
+	public List<HeadApproveSummary> getHeadApprove() {
+		return headApprove;
+	}
+
+	public void setHeadApprove(List<HeadApproveSummary> headApprove) {
+		this.headApprove = headApprove;
 	}
 
 }

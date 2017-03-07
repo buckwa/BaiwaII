@@ -30,7 +30,12 @@ public class AcademicKPI extends BaseDomain {
 	private int summary_App;
 	private int summary_Co;
 	private int summary_Cr;
-
+	
+	private String facultyName;
+	private String DepCode;
+	private String DepName;
+	private String KpiName;
+	
 	private String multiplyValue;
 
 	private List<AcademicUnit> academicUnitList;
@@ -309,6 +314,38 @@ public class AcademicKPI extends BaseDomain {
 
 	public void setSummary_Cr(int summary_Cr) {
 		this.summary_Cr = summary_Cr;
+	}
+
+	public String getFacultyName() {
+		return facultyName;
+	}
+
+	public void setFacultyName(String facultyName) {
+		this.facultyName = facultyName;
+	}
+
+	public String getDepCode() {
+		return DepCode;
+	}
+
+	public void setDepCode(String depCode) {
+		DepCode = depCode;
+	}
+
+	public String getDepName() {
+		return DepName;
+	}
+
+	public void setDepName(String depName) {
+		DepName = depName;
+	}
+
+	public String getKpiName() {
+		return KpiName;
+	}
+
+	public void setKpiName(String kpiName) {
+		KpiName = kpiName;
 	}
 
 	

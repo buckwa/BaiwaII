@@ -25,9 +25,19 @@ public class AcademicKPIUserMapping   extends BaseDomain{
 	private String thaiName;
 	private String thaiSurname;
 	
-	 
+	private String fac_code;
+	private String fac_name;
+	private String dep_code;
+	private String dep_name;
+	private String kpi_unit;
+	private String work_name;
 	
-	
+	public String getWork_name() {
+		return work_name;
+	}
+	public void setWork_name(String work_name) {
+		this.work_name = work_name;
+	}
 	public String getFromSourceText() {
 		String returnStr ="";
 		 if(this.fromSource==null||this.fromSource.trim().length()==0){
@@ -179,6 +189,36 @@ public class AcademicKPIUserMapping   extends BaseDomain{
 	}
 	public void setThaiSurname(String thaiSurname) {
 		this.thaiSurname = thaiSurname;
+	}
+	public String getFac_code() {
+		return fac_code;
+	}
+	public void setFac_code(String fac_code) {
+		this.fac_code = fac_code;
+	}
+	public String getFac_name() {
+		return fac_name;
+	}
+	public void setFac_name(String fac_name) {
+		this.fac_name = fac_name;
+	}
+	public String getDep_code() {
+		return dep_code;
+	}
+	public void setDep_code(String dep_code) {
+		this.dep_code = dep_code;
+	}
+	public String getDep_name() {
+		return dep_name;
+	}
+	public void setDep_name(String dep_name) {
+		this.dep_name = dep_name;
+	}
+	public String getKpi_unit() {
+		return kpi_unit;
+	}
+	public void setKpi_unit(String kpi_unit) {
+		this.kpi_unit = kpi_unit;
 	}
 
 }

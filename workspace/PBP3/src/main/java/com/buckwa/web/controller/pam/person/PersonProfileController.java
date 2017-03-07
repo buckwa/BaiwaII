@@ -21,9 +21,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -52,6 +55,7 @@ import com.buckwa.domain.pbp.PBPWorkTypeSub;
 import com.buckwa.domain.pbp.PBPWorkTypeWrapper;
 import com.buckwa.domain.pbp.report.RadarPlotReport;
 import com.buckwa.domain.pbp.report.TimeTableReport;
+import com.buckwa.domain.pbp3.ResponseObj;
 import com.buckwa.domain.validator.pam.PersonProfileValidator;
 import com.buckwa.domain.validator.pbp.EditImportWorkValidator;
 import com.buckwa.domain.validator.pbp.EditPersonProfilePBPValidator;
@@ -1210,7 +1214,8 @@ public class PersonProfileController {
 	
 	
 	
-	@RequestMapping(value="editKPIMapping.htm", method = RequestMethod.POST)
+	@RequestMapping(value="editKPIMapping", method = RequestMethod.POST)
+	@ResponseBody
 	public ModelAndView editKPIMappingPOST(HttpServletRequest httpRequest, @ModelAttribute AcademicKPIUserMappingWrapper academicKPIUserMappingWrapper , BindingResult result) {
 		logger.info(" Start  academicKPIUserMappingWrapper academicSelectId :"+ academicKPIUserMappingWrapper.getAcademicSelectId());
 		logger.info(" Start  academicKPIUserMappingWrapper userMappingId :"+ academicKPIUserMappingWrapper.getAcademicKPIUserMapping().getKpiUserMappingId());
@@ -1296,14 +1301,17 @@ public class PersonProfileController {
 	}
 	
 	
-	@RequestMapping(value="editImportwork.htm", method = RequestMethod.POST)
-	public ModelAndView editImportworkPOST(HttpServletRequest httpRequest, @ModelAttribute AcademicKPIUserMappingWrapper academicKPIUserMappingWrapper , BindingResult result) {
+	@RequestMapping(value="editImportwork", method = RequestMethod.POST)
+	@ResponseBody
+	public ResponseObj editImportworkPOST(HttpServletRequest httpRequest, @RequestBody  AcademicKPIUserMappingWrapper academicKPIUserMappingWrapper , BindingResult result) {
 //		logger.info(" Start  academicKPIUserMappingWrapper:"+BeanUtils.getBeanString(academicKPIUserMappingWrapper));
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("viewImportWork");
+		ResponseObj resObj =new ResponseObj();
+		
 		try{
 			List<AcademicKPIAttributeValue> academicKPIAttributeValueList =academicKPIUserMappingWrapper.getAcademicKPIAttributeValueList();
-			
+			String filename=academicKPIAttributeValueList.get(0).getValue();
 			for(final AcademicKPIAttributeValue tmp:academicKPIAttributeValueList){
 				tmp.setAcademicKPIMappingId(academicKPIUserMappingWrapper.getAcademicKPIUserMapping().getKpiUserMappingId());
 	            
@@ -1320,16 +1328,9 @@ public class PersonProfileController {
 			}else {	
 				
 				BuckWaRequest request = new BuckWaRequest();
-				
-				
 				//List<AcademicKPIAttributeValue> academicKPIAttributeValueListOld =academicKPIUserMappingWrapper.getAcademicKPIUserMapping().getAcademicKPIAttributeValueList();
-				
-
-				
-			 
-				
-				
 				request.put("academicKPIUserMappingWrapper",academicKPIUserMappingWrapper);
+				request.put("filename",filename);
 				BuckWaResponse response = academicKPIUserMappingService.update(request); 
 				
 				if(response.getStatus()==BuckWaConstants.SUCCESS){	
@@ -1341,27 +1342,25 @@ public class PersonProfileController {
 				if(response.getStatus()==BuckWaConstants.SUCCESS){	
 					academicKPIUserMappingWrapper = (AcademicKPIUserMappingWrapper)response.getResObj("academicKPIUserMappingWrapper");	
 		 
-					mav.addObject("academicKPIUserMappingWrapper", academicKPIUserMappingWrapper);
-					
-					
+					//mav.addObject("academicKPIUserMappingWrapper", academicKPIUserMappingWrapper);
+					resObj.setResObj(academicKPIUserMappingWrapper);
+					resObj.setStatus( "S001");
 				} else{
 					mav.addObject("errorCode", "E001"); 
-				 
-					
+					resObj.setStatus( "E001");
 				}	
 				
 				String	url = httpRequest.getContextPath() + "/pam/person/initAcademicWork.htm"; 
-				
 			//	logger.info(" ### Redirect to :"+url);
 				mav.setView(new RedirectView(url));
- 
 			}
 		 			
 		}catch(Exception ex){
 			ex.printStackTrace();
-			mav.addObject("errorCode", "E001"); 
+			//mav.addObject("errorCode", "E001"); 
+			resObj.setStatus( "E001");
 		}
-		return mav;
+		return resObj;
 	}
 	
 	
@@ -1404,10 +1403,12 @@ public class PersonProfileController {
 	}	
 	
 	
-	@RequestMapping(value="deleteImportWork.htm", method = RequestMethod.GET)
-	public ModelAndView deleteImportWork(@RequestParam("kpiUserMappingId") String kpiUserMappingId ,HttpServletRequest httpRequest ) {
+	@RequestMapping(value="deleteImportWork/{kpiUserMappingId}", method = RequestMethod.GET)
+	@ResponseBody
+	public ResponseObj deleteImportWork(@PathVariable("kpiUserMappingId") String kpiUserMappingId ,HttpServletRequest httpRequest ) {
 		logger.info(" Start  kpiUserMappingId:"+kpiUserMappingId);
 		ModelAndView mav = new ModelAndView();
+		ResponseObj resObj =new ResponseObj();
 		mav.setViewName("viewImportWork");
 		try{
 			BuckWaRequest request = new BuckWaRequest();
@@ -1417,14 +1418,17 @@ public class PersonProfileController {
 			BuckWaResponse response = academicKPIUserMappingService.delete(request);
 			if(response.getStatus()==BuckWaConstants.SUCCESS){	
  
-				mav=initAcademicWorkGET(httpRequest);
+				//mav=initAcademicWorkGET(httpRequest);
+				resObj.setResObj(response);
+				resObj.setStatus("S001");
 			}
 			
 		}catch(Exception ex){
 			ex.printStackTrace();
-			mav.addObject("errorCode", "E001"); 
+			resObj.setStatus("E001");
+			//mav.addObject("errorCode", "E001"); 
 		}
-		return mav;
+		return resObj;
 	}
 	
 	

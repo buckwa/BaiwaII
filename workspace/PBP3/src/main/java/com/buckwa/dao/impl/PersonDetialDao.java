@@ -42,12 +42,12 @@ public class PersonDetialDao {
 	}
 
 	// @SuppressWarnings("unchecked")
-	public List<Message> getMessageByUser(String Username) {
+	public List<Message> getMessageByUser(String Username, String year) {
 		List<Message> messageList = new ArrayList<>();
 		String sql = " SELECT a.message_id ,a.header ,a.detail,a.topic_id,a.create_by,a.create_date,a.status "
 				+ " FROM (SELECT * FROM webboard_message GROUP BY topic_id ) a  INNER JOIN academic_kpi_user_mapping  b ON a.topic_id = b.kpi_user_mapping_id "
 				+ " INNER JOIN person_pbp c ON  b.user_name = c.email " + " WHERE  c.email = '" + Username
-				+ "' AND a.detail != ''  ORDER BY a.message_id DESC  ";
+				+ "' AND a.detail != ''   AND c.academic_year = '"+year+"' ORDER BY a.message_id DESC  ";
 
 		logger.info(" GetMessageByUsername:" + sql);
 
@@ -73,7 +73,7 @@ public class PersonDetialDao {
 
 	}
 
-	public List<Message> getMessageByKPIId(String Username, String KpiId) {
+	public List<Message> getMessageByKPIId(String Username, String KpiId, String year) {
 
 		List<Message> messageList = new ArrayList<>();
 		String sql = "SELECT a.topic_id , a.message_id, a.detail,a.header ,a.create_by, a.create_date,a.status "
@@ -81,7 +81,7 @@ public class PersonDetialDao {
 				+ " ON a.topic_id = b.kpi_user_mapping_id " + " INNER JOIN person_pbp c ON  b.user_name = c.email "
 				// + " WHERE c.email = '"+Username+"' AND topic_id = '"+KpiId+
 				// "' ORDER BY a.message_id ASC ";
-				+ " WHERE  topic_id = '" + KpiId + "'  AND a.detail != '' ORDER BY a.message_id ASC  ";
+				+ " WHERE  topic_id = '" + KpiId + "'  AND a.detail != ''  AND c.academic_year = '"+year+"' ORDER BY a.message_id ASC  ";
 
 		logger.info(" GetMessageByKPIID:" + sql);
 
@@ -107,16 +107,16 @@ public class PersonDetialDao {
 
 	}
 
-	public List<Message> getMessageByHead(String Username, String Department) {
+	public List<Message> getMessageByHead(String Username, String Department, String year) {
 
 		List<Message> messageList = new ArrayList<>();
 		String Departmentid = UserLoginUtil.getCurrentDepartmentCode();
-		int count = countMessage(Department);
+		int count = countMessage(Department,year);
 		String sql = " SELECT c.topic_id , c.message_id, c.detail,c.header ,c.create_by, c.create_date , c.status "
 				+ " FROM person_pbp a LEFT JOIN academic_kpi_user_mapping b "
 				+ " ON b.user_name =  a.email INNER JOIN  (SELECT * FROM webboard_message GROUP BY topic_id ) c "
 				+ " ON c.topic_id = b.kpi_user_mapping_id WHERE a.department_desc = '" + Department + "' "
-				+ " AND c.detail != '' ORDER BY  DATE(c.create_date) DESC LIMIT 0,? ";
+				+ " AND c.detail != ''  AND a.academic_year = '"+year+"' ORDER BY  DATE(c.create_date) DESC LIMIT 0,? ";
 		if (count > 20) {
 			count = 20;
 		}
@@ -144,19 +144,19 @@ public class PersonDetialDao {
 
 	}
 
-	public int countMessage(String criteria) {
+	public int countMessage(String criteria, String year) {
 		Boolean role = UserLoginUtil.isRole(BuckWaConstants.ROLE_HEAD);
 		String sql = "";
 		if (role) {
 			sql = " SELECT COUNT(*) FROM person_pbp a LEFT JOIN academic_kpi_user_mapping b "
 					+ " ON b.user_name =  a.email INNER JOIN  (SELECT * FROM webboard_message GROUP BY topic_id ) c "
 					+ " ON c.topic_id = b.kpi_user_mapping_id " + " WHERE a.department_desc = '" + criteria
-					+ "' AND c.status = '1'  AND c.detail != '' ";
+					+ "' AND c.status = '1'  AND c.detail != '' AND a.academic_year = '"+year+"'   ";
 
 		} else {
 			sql = " SELECT COUNT(*)  FROM webboard_message a  INNER JOIN academic_kpi_user_mapping  b ON a.topic_id = b.kpi_user_mapping_id "
 					+ " INNER JOIN person_pbp c ON  b.user_name = c.email " + " WHERE  c.email = '" + criteria
-					+ "' AND a.detail != '' ";
+					+ "' AND a.detail != '' AND c.academic_year = '"+year+"' ";
 		}
 		logger.info(" CountMessage:" + sql);
 		int count = jdbcTemplate.queryForObject(sql, Integer.class);
@@ -164,15 +164,15 @@ public class PersonDetialDao {
 		return count;
 	}
 
-	public List<Message> getMessageByHeadAll(PagingMessage request) {
+	public List<Message> getMessageByHeadAll(PagingMessage request, String year) {
 
 		List<Message> messageList = new ArrayList<>();
 		// String Departmentid = UserLoginUtil.getCurrentDepartmentCode();
-		int count = countMessage(request.getDepartmentName());
+		int count = countMessage(request.getDepartmentName(),year);
 		String sql = " SELECT c.topic_id , c.message_id, c.detail,c.header ,c.create_by, c.create_date ,c.status "
 				+ " FROM person_pbp a LEFT JOIN academic_kpi_user_mapping b " + " ON b.user_name =  a.email "
 				+ " INNER JOIN  (SELECT * FROM webboard_message GROUP BY topic_id ) c "
-				+ " ON c.topic_id = b.kpi_user_mapping_id " + " WHERE a.department_desc = ? AND c.detail != '' "
+				+ " ON c.topic_id = b.kpi_user_mapping_id " + " WHERE a.department_desc = ? AND c.detail != ''  AND a.academic_year = '"+year+"' "
 				+ " ORDER BY  DATE(c.create_date) DESC  LIMIT ?,? ";
 
 		logger.info(" GetMessageByHeadAll:" + sql + "and department Id :" + request.getDepartmentName());

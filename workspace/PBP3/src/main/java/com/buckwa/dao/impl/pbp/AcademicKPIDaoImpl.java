@@ -27,6 +27,7 @@ import com.buckwa.domain.pbp.AcademicKPIAttributeValue;
 import com.buckwa.domain.pbp.AcademicKPIUserMapping;
 import com.buckwa.domain.pbp.AcademicKPIWrapper;
 import com.buckwa.domain.pbp.AcademicYearEvaluateRound;
+import com.buckwa.domain.pbp.HeadApproveSummary;
 import com.buckwa.domain.pbp.PBPWorkType;
 import com.buckwa.util.BeanUtils;
 import com.buckwa.util.BuckWaDateUtils;
@@ -259,77 +260,35 @@ public class AcademicKPIDaoImpl implements AcademicKPIDao {
 	
 	@Override
 	public AcademicKPIWrapper getByAcademicYearWorkTypeCodeFacultyCodeByinitApprove( String getByAcademicYear,String workTypeCode,String facultyCode ,String department_desc) {		 		
-		String sql =" select *  from academic_kpi where academic_year ='"+getByAcademicYear+"' and work_type_code='"+workTypeCode+"' and faculty_code='"+facultyCode+"' order by order_no asc " ; 
-		logger.info("getByAcademicYearWorkTypeCodeFacultyCode  sql:"+sql);
-		List<AcademicKPI> academicKPIList  =null;
-		
+		String sql =" SELECT kpi_id, kpi_name FROM pbp2.head_approve_summary  WHERE academic_year ='"+getByAcademicYear+ "' AND work_type_code='"+workTypeCode+"' AND dep_name='"+department_desc+"' GROUP BY kpi_name,kpi_id " ; 
+		logger.info("Sql:"+sql);
+		List<HeadApproveSummary> headApprove =null;
+		//HeadApproveSummary HeadApp = new HeadApproveSummary(); 
 		try{
-			academicKPIList = this.jdbcTemplate.query(sql,	new AcademicKPIMapperByKPI() );	
+			headApprove = this.jdbcTemplate.query(sql,	new HeadApproveSummaryMapper() );	
 			
-
 			
-
-			
-			System.out.println(" Test "+academicKPIList.get(0).getSummary_App());
-			if(academicKPIList != null){
+			if(headApprove != null){
 				
-				for (AcademicKPI academicKPI : academicKPIList) {
-					logger.info("getAcademicKPIId  Ok:"+academicKPI.getAcademicKPIId());
+				for (HeadApproveSummary headApps : headApprove) {
+					logger.info("getAcademicKPIId  Ok:"+headApps.getKpi_id());
 					StringBuilder sql_a = new StringBuilder();
-					sql_a.append(" SELECT  COUNT(1) AS total ");
-					sql_a.append(" FROM academic_kpi_user_mapping ");
-					sql_a.append(" INNER JOIN academic_kpi ");
-					sql_a.append(" ON academic_kpi.academic_kpi_id = academic_kpi_user_mapping.academic_kpi_id  ");
-					sql_a.append(" INNER JOIN person_pbp ");
-					sql_a.append(" ON academic_kpi_user_mapping.user_name = person_pbp.email ");
-					sql_a.append(" WHERE academic_kpi.academic_year = '"+getByAcademicYear+"' ");
-					sql_a.append(" AND academic_kpi_user_mapping.academic_year =   '"+getByAcademicYear+"' ");
-					sql_a.append(" AND person_pbp.academic_year =   '"+getByAcademicYear+"' ");
-					sql_a.append(" AND department_desc =   '"+department_desc+"' ");
-					sql_a.append(" AND academic_kpi_user_mapping.work_type_code = '"+workTypeCode+"' ");
-					sql_a.append(" AND academic_kpi.faculty_code = '"+facultyCode+"' ");
-					sql_a.append(" AND academic_kpi_user_mapping.status = 'APPROVED' ");
-					sql_a.append(" AND academic_kpi_user_mapping.academic_kpi_id = '"+academicKPI.getAcademicKPIId()+"' ");
+					sql_a.append(" SELECT COUNT(approve_summary_id)   ");
+					sql_a.append(" FROM head_approve_summary  ");
+					sql_a.append("  WHERE is_approve = 'APPROVED' AND kpi_id = "+headApps.getKpi_id()+" ");
 
 					int total = this.jdbcTemplate.queryForObject(sql_a.toString(), Integer.class);	
-					logger.info("Total Appover  sql:"+ total);
-					academicKPI.setSummary_App(total);
+					logger.info("Total Appover  Sql:"+ total);
+					headApps.setTotal_A(total);
 					
 					StringBuilder sql_co = new StringBuilder();
 					sql_co.append(" SELECT  COUNT(1) AS total ");
 					sql_co.append(" FROM academic_kpi_user_mapping ");
-					sql_co.append(" INNER JOIN academic_kpi ");
-					sql_co.append(" ON academic_kpi.academic_kpi_id = academic_kpi_user_mapping.academic_kpi_id  ");
-					sql_co.append(" INNER JOIN person_pbp ");
-					sql_co.append(" ON academic_kpi_user_mapping.user_name = person_pbp.email ");
-					sql_co.append(" WHERE academic_kpi.academic_year = '"+getByAcademicYear+"' ");
-					sql_co.append(" AND academic_kpi_user_mapping.academic_year =   '"+getByAcademicYear+"' ");
-					sql_co.append(" AND person_pbp.academic_year =   '"+getByAcademicYear+"' ");
-					sql_co.append(" AND department_desc =   '"+department_desc+"' ");
-					sql_co.append(" AND academic_kpi.faculty_code = '"+facultyCode+"' ");
-					sql_co.append(" AND academic_kpi_user_mapping.status != 'APPROVED' ");
-					sql_co.append(" AND academic_kpi_user_mapping.academic_kpi_id = '"+academicKPI.getAcademicKPIId()+"' ");
+					sql_co.append(" WHERE is_approve != 'APPROVED' AND kpi_id = "+headApps.getKpi_id()+" ");
 
 					total = this.jdbcTemplate.queryForObject(sql_co.toString(), Integer.class);	
-					logger.info("Total Appover  sql:"+ total);
-					academicKPI.setSummary_Co(total);
-					
-//					StringBuilder sql_c = new StringBuilder();
-//					sql_c.append(" SELECT  COUNT(1) AS total ");
-//					sql_c.append(" FROM academic_kpi_user_mapping ");
-//					sql_c.append(" INNER JOIN academic_kpi ");
-//					sql_c.append(" ON academic_kpi.code = academic_kpi_user_mapping.academic_kpi_code ");
-//					sql_c.append(" WHERE academic_kpi.academic_year = '"+getByAcademicYear+"' ");
-//					sql_c.append(" AND academic_kpi_user_mapping.work_type_code = '"+workTypeCode+"' ");
-//					sql_c.append(" AND academic_kpi.faculty_code = '"+facultyCode+"' ");
-//					sql_c.append(" AND academic_kpi_user_mapping.status = 'CREATE' ");
-//					sql_c.append(" AND academic_kpi_user_mapping.academic_kpi_code = '"+academicKPI.getCode()+"' ");
-//
-//					total = this.jdbcTemplate.queryForObject(sql_c.toString(), Integer.class);	
-//					logger.info("Total Appover  sql:"+ total);
-//					academicKPI.setSummary_Cr(total);
-					
-					
+					logger.info("Total Appover  Sql:"+ total);
+					headApps.setTotal_C(total);
 				}
 			}
 			
@@ -339,11 +298,92 @@ public class AcademicKPIDaoImpl implements AcademicKPIDao {
 			ex.printStackTrace();
 		} 
 		AcademicKPIWrapper academicKPIWrapper = new AcademicKPIWrapper();  
-		academicKPIWrapper.setAcademicKPIList(academicKPIList);
+		academicKPIWrapper.setHeadApprove(headApprove);
+		
 		return academicKPIWrapper;
 	}
 	
- 
+//	@Override
+//	public AcademicKPIWrapper getByAcademicYearWorkTypeCodeFacultyCodeByinitApprove( String getByAcademicYear,String workTypeCode,String facultyCode ,String department_desc) {		 		
+//		String sql =" select *  from academic_kpi where academic_year ='"+getByAcademicYear+"' and work_type_code='"+workTypeCode+"' and faculty_code='"+facultyCode+"' order by order_no asc " ; 
+//		logger.info("getByAcademicYearWorkTypeCodeFacultyCode  sql:"+sql);
+//		List<AcademicKPI> academicKPIList  =null;
+//		
+//		try{
+//			academicKPIList = this.jdbcTemplate.query(sql,	new AcademicKPIMapperByKPI() );	
+//			
+//			System.out.println(" Test "+academicKPIList.get(0).getSummary_App());
+//			if(academicKPIList != null){
+//				
+//				for (AcademicKPI academicKPI : academicKPIList) {
+//					logger.info("getAcademicKPIId  Ok:"+academicKPI.getAcademicKPIId());
+//					StringBuilder sql_a = new StringBuilder();
+//					sql_a.append(" SELECT  COUNT(1) AS total ");
+//					sql_a.append(" FROM academic_kpi_user_mapping ");
+//					sql_a.append(" INNER JOIN academic_kpi ");
+//					sql_a.append(" ON academic_kpi.academic_kpi_id = academic_kpi_user_mapping.academic_kpi_id  ");
+//					sql_a.append(" INNER JOIN person_pbp ");
+//					sql_a.append(" ON academic_kpi_user_mapping.user_name = person_pbp.email ");
+//					sql_a.append(" WHERE academic_kpi.academic_year = '"+getByAcademicYear+"' ");
+//					sql_a.append(" AND academic_kpi_user_mapping.academic_year =   '"+getByAcademicYear+"' ");
+//					sql_a.append(" AND person_pbp.academic_year =   '"+getByAcademicYear+"' ");
+//					sql_a.append(" AND department_desc =   '"+department_desc+"' ");
+//					sql_a.append(" AND academic_kpi_user_mapping.work_type_code = '"+workTypeCode+"' ");
+//					sql_a.append(" AND academic_kpi.faculty_code = '"+facultyCode+"' ");
+//					sql_a.append(" AND academic_kpi_user_mapping.status = 'APPROVED' ");
+//					sql_a.append(" AND academic_kpi_user_mapping.academic_kpi_id = '"+academicKPI.getAcademicKPIId()+"' ");
+//
+//					int total = this.jdbcTemplate.queryForObject(sql_a.toString(), Integer.class);	
+//					logger.info("Total Appover  sql:"+ total);
+//					academicKPI.setSummary_App(total);
+//					
+//					StringBuilder sql_co = new StringBuilder();
+//					sql_co.append(" SELECT  COUNT(1) AS total ");
+//					sql_co.append(" FROM academic_kpi_user_mapping ");
+//					sql_co.append(" INNER JOIN academic_kpi ");
+//					sql_co.append(" ON academic_kpi.academic_kpi_id = academic_kpi_user_mapping.academic_kpi_id  ");
+//					sql_co.append(" INNER JOIN person_pbp ");
+//					sql_co.append(" ON academic_kpi_user_mapping.user_name = person_pbp.email ");
+//					sql_co.append(" WHERE academic_kpi.academic_year = '"+getByAcademicYear+"' ");
+//					sql_co.append(" AND academic_kpi_user_mapping.academic_year =   '"+getByAcademicYear+"' ");
+//					sql_co.append(" AND person_pbp.academic_year =   '"+getByAcademicYear+"' ");
+//					sql_co.append(" AND department_desc =   '"+department_desc+"' ");
+//					sql_co.append(" AND academic_kpi.faculty_code = '"+facultyCode+"' ");
+//					sql_co.append(" AND academic_kpi_user_mapping.status != 'APPROVED' ");
+//					sql_co.append(" AND academic_kpi_user_mapping.academic_kpi_id = '"+academicKPI.getAcademicKPIId()+"' ");
+//
+//					total = this.jdbcTemplate.queryForObject(sql_co.toString(), Integer.class);	
+//					logger.info("Total Appover  sql:"+ total);
+//					academicKPI.setSummary_Co(total);
+//					
+////					StringBuilder sql_c = new StringBuilder();
+////					sql_c.append(" SELECT  COUNT(1) AS total ");
+////					sql_c.append(" FROM academic_kpi_user_mapping ");
+////					sql_c.append(" INNER JOIN academic_kpi ");
+////					sql_c.append(" ON academic_kpi.code = academic_kpi_user_mapping.academic_kpi_code ");
+////					sql_c.append(" WHERE academic_kpi.academic_year = '"+getByAcademicYear+"' ");
+////					sql_c.append(" AND academic_kpi_user_mapping.work_type_code = '"+workTypeCode+"' ");
+////					sql_c.append(" AND academic_kpi.faculty_code = '"+facultyCode+"' ");
+////					sql_c.append(" AND academic_kpi_user_mapping.status = 'CREATE' ");
+////					sql_c.append(" AND academic_kpi_user_mapping.academic_kpi_code = '"+academicKPI.getCode()+"' ");
+////
+////					total = this.jdbcTemplate.queryForObject(sql_c.toString(), Integer.class);	
+////					logger.info("Total Appover  sql:"+ total);
+////					academicKPI.setSummary_Cr(total);
+//					
+//					
+//				}
+//			}
+//			
+//			logger.info("SS");	
+//			
+//		}catch (org.springframework.dao.EmptyResultDataAccessException ex){
+//			ex.printStackTrace();
+//		} 
+//		AcademicKPIWrapper academicKPIWrapper = new AcademicKPIWrapper();  
+//		academicKPIWrapper.setAcademicKPIList(academicKPIList);
+//		return academicKPIWrapper;
+//	}
 
 	@Override
 	public boolean isExistCreate(AcademicKPI domain) {
@@ -758,7 +798,10 @@ public class AcademicKPIDaoImpl implements AcademicKPIDao {
 			}
 			
 		}
- 	
+		
+		String sql2 =" update   head_approve_summary set kpi_name ='"+domain.getName()+"' where kpi_id ="+domain.getAcademicKPIId()+"" ; 
+		logger.info(" sql update :"+sql2);
+		this.jdbcTemplate.update(sql2); 
   
 	}
 	
@@ -830,6 +873,17 @@ public class AcademicKPIDaoImpl implements AcademicKPIDao {
 		}catch(org.springframework.dao.EmptyResultDataAccessException ex){
 			ex.printStackTrace();
 		}
+		 
+		return domain;
+    }
+	}
+	
+	private class HeadApproveSummaryMapper implements RowMapper<HeadApproveSummary> {   						
+        @Override
+		public HeadApproveSummary mapRow(ResultSet rs, int rowNum) throws SQLException {
+        	HeadApproveSummary domain = new HeadApproveSummary(); 
+        	domain.setKpi_id(rs.getInt("kpi_id"));
+        	domain.setKpi_name(rs.getString("Kpi_name"));
 		 
 		return domain;
     }

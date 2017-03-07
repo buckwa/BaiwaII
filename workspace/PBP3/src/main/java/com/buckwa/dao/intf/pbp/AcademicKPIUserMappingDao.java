@@ -11,7 +11,8 @@ public interface AcademicKPIUserMappingDao {
 	public void delete(String id); 
 	public void unApprove(String id); 
 	
-	public void changeKPI(AcademicKPIUserMappingWrapper academicKPIUserMappingWrapper); 
+	public void changeKPI(AcademicKPIUserMappingWrapper academicKPIUserMappingWrapper);
+	public void update2(AcademicKPIUserMappingWrapper academicKPIUserMappingWrapper, String filename); 
 	
 	
 }

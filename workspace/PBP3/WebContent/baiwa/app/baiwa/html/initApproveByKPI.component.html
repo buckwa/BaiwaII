@@ -54,7 +54,7 @@
                                 <tr>
 
                                     <th>ภาระงาน</th>
-                                    <th>คะแนน</th>
+                                   
                                     <th class="table-icon-cell" width="8%">
                                         อนุมัติ
                                     </th>
@@ -68,21 +68,19 @@
 
 
                             <tbody>
-                                <tr *ngFor="let item of academicKPIList;">
+                                <tr *ngFor="let item of headApprove;">
                                     <td>
-                                        {{item.name}}
+                                        {{item.kpi_name}}
                                     </td>
-                                    <td class="color-blue-grey-lighter">
-                                        {{item.mark}} คะแนน/ {{item.unitDesc}}
-                                    </td>
+              
                                     <td class="table-icon-cell">
-                                        <a href="javascript:void(0)" (click)="clickA(item.academicKPIId,item.summary_App)" >
-                                            <i class="font-icon font-icon-check-circle"></i> {{item.summary_App}}
+                                        <a href="javascript:void(0)" (click)="clickA(item.kpi_id,item.total_A)" >
+                                            <i class="font-icon font-icon-check-circle"></i> {{item.total_A}}
                                         </a>
                                     </td>
                                     <td class="table-icon-cell">
-                                        <a href="javascript:void(0)" (click)="clickC(item.academicKPIId,item.summary_Co)">
-                                            <i class="font-icon font-icon-del"></i> {{item.summary_Co}}
+                                        <a href="javascript:void(0)" (click)="clickC(item.kpi_id,item.total_c)">
+                                            <i class="font-icon font-icon-del"></i> {{item.total_C}}
                                         </a>
                                     </td>
 

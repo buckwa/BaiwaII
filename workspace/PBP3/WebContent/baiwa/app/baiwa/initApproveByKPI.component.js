@@ -53,6 +53,7 @@ var initApproveByKPI = (function () {
         this.academicYearList = this.model.academicYearList;
         this.pBPWorkTypeList = this.model.pBPWorkTypeList;
         this.facultyList = this.model.facultyList;
+        this.headApprove = this.model.headApprove;
         this.commonService.unLoading();
         console.log(" List Success  !");
     };

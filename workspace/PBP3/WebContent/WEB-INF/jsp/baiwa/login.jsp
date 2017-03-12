@@ -35,12 +35,12 @@
     <div class="page-center">
         <div class="page-center-in">
             <div class="container-fluid">
-				<form class="sign-box" action="<c:url value='/login.htm' />" method="POST">               
+				<form class="sign-box" style="    max-width: 400px;" action="<c:url value='/login.htm' />" method="POST">               
                     <div class="sign-avatar">
                         <img src="<c:url value='/baiwa/libs/img/kmitl_logo.png' />" alt="">
                     </div>
                     <header class="sign-title">เข้าสู่ระบบ</header>
-                  <header class="sign-title" style="font-size: 1.0rem;">  ระบบประเมินคุณภาพบุคลากรวิชาการ</header>
+                  <header class="sign-title" style="font-size: 1.0rem;">  ระบบประเมินคุณภาพบุคลากรสายวิชาการ</header>
                     <c:if test="${not empty error}">
 									<div class="alert alert-danger alert-no-border alert-close alert-dismissible fade in" role="alert">
 										<button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -66,7 +66,11 @@
                     <button type="submit" class="btn btn-rounded">ตกลง</button>
 <!--                     <button type="button" class="close">
                         <span aria-hidden="true">&times;</span>
+                        
+                        
+                        
                     </button> -->
+                    * สำหรับข้าราชการ ให้ป้อนข้อมูลภาระงานในรอบที่ 1 คือตั้งแต่ 1 สิงหาคม 2559 ถึง 31 ธันวาคม 2559 โดยระบบจะให้ป้อนภาระงานในรอบที่ 1ได้จนถึงวันที่ 25 มีนาคม 2560  สำหรับ พนักงานสถาบันฯ ให้ป้อนภาระงานตั้งแต่วันที่ 1 สิงหาคม 2559 จนถึงวันที่ 31 กรกฎาคม 2560
                 </form>
             </div>
         </div>

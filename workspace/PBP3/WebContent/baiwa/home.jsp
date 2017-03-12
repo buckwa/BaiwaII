@@ -280,7 +280,7 @@
 	    </div><!--.container-fluid-->
 	</header><!--.site-header-->
 	<div id="tophiddenbar" class="nav-down">
-		<span style="float: left;">&nbsp;&nbsp;&nbsp;รอบการประเมิน : 1 ส.ค. 2558 - 31 ก.ค. 2559</span>
+<!-- 		<span style="float: left;">&nbsp;&nbsp;&nbsp;รอบการประเมิน : 1 ส.ค. 2558 - 31 ก.ค. 2559</span> -->
 		<span style="float: right;">ปีการศึกษา : <%= UserLoginUtil.getCurrentAcademicYear() %>&nbsp;&nbsp;</span>
 	</div>
 

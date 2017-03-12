@@ -26,7 +26,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
  
 
   	@Autowired
-	@Qualifier("authenticationProvider")
+	@Qualifier("LdapAuthenticationProvider")
 	private AuthenticationProvider authenticationProvider;
 	
 	@Autowired
@@ -79,7 +79,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
  				"/index.jsp"
  			).permitAll()
  			//.antMatchers("/admin/**").hasRole("ADMIN")
- 			//.anyRequest().hasAuthority(BaiwaConstants.ROLE_USER)
+ 			.anyRequest().hasAuthority(BaiwaConstants.ROLE_USER)
  		.and()
  		.formLogin()
  			.loginPage(BaiwaConstants.LOGIN_URL).permitAll()
@@ -102,6 +102,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
  		.sessionManagement()
  			.maximumSessions(5)
  			//.sessionRegistry(sessionRegistry())
+ 			
  			.expiredUrl(BaiwaConstants.LOGIN_URL);
  		
  		http.csrf().disable();

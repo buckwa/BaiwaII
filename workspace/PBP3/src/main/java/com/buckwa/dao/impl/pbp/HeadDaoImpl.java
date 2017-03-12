@@ -565,7 +565,8 @@ public class HeadDaoImpl implements HeadDao {
 	@Override
 	public AcademicKPIUserMappingWrapper getByUserAcademicYearNew( String headUserName ,String academicYear,String status,String code,String facultyCode,String department_desc ,String employeeType ){	  
 		
-		AcademicKPIUserMappingWrapper   academicKPIUserMappingWrapper = new AcademicKPIUserMappingWrapper(); 
+		AcademicKPIUserMappingWrapper   academicKPIUserMappingWrapper = new AcademicKPIUserMappingWrapper();
+		
 		// Get Department belong to head
 				
 				Department department=new Department();
@@ -586,7 +587,8 @@ public class HeadDaoImpl implements HeadDao {
 				
 				 long startTime =0l;
 				 long endTime =0l;
-				 
+				
+				 logger.info(" employeeType:"+employeeType);
 				 Timestamp startTimeStamp = null;
 				 Timestamp endTimeStamp = null;
 				 String round ="1";
@@ -623,9 +625,9 @@ public class HeadDaoImpl implements HeadDao {
 				StringBuilder kpiMapping = new StringBuilder();
 				
 				if("A".equalsIgnoreCase(status)){
-					kpiMapping.append(" SELECT * FROM head_approve_summary   WHERE is_approve = 'APPROVED' AND kpi_id = '"+code+"'  ");
+					kpiMapping.append(" SELECT * FROM head_approve_summary   WHERE is_approve = 'APPROVED' AND kpi_id = '"+code+"' and academic_year="+academicYear+" and dep_name='"+department_desc+"'");
 				}else{
-					kpiMapping.append(" SELECT * FROM head_approve_summary   WHERE is_approve != 'APPROVED' AND kpi_id = '"+code+"'  ");
+					kpiMapping.append(" SELECT * FROM head_approve_summary   WHERE is_approve != 'APPROVED' AND kpi_id = '"+code+"'  and academic_year="+academicYear+" and dep_name='"+department_desc+"'");
 				}
 		
 				
@@ -656,67 +658,9 @@ public class HeadDaoImpl implements HeadDao {
 				List<AcademicKPIUserMapping> academicKPIUserMappingList  = this.jdbcTemplate.query(kpiMapping.toString(),	new AcademicKPIUserMappingMapperNew() );
 
 				
-				if(academicKPIUserMappingList!=null&&academicKPIUserMappingList.size()>0){
-					
-					for(AcademicKPIUserMapping mappingTmp:academicKPIUserMappingList){
-						  
-						
-						
-						String sqlkpi =" select *  from academic_kpi where academic_kpi_id ="+mappingTmp.getAcademicKPIId() ; 
-						logger.info(" sqlkpi:"+sqlkpi);
-						 
-						
-						try{
-							 AcademicKPI  academicKPI  = this.jdbcTemplate.queryForObject(sqlkpi,	new AcademicKPIMapper() );
-							 mappingTmp.setAcademicKPI(academicKPI);
-							 
-							 
-								String sqlAttributeValue =" select *  from academic_kpi_attribute_value where kpi_user_mapping_id ="+mappingTmp.getKpiUserMappingId() ; 
-								List<AcademicKPIAttributeValue> academicKPIAttributeValueList = new ArrayList();
-								try{
-									logger.info(" sqlAttributeValue:"+sqlAttributeValue);
-									academicKPIAttributeValueList = this.jdbcTemplate.query(sqlAttributeValue,	new AcademicKPIAttributeValueMapper() );
-									
-								}catch (org.springframework.dao.EmptyResultDataAccessException ex){
-									ex.printStackTrace();
-								} 
-								
-								mappingTmp.setAcademicKPIAttributeValueList(academicKPIAttributeValueList);
-
-								String sqlAttribute  =" select *  from academic_kpi_attribute  where academic_kpi_id ="+mappingTmp.getAcademicKPIId()+" and academic_year='"+mappingTmp.getAcademicYear()+"'" ; 
-								
-								List<AcademicKPIAttribute> academicKPIAttributeList = new ArrayList();
-								try{
-									logger.info(" sqlAttribute:"+sqlAttribute);
-									academicKPIAttributeList = this.jdbcTemplate.query(sqlAttribute,	new AcademicKPIAttributeMapper() );
-									
-								}catch (org.springframework.dao.EmptyResultDataAccessException ex){
-									ex.printStackTrace();
-								} 									
-								
-								mappingTmp.setAcademicKPIAttributeList(academicKPIAttributeList);
-							 
-						}catch (org.springframework.dao.EmptyResultDataAccessException ex){
-							ex.printStackTrace();
-						} 
-						
-						
-						personTmp.setAcademicKPIUserMappingList(academicKPIUserMappingList);
-						newAcademicPersonList.add(personTmp);
-								
-						
-					}
-					
-					department.setAcademicPersonList(newAcademicPersonList);
-					
-					
-
-					
-				}
+				academicKPIUserMappingWrapper.setAcademicKPIUserMappingList( academicKPIUserMappingList);
+				logger.info("  SS:");
 				
-
-				
-				academicKPIUserMappingWrapper.setDepartment(department);
 				
 				return academicKPIUserMappingWrapper;
 	}
@@ -1649,7 +1593,7 @@ public class HeadDaoImpl implements HeadDao {
 			domain.setWorkTypeCode(rs.getString("work_type_code"));  
 			domain.setAcademicYear(rs.getString("academic_year"));
 			domain.setStatus(rs.getString("is_approve"));
-//			domain.setThaiName(rs.getString("full_name"));
+			domain.setThaiName(rs.getString("work_name"));
 			//domain.setThaiSurname(rs.getString("thai_surname"));
 		 
 		return domain;

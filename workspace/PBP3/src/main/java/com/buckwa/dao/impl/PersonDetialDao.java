@@ -107,6 +107,7 @@ public class PersonDetialDao {
 
 	}
 
+	
 	public List<Message> getMessageByHead(String Username, String Department, String year) {
 
 		List<Message> messageList = new ArrayList<>();
@@ -116,10 +117,11 @@ public class PersonDetialDao {
 				+ " FROM person_pbp a LEFT JOIN academic_kpi_user_mapping b "
 				+ " ON b.user_name =  a.email INNER JOIN  (SELECT * FROM webboard_message GROUP BY topic_id ) c "
 				+ " ON c.topic_id = b.kpi_user_mapping_id WHERE a.department_desc = '" + Department + "' "
-				+ " AND c.detail != ''  AND a.academic_year = '"+year+"' ORDER BY  DATE(c.create_date) DESC LIMIT 0,? ";
+				+ " AND c.detail != ''  AND a.academic_year = '"+year+"'and c.create_date between '2016-09-01 00:00:00' and  '2017-09-02 00:00:00' ORDER BY  DATE(c.create_date) DESC LIMIT 0,? ";
 		if (count > 20) {
 			count = 20;
 		}
+		
 		logger.info(" GetMessageByHead:" + sql + " and count :" + count + "and department Id :" + Departmentid);
 
 		// messageList = jdbcTemplate.query(sql, new
@@ -151,12 +153,12 @@ public class PersonDetialDao {
 			sql = " SELECT COUNT(*) FROM person_pbp a LEFT JOIN academic_kpi_user_mapping b "
 					+ " ON b.user_name =  a.email INNER JOIN  (SELECT * FROM webboard_message GROUP BY topic_id ) c "
 					+ " ON c.topic_id = b.kpi_user_mapping_id " + " WHERE a.department_desc = '" + criteria
-					+ "' AND c.status = '1'  AND c.detail != '' AND a.academic_year = '"+year+"'   ";
-
+					+ " ' AND c.status = '1'  AND c.detail != '' AND a.academic_year = '"+year+"'  and c.create_date between '2016-09-01 00:00:00' and  '2017-09-02 00:00:00' ";
+		 
 		} else {
 			sql = " SELECT COUNT(*)  FROM webboard_message a  INNER JOIN academic_kpi_user_mapping  b ON a.topic_id = b.kpi_user_mapping_id "
 					+ " INNER JOIN person_pbp c ON  b.user_name = c.email " + " WHERE  c.email = '" + criteria
-					+ "' AND a.detail != '' AND c.academic_year = '"+year+"' ";
+					+ "' AND a.detail != '' AND c.academic_year = '"+year+"' and c.create_date between '2016-09-01 00:00:00' and  '2017-09-02 00:00:00' ";
 		}
 		logger.info(" CountMessage:" + sql);
 		int count = jdbcTemplate.queryForObject(sql, Integer.class);

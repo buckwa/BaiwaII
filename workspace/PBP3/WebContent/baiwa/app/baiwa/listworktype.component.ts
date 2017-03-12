@@ -3,7 +3,7 @@ import {CommonService} from './../service/Common.service';
 import { Http, Headers, Response } from '@angular/http';
 import { FileSelectDirective, FileDropDirective, FileUploader } from 'ng2-file-upload';
 declare var jQuery: any;
-const URL = '/PBP3/person/importwork_file';
+const URL = '../person/importwork_file';
 
 @Component({
     templateUrl: 'app/baiwa/html/listworktype.component.html'
@@ -233,10 +233,8 @@ export class listworktype implements OnInit, AfterViewInit {
                 }
 
 
-                if(this.FormAddInput[i].code =="3"){
+                if(this.FormAddInput[i].name =='สัดส่วน(%)'){
        
-
-
                          if(this.FormAddInput[i].value > 100){
                             console.log("Number limit !");
                             tamp =0;

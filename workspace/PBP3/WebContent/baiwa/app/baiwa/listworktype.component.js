@@ -12,7 +12,7 @@ var core_1 = require('@angular/core');
 var Common_service_1 = require('./../service/Common.service');
 var http_1 = require('@angular/http');
 var ng2_file_upload_1 = require('ng2-file-upload');
-var URL = '/PBP3/person/importwork_file';
+var URL = '../person/importwork_file';
 var listworktype = (function () {
     function listworktype(commonService, http) {
         this.commonService = commonService;
@@ -170,7 +170,7 @@ var listworktype = (function () {
                 console.log("Required Now !");
                 tamp = 0;
             }
-            if (this.FormAddInput[i].code == "3") {
+            if (this.FormAddInput[i].name == 'สัดส่วน(%)') {
                 if (this.FormAddInput[i].value > 100) {
                     console.log("Number limit !");
                     tamp = 0;

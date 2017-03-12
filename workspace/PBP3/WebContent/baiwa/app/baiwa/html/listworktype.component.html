@@ -339,21 +339,16 @@
 						<label class="col-sm-3 form-control-label">{{a.name}}</label>
 						
 						<!--{{item.name}}-->
-						<div class="col-sm-9" *ngIf="a.code =='1' ">
-							<p class="form-control-static"><input type="text" [ngModelOptions]="{standalone: true}" name="{{a.name}}" [(ngModel)]="a.value" class="form-control" id="inputPassword" value="{{a.value}}" placeholder="{{a.name}}" required="required" ></p>
+						<div class="col-sm-9" *ngIf=" a.name != 'สัดส่วน(%)' " >
+							<p class="form-control-static"><input type="text" [ngModelOptions]="{standalone: true}" name="{{a.name}}" [(ngModel)]="a.value" class="form-control"  value="{{a.value}}" placeholder="{{a.name}}" required="required" ></p>
 							<small class="text-muted" style="color: #fa424a;" >* </small>
 						</div>
-						<!--{{item.number}}-->
-						<div class="col-sm-9" *ngIf="a.code =='2'  ||a.code =='4' || a.code =='5' ">
-							<p class="form-control-static"><input type="number" [ngModelOptions]="{standalone: true}" name="{{a.name}}" [(ngModel)]="a.value" class="form-control" id="inputPassword" value="{{a.value}}" placeholder="{{a.name}}" required="required" ></p>
+						<div class="col-sm-9" *ngIf=" a.name == 'สัดส่วน(%)' " >
+								<p class="form-control-static"><input type="number" [ngModelOptions]="{standalone: true}" name="{{a.name}}" max="100" min="0" [(ngModel)]="a.value" class="form-control" id="number" value="{{a.value}}"  name="number" placeholder="{{a.name}}" required="required" ></p>
 							<small class="text-muted" style="color: #fa424a;" >* กรอกค่าตัวเลข</small>
-						<!--{{item.number}}-->
 						</div>
-						<div class="col-sm-9" *ngIf=" a.code =='3'  ">
-							<p class="form-control-static"><input type="number" [ngModelOptions]="{standalone: true}" name="{{a.name}}" max="100" min="0" [(ngModel)]="a.value" class="form-control" id="number" value="{{a.value}}"  name="number" placeholder="{{a.name}}" required="required" ></p>
-							<small class="text-muted" style="color: #fa424a;" >* กรอกค่าตัวเลข</small>
 						<!--{{item.number}}-->
-						</div>
+
 
 					</div>
 
@@ -393,7 +388,7 @@
         <div class="row">
         
             <div class="col-md-8">
-
+					*ขนาดไม่เกิน 5MB เป็นต้น
                 <h3 style=" margin-top: 2.2rem; margin-bottom: 1.2rem;">Select files</h3>
 
                 <input type="file" class="form-control" ng2FileSelect [uploader]="uploader" multiple  /><br/> 

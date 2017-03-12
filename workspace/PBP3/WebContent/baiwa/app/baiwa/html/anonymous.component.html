@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col-lg-12 col-md-12">
-        <div class="col-lg-8 col-md-8">
+        <!--<div class="col-lg-8 col-md-8">
             <table id="table-edit" class="table table-bordered table-hover">
                 <thead>
                     <tr>
@@ -13,15 +13,14 @@
                         <td [hidden]="item.canEditRound1 =='Y' && item.canEditRound2 ==null">รอบ 1 &nbsp;&nbsp;{{item.round1StartDateShortThaiStr}} - {{item.round1EndDateShortThaiStr}}</td>
                         <td [hidden]="item.canEditRound1 =='Y' && item.canEditRound2 ==null ">รอบ 2 &nbsp;&nbsp;{{item.round2StartDateShortThaiStr}} - {{item.round2EndDateShortThaiStr}}</td>
 
-                        <!--<td [hidden]="item.canEditRound1 =='Y' && item.canEditRound2 == 'Y' ">{{item.evaluateTypeDesc}}</td>-->
-                        <!--<td colspan="2" [hidden]="item.canEditRound1 =='Y' && item.canEditRound2 == 'Y' " >รอบ 1 &nbsp;&nbsp; {{item.round1StartDateShortThaiStr}} - {{item.round1EndDateShortThaiStr}}</td>-->
+                      
 
                     </tr>
                 </tbody>
             </table>
-        </div>
+        </div>-->
         <div class="col-lg-4 col-md-4">
-            <a href="/PBP3/downloadDoc.htm?fileCode=declare{{this.facultyCode}}" class="list-group-item"><span>
+            <a href="../downloadDoc.htm?fileCode=declare{{this.facultyCode}}" class="list-group-item"><span>
                        <img src="/PBP3/baiwa/libs/img/pdf_logo.png">
                         &nbsp; ประกาศหลักเกณฑ์วิธีการคิดภาระงาน
                            <br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ทางวิชาการคณาจารย์ 
@@ -34,20 +33,20 @@
             <table id="table-edit" class="table table-bordered table-hover">
                 <thead>
                     <tr>
-                        <th rowspan="2"><div class="text-center">รอบการประเมิน ประจำปีการศึกษา</div></th>
-                        <th colspan="2">ภาระงานคาดหวัง ต่อปี</th>
+                        <th rowspan="2"><div class="text-center"> ประเภทภาระงาน</div></th>
+                        <!--<th colspan="2">ภาระงานคาดหวัง ต่อปี</th>-->
                     </tr>
-                    <tr>
+                    <!--<tr>
                         <th>ขั้นต่ำ (คะแนน)</th>
                         <th>ขั้นสูง (คะแนน)</th>
-                    </tr>
+                    </tr>-->
 
                 </thead>
                 <tbody>
                     <tr *ngFor="let item of pBPWorkTypeList">
                          <td><a [routerLink]="['/listPIByWorktype', item.code , item.academicYear]" >{{item.name}}</a></td>
-                        <td>{{item.minHour}}</td>
-                        <td>{{item.maxHour}}</td>
+                        <!--<td>{{item.minHour}}</td>
+                        <td>{{item.maxHour}}</td>-->
                     </tr>
                 </tbody>
             </table>

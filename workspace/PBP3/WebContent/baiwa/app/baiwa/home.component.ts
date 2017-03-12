@@ -9,7 +9,7 @@ import {MaxLengthPipe} from './../maxLength.pipe';
 import { Router, ActivatedRoute, NavigationCancel  } from '@angular/router';
 declare var jQuery: any;
 
-const URL1 = '/PBP3/pam/person/uploadPersonProfilePicture2';
+const URL1 = '../pam/person/uploadPersonProfilePicture2';
 
 
 @Component({

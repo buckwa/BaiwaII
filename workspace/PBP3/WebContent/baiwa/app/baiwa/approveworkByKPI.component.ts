@@ -129,7 +129,7 @@ export class approveworkByKPI implements OnInit {
     }
     getkpiworksucess(response:any){
         var json = response.json(JSON.stringify(response._body));
-        this.academicKPIUserMappingList = json.department.academicPersonList[0].academicKPIUserMappingList;
+        this.academicKPIUserMappingList = json.academicKPIUserMappingList;
         //this.person = json.department.academicPersonList[0].thaiName +"  "+ json.department.academicPersonList[0].thaiSurname;
         //console.log("getkpimapping :" +this.academicKPIUserMappingList)
         this.commonService.unLoading();

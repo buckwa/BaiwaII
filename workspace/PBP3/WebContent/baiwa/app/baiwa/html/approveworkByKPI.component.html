@@ -14,10 +14,10 @@
                 <tr *ngFor="let item of academicKPIUserMappingList; let i = index">
 
                     <td width="60%"><a href="#" data-toggle="modal" (click)="ClickGetPointKPI(item.kpiUserMappingId,i)" data-target="#myModal"
-                            data-backdrop="static" data-keyboard="false">{{item.academicKPIAttributeValueList[0].value}}</a>
+                            data-backdrop="static" data-keyboard="false">{{item.thaiName}}</a>
                     </td>
                     <td width="20%">
-                        {{item.thaiName}} {{item.thaiSurname}}
+                        {{item.name}}
                     </td>
                     <td width="20%" *ngIf="item.status =='APPROVED'" style="color:green">อนุมัติแล้ว</td>
                     <td width="20%" *ngIf="item.status !='APPROVED'" style="color:red">รออนุมัติ</td>

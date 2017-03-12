@@ -4,9 +4,10 @@ import { Http, Headers, Response } from '@angular/http';
 import { FileSelectDirective, FileDropDirective, FileUploader } from 'ng2-file-upload';
 import {DomSanitizer} from '@angular/platform-browser';
 import {Observable} from 'rxjs/Rx';
+import { Router, ActivatedRoute, NavigationCancel  } from '@angular/router';
 declare var jQuery: any;
 
-const URL1 = '/PBP3/person/importwork_file';
+const URL1 = '../person/importwork_file';
 
 
 @Component({
@@ -41,7 +42,7 @@ export class AcademicWork implements OnInit, AfterViewInit {
     public messageList: any[];
     public uploader: FileUploader = new FileUploader({ url: URL1 });
 
-    constructor(private commonService: CommonService, private http: Http, private sanitizer: DomSanitizer) {
+    constructor(private router: Router,private commonService: CommonService, private http: Http, private sanitizer: DomSanitizer) {
         this.academy = this.setdefualtkpi();
         this.kpiuserList = [];
         this.kpival = [];
@@ -352,7 +353,9 @@ export class AcademicWork implements OnInit, AfterViewInit {
 
     GetSSDeteleImport(response: any) {
         this.result = response.json(JSON.stringify(response._body));
-        location.reload();
+        
+        setTimeout(() => this.GetAcademicWork(this.user.userName, this.currentAcademicYear, this.evaluateRoundValue), 250);
+
 
     }
 
@@ -361,10 +364,42 @@ export class AcademicWork implements OnInit, AfterViewInit {
     }
 
     clickedEditImport(){
-    this.Model.academicKPIAttributeValueList = this.pointLPIList;
+
+
+        var keys = Object.keys(this.pointLPIList);
+        var len = keys.length;
+        var tamp =1;
+            for(var i=0;i<len;i++) {
+                
+                if(this.pointLPIList[i].value == null ){
+                
+                    console.log("Required Now !");
+                    tamp =0;
+                }
+
+
+                if(this.pointLPIList[i].name =='สัดส่วน(%)'){
+       
+                         if(this.pointLPIList[i].value > 100){
+                            console.log("Number limit !");
+                            tamp =0;
+                         }
+
+                }
+            }
+            
+            if(tamp==1){
+                 this.Model.academicKPIAttributeValueList = this.pointLPIList;
     var url = "../pam/person/editImportwork";
     this.http.post(url, this.Model).subscribe(response => this.EditSuccess(response),
-    error => this.EditError(error), () => console.log("AdminUserCreate : Success saveUser !"));        
+    error => this.EditError(error), () => console.log("AdminUserCreate : Success saveUser !"));
+
+            }
+
+
+
+
+           
 
 
     }
@@ -374,7 +409,9 @@ export class AcademicWork implements OnInit, AfterViewInit {
         
         if(this.result.status=='S001'){
              alert("Success !");
-             location.reload();
+            
+        setTimeout(() => this.GetAcademicWork(this.user.userName, this.currentAcademicYear, this.evaluateRoundValue), 250);
+
         }else{
              alert("Error !");
         }

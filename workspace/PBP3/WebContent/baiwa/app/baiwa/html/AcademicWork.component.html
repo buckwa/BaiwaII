@@ -169,19 +169,34 @@
 
                             <div class="form-group row" style="margin-bottom: 2px;" *ngFor="let a of pointLPIList ">
                                 <label class="col-sm-3 form-control-label">{{a.name}}</label>
-                                <div class="col-sm-9">
+                                <div class="col-sm-9" *ngIf="statusKpi " >
 
-                                    <p class="form-control-static" *ngIf="statusKpi" ><input type="text" [ngModelOptions]="{standalone: true}" name="{{a.name}}" [(ngModel)]="a.value"
+                                    <p class="form-control-static"  ><input type="text" [ngModelOptions]="{standalone: true}" name="{{a.name}}" [(ngModel)]="a.value"
                                             class="form-control" id="inputPassword" value="{{a.value}}" placeholder="{{a.name}}"
                                             required="required" readOnly="true" ></p>
-                                    <p class="form-control-static"  *ngIf="!statusKpi" ><input type="text" [ngModelOptions]="{standalone: true}" name="{{a.name}}" [(ngModel)]="a.value"
+
+                                </div>
+
+                               <div class="col-sm-9" *ngIf="!statusKpi && a.name != 'สัดส่วน(%)'  " >
+
+                        <p class="form-control-static"  ><input type="text" [ngModelOptions]="{standalone: true}" name="{{a.name}}" [(ngModel)]="a.value"
                                             class="form-control" id="inputPassword" value="{{a.value}}" placeholder="{{a.name}}"
                                             required="required" ></p>
-                                    <!--{{item.name}}-->
+
+                                            
+                                </div>
+
+                                <div class="col-sm-9" *ngIf="!statusKpi && a.name == 'สัดส่วน(%)' " >
+            
+            <p class="form-control-static"><input type="number" [ngModelOptions]="{standalone: true}" name="{{a.name}}" max="100" min="0" [(ngModel)]="a.value" class="form-control" id="number" value="{{a.value}}"  name="number" placeholder="{{a.name}}" required="required" ></p>
+							<small class="text-muted" style="color: #fa424a;" >* กรอกค่าตัวเลข</small>
+
+                                            
                                 </div>
                             </div>
 
 
+                                    
 
                             <div class="form-group row" style="margin-bottom: 2px;">
                                 <label class="col-sm-3 form-control-label">ตัวคูณ</label>
@@ -359,7 +374,7 @@
                     </div>
                 </div>
                 <div class="modal-upload-bottom">
-                    <button type="button" class="btn btn-rounded btn-default" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-rounded btn-default" data-dismiss="modal">Close</button>
                     
                 </div>
             </form>

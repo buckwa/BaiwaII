@@ -15,7 +15,7 @@ var ng2_file_upload_1 = require('ng2-file-upload');
 var platform_browser_1 = require('@angular/platform-browser');
 var Rx_1 = require('rxjs/Rx');
 var router_1 = require('@angular/router');
-var URL1 = '/PBP3/pam/person/uploadPersonProfilePicture2';
+var URL1 = '../pam/person/uploadPersonProfilePicture2';
 var home = (function () {
     function home(router, commonService, http, sanitizer) {
         this.router = router;

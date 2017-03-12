@@ -14,9 +14,11 @@ var http_1 = require('@angular/http');
 var ng2_file_upload_1 = require('ng2-file-upload');
 var platform_browser_1 = require('@angular/platform-browser');
 var Rx_1 = require('rxjs/Rx');
-var URL1 = '/PBP3/person/importwork_file';
+var router_1 = require('@angular/router');
+var URL1 = '../person/importwork_file';
 var AcademicWork = (function () {
-    function AcademicWork(commonService, http, sanitizer) {
+    function AcademicWork(router, commonService, http, sanitizer) {
+        this.router = router;
         this.commonService = commonService;
         this.http = http;
         this.sanitizer = sanitizer;
@@ -267,23 +269,42 @@ var AcademicWork = (function () {
         }, this));
     };
     AcademicWork.prototype.GetSSDeteleImport = function (response) {
+        var _this = this;
         this.result = response.json(JSON.stringify(response._body));
-        location.reload();
+        setTimeout(function () { return _this.GetAcademicWork(_this.user.userName, _this.currentAcademicYear, _this.evaluateRoundValue); }, 250);
     };
     AcademicWork.prototype.GetERRDeteleImport = function (response) {
         console.log("Error!");
     };
     AcademicWork.prototype.clickedEditImport = function () {
         var _this = this;
-        this.Model.academicKPIAttributeValueList = this.pointLPIList;
-        var url = "../pam/person/editImportwork";
-        this.http.post(url, this.Model).subscribe(function (response) { return _this.EditSuccess(response); }, function (error) { return _this.EditError(error); }, function () { return console.log("AdminUserCreate : Success saveUser !"); });
+        var keys = Object.keys(this.pointLPIList);
+        var len = keys.length;
+        var tamp = 1;
+        for (var i = 0; i < len; i++) {
+            if (this.pointLPIList[i].value == null) {
+                console.log("Required Now !");
+                tamp = 0;
+            }
+            if (this.pointLPIList[i].name == 'สัดส่วน(%)') {
+                if (this.pointLPIList[i].value > 100) {
+                    console.log("Number limit !");
+                    tamp = 0;
+                }
+            }
+        }
+        if (tamp == 1) {
+            this.Model.academicKPIAttributeValueList = this.pointLPIList;
+            var url = "../pam/person/editImportwork";
+            this.http.post(url, this.Model).subscribe(function (response) { return _this.EditSuccess(response); }, function (error) { return _this.EditError(error); }, function () { return console.log("AdminUserCreate : Success saveUser !"); });
+        }
     };
     AcademicWork.prototype.EditSuccess = function (response) {
+        var _this = this;
         this.result = response.json(JSON.stringify(response._body));
         if (this.result.status == 'S001') {
             alert("Success !");
-            location.reload();
+            setTimeout(function () { return _this.GetAcademicWork(_this.user.userName, _this.currentAcademicYear, _this.evaluateRoundValue); }, 250);
         }
         else {
             alert("Error !");
@@ -296,7 +317,7 @@ var AcademicWork = (function () {
         core_1.Component({
             templateUrl: 'app/baiwa/html/AcademicWork.component.html'
         }), 
-        __metadata('design:paramtypes', [Common_service_1.CommonService, http_1.Http, platform_browser_1.DomSanitizer])
+        __metadata('design:paramtypes', [router_1.Router, Common_service_1.CommonService, http_1.Http, platform_browser_1.DomSanitizer])
     ], AcademicWork);
     return AcademicWork;
 }());

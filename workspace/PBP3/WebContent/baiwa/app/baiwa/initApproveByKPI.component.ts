@@ -106,7 +106,7 @@ export class initApproveByKPI implements OnInit {
         this.workTypeName = this.model.workTypeName;
         this.academicYear = this.model.academicYear;
         this.academicKPIList = this.model.academicKPIList;
-
+        this.headApprove =  this.model.headApprove;
         this.academicYearList = this.model.academicYearList;
         this.pBPWorkTypeList = this.model.pBPWorkTypeList;
         this.facultyList = this.model.facultyList;

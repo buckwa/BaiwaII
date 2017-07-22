@@ -10,9 +10,10 @@
     "typings": "typings",
     "clean": "rimraf dist/*",
     "build": "npm run clean && tsc",
-    "build_prod": "npm run build && browserify -s main app/main.js > dist/bundle.js && npm run b_zone && npm run b_Reflect && npm run minify",
-    "b_zone": "browserify -s main node_modules/zone.js/dist/zone.js > dist/zone.js",
-    "b_Reflect": "browserify -s main node_modules/reflect-metadata/Reflect.js > dist/Reflect.js",
+    "build_prod": "npm run build && browserify -s main app/main.js > dist/bundle.js && npm run b_zone && npm run b_shim && npm run minify",
+    "b_zone" : "browserify -s main node_modules/zone.js/dist/zone.js > dist/zone.js",
+    "b_Reflect" : "browserify -s main node_modules/reflect-metadata/Reflect.js > dist/Reflect.js",
+    "b_shim" : "browserify -s main node_modules/core-js/client/shim.min.js > dist/shim.min.js",
     "minify": "uglifyjs dist/bundle.js --screw-ie8 --compress --mangle --output dist/bundle.min.js"
   },
   "license": "ISC",
@@ -44,5 +45,7 @@
     "http-server": "^0.9.0",
     "uglifyjs": "^2.4.10",
     "rimraf": "^2.5.4"
+
+
   }
 }

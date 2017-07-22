@@ -13,7 +13,7 @@ export class listKPIByWorktype implements OnInit {
     private year: any;
     public listacadamicwork: any;
     public academicKPIList: any[];
-    constructor(private route: ActivatedRoute, private http: Http) {
+    constructor(private router: Router,private route: ActivatedRoute, private http: Http) {
 
     }
 
@@ -29,7 +29,8 @@ export class listKPIByWorktype implements OnInit {
     }
 
     public blackpage() {
-        window.location.href = "#/anonymous";
+    
+        this.router.navigate(['/anonymous']);
 
     }
     public getAcademicList() {

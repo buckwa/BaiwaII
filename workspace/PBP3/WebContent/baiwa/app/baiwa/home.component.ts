@@ -141,7 +141,7 @@ export class home implements OnInit, AfterViewInit {
             this.evaluateRoundList = this.profile.evaluateRoundList;
             
         }
-
+        this.GetRadarPlotNew(this.user.userName, this.currentAcademicYear, this.evaluateRoundValue);
     }
     public GetPersonError(error: String) {
         console.log("GetPersonError.")
@@ -192,7 +192,7 @@ export class home implements OnInit, AfterViewInit {
         }
 
 
-        setTimeout(() => this.GetRadarPlotNew(this.user.userName, this.currentAcademicYear, this.evaluateRoundValue), 250);
+      
 
 
     }

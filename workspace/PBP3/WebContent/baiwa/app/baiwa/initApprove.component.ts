@@ -13,8 +13,9 @@ export class InitApporve implements OnInit {
     public academicKPIUserMappingList: any[];
     public json: any;
     public nameDepart: any;
+    public profile: any;
     user: any;
-    year:any;
+    year: any;
 
 
     constructor(private commonService: CommonService, private http: Http) {
@@ -32,20 +33,42 @@ export class InitApporve implements OnInit {
         return this.http.get(url).subscribe(response => this.GetUserSessionSucess(response),
             error => this.GetUserSessionError(error), () => console.log("editdoneUser !"));
     }
+
     public GetUserSessionSucess(response: any) {
         this.user = response.json(JSON.stringify(response._body));
         this.nameDepart = this.user.facultyName;
         this.year = this.user.currentAcademicYear;
-        this.initTotle();
+        
+        this.GetPersonByAcadamy(this.user.userName, this.user.currentAcademicYear);
+
 
     }
     public GetUserSessionError(error: String) {
         console.log("GetPersonError.")
 
     }
+
+    public GetPersonByAcadamy(user: String, year: String) {
+        var url = "../person/getPersonByAcademicYear/" + user + "/" + year
+        this.http.get(url).subscribe(response => this.GetPersonSucess(response),
+            error => this.GetPersonError(error), () => console.log("editdone !")
+        );
+    }
+
+    public GetPersonSucess(response: any) {
+        
+       this.profile = response.json(JSON.stringify(response._body));
+       this.initTotle();
+
+    }
+    public GetPersonError(error: String) {
+        console.log("GetPersonError.")
+
+    }
+
     initTotle() {
         this.commonService.loading();
-        var url = "../head/init";
+        var url = "../head/init/"+this.profile.evaluateRound;
         this.http.get(url).subscribe(response => this.initTotleSucess(response),
             error => this.initTotlError(error), () => console.log("editdoneUser !"));
     }

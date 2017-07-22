@@ -25,8 +25,14 @@ export class approvework implements OnInit {
     public person:any;
     public academicKPI:any;
     public indexKPI:any;
+    public user: any;
+    public profile: any;
+    public replyMessage: any;
+    public Model:any;
+    public codeNew:any;
+    public name;
 
-        constructor(private route: ActivatedRoute,private http:Http,private commonService: CommonService){
+        constructor(private router: Router,private route: ActivatedRoute,private http:Http,private commonService: CommonService){
         this.pointKPI = this.setdefualtpoitkpi();
         this.academicKPI =this.setacademicKPIdefault();
         this.academicKPIUserMappingList = this.kpiusermappingList();
@@ -56,18 +62,53 @@ export class approvework implements OnInit {
         }]
     }
     ngOnInit(){
-         this.sub = this.route.params.subscribe(params => {
+       this.sub = this.route.params.subscribe(params => {
        this.email = params['email']; // (+) converts string 'id' to a number
        this.rond = +params['rond'];
        // In a real app: dispatch action to load the details here.
     });
-    this.getwork();
+        this.GetUserSession();
 
     }
+
+    public GetUserSession() {
+        var url = "../person/getUserSession";
+        return this.http.get(url).subscribe(response => this.GetUserSessionSucess(response),
+            error => this.GetUserSessionError(error), () => console.log("editdoneUser !"));
+    }
+    public GetUserSessionSucess(response: any) {
+        this.user = response.json(JSON.stringify(response._body));
+        this.GetPersonByAcadamy(this.user.userName, this.user.currentAcademicYear);
+
+       
+    }
+    public GetUserSessionError(error: String) {
+        console.log("GetPersonError.")
+
+    }
+
+    public GetPersonByAcadamy(user: String, year: String) {
+        var url = "../person/getPersonByAcademicYear/" + user + "/" + year
+        this.http.get(url).subscribe(response => this.GetPersonSucess(response),
+            error => this.GetPersonError(error), () => console.log("editdone !")
+        );
+    }
+
+    public GetPersonSucess(response: any) {
+        this.profile = response.json(JSON.stringify(response._body));
+        this.getwork();
+
+    }
+    public GetPersonError(error: String) {
+        console.log("GetPersonError.")
+
+    }
+
+    
     getwork(){
         //this.personWorkList = this.personWork.academicKPIUserMappingList;
         this.commonService.loading();
-        var url ="../head/initByUserName/"+this.email+"/1"
+        var url ="../head/initByUserName/"+this.email+"/"+this.profile.evaluateRound;
         this.http.get(url).subscribe(response => this.getkpiworksucess(response),
             error => this.getkpiworkeror(error), () => console.log("editdoneUser !"));
     }
@@ -75,14 +116,15 @@ export class approvework implements OnInit {
         console.log("error !")   
     }
     getkpiworksucess(response:any){
-        var json = response.json(JSON.stringify(response._body));
-        this.academicKPIUserMappingList = json.department.academicPersonList[0].academicKPIUserMappingList;
-        this.person = json.department.academicPersonList[0].thaiName +"  "+ json.department.academicPersonList[0].thaiSurname;
+     var json = response.json(JSON.stringify(response._body));
+        this.academicKPIUserMappingList = json.academicKPIUserMappingList;
+        this.name =this.academicKPIUserMappingList[0].name ;
         //console.log("getkpimapping :" +this.academicKPIUserMappingList)
         this.commonService.unLoading();
     }
     blackpage(){
-        window.location.href = "#/initApprove";
+        
+        this.router.navigate(['/initApprove']);
     }
     public ClickGetPointKPI(Code: string,indexKPI:string) {
         this.indexKPI = indexKPI;
@@ -139,4 +181,25 @@ export class approvework implements OnInit {
 
         console.log("ApproveSucess!");
     }
+
+        public sentReplyPBPMessage(){
+        if(this.replyMessage!=null){
+        this.Model.replyMessage = this.replyMessage;
+        var url = "../head/pbp/replyMessage";//ติดไว้ก่อน
+        this.http.post(url, this.Model).subscribe(response => this.ReplyPBPMessageSucess(response),
+            error => this.ReplyPBPMessageError(error), () => console.log("AdminUserCreate : Success saveUser !"));
+        }
+    }
+    
+    ReplyPBPMessageSucess(response:any){
+        var temp = response.json(JSON.stringify(response._body));
+        this.ClickGetPointKPI(this.codeNew ,this.indexKPI);
+    }
+    ReplyPBPMessageError(response:any){
+        console.log("Error!");
+      
+    }
+
+
+
 }

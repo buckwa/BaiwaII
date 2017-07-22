@@ -1,14 +1,25 @@
 
 			
-			
-			
-			
-			
-			<header class="section-header">
+			<!--<header class="section-header" *ngIf=" evaluateRoundValue == 'ข้าราชการ' ">
 				<div class="tbl">
 					<div class="tbl-row">
 						<div class="tbl-cell">
-							<h2>เลือกรายการภาระงานเพื่อนำเข้าผลงาน</h2>
+							<h2>ระงับการนำเข้าผลงานชั่วคราวเพื่อให้ประธานสาขาอนุมัติผลงงานรอบที่1</h2>
+							
+						</div>
+						
+						
+					</div>
+				</div>
+			</header>-->
+			
+			<!--*ngIf=" evaluateRoundValue != 'ข้าราชการ' "-->
+			
+			<header class="section-header" >
+				<div class="tbl">
+					<div class="tbl-row">
+						<div class="tbl-cell">
+							<h2>เลือกรายการภาระงานเพื่อนำเข้าผลงาน ปีการศึกษา {{currentAcademicYear}}</h2>
 							
 						</div>
 						
@@ -19,7 +30,7 @@
 
 
 
-			<section class="tabs-section">
+			<section class="tabs-section"  >
 				<div class="tabs-section-nav">
 					<div class="tbl">
 						<ul class="nav" role="tablist">
@@ -91,9 +102,11 @@
 	                                <div class="tbl-row">
 	                                    <div class="tbl-cell">
 	                                        <span class="user-card-row-name">
+
 	                                        <a href="#" data-toggle="modal" (click)="clickedAddImport(item.code)" data-target="#myModal" 
 	                                        data-backdrop="static" data-keyboard="false"
 	                                        >{{item.name}}</a>
+
 	                                        </span>
 	                                    </div>
 	                                    <div class="tbl-cell tbl-cell-date">
@@ -301,7 +314,7 @@
        <form >
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">นำเข้าภาระงานด้าน งานวิชาการ</h4>
+          <h4 class="modal-title">นำเข้าภาระงาน </h4>
         </div>
         <div class="modal-body">
           <div class="row">
@@ -473,3 +486,31 @@
     </div>
   </div>
 
+
+
+
+
+ <!-- Modal 2-->
+  <div class="modal fade" id="myModal2" role="dialog">
+    <div class="modal-dialog " style=" width: 80%;">
+      <div class="modal-content">
+       <form >
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">นำเข้าภาระงาน </h4>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+          
+	       ปิดปรับปรุงชั่วคราว
+
+	         
+          </div>
+        </div>
+        <div class="modal-upload-bottom">
+          <button type="button" class="btn btn-rounded btn-success" data-dismiss="modal" (click)="exitModal()" >เสร็จสิ้น</button>
+        </div>
+        </form>
+      </div>
+    </div>
+  </div>

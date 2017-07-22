@@ -1,7 +1,7 @@
 <div class="box-typical box-typical-padding">
     <div class="row">
         <div class="col-sm-12 text-center">
-            <h4>{{person}}</h4>
+            <h4 style=" margin-bottom: 2.2rem; ">{{name}}</h4>
         </div>
     </div>
 
@@ -19,7 +19,7 @@
                     <tr *ngFor="let item of academicKPIUserMappingList; let i = index">
 
                         <td  width="80%" ><a href="#" data-toggle="modal" (click)="ClickGetPointKPI(item.kpiUserMappingId,i)" data-target="#myModal"
-                                data-backdrop="static" data-keyboard="false">{{item.academicKPIAttributeValueList[0].value}}</a>
+                                data-backdrop="static" data-keyboard="false">{{item.thaiName}}</a>
                         </td>
                         <td width="20%" *ngIf="item.status =='APPROVED'" style="color:green">อนุมัติแล้ว</td>
                         <td  width="20%" *ngIf="item.status !='APPROVED'" style="color:red">รออนุมัติ</td>
@@ -103,7 +103,7 @@
 
                                     <div class="col-md-12">
 
-                                        <h5> แนบเอกสารประกอบการพิจารณา :</h5>
+                                        <h5 style="    margin-bottom: 10px;"> แนบเอกสารประกอบการพิจารณา :</h5>
 
                                         <table class="table">
                                             <thead>
@@ -135,20 +135,63 @@
 
                                     </div>
                                     <div class="row cok-md-12">
-                                         <div class="text-center">
-                                             <button type="button" class="btn btn-inline btn-success " *ngIf="!statusKpi" (click)="approveKPIWork(pointKPI.kpiUserMappingId)"> Apperove</button>
-                                             <button type="button" class="btn btn-inline btn-success " *ngIf="statusKpi" (click)="unapproveKPIWork(pointKPI.kpiUserMappingId)"> UnApperove</button>
-                                             </div>
+                                        <div class="text-center">
+                                            <button type="button" class="btn btn-inline btn-success " *ngIf="!statusKpi" (click)="approveKPIWork(pointKPI.kpiUserMappingId)"> Approve</button>
+                                            <button type="button" class="btn btn-inline btn-success " *ngIf="statusKpi" (click)="unapproveKPIWork(pointKPI.kpiUserMappingId)"> UnApprove</button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        <div class="row"  *ngIf="!statusKpi" >
+                            <div class="col-md-12">
+                                <div class="line"></div>
+                                <h5 style="    margin-bottom: 10px;"> ข้อความ :</h5>
+
+                                <section class="chat-area">
+                                    <div class="chat-dialog-area scrollable-block">
+
+                                        <div class="chat-message" *ngFor="let item of messageList" >
+                                           
+                                            <div class="chat-message-photo">
+                                                <img src="/PBP3/baiwa/libs/img/avatar-2-64.png" alt="">
+                                            </div>
+                                            <div class="chat-message-header">
+                                                <div class="tbl-row">
+                                                    <div class="tbl-cell tbl-cell-name">{{item.createBy}}</div>
+                                                    <div class="tbl-cell tbl-cell-date">{{item.createDateTimeStr}}</div>
+                                                </div>
+                                            </div>
+                                            <div class="chat-message-content">
+                                                <div class="chat-message-txt">{{item.messageDetail}}</div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <!--.chat-dialog-area-->
+
+                                </section>
+                                <!--.chat-area-->
+
+                                <div class="chat-area-bottom">
+                                    <form class="write-message">
+                                        <div class="form-group">
+                                            <textarea rows="1" [(ngModel)]="replyMessage" name="replyMessage" class="form-control" placeholder="Type a message" ></textarea>
+                                            <button type="submit" (click)="sentReplyPBPMessage()" class="btn btn-rounded">ส่ง</button>
+                                        </div>
+                                    </form>
+                                </div>
+                                <!--.chat-area-bottom-->
+
+                            </div>
+                        </div>
+
 
                     </div>
                 </div>
                 <div class="modal-upload-bottom">
-                    <button type="button" class="btn btn-rounded btn-default" data-dismiss="modal">Cancel</button>
-                    <button type="submit" class="btn btn-rounded" >Done</button>
+                    
+                    <button type="submit" class="btn btn-rounded" data-dismiss="modal">Done</button>
                 </div>
             </form>
         </div>

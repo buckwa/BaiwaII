@@ -215,7 +215,8 @@ export class AdminUserCreate {
         this.resule = this.resule.description;
         if(this.resule != "E002"){
             alert("บันทึกเรียบร้อย !");
-            window.location.href = '#/AdminWorkUser';
+
+              this.router.navigate(['/AdminWorkUser']);
             console.log("AdminUserCreate : Ready SaveUserJsonSucess !");
         }else{
             alert("ชื่อผู้ใช้ระบบซ้ำ  !");

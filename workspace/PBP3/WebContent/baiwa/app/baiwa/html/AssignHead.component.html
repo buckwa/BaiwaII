@@ -1,0 +1,45 @@
+<div class="box-typical box-typical-padding">
+    <div class="row">
+        <div class="col-sm-12 text-center">
+            <h4>{{person}}</h4>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-1" ></div>
+        <div class="col-sm-10">
+            <table id="table-edit" class="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th>ชื่อ</th>
+                        <th>สถานะ</th>
+                        <th>แต่งตั้ง</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of Person1; " >
+
+                        <td  width="80%" >{{item.thaiName}}  {{item.thaiSurname}} </td>
+                              <td  width="20%"  style="color:red">ผู้ช่วยอนุมัติผลงาน</td>
+                        <td  width="20%" >	<button type="button" class="btn btn-rounded btn-danger" (click)="DeletePersonList(item.email)" data-dismiss="modal">ยกเลิก</button></td>
+                        
+                    </tr>
+                    <tr  *ngFor="let item of Person2; "  >
+
+                        <td  width="80%" >{{item.thaiName}}  {{item.thaiSurname}}  </td>
+                        <td width="20%"  style="color:green">ผู้ใช้งาน</td>
+                        <td  width="20%" >	<button type="button" class="btn btn-rounded btn-primary" (click)="EditPersonList(item.email)"  data-dismiss="modal">แต่งตั้ง </button></td>
+
+
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+        <div class="col-sm-1" ></div>
+
+    </div>
+
+   
+</div>
+

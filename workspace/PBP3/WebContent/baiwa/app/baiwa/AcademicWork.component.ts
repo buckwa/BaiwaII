@@ -170,20 +170,29 @@ export class AcademicWork implements OnInit, AfterViewInit {
         for (var i = 0; i < this.kpiuserList.length; i++) {
             this.kpival[i] = [];
             for (var j = 0; j < this.kpiuserList[i].length; j++) {
-                if (this.kpiuserList[i][j].academicKPIAttributeValueList.length == 2) {
-                    var temp = this.kpiuserList[i][j].academicKPIAttributeValueList[1].value;
-                    this.kpival[i][j] = temp + "%";
 
-                } else if (this.kpiuserList[i][j].academicKPIAttributeValueList.length == 3) {
-                    this.kpival[i][j] = "";
+                for (var k = 0; k < this.kpiuserList[i][j].academicKPIAttributeValueList.length; k++) {
 
-                } else if (this.kpiuserList[i][j].academicKPIAttributeValueList.length == 4) {
-                    var temp = this.kpiuserList[i][j].academicKPIAttributeValueList[2].value;
-                    this.kpival[i][j] = temp + "%";
-
-                } else {
-                    this.kpival[i][j] = "";
+                    if(this.kpiuserList[i][j].academicKPIAttributeValueList[k].name == 'สัดส่วน(%)'){
+                          var temp = this.kpiuserList[i][j].academicKPIAttributeValueList[k].value;
+                          this.kpival[i][j] = temp + "%";
+                    }
                 }
+
+                // if (this.kpiuserList[i][j].academicKPIAttributeValueList.length == 2) {
+                //     var temp = this.kpiuserList[i][j].academicKPIAttributeValueList[1].value;
+                //     this.kpival[i][j] = temp + "%";
+
+                // } else if (this.kpiuserList[i][j].academicKPIAttributeValueList.length == 3) {
+                //     this.kpival[i][j] = "";
+
+                // } else if (this.kpiuserList[i][j].academicKPIAttributeValueList.length == 4) {
+                //     var temp = this.kpiuserList[i][j].academicKPIAttributeValueList[2].value;
+                //     this.kpival[i][j] = temp + "%";
+
+                // } else {
+                //     this.kpival[i][j] = "";
+                // }
 
             }
 
@@ -353,9 +362,9 @@ export class AcademicWork implements OnInit, AfterViewInit {
 
     GetSSDeteleImport(response: any) {
         this.result = response.json(JSON.stringify(response._body));
-        
+        location.reload();
         setTimeout(() => this.GetAcademicWork(this.user.userName, this.currentAcademicYear, this.evaluateRoundValue), 250);
-
+        
 
     }
 

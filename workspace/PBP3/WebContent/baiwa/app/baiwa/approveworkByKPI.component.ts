@@ -23,14 +23,14 @@ export class approveworkByKPI implements OnInit {
     public academicKPI:any;
     public indexKPI:any;
     public Model:any;
-
+    public workcode:any;
     public user: any;
     public profile: any;
     public replyMessage: any;
 
     public messageList: any[];
 
-        constructor(private route: ActivatedRoute,private http:Http,private commonService: CommonService){
+        constructor(private route: ActivatedRoute,private http:Http,private commonService: CommonService, private router: Router){
          this.pointKPI = this.setdefualtpoitkpi();
          this.academicKPI =this.setacademicKPIdefault();
          this.academicKPIUserMappingList = this.kpiusermappingList();
@@ -74,6 +74,12 @@ export class approveworkByKPI implements OnInit {
         this.route.params.subscribe(params => this.status = params["status"]);
         if (this.status) {
             console.log("status :", this.status);
+            
+        }
+
+        this.route.params.subscribe(params => this.workcode = params["workcode"]);
+        if (this.status) {
+            console.log("workcode :", this.workcode);
             
         }
 
@@ -135,7 +141,8 @@ export class approveworkByKPI implements OnInit {
         this.commonService.unLoading();
     }
     blackpage(){
-        window.location.href = "#/initApproveByKPI";
+       
+          this.router.navigate(['/initApproveByKPI',  this.workcode  ]);
     }
     public ClickGetPointKPI(Code: string,indexKPI:string) {
         this.indexKPI = indexKPI;

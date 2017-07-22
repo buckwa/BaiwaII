@@ -33,6 +33,9 @@ export class listworktype implements OnInit, AfterViewInit {
     public statusActiveUpload: boolean = false;
     public validType:boolean;
     public valid: boolean = true;
+    public currentAcademicYear :any;
+    public profile :any;
+    public evaluateRoundValue :any;
 
 
     constructor(private commonService: CommonService, private http: Http) {
@@ -188,10 +191,27 @@ export class listworktype implements OnInit, AfterViewInit {
     }
     public GetUserSessionSucess(response:any){
         this.user =response.json(JSON.stringify(response._body));
-
-        this.GetDataInport(this.user.facultyCode,this.user.currentAcademicYear);
+        this.currentAcademicYear =this.user.currentAcademicYear;
+        this.GetPersonByAcadamy(this.user.userName, this.currentAcademicYear);
+        
 
         
+    }
+
+    public GetPersonByAcadamy(user: String, year: String) {
+        var url = "../person/getPersonByAcademicYear/" + user + "/" + year
+        this.http.get(url).subscribe(response => this.GetPersonSucess(response),
+            error => this.GetUserSessionError(error), () => console.log("editdone !")
+        );
+    }
+
+
+    public GetPersonSucess(response: any) {
+        this.profile = response.json(JSON.stringify(response._body));
+
+        this.evaluateRoundValue = this.profile.employeeTypeNo;
+
+        this.GetDataInport(this.user.facultyCode,this.user.currentAcademicYear);
     }
     public GetUserSessionError (error :String){
         console.log("GetPersonError.")

@@ -80,7 +80,8 @@ export class headWorkTypeBarChart implements OnInit {
 
             },
             title: {
-                text: "ระดับคะแนนในภาควิชา ด้านวิชาการ ค่่าเฉลี่ย  " + start + "  (เกณฑ์ขั้นต่ำ:" + this.json.minDesc1 + "   เกณฑ์ขั้นสูง:" + this.json.maxDesc1 + ")"
+                // text: "ระดับคะแนนในภาควิชา ด้านวิชาการ ค่่าเฉลี่ย  " + start + "  (เกณฑ์ขั้นต่ำ:" + this.json.minDesc1 + "   เกณฑ์ขั้นสูง:" + this.json.maxDesc1 + ")"
+                               text: "ระดับคะแนนในภาควิชา ด้านวิชาการ ค่่าเฉลี่ย  " + start + "  "
             },
             series: [{
                 type: "column",
@@ -138,7 +139,8 @@ export class headWorkTypeBarChart implements OnInit {
 
             },
             title: {
-                text: "ระดับคะแนนในภาควิชา ด้านงานพัฒนาวิชาการ  ค่่าเฉลี่ย  " + this.json.mean2 + "  (เกณฑ์ขั้นต่ำ:" + this.json.minDesc2 + "   เกณฑ์ขั้นสูง:" + this.json.maxDesc2 + ")"
+                // text: "ระดับคะแนนในภาควิชา ด้านงานพัฒนาวิชาการ  ค่่าเฉลี่ย  " + this.json.mean2 + "  (เกณฑ์ขั้นต่ำ:" + this.json.minDesc2 + "   เกณฑ์ขั้นสูง:" + this.json.maxDesc2 + ")"
+                 text: "ระดับคะแนนในภาควิชา ด้านงานพัฒนาวิชาการ  ค่่าเฉลี่ย  " + this.json.mean2 + " "
             },
             series: [{
                 type: "column",
@@ -196,7 +198,8 @@ export class headWorkTypeBarChart implements OnInit {
 
             },
             title: {
-                text: "ระดับคะแนนในภาควิชา ด้านงานวิจัย  ค่่าเฉลี่ย  " + this.json.mean3 + "  (เกณฑ์ขั้นต่ำ:" + this.json.minDesc3 + "   เกณฑ์ขั้นสูง:" + this.json.maxDesc3 + ")"
+                text: "ระดับคะแนนในภาควิชา ด้านงานวิจัย  ค่่าเฉลี่ย  " + this.json.mean3 + " "
+                // text: "ระดับคะแนนในภาควิชา ด้านงานวิจัย  ค่่าเฉลี่ย  " + this.json.mean3 + "  (เกณฑ์ขั้นต่ำ:" + this.json.minDesc3 + "   เกณฑ์ขั้นสูง:" + this.json.maxDesc3 + ")"
             },
             series: [{
                 type: "column",
@@ -257,8 +260,8 @@ export class headWorkTypeBarChart implements OnInit {
                 }
             },
             title: {
-                text: "ระดับคะแนนในภาควิชา ด้านงานบริการวิชาการ  ค่่าเฉลี่ย  " + this.json.mean4 + "  (เกณฑ์ขั้นต่ำ:" + this.json.minDesc4 + "   เกณฑ์ขั้นสูง:" + this.json.maxDesc4 + ")"
-
+                // text: "ระดับคะแนนในภาควิชา ด้านงานบริการวิชาการ  ค่่าเฉลี่ย  " + this.json.mean4 + "  (เกณฑ์ขั้นต่ำ:" + this.json.minDesc4 + "   เกณฑ์ขั้นสูง:" + this.json.maxDesc4 + ")"
+                text: "ระดับคะแนนในภาควิชา ด้านงานบริการวิชาการ  ค่่าเฉลี่ย  " + this.json.mean4 + "  "
 
             },
             series: [{
@@ -315,8 +318,8 @@ export class headWorkTypeBarChart implements OnInit {
                 }
             },
             title: {
-                text: "ระดับคะแนนในภาควิชา ด้านงานทำนุบำรุงศิลป  ค่่าเฉลี่ย  " + this.json.mean5 + "  (เกณฑ์ขั้นต่ำ:" + this.json.minDesc5 + "   เกณฑ์ขั้นสูง:" + this.json.maxDesc5 + ")"
-
+                text: "ระดับคะแนนในภาควิชา ด้านงานทำนุบำรุงศิลป  ค่่าเฉลี่ย  " + this.json.mean5 + "  "
+                // text: "ระดับคะแนนในภาควิชา ด้านงานทำนุบำรุงศิลป  ค่่าเฉลี่ย  " + this.json.mean5 + "  (เกณฑ์ขั้นต่ำ:" + this.json.minDesc5 + "   เกณฑ์ขั้นสูง:" + this.json.maxDesc5 + ")"
             },
             series: [{
                 type: "column",

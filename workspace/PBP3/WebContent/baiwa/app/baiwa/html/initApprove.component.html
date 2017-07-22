@@ -1,7 +1,7 @@
 <div class="box-typical box-typical-padding">
     <div class="row">
         <div class="col-sm-12 text-center">
-            <h4>ผลงานบุคลากร {{nameDepart}} ประจำปี {{year}}</h4>
+            <h4 style=" margin-bottom: 2.2rem; ">ผลงานบุคลากร {{nameDepart}} ประจำปี {{year}}</h4>
         </div>
     </div>
     <div class="row">
@@ -10,21 +10,39 @@
             <table id="table-edit" class="table table-bordered table-hover">
                 <thead>
                     <tr>
-                        <th><div class="text-center">บุคลากร</div> </th>
-                        <th><div class="text-center">ประเภท</div></th>
-                        <th><div class="text-center">รออนุมัติ</div></th>
-                        <th><div class="text-center">อนุมัติแล้ว</div></th>
-                        <th><div class="text-center">รวม</div></th>
+                        <th>
+                            <div class="text-center">บุคลากร</div>
+                        </th>
+                        <th>
+                            <div class="text-center">ประเภท</div>
+                        </th>
+                        <th>
+                            <div class="text-center">รออนุมัติ</div>
+                        </th>
+                        <th>
+                            <div class="text-center">อนุมัติแล้ว</div>
+                        </th>
+                        <th>
+                            <div class="text-center">รวม</div>
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr *ngFor="let item of academicPersonList; let i = index">
-                        <td><div class="text-center"><a [routerLink]="['/approvework',item.email , 1]">{{item.thaiName}}&nbsp;&nbsp;&nbsp;{{item.thaiSurname}}</a></div></td>
+                        <td>
+                            <div class="text-center"><a [routerLink]="['/approvework',item.email , 1]">{{item.thaiName}}</a></div>
+                        </td>
                         <td [hidden]="item.employeeTypeNo == 1">พนักงาน</td>
                         <td [hidden]="item.employeeTypeNo != 1">ราชการ</td>
-                        <td><div class="text-center">{{item.totalNotApprove}}</div></td>
-                        <td><div class="text-center">{{item.totalApproved}}</div></td>
-                        <td><div class="text-center">{{item.total}}</div></td>
+                        <td>
+                            <div class="text-center">{{item.totalNotApprove}}</div>
+                        </td>
+                        <td>
+                            <div class="text-center">{{item.totalApproved}}</div>
+                        </td>
+                        <td>
+                            <div class="text-center">{{item.total}}</div>
+                        </td>
 
                     </tr>
                 </tbody>
@@ -34,3 +52,4 @@
     </div>
 
 </div>
+

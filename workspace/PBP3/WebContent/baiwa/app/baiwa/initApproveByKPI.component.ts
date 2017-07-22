@@ -32,13 +32,19 @@ export class initApproveByKPI implements OnInit {
     year: any;
 
 
-    constructor(private router: Router, private commonService: CommonService, private http: Http) {
+    constructor(private router: Router, private commonService: CommonService, private http: Http, private route: ActivatedRoute) {
 
         this.tabPerson = false;
 
     }
 
     ngOnInit() {
+
+        this.route.params.subscribe(params => this.workTypeCode = params["workTypeCode"]);
+        if (this.workTypeCode) {
+            console.log("workTypeCode :", this.workTypeCode);
+            //this.editcar(this.para_carId);
+        }
 
         this.GetUserSession();
 
@@ -63,7 +69,7 @@ export class initApproveByKPI implements OnInit {
 
     academicKPI() {
         this.commonService.loading();
-        var url = "../admin/pbp/academicKPI/initApproveByKPI2/1/" + this.user.currentAcademicYear + "/" + this.user.facultyCode + "/" + this.user.departmentName;
+        var url = "../admin/pbp/academicKPI/initApproveByKPI2/"+this.workTypeCode+"/" + this.user.currentAcademicYear + "/" + this.user.facultyCode + "/" + this.user.departmentName;
         this.http.get(url).subscribe(response => this.GetlistKPISucess(response),
             error => this.GetlistKPIJsonError(error), () => console.log(" Sent Success !"));
     }
@@ -76,7 +82,7 @@ export class initApproveByKPI implements OnInit {
         this.workTypeName = this.model.workTypeName;
         this.academicYear = this.model.academicYear;
         this.academicKPIList = this.model.academicKPIList;
-        this.workTypeCode = '1';
+    
         this.academicYearList = this.model.academicYearList;
         this.pBPWorkTypeList = this.model.pBPWorkTypeList;
         this.facultyList = this.model.facultyList;
@@ -118,13 +124,13 @@ export class initApproveByKPI implements OnInit {
 
     public clickA(k_ID: any, summary: string) {
         if (summary != '0') {
-            this.router.navigate(['/approveworkByKPI', k_ID, 'A']);
+            this.router.navigate(['/approveworkByKPI', k_ID, 'A',this.workTypeCode]);
         }
     }
 
     public clickC(K_ID: any, summary: string) {
         if (summary != '0') {
-            this.router.navigate(['/approveworkByKPI', K_ID, 'C']);
+            this.router.navigate(['/approveworkByKPI', K_ID, 'C',this.workTypeCode]);
         }
 
     }

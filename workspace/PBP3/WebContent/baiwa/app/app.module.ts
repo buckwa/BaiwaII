@@ -5,7 +5,7 @@ import { Routes, RouterModule }   from '@angular/router';
 import { AppComponent }   from './app.component';
 import { HttpModule } from '@angular/http';
 import { CommonService } from'./service/Common.service';
-import { FileSelectDirective, FileDropDirective, FileUploader } from 'ng2-file-upload/ng2-file-upload';
+import { FileUploader } from 'ng2-file-upload/ng2-file-upload';
 import {importwork} from './baiwa/importwork.component';
 import {home} from './baiwa/home.component';
 import {listworktype} from './baiwa/listworktype.component';
@@ -64,6 +64,9 @@ import { AdminmarkRankinitEditRound } from './baiwa/AdminmarkRankinitEditRound.c
 import { AdminpBPWorkTypeinit } from './baiwa/AdminpBPWorkTypeinit.component';
 import { approveworkByKPI } from './baiwa/approveworkByKPI.component';
 import { markDepartmentRecalInit } from './baiwa/markDepartmentRecalInit.component';
+import { AssignHead } from './baiwa/AssignHead.component';
+
+
 
 const routes: Routes = [
 
@@ -88,7 +91,7 @@ const routes: Routes = [
     { path: 'barchart',component:barChart},
     { path: 'headWorkTypeBarChart' , component:headWorkTypeBarChart},
     { path: 'initApprove' , component:InitApporve},
-    { path: 'initApproveByKPI' , component:initApproveByKPI},
+    { path: 'initApproveByKPI/:workTypeCode' , component:initApproveByKPI},
     { path: 'approvework/:email/:rond', component:approvework},
     { path: 'facultyReport' , component:FacultyReport},
     { path: 'deanBarChart' , component:deanBarChart},
@@ -118,8 +121,9 @@ const routes: Routes = [
     { path: 'AdminmarkRankinit', component: AdminmarkRankinit },
     { path: 'AdminmarkRankinitEditRound', component: AdminmarkRankinitEditRound },
     { path: 'AdminpBPWorkTypeinit', component: AdminpBPWorkTypeinit },
-    { path: 'approveworkByKPI/:code/:status', component: approveworkByKPI },
+    { path: 'approveworkByKPI/:code/:status/:workcode', component: approveworkByKPI },
     { path: 'markDepartmentRecalInit', component: markDepartmentRecalInit },
+    { path: 'AssignHead', component: AssignHead },
 ];
 
 @NgModule({
@@ -184,7 +188,8 @@ const routes: Routes = [
         AdminmarkRankinitEditRound,//มอส
         AdminpBPWorkTypeinit,
         approveworkByKPI,
-        markDepartmentRecalInit
+        markDepartmentRecalInit,
+        AssignHead
 
     ],
     providers: [

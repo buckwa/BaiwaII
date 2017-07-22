@@ -20,7 +20,7 @@ export class AdminFacultycreateDepartment implements OnInit {
     public result:any;
     public year: any;
     public academicYear: any;
-    constructor(private http: Http, private route: ActivatedRoute) {
+    constructor(private http: Http, private route: ActivatedRoute, private router: Router) {
 
 
     }
@@ -75,7 +75,8 @@ export class AdminFacultycreateDepartment implements OnInit {
         
         //Todo
         //Show Status
-        window.location.href = '#/AdminFaculty';
+       
+        this.router.navigate(['/AdminFaculty']);
         this.result = response.json(JSON.stringify(response._body));
         console.log("AdminUserCreate : Ready SaveUserJsonSucess !");
     }

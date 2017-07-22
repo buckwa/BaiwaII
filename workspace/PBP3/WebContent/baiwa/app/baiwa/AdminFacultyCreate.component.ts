@@ -16,7 +16,7 @@ export class AdminFacultyCreate implements OnInit {
     public name: any;
     public result:any;
     public year: any;
-    constructor(private http: Http, private route: ActivatedRoute) {
+    constructor(private http: Http, private route: ActivatedRoute,private router: Router) {
 
 
     }
@@ -69,7 +69,8 @@ export class AdminFacultyCreate implements OnInit {
         
         //Todo
         //Show Status
-        window.location.href = '#/AdminFaculty';
+       
+        this.router.navigate(['/AdminFaculty']);
         this.result = response.json(JSON.stringify(response._body));
         console.log("AdminUserCreate : Ready SaveUserJsonSucess !");
     }

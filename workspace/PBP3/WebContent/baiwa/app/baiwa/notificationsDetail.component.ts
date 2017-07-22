@@ -18,7 +18,7 @@ export class notificationsDetail {
     public user: any;
     public profile:any;
 
-    constructor(private http: Http, private route: ActivatedRoute) {
+    constructor(private router: Router,private http: Http, private route: ActivatedRoute) {
         this.libPath = "/PBP3/baiwa/libs/";
         this.sub = this.route.params.subscribe(params => {
             this.code = +params['code'];
@@ -113,7 +113,8 @@ export class notificationsDetail {
         console.log("UpdateStatus Message Sucess..");
     }
     backToHome(){
-         window.location.href = "#/home";
+     
+         this.router.navigate(['/home']);
     }
 
     public GetPersonByAcadamy(user: String,  year: String) {

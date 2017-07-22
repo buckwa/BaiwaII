@@ -229,7 +229,7 @@ export class AdminUserEdit {
         //Todo
         //Show Status
         alert("บันทึกเรียบร้อย !");
-        window.location.href = '#/AdminWorkUser';
+        this.router.navigate(['/AdminWorkUser']);
         console.log("AdminUserCreate : Ready SaveUserJsonSucess !");
     }
 

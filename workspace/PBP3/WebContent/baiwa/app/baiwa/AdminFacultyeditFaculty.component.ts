@@ -16,7 +16,7 @@ export class AdminFacultyeditFaculty implements OnInit {
     public model: any;
     public result: any;
 
-    constructor(private http: Http, private route: ActivatedRoute) {
+    constructor(private router: Router,private http: Http, private route: ActivatedRoute) {
         this.Faculty = this.defaultFaculty();
 
     }
@@ -71,7 +71,8 @@ export class AdminFacultyeditFaculty implements OnInit {
         
         //Todo
         //Show Status
-        window.location.href = '#/AdminFaculty';
+
+          this.router.navigate(['/AdminFaculty']);
         this.FacultyJson = response.json(JSON.stringify(response._body));
         console.log("AdminUserCreate : Ready SaveUserJsonSucess !");
     }
@@ -92,7 +93,8 @@ export class AdminFacultyeditFaculty implements OnInit {
     }
     public DeleteFacultySJsonSucess(response: any) {
 
-        window.location.href = '#/AdminFaculty';
+
+          this.router.navigate(['/AdminFaculty']);
         this.result = response.json(JSON.stringify(response._body));
         console.log("Delete: Ready SaveUserJsonSucess !");
     }

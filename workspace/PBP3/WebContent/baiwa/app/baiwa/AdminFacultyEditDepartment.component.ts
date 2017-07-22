@@ -21,7 +21,7 @@ export class AdminFacultyEditDepartment implements OnInit {
     public year: any;
     public academicYear: any;
     public Depart_Id: any;
-    constructor(private http: Http, private route: ActivatedRoute) {
+    constructor(private http: Http, private route: ActivatedRoute, private router: Router) {
 
 
     }
@@ -76,7 +76,8 @@ export class AdminFacultyEditDepartment implements OnInit {
 
         //Todo
         //Show Status
-        window.location.href = '#/AdminFaculty';
+        //window.location.href = '#/AdminFaculty';
+        this.router.navigate(['/AdminFaculty']);
         this.result = response.json(JSON.stringify(response._body));
         console.log("AdminUserCreate : Ready SaveUserJsonSucess !");
     }
@@ -92,7 +93,8 @@ export class AdminFacultyEditDepartment implements OnInit {
     }
     public DeleteFacultySJsonSucess(response: any) {
 
-        window.location.href = '#/AdminFaculty';
+        
+        this.router.navigate(['/AdminFaculty']);
         this.result = response.json(JSON.stringify(response._body));
         console.log("Delete: Ready SaveUserJsonSucess !");
     }

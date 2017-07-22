@@ -132,8 +132,8 @@ export class AdminChainOfCommandinitHead implements OnInit {
 
   SENT_ss(response: any) {
     
-    window.location.href = '#/AdminChainOfCommandinit';
-
+  
+    this.router.navigate(['/AdminChainOfCommandinit']);
 
   }
 }

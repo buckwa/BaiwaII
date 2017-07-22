@@ -351,38 +351,101 @@ public class KMILTCommonController {
 //				fileName ="ประกาศ 2558 วิทยาเขตชุมพรเขตรอุดมศักดิ์.pdf";
 //				fullPath =  filePath+fileName;
 //			}		
+//			if("declare01".equalsIgnoreCase(fileCode)){
+//				fileName ="ประกาศหลักเกณฑ์วิธีคิดภาระงานปี 2559 คณะวิศวกรรมศาสตร์.pdf";
+//				fullPath =  filePath+fileName;
+//			}
+//			if("declare02".equalsIgnoreCase(fileCode)){
+//				fileName ="ประกาศ 2558 คณะสถาปัตย์กรรมศาสตร์.pdf";
+//				fullPath =  filePath+fileName;
+//			}			
+//			
+//			if("declare03".equalsIgnoreCase(fileCode)){
+//				fileName ="ประกาศหลักเกณฑ์วิธีคิดภาระงานปี 2559 คณะครุศาสตร์อุตสาหกรรม.pdf";
+//				fullPath =  filePath+fileName;
+//			}				
+//			
+//			
+//			if("declare04".equalsIgnoreCase(fileCode)){
+//				fileName ="ประกาศหลักเกณฑ์วิธีคิดภาระงานปี 2559 คณะเทคโนโลยีการเกษตร.pdf";
+//				fullPath =  filePath+fileName;
+//			}			
+//			
+//			if("declare05".equalsIgnoreCase(fileCode)){
+//				fileName ="ประกาศหลักเกณฑ์วิธีคิดภาระงานปี 2559 คณะวิทยาศาสตร์.pdf";
+//				fullPath =  filePath+fileName;
+//			}		
+//			
+//			if("declare06".equalsIgnoreCase(fileCode)){
+//				fileName ="ประกาศหลักเกณฑ์วิธีคิดภาระงานปี 2559 คณะอุตสาหกรรมเกษตร.pdf";
+//				fullPath =  filePath+fileName;
+//			}		
+//			
+//			if("declare07".equalsIgnoreCase(fileCode)){
+//				fileName ="ประกาศหลักเกณฑ์วิธีคิดภาระงานปี 2559 คณะเทคโนโลยีสารสนเทศ.pdf";
+//				fullPath =  filePath+fileName;
+//			}		
+//			if("declare09".equalsIgnoreCase(fileCode)){
+//				fileName ="ประกาศ 2558 วิทยาลัยนานาชาติ.pdf";
+//				fullPath =  filePath+fileName;
+//			}					
+//			
+//			if("declare10".equalsIgnoreCase(fileCode)){
+//				fileName ="ประกาศหลักเกณฑ์วิธีคิดภาระงานปี 2559 วิทยาลัยนาโนเทคโนโลยีพระจอมเกล้าลาดกระบัง.pdf";//"ประกาศ 2558 วิทยาลัยนาโนเทคโนโลยีพระจอมเกล้าลาดกระบัง.pdf";
+//				fullPath =  filePath+fileName;
+//			}					
+//			
+//			if("declare11".equalsIgnoreCase(fileCode)){
+//				fileName = "ประกาศหลักเกณฑ์วิธีคิดภาระงานปี 2559 วิทยาลัยนวัตกรรมการผลิตขั้นสูง.pdf";//"ประกาศ 2558 วิทยาลัยนวัตกรรมการผลิตขั้นสูง.pdf";
+//				fullPath =  filePath+fileName;
+//			}					
+//			if("declare12".equalsIgnoreCase(fileCode)){
+//				fileName ="ประกาศ 2558 คณะการบริหารและจัดการ.pdf";
+//				fullPath =  filePath+fileName;
+//			}		
+//			
+//			if("declare13".equalsIgnoreCase(fileCode)){
+//				fileName ="ประกาศหลักเกณฑ์วิธีคิดภาระงานปี 2559 วิทยาเขตชุมพรเขตรอุดมศักดิ์.pdf";//"ประกาศ 2558 วิทยาเขตชุมพรเขตรอุดมศักดิ์.pdf";
+//				fullPath =  filePath+fileName;
+//			}		
+// 			
+//			if("declare14".equalsIgnoreCase(fileCode)){
+//				fileName ="ประกาศหลักเกณฑ์วิธีคิดภาระงานปี 2559 คณะศิลปศาสตร์.pdf";//เกิดใหม่;
+//				fullPath =  filePath+fileName;
+//			}	
+			
 			if("declare01".equalsIgnoreCase(fileCode)){
-				fileName ="ประกาศหลักเกณฑ์วิธีคิดภาระงานปี 2559 คณะวิศวกรรมศาสตร์.pdf";
+				fileName ="ประกาศหลักเกณฑ์วิธีคิดภาระงานปีงบประมาณ-2559-คณะวิศวกรรมศาสตร์.pdf";
 				fullPath =  filePath+fileName;
 			}
 			if("declare02".equalsIgnoreCase(fileCode)){
-				fileName ="ประกาศ 2558 คณะสถาปัตย์กรรมศาสตร์.pdf";
+				fileName ="ประกาศหลักเกณฑ์วิธีภาระงานปีงบประมาณ2559-คณะสถาปัตยกรรมศาสตร์.pdf";
 				fullPath =  filePath+fileName;
 			}			
 			
 			if("declare03".equalsIgnoreCase(fileCode)){
-				fileName ="ประกาศหลักเกณฑ์วิธีคิดภาระงานปี 2559 คณะครุศาสตร์อุตสาหกรรม.pdf";
+				fileName ="ประกาศหลักเกณฑ์วิธีคิดภาระงานปีงบประมาณ-2559-คณะครุศาสตร์อุตสาหกรรม.pdf";
 				fullPath =  filePath+fileName;
 			}				
 			
 			
 			if("declare04".equalsIgnoreCase(fileCode)){
-				fileName ="ประกาศหลักเกณฑ์วิธีคิดภาระงานปี 2559 คณะเทคโนโลยีการเกษตร.pdf";
+				fileName ="ประกาศหลักเกณฑ์วิธีคิดภาระงานทางวิชาการของคณาจารย์ปีงบประมาณ2559 คณะเทคโนโลยีการเกษตร.pdf";
 				fullPath =  filePath+fileName;
 			}			
 			
 			if("declare05".equalsIgnoreCase(fileCode)){
-				fileName ="ประกาศหลักเกณฑ์วิธีคิดภาระงานปี 2559 คณะวิทยาศาสตร์.pdf";
+				fileName ="ประกาศหลักเกณฑ์วิธีคิดภาระงานปีงบประมาณ-2559-คณะวิทยาศาสตร์.pdf";
 				fullPath =  filePath+fileName;
 			}		
 			
 			if("declare06".equalsIgnoreCase(fileCode)){
-				fileName ="ประกาศหลักเกณฑ์วิธีคิดภาระงานปี 2559 คณะอุตสาหกรรมเกษตร.pdf";
+				fileName ="ประกาศหลักเกณฑ์วิธีคิดภาระงานปีงบประมาณ-2559-คณะอุตสาหกรรมเกษตร.pdf";
 				fullPath =  filePath+fileName;
 			}		
 			
 			if("declare07".equalsIgnoreCase(fileCode)){
-				fileName ="ประกาศหลักเกณฑ์วิธีคิดภาระงานปี 2559 คณะเทคโนโลยีสารสนเทศ.pdf";
+				fileName ="ประกาศหลักเกณฑ์วิธีคิดภาระงานปีงบประมาณ-2559-คณะเทคโนโลยีสารสนเทศ.pdf";
 				fullPath =  filePath+fileName;
 			}		
 			if("declare09".equalsIgnoreCase(fileCode)){
@@ -391,29 +454,28 @@ public class KMILTCommonController {
 			}					
 			
 			if("declare10".equalsIgnoreCase(fileCode)){
-				fileName ="ประกาศหลักเกณฑ์วิธีคิดภาระงานปี 2559 วิทยาลัยนาโนเทคโนโลยีพระจอมเกล้าลาดกระบัง.pdf";//"ประกาศ 2558 วิทยาลัยนาโนเทคโนโลยีพระจอมเกล้าลาดกระบัง.pdf";
+				fileName ="ประกาศหลักเกณฑ์วิธีคิดภาระงานปีงบประมาณ-2559-วิทยาลัยนาโนเทคโนโลยีพระจอมเกล้าลาดกระบัง.pdf";//"ประกาศ 2558 วิทยาลัยนาโนเทคโนโลยีพระจอมเกล้าลาดกระบัง.pdf";
 				fullPath =  filePath+fileName;
 			}					
 			
 			if("declare11".equalsIgnoreCase(fileCode)){
-				fileName = "ประกาศหลักเกณฑ์วิธีคิดภาระงานปี 2559 วิทยาลัยนวัตกรรมการผลิตขั้นสูง.pdf";//"ประกาศ 2558 วิทยาลัยนวัตกรรมการผลิตขั้นสูง.pdf";
+				fileName = "ประกาศหลักเกณฑ์วิธีคิดภาระงานปีงบประมาณ-2559-วิทยาลัยนวัตกรรมการผลิตขั้นสูง.pdf";//"ประกาศ 2558 วิทยาลัยนวัตกรรมการผลิตขั้นสูง.pdf";
 				fullPath =  filePath+fileName;
 			}					
 			if("declare12".equalsIgnoreCase(fileCode)){
-				fileName ="ประกาศ 2558 คณะการบริหารและจัดการ.pdf";
+				fileName ="ประกาศหลักเกณฑ์วิธีคิดภาระงานทางวิชาการของคณาจารย์-พ.ศ.2559-คณะการบริหารและจัดการ.pdf";
 				fullPath =  filePath+fileName;
 			}		
 			
 			if("declare13".equalsIgnoreCase(fileCode)){
-				fileName ="ประกาศหลักเกณฑ์วิธีคิดภาระงานปี 2559 วิทยาเขตชุมพรเขตรอุดมศักดิ์.pdf";//"ประกาศ 2558 วิทยาเขตชุมพรเขตรอุดมศักดิ์.pdf";
+				fileName ="ประกาศหลักเกณฑ์วิธีคิดภาระงานปีงบประมาณ-2559-วิทยาเขตชุมพรเขตรอุดมศักดิ์.pdf";//"ประกาศ 2558 วิทยาเขตชุมพรเขตรอุดมศักดิ์.pdf";
 				fullPath =  filePath+fileName;
 			}		
  			
 			if("declare14".equalsIgnoreCase(fileCode)){
-				fileName ="ประกาศหลักเกณฑ์วิธีคิดภาระงานปี 2559 คณะศิลปศาสตร์.pdf";//เกิดใหม่;
+				fileName ="ประกาศหลักเกณฑ์วิธีคิดภาระงานปีงบประมาณ-2559-คณะศิลปศาสตร์.pdf";//เกิดใหม่;
 				fullPath =  filePath+fileName;
 			}	
-			
 			logger.info("#####fullPath :"+fullPath);
 			
 			InputStream inputStream = new FileInputStream(fullPath);

@@ -3,6 +3,11 @@ package baiwa.service;
 import java.util.Hashtable;
 
 import javax.naming.Context;
+import javax.naming.NamingEnumeration;
+import javax.naming.directory.DirContext;
+import javax.naming.directory.InitialDirContext;
+import javax.naming.directory.SearchControls;
+import javax.naming.directory.SearchResult;
 import javax.naming.ldap.InitialLdapContext;
 import javax.naming.ldap.LdapContext;
 
@@ -44,6 +49,38 @@ public class LdapAuthenticationProvider extends DaoAuthenticationProvider {
 	// @Autowired
 	// private UserAttemptServiceImpl userAttemptService;
 
+	private static DirContext ldapContext () throws Exception {
+		Hashtable<String,String> env = new Hashtable <String,String>();
+		return ldapContext(env);
+	}
+
+	private static DirContext ldapContext (Hashtable <String,String>env) throws Exception {
+		env.put(Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.ldap.LdapCtxFactory");
+		env.put(Context.PROVIDER_URL, "ldap://161.246.34.181:389/dc=kmitl,dc=ac,dc=th");
+		DirContext ctx = new InitialDirContext(env);
+		return ctx;
+	}
+	
+	private static String getUid (String user) throws Exception {
+		DirContext ctx = ldapContext();
+
+		String filter = "(uid=" + user + ")";
+		SearchControls ctrl = new SearchControls();
+		ctrl.setSearchScope(SearchControls.SUBTREE_SCOPE);
+		NamingEnumeration answer = ctx.search("", filter, ctrl);
+
+		String dn;
+		if (answer.hasMore()) {
+			SearchResult result = (SearchResult) answer.next();
+			dn = result.getNameInNamespace();
+		}
+		else {
+			dn = null;
+		}
+		answer.close();
+		return dn;
+	}
+	
 	public boolean authenticate_2(Object userDn, Object credentials) {
 		LdapContext ctxGC = null;
 		try {
@@ -51,12 +88,19 @@ public class LdapAuthenticationProvider extends DaoAuthenticationProvider {
 	        Hashtable<String,String> env = new Hashtable<String,String>();
 			env.put(Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.ldap.LdapCtxFactory");
 			env.put(Context.PROVIDER_URL, "ldap://161.246.34.181:389/dc=kmitl,dc=ac,dc=th");
-
-	        env.put(Context.SECURITY_PRINCIPAL, "uid="+userDn+",ou=per,ou=eng,ou=bkk,dc=kmitl,dc=ac,dc=th");
+			
+			env.put(Context.SECURITY_AUTHENTICATION, "simple");
+			String dn = getUid(userDn.toString());
+//			System.out.println(dn);
+//	        env.put(Context.SECURITY_PRINCIPAL, "uid="+userDn+",ou=per,dc=kmitl,dc=ac,dc=th");
+			env.put(Context.SECURITY_PRINCIPAL, dn);
 	        env.put(Context.SECURITY_CREDENTIALS, credentials.toString());
 	        
+//	        System.out.println("UserDn :"+userDn.toString());
+//	        System.out.println("Credentials :"+credentials.toString());
+	        
 			ctxGC = new InitialLdapContext(env, null);
-
+			System.out.println("ctxGC :"+ctxGC);
 			return true;
 		} catch (Exception e) {
 			// Context creation failed - authentication did not succeed

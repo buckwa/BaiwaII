@@ -23,6 +23,8 @@ import com.buckwa.domain.pbp.Faculty;
 import com.buckwa.util.BuckWaException;
 import com.buckwa.util.BuckWaUtils;
 
+import baiwa.util.UserLoginUtil;
+
 @Repository("userDao")
 public class AdminUserDaoImpl implements AdminUserDao {
 
@@ -528,6 +530,8 @@ public class AdminUserDaoImpl implements AdminUserDao {
 				" delete from   buckwauser   where username=? ", username);
 		this.jdbcTemplate.update(
 				" delete from  buckwausergroup where username=? ", username);
+		this.jdbcTemplate.update(
+				" delete from  person_pbp where username=?  AND academic_year=? ", username, UserLoginUtil.getCurrentAcademicYear() );
 
 	}
 

@@ -709,14 +709,14 @@ public class PBPWorkTypeDaoImpl implements PBPWorkTypeDao {
 						BigDecimal multiplyValueBig = new BigDecimal(0.00);						
 						try{
 							multiplyValueBig = new BigDecimal(kpiTmp.getMultiplyValue());
-							multiplyValueBig.setScale(2);
+							multiplyValueBig.setScale(5);
 						}catch(Exception ex){
 							multiplyValueBig = new BigDecimal(1).setScale(2);
 						}
 						
 						calResultStr= " ("+multiplyValueBig+" ตัวคุณ )"+" X ("+kpiTmp.getMark()+" คะแนน KPI )";						
 						if(kpiTmp.getMultiplyValue()!=null&&multiplyValueBig.doubleValue()>0){							
-							totalMappingTmp =totalMappingTmp.add(kpiTmp.getMark()).multiply(multiplyValueBig).setScale(2); 							 
+							totalMappingTmp =totalMappingTmp.add(kpiTmp.getMark()).multiply(multiplyValueBig).setScale(5); 							 
 							//logger.info("  Found multiply value :"+kpiTmp.getMultiplyValue()+"  So multiply by :"+kpiTmp.getMultiplyValue()+" = "+totalMappingTmp);
 						}else{									 	
 							totalMappingTmp =totalMappingTmp.add(kpiTmp.getMark()); 							
@@ -775,14 +775,14 @@ public class PBPWorkTypeDaoImpl implements PBPWorkTypeDao {
 						BigDecimal multiplyValueBig = new BigDecimal(0.00);						
 						try{
 							multiplyValueBig = new BigDecimal(kpiTmp.getMultiplyValue());
-							multiplyValueBig.setScale(2);
+							multiplyValueBig.setScale(5);
 						}catch(Exception ex){
 							multiplyValueBig = new BigDecimal(1).setScale(2);
 						}
 						
 						calResultStr= " ("+multiplyValueBig+" ตัวคุณ )"+" X ("+kpiTmp.getMark()+" คะแนน KPI )";						
 						if(kpiTmp.getMultiplyValue()!=null&&multiplyValueBig.doubleValue()>0){							
-							totalMappingTmp =totalMappingTmp.add(kpiTmp.getMark()).multiply(multiplyValueBig).setScale(2,RoundingMode.HALF_UP); 
+							totalMappingTmp =totalMappingTmp.add(kpiTmp.getMark()).multiply(multiplyValueBig).setScale(5,RoundingMode.HALF_UP); 
 						//	logger.info("  Found multiply value :"+kpiTmp.getMultiplyValue()+"  So multiply by :"+kpiTmp.getMultiplyValue()+" = "+totalMappingTmp);
 						}else{									 	
 							totalMappingTmp =totalMappingTmp.add(kpiTmp.getMark()); 
@@ -1109,14 +1109,14 @@ public class PBPWorkTypeDaoImpl implements PBPWorkTypeDao {
 						BigDecimal multiplyValueBig = new BigDecimal(0.00);						
 						try{
 							multiplyValueBig = new BigDecimal(kpiTmp.getMultiplyValue());
-							multiplyValueBig.setScale(2);
+							multiplyValueBig.setScale(5);
 						}catch(Exception ex){
 							multiplyValueBig = new BigDecimal(1).setScale(2);
 						}
 						
 						calResultStr= " ("+multiplyValueBig+" ตัวคุณ )"+" X ("+kpiTmp.getMark()+" คะแนน KPI )";						
 						if(kpiTmp.getMultiplyValue()!=null&&multiplyValueBig.doubleValue()>0){							
-							totalMappingTmp =totalMappingTmp.add(kpiTmp.getMark()).multiply(multiplyValueBig).setScale(2); 							 
+							totalMappingTmp =totalMappingTmp.add(kpiTmp.getMark()).multiply(multiplyValueBig).setScale(5); 							 
 							//logger.info("  Found multiply value :"+kpiTmp.getMultiplyValue()+"  So multiply by :"+kpiTmp.getMultiplyValue()+" = "+totalMappingTmp);
 						}else{									 	
 							totalMappingTmp =totalMappingTmp.add(kpiTmp.getMark()); 							
@@ -1174,14 +1174,14 @@ public class PBPWorkTypeDaoImpl implements PBPWorkTypeDao {
 						BigDecimal multiplyValueBig = new BigDecimal(0.00);						
 						try{
 							multiplyValueBig = new BigDecimal(kpiTmp.getMultiplyValue());
-							multiplyValueBig.setScale(2);
+							multiplyValueBig.setScale(5);
 						}catch(Exception ex){
 							multiplyValueBig = new BigDecimal(1).setScale(2);
 						}
 						
 						calResultStr= " ("+multiplyValueBig+" ตัวคุณ )"+" X ("+kpiTmp.getMark()+" คะแนน KPI )";						
 						if(kpiTmp.getMultiplyValue()!=null&&multiplyValueBig.doubleValue()>0){							
-							totalMappingTmp =totalMappingTmp.add(kpiTmp.getMark()).multiply(multiplyValueBig).setScale(2,RoundingMode.HALF_UP); 
+							totalMappingTmp =totalMappingTmp.add(kpiTmp.getMark()).multiply(multiplyValueBig).setScale(5,RoundingMode.HALF_UP); 
 							//logger.info("  Found multiply value :"+kpiTmp.getMultiplyValue()+"  So multiply by :"+kpiTmp.getMultiplyValue()+" = "+totalMappingTmp);
 						}else{									 	
 							totalMappingTmp =totalMappingTmp.add(kpiTmp.getMark()); 

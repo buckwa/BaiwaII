@@ -28,20 +28,28 @@ public class UserAttemptDao {
 	
 	public UserAttempt findByUsername (String username){
 		username = username+"@kmitl.ac.th";
-		
+		String sql ="";
 		logger.info("user +Email =" + username);
+		if("admin@kmitl.ac.th".equalsIgnoreCase(username)){
+			
+			sql = " SELECT * FROM person_pbp a INNER JOIN buckwauser d ON d.username = a.email WHERE a.email=? LIMIT 1 ";
+		}else{
+			
+			sql = " SELECT  a.person_id , d.user_id  , d.username , d.password , b.code  AS department_id "
+					+ " ,b.name AS department_name ,c.code, c.name , b.academic_year , a.thai_name,a.thai_surname"
+					+ " FROM person_pbp a INNER JOIN department b ON a.department_desc = b.name "
+					+ " INNER JOIN faculty c ON  c.name = a.faculty_desc "
+					+ " INNER JOIN buckwauser d ON d.username = a.email "
+					+ " WHERE  a.email = ? "
+					+ " ORDER BY b.academic_year DESC LIMIT 1 " ;
+
+		}
 		
 //		StringBuilder sql = new StringBuilder();
 //		sql.append(" SELECT user_id , USERNAME, password ");
 //		sql.append(" FROM buckwauser ");
 //		sql.append(" WHERE username =  ? ");
-		String sql = " SELECT  a.person_id , d.user_id  , d.username , d.password , b.code  AS department_id "
-				+ " ,b.name AS department_name ,c.code, c.name , b.academic_year , a.thai_name,a.thai_surname"
-				+ " FROM person_pbp a INNER JOIN department b ON a.department_desc = b.name "
-				+ " INNER JOIN faculty c ON  c.name = a.faculty_desc "
-				+ " INNER JOIN buckwauser d ON d.username = a.email "
-				+ " WHERE  a.email = ? "
-				+ " ORDER BY b.academic_year DESC LIMIT 1 " ;
+		
 		logger.info("sql" + sql);
 		UserAttempt  userAttempt = null;
 		try {

@@ -79,11 +79,11 @@ public class HeadServiceImpl implements HeadService {
 		// String headUserName ,String academicYear,String status
 		try{				 
 			
-			String headUserName = (String)request.get("headUserName");
+	
 			String academicYear = (String)request.get("academicYear");
-			String status = (String)request.get("status");
 			String userName = (String)request.get("userName");
-			AcademicKPIUserMappingWrapper academicKPIUserMappingWrapper= ( AcademicKPIUserMappingWrapper)headDao.getByUserAcademicYear(headUserName,academicYear,status,userName);
+			String employeeType = (String)request.get("employeeType");
+			AcademicKPIUserMappingWrapper academicKPIUserMappingWrapper= ( AcademicKPIUserMappingWrapper)headDao.getByUserAcademicYearByUserNew(academicYear, userName, employeeType);
 		 
 			 response.addResponse("academicKPIUserMappingWrapper",academicKPIUserMappingWrapper);
  	
@@ -316,8 +316,8 @@ public class HeadServiceImpl implements HeadService {
 			String headUserName = (String)request.get("headUserName");
 			String academicYear = (String)request.get("academicYear");
 			String status = (String)request.get("status");
-			
-			AcademicKPIUserMappingWrapper academicKPIUserMappingWrapper= ( AcademicKPIUserMappingWrapper)headDao.getByHeadAcademicYearCount(headUserName,academicYear,status);
+			String employeeType = (String)request.get("employeeType");
+			AcademicKPIUserMappingWrapper academicKPIUserMappingWrapper= ( AcademicKPIUserMappingWrapper)headDao.getByHeadAcademicYearCount(headUserName,academicYear,status,employeeType);
 		 
 			 response.addResponse("academicKPIUserMappingWrapper",academicKPIUserMappingWrapper);
  	

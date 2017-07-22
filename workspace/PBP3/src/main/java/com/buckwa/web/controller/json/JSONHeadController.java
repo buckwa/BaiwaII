@@ -19,6 +19,7 @@ import com.buckwa.domain.common.BuckWaRequest;
 import com.buckwa.domain.common.BuckWaResponse;
 import com.buckwa.domain.pam.Person;
 import com.buckwa.domain.pbp.AcademicKPIUserMappingWrapper;
+import com.buckwa.domain.pbp.AcademicPerson;
 import com.buckwa.domain.pbp.Department;
 import com.buckwa.domain.pbp.report.DepartmentWorkTypeReport;
 import com.buckwa.domain.pbp.report.RadarPlotReport;
@@ -197,8 +198,8 @@ public class JSONHeadController {
 		}
 		return returnList;
 	}
-	@RequestMapping(value="/init", method = RequestMethod.GET)
-	public AcademicKPIUserMappingWrapper initList( ) {
+	@RequestMapping(value="/init/{employeeType}", method = RequestMethod.GET)
+	public AcademicKPIUserMappingWrapper initList(@PathVariable String employeeType ) {
 		//public ModelAndView initList(@RequestParam("academicYear") String academicYear) {
 		logger.info(" Start  ");
 		ModelAndView mav = new ModelAndView();
@@ -208,13 +209,13 @@ public class JSONHeadController {
 			BuckWaRequest request = new BuckWaRequest(); 
 			 
 			String headUserName = UserLoginUtil.getCurrentUserLogin();
-			
+			String academicYear =UserLoginUtil.getCurrentAcademicYear();
 			//if(academicYear==null||academicYear.length()==0){
 			
 			
 			//String	academicYear =schoolUtil.getCurrentAcademicYear();
 			
-			String	academicYear ="2558";
+		
 			
 			
 			
@@ -224,7 +225,8 @@ public class JSONHeadController {
 			request.put("headUserName",headUserName);
 			request.put("academicYear",academicYear);
 			request.put("status",""); 
-			BuckWaResponse response = headService.getByHeadAcademicYearCount(request);
+			request.put("employeeType",employeeType); 
+						BuckWaResponse response = headService.getByHeadAcademicYearCount(request);
 			if(response.getStatus()==BuckWaConstants.SUCCESS){	
 				academicKPIUserMappingWrapper = (AcademicKPIUserMappingWrapper)response.getResObj("academicKPIUserMappingWrapper");
 			 
@@ -251,13 +253,12 @@ public class JSONHeadController {
 			//httpRequest.getSession().setAttribute("approveUserName", userName);
 			BuckWaRequest request = new BuckWaRequest(); 
 			 
-			String headUserName = UserLoginUtil.getCurrentUserLogin();
+
 			String academicYear =UserLoginUtil.getCurrentAcademicYear();
 			
-			request.put("headUserName",headUserName);
-			request.put("academicYear","2558");
+			request.put("academicYear",academicYear);
 			request.put("userName",userName);
-			request.put("status",""); 
+			request.put("employeeType",round); 
 			BuckWaResponse response = headService.getByUserAcademicYear(request);
 			if(response.getStatus()==BuckWaConstants.SUCCESS){	
 				academicKPIUserMappingWrapper = (AcademicKPIUserMappingWrapper)response.getResObj("academicKPIUserMappingWrapper");
@@ -359,6 +360,84 @@ public class JSONHeadController {
 		return response;
 	}
 	
-	
+	@RequestMapping(value="/AssignHeadY/{department}", method = RequestMethod.GET)
+	public List<AcademicPerson> AssignHeadY(@PathVariable String department ) {
+		logger.info(" Start AssignHead  department_des:"+department);
+		List<AcademicPerson> response = null;
+		try{
+			BuckWaRequest request = new BuckWaRequest();
+			String academicYear =UserLoginUtil.getCurrentAcademicYear();
+			
+			request.put("academicYear",academicYear);
+			request.put("department",department);
 
+			response = academicKPIUserMappingService.assignHead(request);
+			//response.setStatus(BuckWaConstants.SUCCESS);
+
+		}catch(Exception ex){
+			ex.printStackTrace();
+		}
+		return response;
+	}
+	
+	@RequestMapping(value="/AssignHeadN/{department}", method = RequestMethod.GET)
+	public List<AcademicPerson> AssignHeadN(@PathVariable String department ) {
+		logger.info(" Start AssignHead  department_des:"+department);
+		List<AcademicPerson> response = null;
+		try{
+			BuckWaRequest request = new BuckWaRequest();
+			String academicYear =UserLoginUtil.getCurrentAcademicYear();
+			
+			request.put("academicYear",academicYear);
+			request.put("department",department);
+			
+			response = academicKPIUserMappingService.assignHeadN(request);
+			//response.setStatus(BuckWaConstants.SUCCESS);
+
+		}catch(Exception ex){
+			ex.printStackTrace();
+		}
+		return response;
+	}
+	
+	@RequestMapping(value="/AssignHeadDelete/{username}/{id}", method = RequestMethod.GET)
+	public BuckWaResponse AssignHeadDelete(@PathVariable String username ,@PathVariable String id  ) {
+		logger.info(" Start unApprove  username:"+username);
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("headWorkUserList");
+		BuckWaResponse response = new BuckWaResponse();
+		try{
+			BuckWaRequest request = new BuckWaRequest();
+			request.put("username",username);
+			response = academicKPIUserMappingService.assignHeadDelete(request);
+			//response.setStatus(BuckWaConstants.SUCCESS);
+
+		}catch(Exception ex){
+			ex.printStackTrace();
+			mav.addObject("errorCode", "E001"); 
+		}
+		return response;
+	}
+	
+	
+	@RequestMapping(value="/AssignHeadEdit/{username}/{id}", method = RequestMethod.GET)
+	public BuckWaResponse AssignHeadEdit(@PathVariable String username ,@PathVariable String id  ) {
+		logger.info(" Start unApprove  username:"+username);
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("headWorkUserList");
+		BuckWaResponse response = new BuckWaResponse();
+		try{
+			BuckWaRequest request = new BuckWaRequest();
+			request.put("username",username);
+			response = academicKPIUserMappingService.assignHeadEdit(request);
+			//response.setStatus(BuckWaConstants.SUCCESS);
+
+		}catch(Exception ex){
+			ex.printStackTrace();
+			mav.addObject("errorCode", "E001"); 
+		}
+		return response;
+	}
+	
+	
 }

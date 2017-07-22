@@ -26,7 +26,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
  
 
   	@Autowired
-	@Qualifier("LdapAuthenticationProvider")
+	@Qualifier("authenticationProvider")//LdapAuthenticationProvider
 	private AuthenticationProvider authenticationProvider;
 	
 	@Autowired

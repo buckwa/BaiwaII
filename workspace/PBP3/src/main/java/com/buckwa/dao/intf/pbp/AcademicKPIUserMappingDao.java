@@ -1,6 +1,9 @@
 package com.buckwa.dao.intf.pbp;
 
+import java.util.List;
+
 import com.buckwa.domain.pbp.AcademicKPIUserMappingWrapper;
+import com.buckwa.domain.pbp.AcademicPerson;
 
 public interface AcademicKPIUserMappingDao {
 	
@@ -13,6 +16,11 @@ public interface AcademicKPIUserMappingDao {
 	
 	public void changeKPI(AcademicKPIUserMappingWrapper academicKPIUserMappingWrapper);
 	public void update2(AcademicKPIUserMappingWrapper academicKPIUserMappingWrapper, String filename); 
+	public List<AcademicPerson> assignHeadDao(String  department,String  academicYear);
+	public List<AcademicPerson> assignHeadNDao(String  department,String  academicYear);
+
+	public void assignHeadDeleteDao(String Username);
+	public void assignHeadUpdateDao(String Username);
 	
 	
 }

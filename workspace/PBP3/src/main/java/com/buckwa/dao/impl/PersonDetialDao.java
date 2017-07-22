@@ -156,9 +156,9 @@ public class PersonDetialDao {
 					+ " ' AND c.status = '1'  AND c.detail != '' AND a.academic_year = '"+year+"'  and c.create_date between '2016-09-01 00:00:00' and  '2017-09-02 00:00:00' ";
 		 
 		} else {
-			sql = " SELECT COUNT(*)  FROM webboard_message a  INNER JOIN academic_kpi_user_mapping  b ON a.topic_id = b.kpi_user_mapping_id "
+			sql = " SELECT COUNT(*)  FROM (SELECT * FROM webboard_message GROUP BY topic_id ) a  INNER JOIN academic_kpi_user_mapping  b ON a.topic_id = b.kpi_user_mapping_id "
 					+ " INNER JOIN person_pbp c ON  b.user_name = c.email " + " WHERE  c.email = '" + criteria
-					+ "' AND a.detail != '' AND c.academic_year = '"+year+"' and c.create_date between '2016-09-01 00:00:00' and  '2017-09-02 00:00:00' ";
+					+ "' AND a.detail != '' AND c.academic_year = '"+year+"' and a.create_date between '2016-09-01 00:00:00' and  '2017-09-02 00:00:00' ";
 		}
 		logger.info(" CountMessage:" + sql);
 		int count = jdbcTemplate.queryForObject(sql, Integer.class);

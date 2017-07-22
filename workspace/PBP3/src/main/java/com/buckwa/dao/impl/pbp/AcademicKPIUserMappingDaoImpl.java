@@ -13,6 +13,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
+
 import com.buckwa.dao.intf.pbp.AcademicKPIUserMappingDao;
 import com.buckwa.domain.pbp.AcademicKPI;
 import com.buckwa.domain.pbp.AcademicKPIAttachFile;
@@ -20,6 +21,7 @@ import com.buckwa.domain.pbp.AcademicKPIAttribute;
 import com.buckwa.domain.pbp.AcademicKPIAttributeValue;
 import com.buckwa.domain.pbp.AcademicKPIUserMapping;
 import com.buckwa.domain.pbp.AcademicKPIUserMappingWrapper;
+import com.buckwa.domain.pbp.AcademicPerson;
 import com.buckwa.domain.pbp.PBPWorkType;
 import com.buckwa.domain.webboard.Message;
 import com.buckwa.util.school.SchoolUtil;
@@ -282,7 +284,72 @@ public class AcademicKPIUserMappingDaoImpl implements AcademicKPIUserMappingDao 
 	  
 	}
 	
+	@Override
+	public List<AcademicPerson> assignHeadDao( String department,String academicYear) {
+		
+		StringBuilder sql =new StringBuilder() ; 
+		sql.append(" SELECT 	* FROM person_pbp  ");
+		sql.append(" INNER JOIN buckwausergroup ON buckwausergroup.username=person_pbp.email ");
+		sql.append(" WHERE department_desc ='"+department+"' AND academic_year='"+academicYear+"'  ");
+		sql.append(" AND  (  buckwausergroup.group_id ='19')  ");
+		
+		logger.info(" sql:"+sql);
+		List<AcademicPerson> academicPersonList  = this.jdbcTemplate.query(sql.toString(),new AcademicPersonMapper() );
+		return academicPersonList;
+		 
+	}
 	
+	@Override
+	public List<AcademicPerson> assignHeadNDao( String department,String academicYear) {
+		
+		StringBuilder sql =new StringBuilder() ; 
+		sql.append(" SELECT 	*   ");
+		sql.append(" FROM pbp2.person_pbp  ");
+		sql.append(" INNER JOIN buckwausergroup ON buckwausergroup.username=person_pbp.email ");
+		sql.append(" WHERE department_desc ='"+department+"' AND academic_year='"+academicYear+"'  AND  buckwausergroup.group_id ='2' ");
+		sql.append(" AND buckwausergroup.username NOT IN ( SELECT 	person_pbp.email  ");
+		sql.append(" FROM pbp2.person_pbp  INNER JOIN buckwausergroup ");
+		sql.append(" ON buckwausergroup.username=person_pbp.email  ");
+		sql.append(" WHERE department_desc ='"+department+"' AND academic_year='"+academicYear+"' AND    buckwausergroup.group_id ='19') ");
+
+		
+		logger.info(" sql:"+sql);
+		List<AcademicPerson> academicPersonList  = this.jdbcTemplate.query(sql.toString(),new AcademicPersonMapper() );
+		return academicPersonList;
+	}
+	
+	@Override
+	public void assignHeadDeleteDao(String Username){
+		
+		String sql2 =" DELETE FROM buckwausergroup WHERE username = '"+Username+"' AND group_id='19'  ; " ; 
+		
+		logger.info(" sql2:"+sql2);
+		this.jdbcTemplate.update(sql2); 
+		 
+	}
+	
+	@Override
+	public void assignHeadUpdateDao( String Username) {
+		
+		String sql2 ="INSERT INTO buckwausergroup ( username, group_id ) VALUES ('"+Username+"', '19' ) " ; 
+		logger.info(" sql2:"+sql2);
+		this.jdbcTemplate.update(sql2); 
+		 
+	}
+	
+	
+	private static class AcademicPersonMapper implements RowMapper<AcademicPerson> {
+		@Override
+		public AcademicPerson mapRow(ResultSet rs, int rowNum) throws SQLException {
+			AcademicPerson domain = new AcademicPerson();
+			domain.setPersonId(rs.getLong("person_id"));
+			domain.setThaiName(rs.getString("thai_name").trim());
+			domain.setThaiSurname(rs.getString("thai_surname"));
+			domain.setEmail(rs.getString("email"));
+
+			return domain;
+		}
+	}
 	
 	private class AcademicKPIUserMappingMapper implements RowMapper<AcademicKPIUserMapping> {   						
         @Override

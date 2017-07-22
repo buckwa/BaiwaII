@@ -152,7 +152,7 @@ public class ReportYearPersonController{
 				
 				// Add For Specific case
 				SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-				Date endRoundDateHardCode = sdf.parse("31/07/2016");
+				Date endRoundDateHardCode = sdf.parse("31/07/2017");
 				
 		 
 				

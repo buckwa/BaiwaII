@@ -1,5 +1,7 @@
 package com.buckwa.service.impl.pbp;
 
+import java.util.List;
+
 import org.slf4j.Logger;import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -8,6 +10,7 @@ import com.buckwa.dao.intf.pbp.AcademicKPIUserMappingDao;
 import com.buckwa.domain.common.BuckWaRequest;
 import com.buckwa.domain.common.BuckWaResponse;
 import com.buckwa.domain.pbp.AcademicKPIUserMappingWrapper;
+import com.buckwa.domain.pbp.AcademicPerson;
 import com.buckwa.service.intf.pbp.AcademicKPIUserMappingService;
 import com.buckwa.util.BuckWaConstants;
 
@@ -129,4 +132,78 @@ public class AcademicKPIUserMappingServiceImpl implements AcademicKPIUserMapping
 		return response;
 	}
 	
+	
+	@Override	
+	public List<AcademicPerson> assignHead(BuckWaRequest request) {
+		List<AcademicPerson> response = null;
+		try{				 
+			
+			String department =  (String)request.get("department");
+			String academicYear =  (String)request.get("academicYear");
+			
+			response=academicKPIUserMappingDao.assignHeadDao(department, academicYear);
+ 	
+		}catch(Exception ex){
+			ex.printStackTrace();
+//			response.setStatus(BuckWaConstants.FAIL);
+//			response.setErrorCode("E001");			
+		}
+	 
+		return response;
+	}
+	
+	@Override	
+	public List<AcademicPerson> assignHeadN(BuckWaRequest request) {
+		List<AcademicPerson> response =null;
+		try{				 
+			
+			String department =  (String)request.get("department");
+			String academicYear =  (String)request.get("academicYear");
+			
+			response =academicKPIUserMappingDao.assignHeadNDao(department, academicYear);
+			
+			
+ 	
+		}catch(Exception ex){
+			ex.printStackTrace();
+//			response.setStatus(BuckWaConstants.FAIL);
+//			response.setErrorCode("E001");			
+		}
+	 
+		return response;
+	}
+	
+	@Override	
+	public BuckWaResponse assignHeadDelete(BuckWaRequest request) {
+		BuckWaResponse response = new BuckWaResponse();
+		try{				 
+			
+			String username =  (String)request.get("username");
+			 academicKPIUserMappingDao.assignHeadDeleteDao(username); 
+ 	
+		}catch(Exception ex){
+			ex.printStackTrace();
+			response.setStatus(BuckWaConstants.FAIL);
+			response.setErrorCode("E001");			
+		}
+	 
+		return response;
+	}
+	
+	@Override	
+	public BuckWaResponse assignHeadEdit(BuckWaRequest request) {
+		BuckWaResponse response = new BuckWaResponse();
+		try{				 
+			
+			String username =  (String)request.get("username");
+			 academicKPIUserMappingDao.assignHeadUpdateDao(username); 
+ 	
+		}catch(Exception ex){
+			ex.printStackTrace();
+			response.setStatus(BuckWaConstants.FAIL);
+			response.setErrorCode("E001");			
+		}
+	 
+		return response;
+	}
 }

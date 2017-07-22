@@ -1192,24 +1192,15 @@ public class JSONAdminController {
 	}
 	
 	
-	@RequestMapping(value="/TestOject", method = RequestMethod.GET, headers = "Accept=application/json")
-	public List<Object> TestOject() {
+	@RequestMapping(value="/TestOject/{work}", method = RequestMethod.GET, headers = "Accept=application/json")
+	public List<Object> TestOject(@PathVariable("work") String work) {
 		
-		List<Object> returnList = new ArrayList<Object>();
-		logger.info(" Test kab  ");
-		Person user =new Person();
+		 List<Object> test =null; 
 		
-		String reportPath = PAMConstants.rbApp.getString("report.path");	
-		logger.info("reportPath :" + reportPath);
-		String reportFile =  reportPath+"person_yearly_report.jasper";	
-		logger.info("reportFile :" + reportFile);
-		String subReportFileName = reportPath+"person_yearly_report_detail.jrxml";	
-		logger.info("subReportFileName :" + subReportFileName);
-		//params.put("SUBREPORT_DIR", reportPath);
-		
-		returnList.add(reportPath);
-		
-		return returnList;
+		 
+		 
+		 
+		return test;
 	}
 	
 	

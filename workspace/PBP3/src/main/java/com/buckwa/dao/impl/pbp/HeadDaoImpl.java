@@ -560,7 +560,81 @@ public class HeadDaoImpl implements HeadDao {
 		return academicKPIUserMappingWrapper;
 	}
 	
-	
+	@Override
+	public AcademicKPIUserMappingWrapper getByUserAcademicYearByUserNew( String academicYear,String code ,String employeeType ){	  
+		
+		AcademicKPIUserMappingWrapper   academicKPIUserMappingWrapper = new AcademicKPIUserMappingWrapper();
+		
+		// Get Department belong to head
+				
+				Department department=new Department();
+				AcademicPerson personTmp =new AcademicPerson();
+				List<AcademicPerson> newAcademicPersonList = new ArrayList();
+				
+				
+				 //String employeeType = personTmp.getEmployeeTypeNo();
+				
+				String sqlRound =" select *  from academic_evaluate_round where academic_year  ='"+academicYear+"' and evaluate_type='"+employeeType+"'"   ;  
+				
+				
+				
+				logger.info(" sqlRound:"+sqlRound);
+				 AcademicYearEvaluateRound  academicYearEvaluateRound   = this.jdbcTemplate.queryForObject(sqlRound,	new AcademicYearEvaluateRoundMapper() );	
+				
+				// logger.info(" academicYearEvaluateRound:"+BeanUtils.getBeanString(academicYearEvaluateRound));
+				
+				 long startTime =0l;
+				 long endTime =0l;
+				
+				 logger.info(" employeeType:"+employeeType);
+				 Timestamp startTimeStamp = null;
+				 Timestamp endTimeStamp = null;
+				 String round ="1";
+				 if(employeeType.equalsIgnoreCase("1")){
+					 
+					 long round1EndLong = academicYearEvaluateRound.getRound1EndDate().getTime();
+					 
+						 logger.info(" round 1 Start From:"+academicYearEvaluateRound.getRound1StartDate()+" to "+academicYearEvaluateRound.getRound1EndDate()+" doday :"+new Timestamp(System.currentTimeMillis()) +" so use round 1");
+						 startTime = academicYearEvaluateRound.getRound1StartDate().getTime();
+						 startTimeStamp = academicYearEvaluateRound.getRound1StartDate();
+						 
+						 round ="2";
+
+						 endTime = academicYearEvaluateRound.getRound2EndDate().getTime();
+						 endTimeStamp = academicYearEvaluateRound.getRound2EndDate();
+						 
+				 }else{
+					 
+					 startTime = academicYearEvaluateRound.getRound1StartDate().getTime();
+					 startTimeStamp = academicYearEvaluateRound.getRound1StartDate();
+					 
+					 endTime = academicYearEvaluateRound.getRound1EndDate().getTime();
+					 endTimeStamp = academicYearEvaluateRound.getRound1EndDate(); 
+					 
+				 }
+						 
+				 logger.info(" Employee Type:"+employeeType+ " Start Date:"+startTimeStamp+"   End Date:"+endTimeStamp +" round:"+round);
+			 	
+				 
+				//String kpiMapping = " select * from academic_kpi_user_mapping where user_name='"+personTmp.getEmail()+"'  and  academic_year='"+academicYear+"'";
+				//String kpiMapping = " select * from academic_kpi_user_mapping where user_name='"+personTmp.getEmail()+"'  and  academic_year='"+academicYear+"' and create_date BETWEEN '"+startTimeStamp+"' AND '"+endTimeStamp+"' AND academic_kpi_code='"+code+"'  "; 
+				
+				
+				StringBuilder kpiMapping = new StringBuilder();
+				
+				kpiMapping.append(" SELECT * FROM head_approve_summary   WHERE user_name = '"+code+"' and academic_year="+academicYear+"  ORDER BY is_approve ");
+				
+				
+				logger.info("  getByHeadAcademicYear kpiMapping:"+kpiMapping.toString());
+				List<AcademicKPIUserMapping> academicKPIUserMappingList  = this.jdbcTemplate.query(kpiMapping.toString(),	new AcademicKPIUserMappingMapperNew() );
+
+				
+				academicKPIUserMappingWrapper.setAcademicKPIUserMappingList( academicKPIUserMappingList);
+				logger.info("  SS:");
+				
+				
+				return academicKPIUserMappingWrapper;
+	}
 	
 	@Override
 	public AcademicKPIUserMappingWrapper getByUserAcademicYearNew( String headUserName ,String academicYear,String status,String code,String facultyCode,String department_desc ,String employeeType ){	  
@@ -1562,6 +1636,18 @@ public class HeadDaoImpl implements HeadDao {
 		}
 	}
 	
+	private static class AcademicPersonMapperNew implements RowMapper<AcademicPerson> {
+		@Override
+		public AcademicPerson mapRow(ResultSet rs, int rowNum) throws SQLException {
+			AcademicPerson domain = new AcademicPerson();
+
+			domain.setThaiName(rs.getString("full_name").trim());
+			domain.setEmail(rs.getString("user_name"));
+
+			return domain;
+		}
+	}
+	
 	
 	private class AcademicKPIUserMappingMapper implements RowMapper<AcademicKPIUserMapping> {   						
         @Override
@@ -1715,7 +1801,7 @@ public class HeadDaoImpl implements HeadDao {
 	
 
 	@Override
-	public AcademicKPIUserMappingWrapper getByHeadAcademicYearCount( String headUserName ,String academicYear,String status) {	 
+	public AcademicKPIUserMappingWrapper getByHeadAcademicYearCount( String headUserName ,String academicYear,String status,String employeeType) {	 
 		
 		AcademicKPIUserMappingWrapper   academicKPIUserMappingWrapper = new AcademicKPIUserMappingWrapper(); 
  		String sqlDepartment = " select d.* from department d 	inner join person_pbp p on (d.name=p.head_department) 	where p.email='"+headUserName+"' and p.academic_year='"+academicYear+"'  and d.academic_year='"+academicYear+"'";
@@ -1731,9 +1817,14 @@ public class HeadDaoImpl implements HeadDao {
 		if(department!=null){
 			
 			// Get User belong to department 
-			String sqlacademicPerson = "  select * from person_pbp where department_desc ='"+department.getName()+"'  and  academic_year='"+academicYear+"'";
+			//String sqlacademicPerson = "  select * from person_pbp where department_desc ='"+department.getName()+"'  and  academic_year='"+academicYear+"'";
+			String sqlacademicPersonNew = " SELECT * FROM head_approve_summary   WHERE dep_name ='"+department.getName()+"' and  academic_year='"+academicYear+"' GROUP BY user_name ";
+			
+			
+			
+			
 			//logger.info("  getByHeadAcademicYear sqlacademicPerson:"+sqlacademicPerson);
-			List<AcademicPerson> academicPersonList  = this.jdbcTemplate.query(sqlacademicPerson,	new AcademicPersonMapper() );
+			List<AcademicPerson> academicPersonList  = this.jdbcTemplate.query(sqlacademicPersonNew,	new AcademicPersonMapperNew() );
 			
 			
 			int departmentTotalApproved = 0;
@@ -1754,9 +1845,9 @@ public class HeadDaoImpl implements HeadDao {
 			for(AcademicPerson personTmp:academicPersonList){
 				
 				// Get KPI User Mapping 
-				logger.info("  Loop :"+loop+++":"+personTmp.getThaiName()+" "+personTmp.getThaiSurname());
+				//logger.info("  Loop :"+loop+++":"+personTmp.getThaiName()+" "+personTmp.getThaiSurname());
 				
-				String employeeType = personTmp.getEmployeeTypeNo();
+				
 				
 				String sqlRound =" select *  from academic_evaluate_round where academic_year  ='"+academicYear+"' and evaluate_type='"+employeeType+"'"   ;  
 				///logger.info(" sqlRound:"+sqlRound);
@@ -1792,10 +1883,15 @@ public class HeadDaoImpl implements HeadDao {
 						 
 				 logger.info(" Employee Type:"+employeeType+ " Start Date:"+startTimeStamp+"   End Date:"+endTimeStamp +" round:"+round);
 			 	
-				 String sqlCountApprove = "SELECT COUNT(*) FROM academic_kpi_user_mapping  WHERE STATUS = 'APPROVED' AND user_name='"+personTmp.getEmail()+"'  AND  academic_year='"+academicYear+"' AND create_date BETWEEN '"+startTimeStamp+"' AND '"+endTimeStamp+"'";
-				 //String sqlCountCoApprove = "SELECT COUNT(*) FROM academic_kpi_user_mapping  WHERE STATUS = 'STATUS_CREATE_CO_TEACH' AND user_name='"+personTmp.getEmail()+"'  AND  academic_year='"+academicYear+"' AND create_date BETWEEN '"+startTimeStamp+"' AND '"+endTimeStamp+"'";
-				 String sqlCountNonApprove = "SELECT COUNT(*) FROM academic_kpi_user_mapping  WHERE STATUS = 'CREATE' AND user_name='"+personTmp.getEmail()+"'  AND  academic_year='"+academicYear+"' AND create_date BETWEEN '"+startTimeStamp+"' AND '"+endTimeStamp+"'";
-					
+//				 " SELECT COUNT(*) FROM head_approve_summary   WHERE user_name ='"+personTmp.getEmail()+"' AND is_approve = 'APPROVED' "
+//				 " SELECT COUNT(*) FROM head_approve_summary   WHERE user_name ='"+personTmp.getEmail()+"' AND is_approve != 'APPROVED' "
+				  
+				 String sqlCountApprove = " SELECT COUNT(*) FROM head_approve_summary   WHERE user_name ='"+personTmp.getEmail()+"' AND is_approve = 'APPROVED' ";
+				 String sqlCountNonApprove =" SELECT COUNT(*) FROM head_approve_summary   WHERE user_name ='"+personTmp.getEmail()+"' AND is_approve != 'APPROVED' ";
+//				 String sqlCountApprove = " SELECT COUNT(*) FROM academic_kpi_user_mapping  WHERE STATUS = 'APPROVED' AND user_name='"+personTmp.getEmail()+"'  AND  academic_year='"+academicYear+"' AND create_date BETWEEN '"+startTimeStamp+"' AND '"+endTimeStamp+"'";
+//				 //String sqlCountCoApprove = "SELECT COUNT(*) FROM academic_kpi_user_mapping  WHERE STATUS = 'STATUS_CREATE_CO_TEACH' AND user_name='"+personTmp.getEmail()+"'  AND  academic_year='"+academicYear+"' AND create_date BETWEEN '"+startTimeStamp+"' AND '"+endTimeStamp+"'";
+//				 String sqlCountNonApprove = "SELECT COUNT(*) FROM academic_kpi_user_mapping  WHERE STATUS = 'CREATE' AND user_name='"+personTmp.getEmail()+"'  AND  academic_year='"+academicYear+"' AND create_date BETWEEN '"+startTimeStamp+"' AND '"+endTimeStamp+"'";
+//					
 				 
 				 //String kpiMapping = " select * from academic_kpi_user_mapping where user_name='"+personTmp.getEmail()+"'  and  academic_year='"+academicYear+"'";
 				//String kpiMapping = " select * from academic_kpi_user_mapping where user_name='"+personTmp.getEmail()+"'  and  academic_year='"+academicYear+"' and create_date BETWEEN '"+startTimeStamp+"' AND '"+endTimeStamp+"'"; 

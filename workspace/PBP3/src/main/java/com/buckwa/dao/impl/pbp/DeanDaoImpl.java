@@ -13,6 +13,7 @@ import org.springframework.stereotype.Repository;
 
 import com.buckwa.dao.intf.pbp.DeanDao;
 import com.buckwa.domain.pbp.Faculty;
+import com.buckwa.domain.pbp.report.CountReport;
 import com.buckwa.domain.pbp.report.DepartmentWorkTypeReport;
 import com.buckwa.domain.pbp.report.FacultyReportLevel;
 import com.buckwa.domain.pbp.report.FacultyWorkTypeReport;
@@ -40,11 +41,23 @@ public class DeanDaoImpl implements DeanDao {
 		for(DepartmentWorkTypeReport tmp:tmpList){
 			FacultyReportLevel returnTmp = new FacultyReportLevel();
 			
-			returnTmp.setDepartmentName(tmp.getDepartmentName());
-			returnTmp.setMark(tmp.getMarkTotal());
-		 
 			
-					returnList.add(returnTmp);
+			StringBuilder conutPerSon = new StringBuilder();
+			conutPerSon.append(" SELECT COUNT(person_pbp.person_id)AS Person ,person_pbp.department_desc ");
+			conutPerSon.append(" FROM person_pbp WHERE department_desc='"+tmp.getDepartmentName()+"'  ");
+			conutPerSon.append(" GROUP BY person_pbp.department_desc; ");
+			
+			List<CountReport> total = this.jdbcTemplate.query(conutPerSon.toString() ,new PersonCountReportMapper());
+					//getJdbcTemplate().queryForInt(sql);
+			
+			double temp=total.get(0).getPersonCount();
+			double value = Double.parseDouble(tmp.getMarkTotal());
+			double result = value/temp;
+			
+			returnTmp.setDepartmentName(tmp.getDepartmentName());
+			returnTmp.setMark(Double.toString(result));
+			
+			returnList.add(returnTmp);
 		}
   
 		
@@ -55,13 +68,51 @@ public class DeanDaoImpl implements DeanDao {
 	
 	@Override
 	public List<DepartmentWorkTypeReport> getReportWorkTypeFaculty( String workType ,Faculty faculty ) {
-		List<DepartmentWorkTypeReport> returnList = new ArrayList();				
+		List<DepartmentWorkTypeReport> returnList = new ArrayList();
+		List<DepartmentWorkTypeReport> resultList = new ArrayList();		
 		String getWorkTypeReportDepartmentSQL =" select *  from report_department where faculty_code  ='"+faculty.getCode()+"' and academic_year="+faculty.getAcademicYear()
 				//+" order by department_code "
 				+ " order by CAST(mark_" + workType + " AS DECIMAL(9,2)) desc";
 		logger.info(" getWorkTypeReportDepartmentSQL:"+getWorkTypeReportDepartmentSQL);
 		returnList  = this.jdbcTemplate.query(getWorkTypeReportDepartmentSQL,	new DepartmentWorkTypeReportMapper() );			
-		return returnList;
+		for (DepartmentWorkTypeReport departmentWorkTypeReport : returnList) {
+			
+			StringBuilder conutPerSon = new StringBuilder();
+			conutPerSon.append(" SELECT COUNT(person_pbp.person_id)AS Person ,person_pbp.department_desc ");
+			conutPerSon.append(" FROM person_pbp WHERE department_desc='"+departmentWorkTypeReport.getDepartmentName()+"'  ");
+			conutPerSon.append(" GROUP BY person_pbp.department_desc; ");
+			
+			List<CountReport> total = this.jdbcTemplate.query(conutPerSon.toString() ,new PersonCountReportMapper());
+					//getJdbcTemplate().queryForInt(sql);
+			
+			double temp=total.get(0).getPersonCount();
+			double value1 = Double.parseDouble(departmentWorkTypeReport.getMark1());
+			double value2 = Double.parseDouble(departmentWorkTypeReport.getMark2());
+			double value3 = Double.parseDouble(departmentWorkTypeReport.getMark3());
+			double value4 = Double.parseDouble(departmentWorkTypeReport.getMark4());
+			double value5 = Double.parseDouble(departmentWorkTypeReport.getMark5());
+			
+//			System.out.println("result A :"+temp);
+//			System.out.println("result B :"+value);
+			double result1 = value1/temp;
+			double result2 = value2/temp;
+			double result3 = value3/temp;
+			double result4 = value4/temp;
+			double result5 = value5/temp;
+			
+			departmentWorkTypeReport.setMark1(Double.toString(result1));
+			departmentWorkTypeReport.setMark2(Double.toString(result2));
+			departmentWorkTypeReport.setMark3(Double.toString(result3));
+			departmentWorkTypeReport.setMark4(Double.toString(result4));
+			departmentWorkTypeReport.setMark5(Double.toString(result5));
+			
+//			System.out.println("result C :"+result);
+			resultList.add(departmentWorkTypeReport);
+			
+		}
+		
+		
+		return resultList;
 	}
 	
 	
@@ -150,13 +201,67 @@ public class DeanDaoImpl implements DeanDao {
     }
 	}
 	
+
+
+	private class PersonCountReportMapper implements RowMapper<CountReport> {   						
+        @Override
+		public CountReport mapRow(ResultSet rs, int rowNum) throws SQLException {
+        	CountReport domain = new CountReport(); 
+        	
+        	domain.setPersonCount(rs.getDouble("Person"));
+        	
+ 
+		 
+		return domain;
+    }
+	}
+	
 	@Override
 	public List<DepartmentWorkTypeReport> getReportWorkTypeCompareFaculty(Faculty faculty) {
 		List<DepartmentWorkTypeReport> returnList = new ArrayList<DepartmentWorkTypeReport>();				
 		String getWorkTypeReportDepartmentSQL = "select * from report_department where faculty_code  ='"+faculty.getCode()+"' and academic_year="+faculty.getAcademicYear()
 			+ " order by department_code ";
 		logger.info(" getReportWorkTypeCompareFacultySQL:"+getWorkTypeReportDepartmentSQL);
-		returnList  = this.jdbcTemplate.query(getWorkTypeReportDepartmentSQL, new DepartmentWorkTypeReportMapper());			
+		returnList  = this.jdbcTemplate.query(getWorkTypeReportDepartmentSQL, new DepartmentWorkTypeReportMapper());	
+		
+		for (DepartmentWorkTypeReport departmentWorkTypeReport : returnList) {
+			
+			StringBuilder conutPerSon = new StringBuilder();
+			conutPerSon.append(" SELECT COUNT(person_pbp.person_id)AS Person ,person_pbp.department_desc ");
+			conutPerSon.append(" FROM person_pbp WHERE department_desc='"+departmentWorkTypeReport.getDepartmentName()+"'  ");
+			conutPerSon.append(" GROUP BY person_pbp.department_desc; ");
+			
+			List<CountReport> total = this.jdbcTemplate.query(conutPerSon.toString() ,new PersonCountReportMapper());
+					//getJdbcTemplate().queryForInt(sql);
+			
+			double temp=total.get(0).getPersonCount();
+			double value1 = Double.parseDouble(departmentWorkTypeReport.getMark1());
+			double value2 = Double.parseDouble(departmentWorkTypeReport.getMark2());
+			double value3 = Double.parseDouble(departmentWorkTypeReport.getMark3());
+			double value4 = Double.parseDouble(departmentWorkTypeReport.getMark4());
+			double value5 = Double.parseDouble(departmentWorkTypeReport.getMark5());
+			double value6 = Double.parseDouble(departmentWorkTypeReport.getMarkTotal());
+//			System.out.println("result A :"+temp);
+//			System.out.println("result B :"+value);
+			double result1 = value1/temp;
+			double result2 = value2/temp;
+			double result3 = value3/temp;
+			double result4 = value4/temp;
+			double result5 = value5/temp;
+			double result6 = value6/temp;
+			
+			departmentWorkTypeReport.setMark1(Double.toString(result1));
+			departmentWorkTypeReport.setMark2(Double.toString(result2));
+			departmentWorkTypeReport.setMark3(Double.toString(result3));
+			departmentWorkTypeReport.setMark4(Double.toString(result4));
+			departmentWorkTypeReport.setMark5(Double.toString(result5));
+			departmentWorkTypeReport.setMarkTotal(Double.toString(result6));
+//			System.out.println("result C :"+result);
+//			departmentWorkTypeReport.add(departmentWorkTypeReport);
+			
+		}
+		
+
 		return returnList;
 	}
  

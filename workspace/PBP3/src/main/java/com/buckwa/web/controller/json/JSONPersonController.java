@@ -1781,8 +1781,12 @@ public class JSONPersonController {
 			Boolean role = UserLoginUtil.isRole(BuckWaConstants.ROLE_HEAD);
 			String user = UserLoginUtil.getCurrentUserLogin();
 			String year = UserLoginUtil.getCurrentAcademicYear();
+			
+			
 			//String facultyCode = UserLoginUtil.getCurrentFacultyCode();
 			String department = UserLoginUtil.getCurrentDepartmentName();
+			System.out.println(department);
+			System.out.println(role);
 			PagingMessage request = new PagingMessage();
 			request.setPageStrart(Integer.parseInt(start));
 			request.setPageEnd(Integer.parseInt(end));

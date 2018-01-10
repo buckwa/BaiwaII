@@ -9,6 +9,15 @@ import com.buckwa.domain.BaseDomain;
 public class AcademicKPIUserMappingWrapper   extends BaseDomain{
 	
 	 
+	@Override
+	public String toString() {
+		return "AcademicKPIUserMappingWrapper [academicYear=" + academicYear + ", academicKPIUserMappingList="
+				+ academicKPIUserMappingList + ", academicKPIUserMapping=" + academicKPIUserMapping + ", pBPWorkType="
+				+ pBPWorkType + ", academicKPIAttributeValueList=" + academicKPIAttributeValueList + ", department="
+				+ department + ", fileData=" + fileData + ", replyMessage=" + replyMessage + ", errorDesc=" + errorDesc
+				+ ", totalApproved=" + totalApproved + ", totalNotApprove=" + totalNotApprove + ", total=" + total
+				+ ", academicSelectId=" + academicSelectId + ", academicYearList=" + academicYearList + "]";
+	}
 	private String academicYear;
 	private List<AcademicKPIUserMapping> academicKPIUserMappingList;
 	

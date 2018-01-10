@@ -272,6 +272,8 @@ public class ReportYearPersonController{
 	        	httpResponse.setHeader("Content-Disposition","attachment; filename="+fileName);
 	        if(browserType.contains("Firefox")){
 	        	httpResponse.setHeader("Content-Disposition","attachment; filename*=UTF-8''"+fileName);
+	        }else{
+	        	httpResponse.setHeader("Content-Disposition","attachment; filename="+fileName);
 	        }
  
 	 

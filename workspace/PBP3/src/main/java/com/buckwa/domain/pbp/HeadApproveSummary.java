@@ -22,9 +22,25 @@ public class HeadApproveSummary {
 	int total_A;
 
 	int total_C;
+	int totalKpi;
 	
 	
-	
+	@Override
+	public String toString() {
+		return "HeadApproveSummary [approve_summary_id=" + approve_summary_id + ", academic_year=" + academic_year
+				+ ", fac_code=" + fac_code + ", fac_name=" + fac_name + ", dep_code=" + dep_code + ", dep_name="
+				+ dep_name + ", kpi_id=" + kpi_id + ", kpi_name=" + kpi_name + ", kpi_unit=" + kpi_unit
+				+ ", kpi_user_mapping_id=" + kpi_user_mapping_id + ", user_name=" + user_name + ", full_name="
+				+ full_name + ", approve_by=" + approve_by + ", is_approve=" + is_approve + ", is_from_reg="
+				+ is_from_reg + ", work_name=" + work_name + ", work_type_code=" + work_type_code + ", total_A="
+				+ total_A + ", total_C=" + total_C + ", totalKpi=" + totalKpi + "]";
+	}
+	public int getTotalKpi() {
+		return totalKpi;
+	}
+	public void setTotalKpi(int totalKpi) {
+		this.totalKpi = totalKpi;
+	}
 	public String getWork_type_code() {
 		return work_type_code;
 	}

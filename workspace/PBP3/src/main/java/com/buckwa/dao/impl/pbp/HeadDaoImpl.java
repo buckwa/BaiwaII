@@ -30,6 +30,7 @@ import com.buckwa.domain.pbp.AcademicPerson;
 import com.buckwa.domain.pbp.AcademicYearEvaluateRound;
 import com.buckwa.domain.pbp.Department;
 import com.buckwa.domain.pbp.Faculty;
+import com.buckwa.domain.pbp.HeadApproveSummary;
 import com.buckwa.domain.pbp.PBPWorkType;
 import com.buckwa.domain.pbp.PBPWorkTypeWrapper;
 import com.buckwa.domain.pbp.report.DepartmentReport;
@@ -1643,7 +1644,8 @@ public class HeadDaoImpl implements HeadDao {
 
 			domain.setThaiName(rs.getString("full_name").trim());
 			domain.setEmail(rs.getString("user_name"));
-
+			domain.setEmployeeType(rs.getString("employee_type"));
+//			domain.setEmployeeTypeNo("");
 			return domain;
 		}
 	}
@@ -1801,12 +1803,17 @@ public class HeadDaoImpl implements HeadDao {
 	
 
 	@Override
-	public AcademicKPIUserMappingWrapper getByHeadAcademicYearCount( String headUserName ,String academicYear,String status,String employeeType) {	 
+	public AcademicKPIUserMappingWrapper getByHeadAcademicYearCount( String headUserName ,String academicYear,Boolean status,String employeeType) {	 
 		
 		AcademicKPIUserMappingWrapper   academicKPIUserMappingWrapper = new AcademicKPIUserMappingWrapper(); 
- 		String sqlDepartment = " select d.* from department d 	inner join person_pbp p on (d.name=p.head_department) 	where p.email='"+headUserName+"' and p.academic_year='"+academicYear+"'  and d.academic_year='"+academicYear+"'";
+		String sqlDepartment = "";
+		if(status){
+			sqlDepartment = " select d.* from department d 	inner join person_pbp p on (d.name=p.head_department) 	where p.email='"+headUserName+"' and p.academic_year='"+academicYear+"'  and d.academic_year='"+academicYear+"'";
+		}else{
+			sqlDepartment = " select d.* from department d 	inner join person_pbp p on (d.name=p.department_desc) 	where p.email='"+headUserName+"' and p.academic_year='"+academicYear+"'  and d.academic_year='"+academicYear+"'";
+		}
 
-		//logger.info("  getByHeadAcademicYear sqlDepartment:"+sqlDepartment);
+		logger.info("  getByHeadAcademicYear sqlDepartment:"+sqlDepartment+"  "+headUserName);
 		Department department=null;
 		try{
 			department = this.jdbcTemplate.queryForObject(sqlDepartment,	new DepartmentMapper() );	
@@ -1818,12 +1825,10 @@ public class HeadDaoImpl implements HeadDao {
 			
 			// Get User belong to department 
 			//String sqlacademicPerson = "  select * from person_pbp where department_desc ='"+department.getName()+"'  and  academic_year='"+academicYear+"'";
-			String sqlacademicPersonNew = " SELECT * FROM head_approve_summary   WHERE dep_name ='"+department.getName()+"' and  academic_year='"+academicYear+"' GROUP BY user_name ";
+			String sqlacademicPersonNew = " SELECT * FROM head_approve_summary  LEFT JOIN person_pbp ON head_approve_summary.user_name = person_pbp.email WHERE dep_name ='"+department.getName()+"' and  head_approve_summary.academic_year='"+academicYear+"' GROUP BY user_name ";
 			
 			
-			
-			
-			//logger.info("  getByHeadAcademicYear sqlacademicPerson:"+sqlacademicPerson);
+			logger.info("  getByHeadAcademicYear sqlacademicPerson:"+sqlacademicPersonNew);
 			List<AcademicPerson> academicPersonList  = this.jdbcTemplate.query(sqlacademicPersonNew,	new AcademicPersonMapperNew() );
 			
 			
@@ -1833,19 +1838,22 @@ public class HeadDaoImpl implements HeadDao {
 			
 			int loop =1;
 			String sqlRound1 =" select *  from academic_evaluate_round where academic_year  ='"+academicYear+"' and evaluate_type='1'"   ;  
-			///logger.info(" sqlRound:"+sqlRound);
+			logger.info(" sqlRound:"+sqlRound1);
 			 //AcademicYearEvaluateRound  academicYearEvaluateRound1   = this.jdbcTemplate.queryForObject(sqlRound1,	new AcademicYearEvaluateRoundMapper() );	
 			
-			 //String sqlRound2 =" select *  from academic_evaluate_round where academic_year  ='"+academicYear+"' and evaluate_type='2'"   ;  
+			String sqlRound2 =" select *  from academic_evaluate_round where academic_year  ='"+academicYear+"' and evaluate_type='2'"   ;  
 				///logger.info(" sqlRound:"+sqlRound);
 			//AcademicYearEvaluateRound  academicYearEvaluateRound2   = this.jdbcTemplate.queryForObject(sqlRound2,	new AcademicYearEvaluateRoundMapper() );	
 
 				
 			
 			for(AcademicPerson personTmp:academicPersonList){
-				
+				System.out.println(personTmp.getEmployeeType());
+				System.out.println(personTmp.getEmployeeTypeNo());
 				// Get KPI User Mapping 
-				//logger.info("  Loop :"+loop+++":"+personTmp.getThaiName()+" "+personTmp.getThaiSurname());
+				
+				
+				logger.info("  Loop :"+loop+++":"+personTmp.getThaiName()+" "+personTmp.getThaiSurname());
 				
 				
 				
@@ -1861,7 +1869,7 @@ public class HeadDaoImpl implements HeadDao {
 				 
 				 Timestamp startTimeStamp = null;
 				 Timestamp endTimeStamp = null;
-				 String round ="1";
+				 String round ="2";
 				 if(employeeType.equalsIgnoreCase("1")){
 					 
 					 long round1EndLong = academicYearEvaluateRound.getRound1EndDate().getTime();
@@ -1933,5 +1941,77 @@ public class HeadDaoImpl implements HeadDao {
 		
 		return academicKPIUserMappingWrapper;
 	}
+
+	@Override
+	public List<HeadApproveSummary> getHeadApproveSummaryMark(String facName, String academicYear, String workTypeCode) {
+		// TODO Auto-generated method stub
+		StringBuilder sql =new StringBuilder();
+		sql.append(" SELECT 	hs.kpi_id ,hs.kpi_name,academic_year , ");
+		sql.append(" COUNT(approve_summary_id)AS CountKpi FROM pbp2.head_approve_summary  hs ");
+		sql.append(" INNER JOIN buckwauser bu ON hs.user_name = bu.USERNAME ");
+		sql.append(" WHERE hs.academic_year = '"+academicYear+"' AND   hs.fac_name = '"+facName+"'   ");
+		sql.append(" AND   hs.work_type_code = '"+workTypeCode+"'  ");
+		sql.append(" GROUP BY hs.kpi_id   ,hs.academic_year,hs.kpi_name ORDER BY hs.kpi_name   ");
+		System.out.println(sql);
+		//HeadApproveSummary  headApproveSummary   = this.jdbcTemplate.queryForList(sql.,	new AcademicYearEvaluateRoundMapper() );	
+		List<HeadApproveSummary> headApproveSummaryList = jdbcTemplate.query(sql.toString(), new RowMapper<HeadApproveSummary>() {
+
+			@Override
+			public HeadApproveSummary mapRow(ResultSet rs, int rowNum) throws SQLException {
+				HeadApproveSummary headApproveSummaryModel = new HeadApproveSummary();
+				
+				headApproveSummaryModel.setKpi_id(rs.getInt("kpi_id"));
+				headApproveSummaryModel.setTotalKpi(rs.getInt("CountKpi"));
+				headApproveSummaryModel.setKpi_name(rs.getString("kpi_name"));
+				
+				return headApproveSummaryModel;
+			}
+		});
+		
+		return headApproveSummaryList;
+	}
  
+	
+	@Override
+	public List<HeadApproveSummary> getHeadApproveSummaryMark2(String facName, String academicYear, String workTypeCode) {
+		// TODO Auto-generated method stub
+		StringBuilder sql =new StringBuilder();
+		String mark = "mark_total";
+		if(workTypeCode.equals("1")){
+			mark = "mark_1";
+		}else if(workTypeCode.equals("2")){
+			mark = "mark_2";
+		}else if(workTypeCode.equals("3")){
+			mark = "mark_3";
+		}else if(workTypeCode.equals("4")){
+			mark = "mark_4";
+		}else if(workTypeCode.equals("5")){
+			mark = "mark_5";
+		}
+		
+		sql.append(" SELECT 	hs.kpi_id ,hs.kpi_name,hs.academic_year , ");
+		sql.append(" SUM(bu."+mark+")AS CountKpi   FROM pbp2.head_approve_summary  hs ");
+		sql.append(" INNER JOIN report_person bu ON hs.user_name = bu.USERNAME ");
+		sql.append(" WHERE hs.academic_year = '"+academicYear+"' AND   hs.fac_name = '"+facName+"'   ");
+		sql.append(" AND   hs.work_type_code = '"+workTypeCode+"'  ");
+		sql.append(" GROUP BY hs.kpi_id   ,hs.academic_year,hs.kpi_name ");
+		
+		//HeadApproveSummary  headApproveSummary   = this.jdbcTemplate.queryForList(sql.,	new AcademicYearEvaluateRoundMapper() );	
+		List<HeadApproveSummary> headApproveSummaryList = jdbcTemplate.query(sql.toString(), new RowMapper<HeadApproveSummary>() {
+
+			@Override
+			public HeadApproveSummary mapRow(ResultSet rs, int rowNum) throws SQLException {
+				HeadApproveSummary headApproveSummaryModel = new HeadApproveSummary();
+				
+				headApproveSummaryModel.setKpi_id(rs.getInt("kpi_id"));
+				headApproveSummaryModel.setTotalKpi(rs.getInt("CountKpi"));
+				headApproveSummaryModel.setKpi_name(rs.getString("kpi_name"));
+				
+				return headApproveSummaryModel;
+			}
+		});
+		
+		return headApproveSummaryList;
+	}
+	
 }

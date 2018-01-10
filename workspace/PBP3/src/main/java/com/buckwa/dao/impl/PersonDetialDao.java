@@ -175,7 +175,7 @@ public class PersonDetialDao {
 				+ " FROM person_pbp a LEFT JOIN academic_kpi_user_mapping b " + " ON b.user_name =  a.email "
 				+ " INNER JOIN  (SELECT * FROM webboard_message GROUP BY topic_id ) c "
 				+ " ON c.topic_id = b.kpi_user_mapping_id " + " WHERE a.department_desc = ? AND c.detail != ''  AND a.academic_year = '"+year+"' "
-				+ " ORDER BY  DATE(c.create_date) DESC  LIMIT ?,? ";
+				+ " ORDER BY  DATE(c.create_date) DESC   ";
 
 		logger.info(" GetMessageByHeadAll:" + sql + "and department Id :" + request.getDepartmentName());
 		System.out.println("Start Page and EndPage :" + request.getPageStrart() + "," + request.getPageEnd());
@@ -183,11 +183,11 @@ public class PersonDetialDao {
 		// messageList = jdbcTemplate.query(sql, new
 		// BeanPropertyRowMapper(Message.class));
 		List<Map<String, Object>> rows = jdbcTemplate.queryForList(sql,
-				new Object[] { request.getDepartmentName(), request.getPageStrart(), request.getPageEnd() });
+				new Object[] { request.getDepartmentName() });
 		for (Map<String, Object> row : rows) {
 			Message message = new Message();
-			// message.setCode((String)row.get("message_id"));
-			// message.setDescription((String)row.get("detail"));
+//			 message.setCode((String)row.get("message_id"));
+//			 message.setDescription((String)row.get("detail"));
 			message.setTopicId((Long) row.get("topic_id"));
 			message.setMessageId((Long) row.get("message_id"));
 			message.setMessageDetail((String) row.get("detail"));

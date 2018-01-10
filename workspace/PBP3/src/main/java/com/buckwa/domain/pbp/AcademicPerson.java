@@ -109,6 +109,10 @@ public class AcademicPerson extends BaseDomain  {
 	private String mark5;
 	
 	 
+	
+	
+	
+	
 	public String getMark1() {
 		return mark1;
 	}
@@ -728,111 +732,32 @@ public class AcademicPerson extends BaseDomain  {
 
 	@Override
 	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("Person [personId=");
-		builder.append(personId);
-		builder.append(", employeeId=");
-		builder.append(employeeId);
-		builder.append(", citizenId=");
-		builder.append(citizenId);
-		builder.append(", thaiName=");
-		builder.append(thaiName);
-		builder.append(", thaiSurname=");
-		builder.append(thaiSurname);
-		builder.append(", sex=");
-		builder.append(sex);
-		builder.append(", birthdate=");
-		builder.append(birthdate);
-		builder.append(", rateNo=");
-		builder.append(rateNo);
-		builder.append(", employeeType=");
-		builder.append(employeeType);
-		builder.append(", position=");
-		builder.append(position);
-		builder.append(", level=");
-		builder.append(level);
-		builder.append(", workLine=");
-		builder.append(workLine);
-		builder.append(", salary=");
-		builder.append(salary);
-		builder.append(", workTelNo=");
-		builder.append(workTelNo);
-		builder.append(", belongTo=");
-		builder.append(belongTo);
-		builder.append(", faculty=");
-		builder.append(faculty);
-		builder.append(", workingDate=");
-		builder.append(workingDate);
-		builder.append(", assignDate=");
-		builder.append(assignDate);
-		builder.append(", retireDate=");
-		builder.append(retireDate);
-		builder.append(", maxInsignia=");
-		builder.append(maxInsignia);
-		builder.append(", maxEducation=");
-		builder.append(maxEducation);
-		builder.append(", taxNo=");
-		builder.append(taxNo);
-		builder.append(", workingStatus=");
-		builder.append(workingStatus);
-		builder.append(", marriedStatus=");
-		builder.append(marriedStatus);
-		builder.append(", workNumber=");
-		builder.append(workNumber);
-		builder.append(", insureNo=");
-		builder.append(insureNo);
-		builder.append(", fund=");
-		builder.append(fund);
-		builder.append(", address=");
-		builder.append(address);
-		builder.append(", zipCode=");
-		builder.append(zipCode);
-		builder.append(", telNo=");
-		builder.append(telNo);
-		builder.append(", email=");
-		builder.append(email);
-		builder.append(", oldWorklineCode=");
-		builder.append(oldWorklineCode);
-		builder.append(", worklineCode=");
-		builder.append(worklineCode);
-		builder.append(", worklineName=");
-		builder.append(worklineName);
-		builder.append(", userId=");
-		builder.append(userId);
-		builder.append(", fullName=");
-		builder.append(fullName);
-		builder.append(", estimateGroupName=");
-		builder.append(estimateGroupName);
-		builder.append(", picture=");
-		builder.append(picture);
-		builder.append(", birthdateStr=");
-		builder.append(birthdateStr);
-		builder.append(", workingDateStr=");
-		builder.append(workingDateStr);
-		builder.append(", assignDateStr=");
-		builder.append(assignDateStr);
-		builder.append(", retireDateStr=");
-		builder.append(retireDateStr);
-		builder.append(", lovSexList=");
-		builder.append(lovSexList);
-		builder.append(", lovEmployeeTypeList=");
-		builder.append(lovEmployeeTypeList);
-		builder.append(", lovPositionList=");
-		builder.append(lovPositionList);
-		builder.append(", lovWorkLineList=");
-		builder.append(lovWorkLineList);
-		builder.append(", lovFacultyList=");
-		builder.append(lovFacultyList);
-		builder.append(", lovInsigniaList=");
-		builder.append(lovInsigniaList);
-		builder.append(", lovMarriedStatusList=");
-		builder.append(lovMarriedStatusList);
-		builder.append(", lovEducationList=");
-		builder.append(lovEducationList);
-		builder.append(", lovWorkingStatusList=");
-		builder.append(lovWorkingStatusList);
-		builder.append("]");
-		return builder.toString();
+		return "AcademicPerson [personId=" + personId + ", employeeId=" + employeeId + ", citizenId=" + citizenId
+				+ ", thaiName=" + thaiName + ", thaiSurname=" + thaiSurname + ", sex=" + sex + ", birthdate="
+				+ birthdate + ", rateNo=" + rateNo + ", employeeType=" + employeeType + ", position=" + position
+				+ ", level=" + level + ", workLine=" + workLine + ", salary=" + salary + ", workTelNo=" + workTelNo
+				+ ", belongTo=" + belongTo + ", faculty=" + faculty + ", workingDate=" + workingDate + ", assignDate="
+				+ assignDate + ", retireDate=" + retireDate + ", maxInsignia=" + maxInsignia + ", maxEducation="
+				+ maxEducation + ", taxNo=" + taxNo + ", workingStatus=" + workingStatus + ", marriedStatus="
+				+ marriedStatus + ", workNumber=" + workNumber + ", insureNo=" + insureNo + ", fund=" + fund
+				+ ", address=" + address + ", zipCode=" + zipCode + ", telNo=" + telNo + ", email=" + email
+				+ ", oldWorklineCode=" + oldWorklineCode + ", worklineCode=" + worklineCode + ", worklineName="
+				+ worklineName + ", userId=" + userId + ", fullName=" + fullName + ", estimateGroupName="
+				+ estimateGroupName + ", regId=" + regId + ", picture=" + picture + ", personType=" + personType
+				+ ", birthdateStr=" + birthdateStr + ", workingDateStr=" + workingDateStr + ", assignDateStr="
+				+ assignDateStr + ", retireDateStr=" + retireDateStr + ", lovSexList=" + lovSexList
+				+ ", lovEmployeeTypeList=" + lovEmployeeTypeList + ", lovPositionList=" + lovPositionList
+				+ ", lovWorkLineList=" + lovWorkLineList + ", lovFacultyList=" + lovFacultyList + ", lovInsigniaList="
+				+ lovInsigniaList + ", lovMarriedStatusList=" + lovMarriedStatusList + ", lovEducationList="
+				+ lovEducationList + ", lovWorkingStatusList=" + lovWorkingStatusList + ", fileData=" + fileData
+				+ ", academicKPIUserMappingList=" + academicKPIUserMappingList + ", leaveAccumulate=" + leaveAccumulate
+				+ ", pBPWorkTypeList=" + pBPWorkTypeList + ", pBPWorkTypeWrapper=" + pBPWorkTypeWrapper
+				+ ", academicKPIWrapper=" + academicKPIWrapper + ", department=" + department + ", isDean=" + isDean
+				+ ", isHead=" + isHead + ", academicYear=" + academicYear + ", isPresident=" + isPresident
+				+ ", totalApproved=" + totalApproved + ", totalNotApprove=" + totalNotApprove + ", total=" + total
+				+ ", departmentDesc=" + departmentDesc + ", facultyDesc=" + facultyDesc + ", employeeTypeNo="
+				+ employeeTypeNo + ", totalMark=" + totalMark + ", mark1=" + mark1 + ", mark2=" + mark2 + ", mark3="
+				+ mark3 + ", mark4=" + mark4 + ", mark5=" + mark5 + "]";
 	}
 	
 	

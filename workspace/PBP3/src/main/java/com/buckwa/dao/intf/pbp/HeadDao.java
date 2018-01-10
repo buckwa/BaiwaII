@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.buckwa.domain.pbp.AcademicKPIUserMappingWrapper;
 import com.buckwa.domain.pbp.Department;
+import com.buckwa.domain.pbp.HeadApproveSummary;
 import com.buckwa.domain.pbp.report.DepartmentWorkTypeReport;
 import com.buckwa.domain.pbp.report.MinMaxBean;
 
@@ -28,9 +29,11 @@ public interface HeadDao {
 	public Department getDepartmentMarkAllYear( String headUserName , String academicYear );
 	
 	public AcademicKPIUserMappingWrapper listApproveByAcademicYear( String headUserName ,String academicYear,String status,String userName);
-	public AcademicKPIUserMappingWrapper getByHeadAcademicYearCount( String headUserName ,String academicYear,String status,String employeeType);
+	public AcademicKPIUserMappingWrapper getByHeadAcademicYearCount( String headUserName ,String academicYear,Boolean status,String employeeType);
 	
 	public AcademicKPIUserMappingWrapper getByUserAcademicYearByUserNew( String academicYear, String code, String employeeType);
+	public List<HeadApproveSummary> getHeadApproveSummaryMark(String facName, String academicYear, String workTypeCode);
+	List<HeadApproveSummary> getHeadApproveSummaryMark2(String facName, String academicYear, String workTypeCode);
 
 	
 }

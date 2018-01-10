@@ -25,6 +25,7 @@ import com.buckwa.domain.common.BuckWaResponse;
 import com.buckwa.domain.pam.Person;
 import com.buckwa.domain.pbp.Department;
 import com.buckwa.domain.pbp.Faculty;
+import com.buckwa.domain.pbp.HeadApproveSummary;
 import com.buckwa.domain.pbp.report.DepartmentReport;
 import com.buckwa.domain.pbp.report.DepartmentWorkTypeReport;
 import com.buckwa.domain.pbp.report.FacultyReportLevel;
@@ -189,6 +190,128 @@ public class JSONDeanController {
 		return returnList;
 	}
 
+	
+	@RequestMapping(value = "/getReportBarchart/{academicYear}/{facName}/{workTypeCode}", method = RequestMethod.GET, headers = "Accept=application/json")
+	public List<RadarPlotReport> getReportBarchart(
+			@PathVariable String academicYear,
+			@PathVariable String facName,
+			@PathVariable String workTypeCode
+			) {
+		logger.info(" academicYear:" + academicYear +" facName:" + facName +" workTypeCode:" + workTypeCode);
+		List<RadarPlotReport> returnList = new ArrayList<RadarPlotReport>();
+		ModelAndView mav = new ModelAndView();
+	 
+		try {
+			BuckWaRequest request = new BuckWaRequest();
+
+		
+					
+//			System.out.println("head"+headUserName );
+			//headUserName =headUserName+"@kmitl.ac.th";
+			
+//			String academicYear = schoolUtil.getCurrentAcademicYear();
+ 
+			request.put("facName", facName);
+			request.put("academicYear", academicYear);
+			request.put("workTypeCode", workTypeCode);
+			
+
+			BuckWaResponse response = headService.markReportRecal(request);
+
+					if (response.getStatus() == BuckWaConstants.SUCCESS) {
+						List<HeadApproveSummary> reportWorkTypeDepartmentList = (List<HeadApproveSummary>) response.getResObj("headApproveSummary");
+						logger.info(reportWorkTypeDepartmentList.toString());
+						//response = personProfileService.getByUsername(request);
+
+
+							int loopx = 1;
+							for (HeadApproveSummary personTmp : reportWorkTypeDepartmentList) {
+								String TemtotalKpi = Integer.toString(personTmp.getTotalKpi()); ;
+								RadarPlotReport reportTmp = new RadarPlotReport();
+//								reportTmp.setAxisName(" ");	
+								 String firstWord = personTmp.getKpi_name();
+							     if(firstWord.contains(" ")){
+							        firstWord= firstWord.substring(0, firstWord.indexOf(" ")); 
+							        System.out.println(firstWord);
+							     }
+							     
+								reportTmp.setAxisName(firstWord);
+								reportTmp.setAxisValue(TemtotalKpi);
+
+								reportTmp.setOrderNo(loopx);
+								returnList.add(reportTmp);
+								loopx++;
+							}
+
+					}
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			mav.addObject("errorCode", "E001");
+		}
+		return returnList;
+	}
+	
+	
+	@RequestMapping(value = "/getReport2Barchart/{academicYear}/{facName}/{workTypeCode}", method = RequestMethod.GET, headers = "Accept=application/json")
+	public List<RadarPlotReport> getReport2Barchart(
+			@PathVariable String academicYear,
+			@PathVariable String facName,
+			@PathVariable String workTypeCode
+			) {
+		logger.info(" academicYear:" + academicYear +" facName:" + facName +" workTypeCode:" + workTypeCode);
+		List<RadarPlotReport> returnList = new ArrayList<RadarPlotReport>();
+		ModelAndView mav = new ModelAndView();
+	 
+		try {
+			BuckWaRequest request = new BuckWaRequest();
+
+		
+					
+//			System.out.println("head"+headUserName );
+			//headUserName =headUserName+"@kmitl.ac.th";
+			
+//			String academicYear = schoolUtil.getCurrentAcademicYear();
+ 
+			request.put("facName", facName);
+			request.put("academicYear", academicYear);
+			request.put("workTypeCode", workTypeCode);
+			
+
+			BuckWaResponse response = headService.markReport2Recal(request);
+
+					if (response.getStatus() == BuckWaConstants.SUCCESS) {
+						List<HeadApproveSummary> reportWorkTypeDepartmentList = (List<HeadApproveSummary>) response.getResObj("headApproveSummary");
+						logger.info(reportWorkTypeDepartmentList.toString());
+						//response = personProfileService.getByUsername(request);
+
+
+							int loopx = 1;
+							for (HeadApproveSummary personTmp : reportWorkTypeDepartmentList) {
+								String TemtotalKpi = Integer.toString(personTmp.getTotalKpi()); ;
+								RadarPlotReport reportTmp = new RadarPlotReport();
+//								reportTmp.setAxisName(" ");	
+								 String firstWord = personTmp.getKpi_name();
+							     if(firstWord.contains(" ")){
+							        firstWord= firstWord.substring(0, firstWord.indexOf(" ")); 
+							        System.out.println(firstWord);
+							     }
+							     
+								reportTmp.setAxisName(firstWord);
+								reportTmp.setAxisValue(TemtotalKpi);
+
+								reportTmp.setOrderNo(loopx);
+								returnList.add(reportTmp);
+								loopx++;
+							}
+
+					}
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			mav.addObject("errorCode", "E001");
+		}
+		return returnList;
+	}
+	
 	
 	@RequestMapping(value = "/getBarchart", method = RequestMethod.GET, headers = "Accept=application/json")
 	public List<RadarPlotReport> getBarchart() {

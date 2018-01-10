@@ -33,6 +33,8 @@ import com.buckwa.domain.pam.Person;
 import com.buckwa.domain.pbp.AcademicKPI;
 import com.buckwa.domain.pbp.AcademicKPIAttachFile;
 import com.buckwa.domain.pbp.AcademicPerson;
+import com.buckwa.domain.pbp.AcademicYear;
+import com.buckwa.domain.pbp.AcademicYearWrapper;
 import com.buckwa.domain.pbp.ChainOfCommandWrapper;
 import com.buckwa.domain.pbp.Department;
 import com.buckwa.domain.pbp.Faculty;
@@ -40,10 +42,12 @@ import com.buckwa.domain.pbp.FacultyWrapper;
 import com.buckwa.domain.pbp3.ResponseObj;
 import com.buckwa.domain.pbp3.ResponseObjPaging;
 import com.buckwa.domain.validator.UserValidator;
+import com.buckwa.domain.validator.pbp.AcademicYearDateEditValidator;
 import com.buckwa.domain.validator.pbp.DepartmentValidator;
 import com.buckwa.domain.validator.pbp.FacultyValidator;
 import com.buckwa.service.intf.CommonService;
 import com.buckwa.service.intf.admin.AdminUserService;
+import com.buckwa.service.intf.pbp.AcademicYearService;
 import com.buckwa.service.intf.pbp.FacultyService;
 import com.buckwa.service.intf.util.PathUtil;
 import com.buckwa.util.BeanUtils;
@@ -82,6 +86,11 @@ public class JSONAdminController {
 	
 	@Autowired
     private PathUtil pathUtil;
+	
+	@Autowired
+	private AcademicYearService academicYearService;
+	
+
 
 
 	@RequestMapping(value = "/getFacultyWrapper/{year}", method = RequestMethod.GET, headers = "Accept=application/json")
@@ -1204,6 +1213,55 @@ public class JSONAdminController {
 	}
 	
 	
+	@RequestMapping(value="/getAcademicYear/init" , method = RequestMethod.GET )
+	public ResponseObj academicYearInitList( ) {
+		ResponseObj resObj =new ResponseObj();
+		List<Object> listResult =new ArrayList<>();
+		logger.info(" Start  ");
 	
-	
+		try{
+			BuckWaRequest request = new BuckWaRequest();	 
+			BuckWaResponse response = academicYearService.getFullAcademicYear(request);
+			if(response.getStatus()==BuckWaConstants.SUCCESS){	
+				AcademicYearWrapper academicYearWrapper = (AcademicYearWrapper)response.getResObj("academicYearWrapper");
+			
+				listResult.add(academicYearWrapper);
+			}
+			listResult.add(academicYearUtil.getAcademicYearList());
+			resObj.setResObj(listResult);
+		}catch(Exception ex){
+			ex.printStackTrace();
+			resObj.setResObj(listResult);
+
+		}
+		return resObj;
+		
+	}
+
+	@RequestMapping(value="editDateAcademicYear", method = RequestMethod.POST)
+	public ModelAndView editDateAcademicYearPost(HttpServletRequest httpRequest,@ModelAttribute AcademicYear academicYear, BindingResult result) {
+		logger.info(" Start   editDateAcademicYearPost:"+BeanUtils.getBeanString(academicYear));
+		ModelAndView mav = new ModelAndView();
+//		mav.setViewName("dateAcademicYearEdit");
+//		try{ 
+//			new AcademicYearDateEditValidator().validate(academicYear, result);			
+//			if (result.hasErrors()) {				
+//				 
+//			}else {					
+//				BuckWaRequest request = new BuckWaRequest();
+//				request.put("academicYear", academicYear);
+//				BuckWaResponse response = academicYearService.editDateAcademicYear(request);
+//				if(response.getStatus()==BuckWaConstants.SUCCESS){									
+//		 			mav=initList();
+//				}else {
+//					mav.addObject("errorCode", response.getErrorCode());  
+//				}				
+//			}	
+//
+//		}catch(Exception ex){
+//			ex.printStackTrace();
+//			mav.addObject("errorCode", "E001"); 
+//		}
+		return mav;
+	}	
 }

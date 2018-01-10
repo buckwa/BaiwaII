@@ -212,7 +212,8 @@ public class JSONHeadController {
 			String academicYear =UserLoginUtil.getCurrentAcademicYear();
 			//if(academicYear==null||academicYear.length()==0){
 			
-			
+			Boolean role = UserLoginUtil.isRole(BuckWaConstants.ROLE_HEAD);
+			System.out.println(role);
 			//String	academicYear =schoolUtil.getCurrentAcademicYear();
 			
 		
@@ -224,7 +225,54 @@ public class JSONHeadController {
 			
 			request.put("headUserName",headUserName);
 			request.put("academicYear",academicYear);
-			request.put("status",""); 
+			request.put("status",role); 
+			request.put("employeeType",employeeType); 
+						BuckWaResponse response = headService.getByHeadAcademicYearCount(request);
+			if(response.getStatus()==BuckWaConstants.SUCCESS){	
+				academicKPIUserMappingWrapper = (AcademicKPIUserMappingWrapper)response.getResObj("academicKPIUserMappingWrapper");
+			 
+				academicKPIUserMappingWrapper.setAcademicYear(academicYear);
+				academicKPIUserMappingWrapper.setAcademicYearList(academicYearUtil.getAcademicYearList());
+				//mav.addObject("academicKPIUserMappingWrapper", academicKPIUserMappingWrapper);	
+			}		
+			 
+		}catch(Exception ex){
+			ex.printStackTrace();
+			//mav.addObject("errorCode", "E001"); 
+		}
+		return academicKPIUserMappingWrapper;
+	}	
+	
+	
+	@RequestMapping(value="/initByYear/{employeeType}/{year}", method = RequestMethod.GET)
+	public AcademicKPIUserMappingWrapper initListByYear(@PathVariable String employeeType,@PathVariable String year ) {
+		//public ModelAndView initList(@RequestParam("academicYear") String academicYear) {
+		logger.info(" Start  ");
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("headWorkList");
+		AcademicKPIUserMappingWrapper academicKPIUserMappingWrapper = null;
+		try{
+			BuckWaRequest request = new BuckWaRequest(); 
+			 
+			String headUserName = UserLoginUtil.getCurrentUserLogin();
+			String academicYear =UserLoginUtil.getCurrentAcademicYear();
+			
+			
+			//if(academicYear==null||academicYear.length()==0){
+			
+			
+			//String	academicYear =schoolUtil.getCurrentAcademicYear();
+			
+		
+			
+			
+			
+			//}
+		//	String academicYear =schoolUtil.getCurrentAcademicYear();
+			
+			request.put("headUserName",headUserName);
+			request.put("academicYear",year);
+			request.put("status",UserLoginUtil.isRole(BuckWaConstants.ROLE_HEAD)); 
 			request.put("employeeType",employeeType); 
 						BuckWaResponse response = headService.getByHeadAcademicYearCount(request);
 			if(response.getStatus()==BuckWaConstants.SUCCESS){	
@@ -273,6 +321,36 @@ public class JSONHeadController {
 		return academicKPIUserMappingWrapper;
 	}	
 	
+	@RequestMapping(value="/initByUserNameByYear/{userName}/{round}/{year}", method = RequestMethod.GET , headers = "Accept=application/json")
+	public AcademicKPIUserMappingWrapper initByUserNameByYear(@PathVariable String userName,@PathVariable String round,@PathVariable String year) {
+		logger.info(" Start  userName: "+userName);
+
+		
+		AcademicKPIUserMappingWrapper academicKPIUserMappingWrapper =null;
+		try{
+			
+			//httpRequest.getSession().setAttribute("approveUserName", userName);
+			BuckWaRequest request = new BuckWaRequest(); 
+			 
+
+			String academicYear =UserLoginUtil.getCurrentAcademicYear();
+			
+			request.put("academicYear",year);
+			request.put("userName",userName);
+			request.put("employeeType",round); 
+			BuckWaResponse response = headService.getByUserAcademicYear(request);
+			if(response.getStatus()==BuckWaConstants.SUCCESS){	
+				academicKPIUserMappingWrapper = (AcademicKPIUserMappingWrapper)response.getResObj("academicKPIUserMappingWrapper");
+			 
+				academicKPIUserMappingWrapper.setAcademicYear(academicYear);
+				//mav.addObject("academicKPIUserMappingWrapper", academicKPIUserMappingWrapper);	
+			}				  
+		}catch(Exception ex){
+			ex.printStackTrace();
+			//mav.addObject("errorCode", "E001"); 
+		}
+		return academicKPIUserMappingWrapper;
+	}	
 	
 	@RequestMapping(value="/initByUserNameNew/{code}/{status}/{facultyCode}/{department_desc}/{employeeType}", method = RequestMethod.GET , headers = "Accept=application/json")
 	public AcademicKPIUserMappingWrapper initByUserNameNew(@PathVariable String code,@PathVariable String status,@PathVariable String facultyCode,@PathVariable String department_desc,@PathVariable String employeeType) {

@@ -11,6 +11,7 @@ import com.buckwa.domain.common.BuckWaRequest;
 import com.buckwa.domain.common.BuckWaResponse;
 import com.buckwa.domain.pbp.AcademicKPIUserMappingWrapper;
 import com.buckwa.domain.pbp.Department;
+import com.buckwa.domain.pbp.HeadApproveSummary;
 import com.buckwa.domain.pbp.report.DepartmentWorkTypeReport;
 import com.buckwa.domain.pbp.report.MinMaxBean;
 import com.buckwa.service.intf.pbp.HeadService;
@@ -212,6 +213,55 @@ public class HeadServiceImpl implements HeadService {
 		return response;
 	}
 		
+	@Override	
+	public BuckWaResponse markReportRecal(BuckWaRequest request) {
+		BuckWaResponse response = new BuckWaResponse();
+		
+		// String headUserName ,String academicYear,String status
+		try{				  
+
+			
+			String academicYear = (String)request.get("academicYear");
+			String facName = (String)request.get("facName");
+			String workTypeCode = (String)request.get("workTypeCode");
+			List<HeadApproveSummary> headApproveSummary= ( List<HeadApproveSummary>)headDao.getHeadApproveSummaryMark(facName, academicYear,workTypeCode);
+			//Department department= ( Department)headDao.getDepartmentMark(headUserName, academicYear);
+			response.setSuccessCode("S100");	
+			 response.addResponse("headApproveSummary",headApproveSummary);
+ 	
+		}catch(Exception ex){
+			ex.printStackTrace();
+			response.setStatus(BuckWaConstants.FAIL);
+			response.setErrorCode("E001");			
+		}
+	 
+		return response;
+	}
+	
+	@Override	
+	public BuckWaResponse markReport2Recal(BuckWaRequest request) {
+		BuckWaResponse response = new BuckWaResponse();
+		
+		// String headUserName ,String academicYear,String status
+		try{				  
+
+			
+			String academicYear = (String)request.get("academicYear");
+			String facName = (String)request.get("facName");
+			String workTypeCode = (String)request.get("workTypeCode");
+			List<HeadApproveSummary> headApproveSummary= ( List<HeadApproveSummary>)headDao.getHeadApproveSummaryMark2(facName, academicYear,workTypeCode);
+			//Department department= ( Department)headDao.getDepartmentMark(headUserName, academicYear);
+			response.setSuccessCode("S100");	
+			 response.addResponse("headApproveSummary",headApproveSummary);
+ 	
+		}catch(Exception ex){
+			ex.printStackTrace();
+			response.setStatus(BuckWaConstants.FAIL);
+			response.setErrorCode("E001");			
+		}
+	 
+		return response;
+	}
 	
 	
 	@Override	
@@ -315,7 +365,7 @@ public class HeadServiceImpl implements HeadService {
 			
 			String headUserName = (String)request.get("headUserName");
 			String academicYear = (String)request.get("academicYear");
-			String status = (String)request.get("status");
+			Boolean status = (Boolean) request.get("status");
 			String employeeType = (String)request.get("employeeType");
 			AcademicKPIUserMappingWrapper academicKPIUserMappingWrapper= ( AcademicKPIUserMappingWrapper)headDao.getByHeadAcademicYearCount(headUserName,academicYear,status,employeeType);
 		 

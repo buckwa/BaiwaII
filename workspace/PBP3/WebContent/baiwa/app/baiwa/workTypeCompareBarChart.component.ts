@@ -95,8 +95,8 @@ export class workTypeCompareBarChart implements OnInit {
         },
 		valueAxis: {
 			min: 0,
-			max: 80000,
-			majorUnit: 10000,
+			max: 1000,
+			majorUnit: 1000,
 		},
 		categoryAxis: {
 			field: "categoryName",

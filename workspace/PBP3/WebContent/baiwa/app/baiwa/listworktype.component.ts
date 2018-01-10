@@ -20,7 +20,8 @@ export class listworktype implements OnInit, AfterViewInit {
     public inport3: any[];
     public inport4: any[];
    
-
+    public mark: String;
+    public codeKpi: string;
     public inport5: any;
     public FormAddInput: any;
     public inport_sento: any;
@@ -36,6 +37,7 @@ export class listworktype implements OnInit, AfterViewInit {
     public currentAcademicYear :any;
     public profile :any;
     public evaluateRoundValue :any;
+    public fileWork: any[];
 
 
     constructor(private commonService: CommonService, private http: Http) {
@@ -156,14 +158,13 @@ export class listworktype implements OnInit, AfterViewInit {
     public uploadFileAll() {
         this.uploader.uploadAll();
 
-        window.setTimeout(() => {
-            var temp = !this.uploader.getNotUploadedItems().length;
-            this.uploadalert = true;
-            console.log("status upload :" + temp)
-            this.uploader.clearQueue();
-        }, 600);
-
-
+        
+        this.uploader.onCompleteItem = (item:any, response:any, status:any, headers:any) => {
+            console.log("ImageUpload:uploaded:", item, status);
+           
+            this.ClickGetPointKPI(this.academicKPIId, this.mark);
+             this.uploadalert = true;
+        };
     }
 
 
@@ -277,10 +278,21 @@ export class listworktype implements OnInit, AfterViewInit {
     public savesucess (response :any){
 
             this.academicKPIId = response.json(JSON.stringify(response._body));
-            this.academicKPIId = this.academicKPIId.resObj;
-            this.statusActiveUpload = true;
-            this.savealert = true;
-            this.valid = false;
+            
+            console.log( this.academicKPIId);
+            
+            //  if(this.academicKPIId.resObj=="0"){
+            //      alert("ไม่สามารถ บันทึกรายการได้ กรุณาติดต่อผู้ดูแลระบบ");
+            //  }else{}
+                 this.academicKPIId = this.academicKPIId.resObj;
+                this.statusActiveUpload = true;
+                this.savealert = true;
+                this.valid = false;
+                this.ClickGetPointKPI(this.academicKPIId, this.mark);
+       
+
+
+           
     }
 
     public exitModal (){
@@ -294,8 +306,41 @@ export class listworktype implements OnInit, AfterViewInit {
     }
 
 
+    public ClickGetPointKPI(Code: string, mark: String) {
+  
+        
+        this.academicKPIId = Code;
+        console.log("../person/getImportWorkNew/" + Code);
+        var url = "../person/getImportWorkNew/" + Code
+        return this.http.get(url).subscribe(response => this.GetKPISucess(response),
+            error => this.GetUserSessionError(error), () => console.log("editdoneUser !"));
+    }
 
-
+        public GetKPISucess(response: any) {
+            
+        var Model = response.json(JSON.stringify(response._body));
+        console.log(Model);
+        this.fileWork = Model.academicKPIUserMapping.academicKPIAttachFileList;
+       
+      
+    }
     
+    public deleteFile(attachFileId: any, fileName: string) {
+        console.log(this.academicKPIId );
+        var url = "../person/deleteAttachFile/" + this.academicKPIId + "/" + fileName + "/" + attachFileId;
+        this.commonService.confirm("คุณต้องการลบเอกสารแบบใช่หรื่อไม่?", jQuery.proxy(function (isOk) {
+            console.log("isOk", isOk);
+            if (isOk) {
+                this.http.get(url).subscribe(response => this.deletesucess(response),
+                    error => this.deleteError(), () => console.log("editdoneUser !"));
+            }
+        }, this));
+    }
+
+    public deletesucess(response: any) {
+
+        console.log("deletesucess!")
+        this.ClickGetPointKPI(this.academicKPIId, this.mark);
+    }
 
 }

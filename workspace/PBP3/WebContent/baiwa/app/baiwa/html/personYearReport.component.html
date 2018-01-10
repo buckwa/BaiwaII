@@ -7,16 +7,31 @@
 						<div class="widget-pie-chart-header-title">พิมพ์รายงานประจำปีการศึกษา</div>
 
 					</div>
+
+							 
 					<div class="col-40">
+
+				
+
 						<div class="period">
 							<div class="lbl">ปี</div>
 							<select name="select" class="form-control" [(ngModel)]="acdemicyear" (ngModelChange)="changYear($event)">
 							<option *ngFor="let a of year " [value]="a.name" >{{a.name}}</option>
-                            
-                            
-				</select>
+                  </select>
 
 						</div>
+
+						
+					</div>
+
+					<div class="col-100" >
+						 <label for="exampleSelect2" class="col-sm-2 form-control-label" *ngIf="evaluateRoundList">รอบ</label >      
+					<div class="col-sm-2" *ngIf="evaluateRoundList">
+						<select id="exampleSelect2" class="form-control"  [(ngModel)]="evaluateRoundValue" >
+								<option *ngFor="let item of evaluateRoundList;"  [value]="item.name"  >{{item.name}}</option>
+						</select>
+					</div>
+
 					</div>
 				</div>
 				<div class="tbl tbl-grid">

@@ -261,7 +261,7 @@
                                         <hr>
                                         <div *ngIf="!statusKpi">
                                             <h5 style="padding-bottom: 11px;">เพิ่มเอกสารแบบ</h5>
-
+                                                    
                                             <input type="file" class="form-control" ng2FileSelect [uploader]="uploader" multiple /><br/>
                                         </div>
                                     </div>
@@ -307,9 +307,14 @@
                                     </tbody>
 
                                 </table>
-
+                                            
                                 <div *ngIf="!statusKpi">
-
+                     <div>
+                    Progress:
+                    <div class="progress" style="">
+                        <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': uploader.progress + '%' }"></div>
+                    </div>
+                </div>
                                     <button type="button" class="btn btn-success btn-s" (click)="uploadFileAll()" [disabled]="!uploader.getNotUploadedItems().length">
                     <span class="glyphicon glyphicon-upload"></span> Upload all
                 </button>
@@ -374,7 +379,7 @@
                     </div>
                 </div>
                 <div class="modal-upload-bottom">
-                    <button type="button" class="btn btn-rounded btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-rounded btn-default"  (click)="exitModal()" data-dismiss="modal">Close</button>
                     
                 </div>
             </form>

@@ -27,6 +27,7 @@ import { headWorkTypeBarChart} from './baiwa/headWorkTypeBarChart.component';
 import { InitApporve} from './baiwa/initApprove.component';
 import { initApproveByKPI} from './baiwa/initApproveByKPI.component';
 import { approvework} from './baiwa/approvework.component';
+import { approveworkRead} from './baiwa/approveworkRead.component';
 import { FacultyReport} from './baiwa/FacultyReport.component';
 import { deanBarChart } from './baiwa/deanBarChart.component';
 import { deanWorkTypeBarChart } from './baiwa/deanWorkTypeBarChart.component';
@@ -65,8 +66,12 @@ import { AdminpBPWorkTypeinit } from './baiwa/AdminpBPWorkTypeinit.component';
 import { approveworkByKPI } from './baiwa/approveworkByKPI.component';
 import { markDepartmentRecalInit } from './baiwa/markDepartmentRecalInit.component';
 import { AssignHead } from './baiwa/AssignHead.component';
+import { PreviousAcademicWorkComponent } from './baiwa/PreviousAcademicWork.component';
+import { AdminAcademicYearEditComponent } from './baiwa/AdminAcademicYearEdit.component';
 
 
+import { ReportKpi1 } from './baiwa/ReportKpi1.component';
+import { ReportKpi2 } from './baiwa/ReportKpi2.component';
 
 const routes: Routes = [
 
@@ -88,6 +93,7 @@ const routes: Routes = [
     { path: 'notificationsList', component: notificationsList },//ยุง
     { path: 'notificationsDetail/:code', component: notificationsDetail },//ยุง
     { path: '', component: home },
+    // { path: '**', component: home },
     { path: 'barchart',component:barChart},
     { path: 'headWorkTypeBarChart' , component:headWorkTypeBarChart},
     { path: 'initApprove' , component:InitApporve},
@@ -124,6 +130,14 @@ const routes: Routes = [
     { path: 'approveworkByKPI/:code/:status/:workcode', component: approveworkByKPI },
     { path: 'markDepartmentRecalInit', component: markDepartmentRecalInit },
     { path: 'AssignHead', component: AssignHead },
+    { path: 'PreviousAcademicWork', component: PreviousAcademicWorkComponent },
+    { path: 'ReportKpi1', component: ReportKpi1 },
+    { path: 'ReportKpi2', component: ReportKpi2 },
+    { path: 'approveworkRead/:email/:rond/:year', component: approveworkRead },
+    { path: 'adminAcademicYearEdit/:year/:startDate/:endDate', component: AdminAcademicYearEditComponent },
+
+
+    
 ];
 
 @NgModule({
@@ -189,7 +203,12 @@ const routes: Routes = [
         AdminpBPWorkTypeinit,
         approveworkByKPI,
         markDepartmentRecalInit,
-        AssignHead
+        AssignHead,
+        PreviousAcademicWorkComponent,
+        approveworkRead,
+        ReportKpi1,
+        ReportKpi2,
+        AdminAcademicYearEditComponent
 
     ],
     providers: [

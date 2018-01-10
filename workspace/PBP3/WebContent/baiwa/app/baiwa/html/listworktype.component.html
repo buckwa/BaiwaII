@@ -1,4 +1,15 @@
-
+	<header class="section-header" *ngIf=" false">
+				<div class="tbl">
+					<div class="tbl-row">
+						<div class="tbl-cell">
+							<h2>ระงับการนำเข้าผลงานชั่วคราวเพื่อให้ประธานสาขาอนุมัติผลงงาน</h2>
+							
+						</div>
+						
+						
+					</div>
+				</div>
+	</header>
 			
 			<!--<header class="section-header" *ngIf=" evaluateRoundValue == 'ข้าราชการ' ">
 				<div class="tbl">
@@ -14,7 +25,7 @@
 			</header>-->
 			
 			<!--*ngIf=" evaluateRoundValue != 'ข้าราชการ' "-->
-			
+<div  *ngIf=" true">		
 			<header class="section-header" >
 				<div class="tbl">
 					<div class="tbl-row">
@@ -398,14 +409,44 @@
 	<div class="row" *ngIf="statusActiveUpload">
 
         <div class="col-md-12" >
-        <div class="row">
-        
+
+			      <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th width="50%">
+                                                        <div class="text-center">Name</div>
+                                                    </th>
+
+                                                    <th>
+                                                        <div class="text-center"></div>
+                                                    </th>
+
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr  *ngFor="let item of fileWork">
+
+                                                    <td width="70%"><strong><a href="../person/downloadAttachFile/{{item.attachFileId}}">{{item.fileName}}</a></strong></td>
+
+                                                    <td nowrap width="30%">
+                                                        <button type="button" class="btn btn-danger btn-xs" (click)="deleteFile(item.attachFileId,item.fileName)">
+                                                        <span class="glyphicon glyphicon-trash"></span> 
+                                                    </button>
+                                                    </td>
+
+                                                </tr>
+    
+                                            </tbody>
+
+                                        </table>
+        <div class="row" style=" margin-top: 27px;">
             <div class="col-md-8">
 					*ขนาดไม่เกิน 5MB เป็นต้น
                 <h3 style=" margin-top: 2.2rem; margin-bottom: 1.2rem;">Select files</h3>
 
                 <input type="file" class="form-control" ng2FileSelect [uploader]="uploader" multiple  /><br/> 
-            </div>
+			</div>
+			
         </div>  
         
 
@@ -514,3 +555,5 @@
       </div>
     </div>
   </div>
+
+</div>

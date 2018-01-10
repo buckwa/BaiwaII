@@ -32,8 +32,8 @@
                         <td>
                             <div class="text-center"><a [routerLink]="['/approvework',item.email , 1]">{{item.thaiName}}</a></div>
                         </td>
-                        <td [hidden]="item.employeeTypeNo == 1">พนักงาน</td>
-                        <td [hidden]="item.employeeTypeNo != 1">ราชการ</td>
+                        <!-- <td *ngIf="item.employeeTypeNo == 1" >พนักงาน</td> -->
+                        <td >{{item.employeeType}}</td>
                         <td>
                             <div class="text-center">{{item.totalNotApprove}}</div>
                         </td>

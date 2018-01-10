@@ -8,6 +8,7 @@ import { URLSearchParams, Http} from '@angular/http';
 export class listKPIByWorktype implements OnInit {
 
     public acadenmicwork: any;
+    public edited = true;
     public code: any;
     private sub: any;
     private year: any;

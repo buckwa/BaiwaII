@@ -1,0 +1,57 @@
+<div class="box-typical box-typical-padding">
+    <div class="row">
+        <div class="col-sm-12 text-center">
+
+            
+            <h4 style=" margin-bottom: 2.2rem; ">ผลงานบุคลากร {{nameDepart}} {{currentAcademicYear}}</h4>
+<div class="row">
+        <div class="col-md-1">
+            ประจำปี 
+            
+        </div>
+           
+        <div class="col-md-2">
+
+            <select id="exampleSelect" class="form-control"  [(ngModel)]="currentAcademicYear" #academic (change)="changeYear(academic.value)" >
+			        <option *ngFor="let item of academicYearList;"  [value]="item.name"  >{{item.name}}</option>
+			</select>
+        </div>
+</div>          
+
+
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-1"></div>
+        <div class="col-sm-10">
+            <table id="table-edit" class="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th>
+                            <div class="text-center">บุคลากร</div>
+                        </th>
+                        <th>
+                            <div class="text-center">ประเภท</div>
+                        </th>
+                      
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of academicPersonList; let i = index">
+                        <td>
+                            <div class="text-center"><a [routerLink]="['/approveworkRead',item.email , 1,currentAcademicYear]">{{item.thaiName}}</a></div>
+                        </td>
+                        <td [hidden]="item.employeeTypeNo == 1">พนักงาน</td>
+                        <td [hidden]="item.employeeTypeNo != 1">ราชการ</td>
+                      
+
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-sm-1"></div>
+    </div>
+
+</div>
+

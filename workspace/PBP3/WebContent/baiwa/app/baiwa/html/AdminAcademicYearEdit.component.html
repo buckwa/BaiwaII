@@ -1,0 +1,53 @@
+<div style="width: 100%">
+    <div class="col-md-4 col-lg-12">
+        <section id="blockui-element-container-dark" class="card">
+            <div class="card-block display-table" style="min-height: auto">
+                <section class="card card-default">
+                     <header class="card-header"> ปีการศึกษา </header>
+                        <div class="card-block">
+                            <table border="1" width="100%" class="table table-bordered">
+                                <thead>
+                                    <tr class="text-center">
+                                        <td><strong>ปีการศีกษา</strong></td>
+                                        <td><strong>เริ่มต้น</strong></td>
+                                        <td><strong>สิ้นสุด</strong></td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="text-center">
+                                           <label>
+{{year}}
+                                           </label>
+                                        </td>
+                                        <td width="15%">
+
+                                                <div class="form-group has-warning">
+                                                        <label class="control-label" style="color:red">*request</label>
+                                                        <input type="text" class="form-control"  [(ngModel)]="startDate"  >
+                                                </div>
+                                        </td>
+                                        
+                                        <td width="15%">
+                                                <div class="form-group has-warning">
+                                                        <label class="control-label" style="color:red">*request</label>
+                                                        <input type="text" class="form-control"  [(ngModel)]="endDate"  >
+                                                </div>
+                                        </td>
+                                    </tr>          
+                                </tbody>
+                            </table>   
+
+                            <div class="" style="text-align: center">
+                                <button (click)="backClicked()" >กลับ</button>
+                                <button (click)="saveClicked()" >บันทึก</button>
+                            </div>
+                        </div>
+                </section>
+            </div>
+        </section>
+    </div>
+</div>
+
+
+    

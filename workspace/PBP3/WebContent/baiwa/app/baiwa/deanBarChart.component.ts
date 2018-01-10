@@ -30,7 +30,7 @@ export class deanBarChart implements OnInit  {
         this.json = response.json(JSON.stringify(response._body));
         this.nameDepart = this.json.facultyName;
         //this.mean1 = this.json.mean1;
-        this.getbarChart();
+     this.getbarChart();
     }
 
     public GetDepartmentNameError(error: String) {
@@ -63,8 +63,8 @@ export class deanBarChart implements OnInit  {
         	        },
         	        valueAxis: {
         	        	min: 0,        	  
-        	        	max: 105000,
-        	        	majorUnit: 10000
+        	        	max: 1050,
+        	        	majorUnit: 100
         	        },
                     tooltip: {
                         visible: true,

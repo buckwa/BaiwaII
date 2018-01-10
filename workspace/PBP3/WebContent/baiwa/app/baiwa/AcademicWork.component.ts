@@ -132,11 +132,12 @@ export class AcademicWork implements OnInit, AfterViewInit {
         for (var i = 0; i < this.academy.pBPWorkTypeList.length; i++) {
             this.kpiuserList.push(this.academy.pBPWorkTypeList[i].academicKPIUserMappingList)
         }
+        console.log(this.kpiuserList);
         this.commonService.unLoading();
         this.mapKpi();
     }
     public ClickGetPointKPI(Code: string, mark: String) {
-        this.uploader.clearQueue();
+  
         this.mark = mark;
         this.codeKpi = Code;
         var url = "../person/getImportWorkNew/" + Code
@@ -246,15 +247,28 @@ export class AcademicWork implements OnInit, AfterViewInit {
         return this.sanitizer.bypassSecurityTrustUrl(url);
     }
     public uploadFileAll() {
+        
+            
         this.uploader.uploadAll();
 
-        window.setTimeout(() => {
-            var temp = !this.uploader.getNotUploadedItems().length;
-            this.ClickGetPointKPI(this.codeKpi, this.mark);
-            console.log("status upload :" + temp)
-            this.uploader.clearQueue();
-        }, 600);
+        this.uploader.onCompleteItem = (item:any, response:any, status:any, headers:any) => {
+            console.log("ImageUpload:uploaded:", item, status);
+             console.log("CodeKpi", this.codeKpi);
 
+             
+            this.ClickGetPointKPI(this.codeKpi, this.mark);
+          
+        };
+        
+        // window.setTimeout(() => {
+        //     var temp = !this.uploader.getNotUploadedItems().length;
+            
+            
+        // }, 900);
+        // console.log(this.uploader);
+        // console.log(this.uploader.getNotUploadedItems());
+        
+       
 
     }
     public deleteFile(attachFileId: any, fileName: string) {
@@ -433,4 +447,11 @@ export class AcademicWork implements OnInit, AfterViewInit {
        
     }
 
+    public exitModal (){
+
+           
+             this.uploader.clearQueue();
+            
+
+    }
 }

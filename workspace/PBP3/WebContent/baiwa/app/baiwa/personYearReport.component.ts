@@ -10,7 +10,9 @@ export class personYearReport {
     user: any;
     year: any;
     acdemicyear: any;
-
+    evaluateRoundValue: any;
+    profile: any;
+    evaluateRoundList: any;
     public libPath: string;
 
     constructor(private http: Http) {
@@ -32,10 +34,36 @@ export class personYearReport {
     }
     public GetuserSucess(response: any) {
         this.user = response.json(JSON.stringify(response._body));
+        console.log('User');
+        console.log( this.user);
         this.year = this.user.academicYearList;
         //this.year = ["2557","2558","2559"];
         this.acdemicyear = this.user.currentAcademicYear;
+
+        this.GetPersonByAcadamy( this.user.userName,this.acdemicyear);
         return true;
+    }
+
+    public GetPersonByAcadamy(user: String, year: String) {
+        var url = "../person/getPersonByAcademicYear/" + user + "/" + year
+        this.http.get(url).subscribe(response => this.GetPersonSucess(response),
+            error => this.GetPersonError(error), () => console.log("editdone !")
+        );
+    }
+
+       public GetPersonSucess(response: any) {
+           
+        this.profile = response.json(JSON.stringify(response._body));
+        console.log( this.profile );
+        //this.imageProfilePath = this.sanitize(this.profile.picture)
+     
+        
+        this.evaluateRoundValue = this.profile.evaluateRound;
+        console.log( this.evaluateRoundValue );
+        if (this.profile.employeeType == 'ข้าราชการ') {
+            this.evaluateRoundList = this.profile.evaluateRoundList;
+             console.log( this.evaluateRoundList );
+        }
     }
     GetPersonError(error: any) {
 
@@ -47,7 +75,7 @@ export class personYearReport {
 
     }
     clickDownload() {
-        window.location.href = '../report/printReportYear.htm?year=' + this.acdemicyear + '&round=undefined';
+        window.location.href = '../report/printReportYear.htm?year=' + this.acdemicyear + '&round='+this.evaluateRoundValue;
     }
 
 

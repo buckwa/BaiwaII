@@ -49,10 +49,10 @@
 <script src="${contextLibs}node_modules/reflect-metadata/Reflect.js"></script>
 
 <!-- Dev -->
-<%-- <script src="${contextLibs}node_modules/core-js/client/shim.min.js"></script> --%>
-<%-- <script src="${contextLibs}node_modules/zone.js/dist/zone.js"></script> --%>
-<%-- <script src="${contextLibs}node_modules/systemjs/dist/system.src.js"></script> --%>
-<%-- <script src="${contextLibs}systemjs.config.js"></script> --%>
+<script src="${contextLibs}node_modules/core-js/client/shim.min.js"></script>
+<script src="${contextLibs}node_modules/zone.js/dist/zone.js"></script>
+<script src="${contextLibs}node_modules/systemjs/dist/system.src.js"></script>
+<script src="${contextLibs}systemjs.config.js"></script>
 
 
 <link rel="stylesheet" type="text/css"
@@ -67,7 +67,7 @@
 <script>
     
     
-//       System.import('app').catch(function(err){ console.error("run App", err); });//Dev
+    System.import('app').catch(function(err){ console.error("run App", err); });//Dev
     
     const messages = "";
     const LOV_MASTER = "";
@@ -209,6 +209,8 @@
 												class="font-icon font-icon-users"></span>อนุมัติผลงาน</a> <a
 												class="dropdown-item" href="#/initApprove"><span
 												class="font-icon font-icon-users"></span>อนุมัติผลงานรายบุคคล</a>
+											<a class="dropdown-item" href="#/PreviousAcademicWork"><span
+												class="font-icon font-icon-users"></span>ดูผลงานย้อนหลัง</a>
 											<a class="dropdown-item" href="#/AssignHead"><span
 												class="font-icon font-icon-users"></span>กำหนดผู้ช่วยอนุมัติ</a>
 											<a class="dropdown-item" href="#/markDepartmentRecalInit"><span
@@ -222,15 +224,20 @@
 									</div>
 								</sec:authorize>
 								<sec:authorize access="hasAuthority('ROLE_HEAD_ASSIST')">
-									<div class="dropdown dropdown-typical">
-										<div class="dropdown dropdown-typical">
-											<a class="dropdown-toggle no-arr" id="dd-header-form-builder"
-												href="#/initApproveByKPI/1"> <span class="font-icon"><i
-													class="fa fa-balance-scale"></i>&nbsp;อนุมัติผลงาน</span>
-											</a> <a class="dropdown-item" href="#/initApprove"><span
-												class="font-icon font-icon-users"></span>อนุมัติผลงานรายบุคคล</a>
-										</div>
-									</div>
+									
+								<div class="dropdown dropdown-typical">
+									<a class="dropdown-toggle no-arr" id="dd-header-form-builder"
+										href="#/initApproveByKPI/1"> <span class="font-icon"><i
+											class="fa fa-balance-scale"></i>&nbsp;อนุมัติผลงาน</span>
+									</a>
+								</div>
+								<div class="dropdown dropdown-typical">
+									<a class="dropdown-toggle no-arr" id="dd-header-form-builder"
+										href="#/initApprove"> <span class="font-icon"><i
+											class="font-icon font-icon-users"></i>&nbsp;อนุมัติผลงานรายบุคคล</span>
+									</a>
+								</div>
+								
 								</sec:authorize>
 
 								<sec:authorize access="hasAuthority('ROLE_DEAN')">
@@ -254,6 +261,14 @@
 												แต่ละด้าน</a> <a class="dropdown-item"
 												href="#/departmentBarChart"><span
 												class="font-icon font-icon-users"></span>ระดับคะแนนในภาควิชา</a>
+												
+												<a class="dropdown-item" href="#/ReportKpi2"><span
+											class="font-icon font-icon-users"></span>
+											 ระดับคะแนนตามตัวชี้วัด</a>	
+											
+										<a class="dropdown-item" href="#/ReportKpi1"><span
+											class="font-icon font-icon-users"></span>
+											จำนวนผลงานตามตัวชี้วัด</a>	
 										</div>
 									</div>
 								</sec:authorize>
@@ -350,7 +365,16 @@
 										aria-labelledby="dd-header-form-builder">
 										<a class="dropdown-item" href="javascript:void(0);"><span
 											class="font-icon font-icon-users"></span>
-											รายงานคะแนนบุคลากรทั้งสถาบัน </a> <a class="dropdown-item"
+											รายงานคะแนนบุคลากรทั้งสถาบัน </a>
+										<a class="dropdown-item" href="#/ReportKpi2"><span
+											class="font-icon font-icon-users"></span>
+											 ระดับคะแนนตามตัวชี้วัด</a>	
+											
+										<a class="dropdown-item" href="#/ReportKpi1"><span
+											class="font-icon font-icon-users"></span>
+											จำนวนผลงานตามตัวชี้วัด</a>	
+											
+											 <a class="dropdown-item"
 											href="javascript:void(0);"><span
 											class="font-icon font-icon-users"></span> หน่วยนับ Access Log
 										</a>
@@ -463,8 +487,8 @@
 		});
  	</script>
 
-		<script src="${contextLibs}dist/shim.min.js"></script>
-		<script src="${contextLibs}dist/zone.js"></script>
-		<script src="${contextLibs}dist/bundle.min.js"></script>
+<%-- 		<script src="${contextLibs}dist/shim.min.js"></script> --%>
+<%-- 		<script src="${contextLibs}dist/zone.js"></script> --%>
+<%-- 		<script src="${contextLibs}dist/bundle.min.js"></script> --%>
 </body>
 </html>

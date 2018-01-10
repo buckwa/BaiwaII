@@ -62,7 +62,7 @@ export class deanWorkTypeBarChart implements OnInit  {
         	        },
         	        valueAxis: {
         	        	min: 0,
-        	        	max: 10000,
+        	        	max: 1000,
         	        	majorUnit: 500
        	        	},
                     tooltip: {
@@ -99,7 +99,7 @@ export class deanWorkTypeBarChart implements OnInit  {
        	        },
        	     	valueAxis: {
     	        	min: 0,
-    	        	max: 1000,
+    	        	max: 800,
     	        	majorUnit: 100
        	    	},
              tooltip: {
@@ -134,7 +134,7 @@ export class deanWorkTypeBarChart implements OnInit  {
           	        },
 	          	    valueAxis: {
         	        	min: 0,
-        	        	max: 1000,
+        	        	max: 800,
         	        	majorUnit: 100
           	    	},
                   tooltip: {
@@ -169,7 +169,7 @@ export class deanWorkTypeBarChart implements OnInit  {
           	        },
           	      	valueAxis: {
         	        	min: 0,
-        	        	max: 1000,
+        	        	max: 800,
         	        	majorUnit: 100
           	    	},
                   tooltip: {
@@ -205,7 +205,7 @@ export class deanWorkTypeBarChart implements OnInit  {
           	        },
           	      	valueAxis: {
         	        	min: 0,
-        	        	max: 1000,
+        	        	max: 800,
         	        	majorUnit: 100
           	    	},
                   tooltip: {

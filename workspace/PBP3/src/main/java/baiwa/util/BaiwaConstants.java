@@ -2,6 +2,8 @@ package baiwa.util;
 
 public class BaiwaConstants {
 	
+	// Test
+	
 	public static final String ROLE_USER = "ROLE_USER";
 	public static final String ROLE_ADM = "ROLE_ADM";
 	

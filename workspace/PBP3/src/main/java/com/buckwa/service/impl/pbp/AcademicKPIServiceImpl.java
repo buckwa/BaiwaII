@@ -308,12 +308,15 @@ public class AcademicKPIServiceImpl implements AcademicKPIService {
 			AcademicKPIUserMapping academicKPIUserMapping = (AcademicKPIUserMapping) request.get("academicKPIUserMapping");
 
 			Long academicKPIId = academicKPIDao.importwork(academicKPIUserMapping);
-			
+			System.out.println("academicKPIId"+academicKPIId);
+			if(0l!=academicKPIId){
 			headApproveSummaryDao.HeadApproveInsert(academicKPIUserMapping,academicKPIId.intValue());
 			
 			response.addResponse("academicKPIId", academicKPIId);
 			response.setSuccessCode(BuckWaConstants.MSGCODE_IMPORT_SUCESS);
-
+			}else{
+				
+			}
 			
 //			String tempPath = pathUtil.getPBPAttatchFilePath() + "temp/" + BuckWaUtils.getUserIdFromContext() + "/";
 //			String uploadPath = pathUtil.getPBPAttatchFilePath() + academicKPIId + "/";

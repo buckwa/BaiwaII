@@ -12,7 +12,19 @@ public class WorkTypeCompareReport {
 	private String categoryName;
 	private String groupName;
 	private String axisValue;
+	private String year;
 	
+	
+	
+	
+	public String getYear() {
+		return year;
+	}
+
+	public void setYear(String year) {
+		this.year = year;
+	}
+
 	public boolean isType1() {
 		return type1;
 	}

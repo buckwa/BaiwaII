@@ -325,8 +325,7 @@ public class AcademicYearDaoImpl implements AcademicYearDao {
 	@Override
 	public void editDateAcademicYear(final AcademicYear domain ) {
 		logger.info(" #editDateAcademicYear");
-  
-   		
+		
 		jdbcTemplate.update(new PreparedStatementCreator() {  
 			public PreparedStatement createPreparedStatement(Connection connection)throws SQLException {  
 				PreparedStatement ps = connection.prepareStatement("" +						

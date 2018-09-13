@@ -50,7 +50,7 @@ public class PersonTimeTableDaoImpl implements PersonTimetableDao {
 		
 		String sqlName = " select p.email,p.thai_name , p.thai_surname ,  concat(concat(p.thai_name,' '),p.thai_surname) as fullName ,p.reg_id"+
 				" from person_pbp p  "+
-				" where p.email='"+userName+"' ";
+				" where p.email='"+userName+"' AND academic_year ='"+academicYear+"'   ";
 		
 		List<PersonReport> personReportList = new ArrayList();
 		try{
@@ -369,6 +369,7 @@ CREATE TABLE  `pbp2`.`time_table` (
         	domain.setIsTA(rs.getString("is_ta"));
         	domain.setRemark(rs.getString("remark"));
         	domain.setIsProjectBase(rs.getString("is_project_base"));
+        	domain.setTeachtimeStr(rs.getString("teachtime_str"));
 		return domain;
     }
 	}

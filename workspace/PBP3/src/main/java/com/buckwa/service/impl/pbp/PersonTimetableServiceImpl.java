@@ -37,7 +37,36 @@ public class PersonTimetableServiceImpl implements PersonTimeTableService {
 			
 			List<TimeTableReport> timeTableReportList  =personTimetableDao.getTimeTable(academicYear, userName, semester);
 		 
-			 response.addResponse("timeTableReportList",timeTableReportList);
+			System.out.println(timeTableReportList);
+			
+			for (TimeTableReport timeTableReport : timeTableReportList) {
+				if(timeTableReport.getTeachtimeStr()!=null&&!timeTableReport.getTeachtimeStr().isEmpty()){
+					
+					String[] parts = timeTableReport.getTeachtimeStr().split(",");
+					String result ="";
+					for (String string : parts) {
+						String partSum ="";
+//						System.out.println(string);
+						String[] parts2 = string.split("x");
+						if(parts2[0]!=null&&!parts2[0].isEmpty()){
+//							if(parts2[0].equals("1")){partSum="อาทิตย์";
+//							}else if(parts2[0].equals("2")){partSum="จันทร์";
+//							}else if(parts2[0].equals("3")){partSum="อังคาร";
+//							}else if(parts2[0].equals("4")){partSum="พุธ";
+//							}else if(parts2[0].equals("5")){partSum="พฤหัส.";
+//							}else if(parts2[0].equals("6")){partSum="ศุกร์";
+//							}else if(parts2[0].equals("7")){partSum="เสาร์";}
+							partSum=parts2[0]+" "+parts2[1];
+						}
+						result = result+","+partSum;
+					}
+					timeTableReport.setTeachtimeStr(result);
+					System.out.println(timeTableReport.getTeachtimeStr());
+				}
+				
+			}
+			
+			response.addResponse("timeTableReportList",timeTableReportList);
  	
 		}catch(Exception ex){
 			ex.printStackTrace();

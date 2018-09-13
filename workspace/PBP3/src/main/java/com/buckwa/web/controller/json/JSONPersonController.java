@@ -1093,7 +1093,6 @@ public class JSONPersonController {
 	public ResponseObj jsonImportworkPOST(@RequestBody AcademicKPI academicKPI) {
 		logger.info(" Start  ");
 		ResponseObj resp = new ResponseObj();
-		resp.setStatus("0");
 		try {
 
 			// String userName = BuckWaUtils.getUserNameFromContext();
@@ -1149,7 +1148,10 @@ public class JSONPersonController {
 				Long academicKPIId = (Long) response.getResObj("academicKPIId");
 				academicKPI.setAcademicKPIUserMappingId(academicKPIId);
 				resp.setResObj(academicKPIId);
+				resp.setStatus("0");
 				logger.info("  Save Success academicKPIId: " + academicKPIId);
+			}else{
+				resp.setStatus("1");
 			}
 
 		} catch (Exception ex) {

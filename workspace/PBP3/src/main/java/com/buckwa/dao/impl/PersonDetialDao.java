@@ -45,9 +45,9 @@ public class PersonDetialDao {
 	public List<Message> getMessageByUser(String Username, String year) {
 		List<Message> messageList = new ArrayList<>();
 		String sql = " SELECT a.message_id ,a.header ,a.detail,a.topic_id,a.create_by,a.create_date,a.status "
-				+ " FROM (SELECT * FROM webboard_message GROUP BY topic_id ) a  INNER JOIN academic_kpi_user_mapping  b ON a.topic_id = b.kpi_user_mapping_id "
+				+ " FROM (SELECT * FROM webboard_message where DATE_FORMAT(create_date , '%Y')= '2018' GROUP BY topic_id ) a  INNER JOIN academic_kpi_user_mapping  b ON a.topic_id = b.kpi_user_mapping_id "
 				+ " INNER JOIN person_pbp c ON  b.user_name = c.email " + " WHERE  c.email = '" + Username
-				+ "' AND a.detail != ''   AND c.academic_year = '"+year+"' ORDER BY a.message_id DESC  ";
+				+ "' AND a.detail != ''   AND c.academic_year = '"+year+"' ORDER BY DATE(a.create_date) DESC  ";
 
 		logger.info(" GetMessageByUsername:" + sql);
 
@@ -115,7 +115,7 @@ public class PersonDetialDao {
 		int count = countMessage(Department,year);
 		String sql = " SELECT c.topic_id , c.message_id, c.detail,c.header ,c.create_by, c.create_date , c.status "
 				+ " FROM person_pbp a LEFT JOIN academic_kpi_user_mapping b "
-				+ " ON b.user_name =  a.email INNER JOIN  (SELECT * FROM webboard_message GROUP BY topic_id ) c "
+				+ " ON b.user_name =  a.email INNER JOIN  (SELECT * FROM webboard_message where DATE_FORMAT(create_date , '%Y')= '2018' GROUP BY topic_id ) c "
 				+ " ON c.topic_id = b.kpi_user_mapping_id WHERE a.department_desc = '" + Department + "' "
 				+ " AND c.detail != ''  AND a.academic_year = '"+year+"'and c.create_date between '2016-09-01 00:00:00' and  '2017-09-02 00:00:00' ORDER BY  DATE(c.create_date) DESC LIMIT 0,? ";
 		if (count > 20) {

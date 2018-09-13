@@ -34,6 +34,7 @@ import com.buckwa.domain.pbp.AcademicKPI;
 import com.buckwa.domain.pbp.AcademicKPIAttachFile;
 import com.buckwa.domain.pbp.AcademicPerson;
 import com.buckwa.domain.pbp.AcademicYear;
+import com.buckwa.domain.pbp.AcademicYearEvaluateRound;
 import com.buckwa.domain.pbp.AcademicYearWrapper;
 import com.buckwa.domain.pbp.ChainOfCommandWrapper;
 import com.buckwa.domain.pbp.Department;
@@ -1237,31 +1238,98 @@ public class JSONAdminController {
 		return resObj;
 		
 	}
+	@RequestMapping(value="/getAcademicYearEdit/{name}" , method = RequestMethod.GET )
+	public ResponseObj getAcademicYearEdit(@PathVariable("name") String name) {
+		ResponseObj resObj =new ResponseObj();
+		List<Object> listResult =new ArrayList<>();
+		logger.info(" Start  ");
+	
+		try{
 
+			BuckWaRequest request = new BuckWaRequest();
+			request.put("academicYear", name);
+			BuckWaResponse response = academicYearService.getByYear(request);
+			if(response.getStatus()==BuckWaConstants.SUCCESS){	
+				logger.info(" Success ");
+				AcademicYear academicYearReturn = (AcademicYear)response.getResObj("academicYear");
+				logger.info(" academicYearReturn: "+academicYearReturn.getName());
+				resObj.setResObj(academicYearReturn);
+			}else {	
+				resObj.setResObj(response.getErrorCode());
+				
+			}	
+		}catch(Exception ex){
+			ex.printStackTrace();
+			resObj.setResObj(listResult);
+
+		}
+		return resObj;
+		
+	}
 	@RequestMapping(value="editDateAcademicYear", method = RequestMethod.POST)
-	public ModelAndView editDateAcademicYearPost(HttpServletRequest httpRequest,@ModelAttribute AcademicYear academicYear, BindingResult result) {
+	public ResponseObj editDateAcademicYearPost(HttpServletRequest httpRequest,@RequestBody  AcademicYear academicYear, BindingResult result) {
 		logger.info(" Start   editDateAcademicYearPost:"+BeanUtils.getBeanString(academicYear));
-		ModelAndView mav = new ModelAndView();
-//		mav.setViewName("dateAcademicYearEdit");
-//		try{ 
-//			new AcademicYearDateEditValidator().validate(academicYear, result);			
-//			if (result.hasErrors()) {				
-//				 
-//			}else {					
-//				BuckWaRequest request = new BuckWaRequest();
-//				request.put("academicYear", academicYear);
-//				BuckWaResponse response = academicYearService.editDateAcademicYear(request);
-//				if(response.getStatus()==BuckWaConstants.SUCCESS){									
+		ResponseObj resObj =new ResponseObj();
+		
+		System.out.println(academicYear);
+
+		try{ 
+			new AcademicYearDateEditValidator().validate(academicYear, result);			
+			if (result.hasErrors()) {				
+				 
+			}else {					
+				BuckWaRequest request = new BuckWaRequest();
+				request.put("academicYear", academicYear);
+				BuckWaResponse response = academicYearService.editDateAcademicYear(request);
+				if(response.getStatus()==BuckWaConstants.SUCCESS){		
+					response.setSuccessCode("S002");	
+					resObj.setResObj(response);
 //		 			mav=initList();
-//				}else {
+				}else {
 //					mav.addObject("errorCode", response.getErrorCode());  
-//				}				
-//			}	
-//
-//		}catch(Exception ex){
-//			ex.printStackTrace();
-//			mav.addObject("errorCode", "E001"); 
-//		}
-		return mav;
-	}	
+				}				
+			}	
+
+		}catch(Exception ex){
+			ex.printStackTrace();
+			resObj.setDescription("E001");
+			
+		}
+		return resObj;
+	}
+	
+	
+	@RequestMapping(value="/editDateEvaluateRound/{academicYear}/{evaluateType}" , method = RequestMethod.GET )
+	public ResponseObj editDateEvaluateRound(@PathVariable("academicYear") String academicYear,@PathVariable("evaluateType") String evaluateType) {
+		ResponseObj resObj =new ResponseObj();
+		List<Object> listResult =new ArrayList<>();
+		logger.info(" Start  ");
+		
+		try{
+
+			BuckWaRequest request = new BuckWaRequest();
+			request.put("academicYear", academicYear);
+			request.put("evaluateType", evaluateType);
+			BuckWaResponse response = academicYearService.getEvaluateRoundByYear(request);
+			if(response.getStatus()==BuckWaConstants.SUCCESS){	
+				logger.info(" Success ");
+				 AcademicYearEvaluateRound  academicYearEvaluateRound  = (AcademicYearEvaluateRound)response.getResObj("academicYearEvaluateRound");
+//				mav.addObject("academicYearEvaluateRound", academicYearEvaluateRound); 
+				resObj.setResObj(academicYearEvaluateRound);
+			}else {	 
+//				mav.addObject("errorCode", response.getErrorCode()); 
+				resObj.setResObj(response.getErrorCode());
+			}	 
+	 
+			
+		}catch(Exception ex){
+			ex.printStackTrace();
+			resObj.setResObj(listResult);
+
+		}
+		return resObj;
+		
+	}
+	
+	
 }

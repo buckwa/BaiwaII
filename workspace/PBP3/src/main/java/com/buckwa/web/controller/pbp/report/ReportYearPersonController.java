@@ -152,8 +152,8 @@ public class ReportYearPersonController{
 				
 				// Add For Specific case
 				SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-				Date endRoundDateHardCode = sdf.parse("31/07/2017");
-				
+				Date endRoundDateHardCode = sdf.parse("31/07/2018");
+//				Date endRoundDateHardCode =endRoundDate;
 		 
 				
 				if(null!= startRoundDate){
@@ -167,14 +167,14 @@ public class ReportYearPersonController{
 //						+ " "+new SimpleDateFormat("MMMMM", new Locale("th", "TH")).format(endRoundDate)+" "
 //						+ new SimpleDateFormat("yyyy", new Locale("th", "TH")).format(endRoundDate);
 //				}
-				
+//				
 
 				if(null!= endRoundDateHardCode){
 				reportTo = new SimpleDateFormat("d").format(endRoundDateHardCode)
 					+ " "+new SimpleDateFormat("MMMMM", new Locale("th", "TH")).format(endRoundDateHardCode)+" "
 					+ new SimpleDateFormat("yyyy", new Locale("th", "TH")).format(endRoundDateHardCode);
 			}
-				
+////				
 				
 			}	
 			

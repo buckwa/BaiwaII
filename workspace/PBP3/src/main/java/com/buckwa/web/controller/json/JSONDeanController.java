@@ -72,8 +72,8 @@ public class JSONDeanController {
 	@Autowired
 	private PersonProfileService personProfileService;
 
-	@RequestMapping(value = "/facultyReport", method = RequestMethod.GET, headers = "Accept=application/json")
-	public List<RadarPlotReport> facultyReport() {
+	@RequestMapping(value = "/facultyReport/{year}", method = RequestMethod.GET, headers = "Accept=application/json")
+	public List<RadarPlotReport> facultyReport(@PathVariable String year) {
 
 		List<RadarPlotReport> returnList = new ArrayList<RadarPlotReport>();
 		logger.info(" Start  academicYear:" + academicYearUtil.getAcademicYear());
@@ -88,14 +88,16 @@ public class JSONDeanController {
 			BuckWaRequest request = new BuckWaRequest();
 
 			request.put("username", user);
-			request.put("academicYear", academicYearUtil.getAcademicYear());
+//			request.put("academicYear", academicYearUtil.getAcademicYear());
+			request.put("academicYear", year);
+			
 
 			BuckWaResponse response = facultyService.getFacultyByDeanUserNameandYear(request);
 			if (response.getStatus() == BuckWaConstants.SUCCESS) {
 				Faculty faculty = (Faculty) response.getResObj("faculty");
 
 				request.put("facultyCode", faculty.getCode());
-				request.put("academicYear", academicYearUtil.getAcademicYear());
+				request.put("academicYear", year);
 				response = pbpReportService.getFacultyReportByAcademicYear(request);
 
 				if (response.getStatus() == BuckWaConstants.SUCCESS) {
@@ -114,8 +116,8 @@ public class JSONDeanController {
 		return returnList;
 	}
 
-	@RequestMapping(value = "/getDepartmentBarchart/{headUserName}/{rond}", method = RequestMethod.GET, headers = "Accept=application/json")
-	public List<RadarPlotReport> getDepartmentBarchart(@PathVariable String headUserName,@PathVariable String rond) {
+	@RequestMapping(value = "/getDepartmentBarchart/{headUserName}/{rond}/{year}", method = RequestMethod.GET, headers = "Accept=application/json")
+	public List<RadarPlotReport> getDepartmentBarchart(@PathVariable String headUserName,@PathVariable String rond,@PathVariable String year) {
 		logger.info(" headUserName:" + headUserName);
 		List<RadarPlotReport> returnList = new ArrayList<RadarPlotReport>();
 		ModelAndView mav = new ModelAndView();
@@ -134,7 +136,7 @@ public class JSONDeanController {
 			System.out.println("head"+headUserName );
 			//headUserName =headUserName+"@kmitl.ac.th";
 			
-			String academicYear = schoolUtil.getCurrentAcademicYear();
+			String academicYear = year;
  
 			request.put("username", headUserName);
 			request.put("academicYear", academicYear);
@@ -313,8 +315,8 @@ public class JSONDeanController {
 	}
 	
 	
-	@RequestMapping(value = "/getBarchart", method = RequestMethod.GET, headers = "Accept=application/json")
-	public List<RadarPlotReport> getBarchart() {
+	@RequestMapping(value = "/getBarchart/{year}", method = RequestMethod.GET, headers = "Accept=application/json")
+	public List<RadarPlotReport> getBarchart(@PathVariable String year) {
 
 		List<RadarPlotReport> returnList = new ArrayList<RadarPlotReport>();
 		ModelAndView mav = new ModelAndView();
@@ -323,7 +325,7 @@ public class JSONDeanController {
 			BuckWaRequest request = new BuckWaRequest();
 
 			String userName = UserLoginUtil.getCurrentUserLogin();
-			String academicYear = schoolUtil.getCurrentAcademicYear();
+			String academicYear = year;
 
 			request.put("username", userName);
 			request.put("academicYear", academicYear);
@@ -368,8 +370,8 @@ public class JSONDeanController {
 		return returnList;
 	}
 
-	@RequestMapping(value = "/getWorkTypeBarchart/{worktypecode}", method = RequestMethod.GET, headers = "Accept=application/json")
-	public List<RadarPlotReport> getWorkTypeBarChartReport(@PathVariable String worktypecode) {
+	@RequestMapping(value = "/getWorkTypeBarchart/{year}/{worktypecode}", method = RequestMethod.GET, headers = "Accept=application/json")
+	public List<RadarPlotReport> getWorkTypeBarChartReport(@PathVariable String year,@PathVariable String worktypecode) {
 
 		List<RadarPlotReport> returnList = new ArrayList<RadarPlotReport>();
 		// ModelAndView mav = new ModelAndView();
@@ -378,7 +380,7 @@ public class JSONDeanController {
 			BuckWaRequest request = new BuckWaRequest();
 
 			String userName = UserLoginUtil.getCurrentUserLogin();
-			String academicYear = schoolUtil.getCurrentAcademicYear();
+			String academicYear = year;
 
 			request.put("username", userName);
 			request.put("academicYear", academicYear);
@@ -569,7 +571,7 @@ public class JSONDeanController {
 		
 		List<WorkTypeCompareReport> returnList = new ArrayList<WorkTypeCompareReport>();
 		try {
-			String academicYear =schoolUtil.getCurrentAcademicYear();
+			String academicYear =workTypeCompareReport.getYear();
 			mav.addObject("facultyName", schoolUtil.getFacutyByDeanUserName(UserLoginUtil.getCurrentUserLogin(),academicYear));
 			
 			BuckWaRequest request = new BuckWaRequest();

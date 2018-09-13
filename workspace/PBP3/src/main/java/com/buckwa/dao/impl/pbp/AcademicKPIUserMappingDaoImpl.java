@@ -304,11 +304,11 @@ public class AcademicKPIUserMappingDaoImpl implements AcademicKPIUserMappingDao 
 		
 		StringBuilder sql =new StringBuilder() ; 
 		sql.append(" SELECT 	*   ");
-		sql.append(" FROM pbp2.person_pbp  ");
+		sql.append(" FROM person_pbp  ");
 		sql.append(" INNER JOIN buckwausergroup ON buckwausergroup.username=person_pbp.email ");
 		sql.append(" WHERE department_desc ='"+department+"' AND academic_year='"+academicYear+"'  AND  buckwausergroup.group_id ='2' ");
 		sql.append(" AND buckwausergroup.username NOT IN ( SELECT 	person_pbp.email  ");
-		sql.append(" FROM pbp2.person_pbp  INNER JOIN buckwausergroup ");
+		sql.append(" FROM person_pbp  INNER JOIN buckwausergroup ");
 		sql.append(" ON buckwausergroup.username=person_pbp.email  ");
 		sql.append(" WHERE department_desc ='"+department+"' AND academic_year='"+academicYear+"' AND    buckwausergroup.group_id ='19') ");
 

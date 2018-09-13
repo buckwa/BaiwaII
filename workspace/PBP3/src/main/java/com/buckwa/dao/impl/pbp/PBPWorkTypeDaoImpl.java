@@ -842,6 +842,26 @@ public class PBPWorkTypeDaoImpl implements PBPWorkTypeDao {
 			tmp.setTotalInWorkType(totalInWorkType.setScale(2,RoundingMode.HALF_UP));
 			tmp.setTotalInWorkType_E(totalInWorkType_E.setScale(2,RoundingMode.HALF_UP));
 			
+			
+			// Start Ajust Max Mark
+						boolean isAjust = false;
+						BigDecimal tempMark = new BigDecimal(totalInWorkType.doubleValue());
+						
+						//BigDecimal maxMarkBig = tmp.getMaxHour()==null?tmp.getMaxHour():new BigDecimal(0.00);
+						   BigDecimal maxMarkBig = tmp.getMaxHour()==null?new BigDecimal(0.00):tmp.getMaxHour();
+						   if(totalInWorkType.compareTo(maxMarkBig)==1){
+						    logger.info(tmp.getName()+"  In Ajust compare result:"+totalInWorkType.compareTo(maxMarkBig));
+						    isAjust=true;
+						    totalInWorkType = tmp.getMaxHour();
+						   }
+						
+						logger.info(tmp.getName()+"  MarkFrom Calculate "+tempMark +"  MaxMark Limit:"+tmp.getMaxHour()  +" So is ajust ="+isAjust +" Mark After Ajust:"+totalInWorkType);
+						//logger.info(" ## totalInWorkType name:"+tmp.getName()+"   "+totalInWorkType  );
+						
+						tmp.setTotalInWorkType(totalInWorkType.setScale(2,RoundingMode.HALF_UP));
+			// End Ajust Max Mark
+			
+			
 			logger.info(tmp.getName()+"   "+totalInWorkType  );
 			//logger.info(" ## totalInWorkType name:"+tmp.getName()+"   "+totalInWorkType  );
 			
@@ -1239,6 +1259,25 @@ public class PBPWorkTypeDaoImpl implements PBPWorkTypeDao {
 			tmp.setTotalInWorkType(totalInWorkType.setScale(2,RoundingMode.HALF_UP));
 			tmp.setTotalInWorkType_E(totalInWorkType_E.setScale(2,RoundingMode.HALF_UP));
 			
+			
+					// Start Ajust Max Mark
+					boolean isAjust = false;
+					BigDecimal tempMark = new BigDecimal(totalInWorkType.doubleValue());
+					
+					//BigDecimal maxMarkBig = tmp.getMaxHour()==null?tmp.getMaxHour():new BigDecimal(0.00);
+					   BigDecimal maxMarkBig = tmp.getMaxHour()==null?new BigDecimal(0.00):tmp.getMaxHour();
+					   if(totalInWorkType.compareTo(maxMarkBig)==1){
+					    logger.info(tmp.getName()+"  In Ajust compare result:"+totalInWorkType.compareTo(maxMarkBig));
+					    isAjust=true;
+					    totalInWorkType = tmp.getMaxHour();
+					   }
+					
+					logger.info(tmp.getName()+"  MarkFrom Calculate "+tempMark +"  MaxMark Limit:"+tmp.getMaxHour()  +" So is ajust ="+isAjust +" Mark After Ajust:"+totalInWorkType);
+					//logger.info(" ## totalInWorkType name:"+tmp.getName()+"   "+totalInWorkType  );
+					
+					tmp.setTotalInWorkType(totalInWorkType.setScale(2,RoundingMode.HALF_UP));
+					// End Ajust Max Mark
+			
 			logger.info(tmp.getName()+"   "+totalInWorkType  );
 			
 			//tmp.setTotalInPercentWorkType(totalInPercentWorkType.setScale(2));
@@ -1291,7 +1330,7 @@ public class PBPWorkTypeDaoImpl implements PBPWorkTypeDao {
 			pBPWorkTypeWrapper.setpBPWorkTypeList(pBPWorkTypeList);
 			
 			
-			//updateReportPerson(pBPWorkTypeWrapper);
+			updateReportPerson(pBPWorkTypeWrapper);
 			
 		}catch(Exception ex){
 			ex.printStackTrace();

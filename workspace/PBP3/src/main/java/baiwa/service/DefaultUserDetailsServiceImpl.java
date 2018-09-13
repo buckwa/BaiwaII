@@ -27,12 +27,16 @@ public class DefaultUserDetailsServiceImpl implements UserDetailsService{
 
 	@Override
 	@Transactional(readOnly = true)
-	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+	public UserDetails loadUserByUsername(String username) {
 		logger.info("loadUserByUsername username=" + username);
 		UserAttempt user = userAttemptDao.findByUsername(username);
+		
 		List<GrantedAuthority> grantedAuthorityList = new ArrayList<GrantedAuthority>();
-		grantedAuthorityList = userAttemptDao.findGrantedRoleByUserId(user.getUsername());
-
+if(user!=null){
+			
+		
+			grantedAuthorityList = userAttemptDao.findGrantedRoleByUserId(user.getUsername());
+		
 		UserDetails userDeail = new UserDetails(
 				user.getUsername(),
 				user.getPassword(),
@@ -46,9 +50,12 @@ public class DefaultUserDetailsServiceImpl implements UserDetailsService{
 		userDeail.setDepartmentName(user.getDepartment_name());
 		userDeail.setThaiName(user.getThai_name());
 		userDeail.setThaiSurname(user.getThai_surname());
-		
-		
 		return userDeail;
+}else{
+	return null;
+}
+
+		
 	}
 
 }

@@ -51,7 +51,7 @@ public class AcademicYearServiceImpl implements AcademicYearService {
 
 				AcademicYearWrapper academicYearWrapper= ( AcademicYearWrapper)academicYearDao.getFullAcademicYear();
 				 
-				 response.addResponse("academicYearWrapper",academicYearWrapper);				
+				response.addResponse("academicYearWrapper",academicYearWrapper);				
 			 
 
  	

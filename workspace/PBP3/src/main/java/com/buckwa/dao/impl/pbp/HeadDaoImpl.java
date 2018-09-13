@@ -28,6 +28,7 @@ import com.buckwa.domain.pbp.AcademicKPIUserMapping;
 import com.buckwa.domain.pbp.AcademicKPIUserMappingWrapper;
 import com.buckwa.domain.pbp.AcademicPerson;
 import com.buckwa.domain.pbp.AcademicYearEvaluateRound;
+import com.buckwa.domain.pbp.CountAcademic;
 import com.buckwa.domain.pbp.Department;
 import com.buckwa.domain.pbp.Faculty;
 import com.buckwa.domain.pbp.HeadApproveSummary;
@@ -1642,14 +1643,28 @@ public class HeadDaoImpl implements HeadDao {
 		public AcademicPerson mapRow(ResultSet rs, int rowNum) throws SQLException {
 			AcademicPerson domain = new AcademicPerson();
 
-			domain.setThaiName(rs.getString("full_name").trim());
-			domain.setEmail(rs.getString("user_name"));
+			domain.setThaiName(rs.getString("thai_name") + " "+ rs.getString("thai_surname"));
+			domain.setEmail(rs.getString("email"));
 			domain.setEmployeeType(rs.getString("employee_type"));
+			
+		
 //			domain.setEmployeeTypeNo("");
 			return domain;
 		}
 	}
 	
+	
+	private static class AcademicCount implements RowMapper<CountAcademic> {
+		@Override
+		public CountAcademic mapRow(ResultSet rs, int rowNum) throws SQLException {
+			CountAcademic domain = new CountAcademic();
+
+			domain.setCount(rs.getInt("COUNTAPP"));
+			domain.setEmail(rs.getString("user_name"));
+			
+			return domain;
+		}
+	}
 	
 	private class AcademicKPIUserMappingMapper implements RowMapper<AcademicKPIUserMapping> {   						
         @Override
@@ -1825,7 +1840,9 @@ public class HeadDaoImpl implements HeadDao {
 			
 			// Get User belong to department 
 			//String sqlacademicPerson = "  select * from person_pbp where department_desc ='"+department.getName()+"'  and  academic_year='"+academicYear+"'";
-			String sqlacademicPersonNew = " SELECT * FROM head_approve_summary  LEFT JOIN person_pbp ON head_approve_summary.user_name = person_pbp.email WHERE dep_name ='"+department.getName()+"' and  head_approve_summary.academic_year='"+academicYear+"' GROUP BY user_name ";
+//			String sqlacademicPersonNew = " SELECT * FROM head_approve_summary  LEFT JOIN person_pbp ON head_approve_summary.user_name = person_pbp.email WHERE dep_name ='"+department.getName()+"' and  head_approve_summary.academic_year='"+academicYear+"' GROUP BY user_name ";
+			
+			String sqlacademicPersonNew =  " SELECT * FROM person_pbp  WHERE department_desc ='"+department.getName()+"'  AND  academic_year='"+academicYear+"' GROUP BY email ";
 			
 			
 			logger.info("  getByHeadAcademicYear sqlacademicPerson:"+sqlacademicPersonNew);
@@ -1845,9 +1862,14 @@ public class HeadDaoImpl implements HeadDao {
 				///logger.info(" sqlRound:"+sqlRound);
 			//AcademicYearEvaluateRound  academicYearEvaluateRound2   = this.jdbcTemplate.queryForObject(sqlRound2,	new AcademicYearEvaluateRoundMapper() );	
 
-				
+			String app1 = " SELECT COUNT(*)AS COUNTAPP ,user_name FROM head_approve_summary   WHERE   is_approve = 'APPROVED' AND academic_year='"+academicYear+"' GROUP BY user_name " ;
+			String app2 = " SELECT COUNT(*)AS COUNTAPP ,user_name FROM head_approve_summary   WHERE   is_approve != 'APPROVED' AND academic_year='"+academicYear+"' GROUP BY user_name " ;
+			 
+			List<CountAcademic> CountAcademicApp  = this.jdbcTemplate.query(app1,	new AcademicCount() );
+			List<CountAcademic> CountAcademicNonApp  = this.jdbcTemplate.query(app2,	new AcademicCount() );
 			
 			for(AcademicPerson personTmp:academicPersonList){
+	
 				System.out.println(personTmp.getEmployeeType());
 				System.out.println(personTmp.getEmployeeTypeNo());
 				// Get KPI User Mapping 
@@ -1894,8 +1916,8 @@ public class HeadDaoImpl implements HeadDao {
 //				 " SELECT COUNT(*) FROM head_approve_summary   WHERE user_name ='"+personTmp.getEmail()+"' AND is_approve = 'APPROVED' "
 //				 " SELECT COUNT(*) FROM head_approve_summary   WHERE user_name ='"+personTmp.getEmail()+"' AND is_approve != 'APPROVED' "
 				  
-				 String sqlCountApprove = " SELECT COUNT(*) FROM head_approve_summary   WHERE user_name ='"+personTmp.getEmail()+"' AND is_approve = 'APPROVED' ";
-				 String sqlCountNonApprove =" SELECT COUNT(*) FROM head_approve_summary   WHERE user_name ='"+personTmp.getEmail()+"' AND is_approve != 'APPROVED' ";
+				 String sqlCountApprove = " SELECT COUNT(*) FROM head_approve_summary   WHERE user_name ='"+personTmp.getEmail()+"' AND is_approve = 'APPROVED' AND academic_year='"+academicYear+"' ";
+				 String sqlCountNonApprove =" SELECT COUNT(*) FROM head_approve_summary   WHERE user_name ='"+personTmp.getEmail()+"' AND is_approve != 'APPROVED' AND academic_year='"+academicYear+"' ";
 //				 String sqlCountApprove = " SELECT COUNT(*) FROM academic_kpi_user_mapping  WHERE STATUS = 'APPROVED' AND user_name='"+personTmp.getEmail()+"'  AND  academic_year='"+academicYear+"' AND create_date BETWEEN '"+startTimeStamp+"' AND '"+endTimeStamp+"'";
 //				 //String sqlCountCoApprove = "SELECT COUNT(*) FROM academic_kpi_user_mapping  WHERE STATUS = 'STATUS_CREATE_CO_TEACH' AND user_name='"+personTmp.getEmail()+"'  AND  academic_year='"+academicYear+"' AND create_date BETWEEN '"+startTimeStamp+"' AND '"+endTimeStamp+"'";
 //				 String sqlCountNonApprove = "SELECT COUNT(*) FROM academic_kpi_user_mapping  WHERE STATUS = 'CREATE' AND user_name='"+personTmp.getEmail()+"'  AND  academic_year='"+academicYear+"' AND create_date BETWEEN '"+startTimeStamp+"' AND '"+endTimeStamp+"'";
@@ -1913,8 +1935,26 @@ public class HeadDaoImpl implements HeadDao {
 				
 						
 				//if(academicKPIUserMappingList!=null&&academicKPIUserMappingList.size()>0){
-					totalApproved = this.jdbcTemplate.queryForObject(sqlCountApprove,Integer.class);
-					totalNotApprove = this.jdbcTemplate.queryForObject(sqlCountNonApprove,Integer.class);
+//					totalApproved = this.jdbcTemplate.queryForObject(sqlCountApprove,Integer.class);
+//					totalNotApprove = this.jdbcTemplate.queryForObject(sqlCountNonApprove,Integer.class);
+//		
+					for (int i = 0; i < CountAcademicApp.size(); i++) {
+						
+						if(CountAcademicApp.get(i).getEmail()!=null){
+							if(CountAcademicApp.get(i).getEmail().equalsIgnoreCase(personTmp.getEmail())){
+								totalApproved = CountAcademicApp.get(i).getCount();
+							}
+						}
+					
+					}
+					for (int i = 0; i < CountAcademicNonApp.size(); i++) {
+						if(CountAcademicNonApp.get(i).getEmail()!=null){
+							if(CountAcademicNonApp.get(i).getEmail().equalsIgnoreCase(personTmp.getEmail())){
+								totalNotApprove = CountAcademicNonApp.get(i).getCount();
+							}
+						}
+					}
+					
 					totalByPerson= totalByPerson+totalApproved+totalNotApprove;				
 					totalByPerson = totalApproved+totalNotApprove;
 					personTmp.setTotalApproved(totalApproved);
@@ -1946,13 +1986,19 @@ public class HeadDaoImpl implements HeadDao {
 	public List<HeadApproveSummary> getHeadApproveSummaryMark(String facName, String academicYear, String workTypeCode) {
 		// TODO Auto-generated method stub
 		StringBuilder sql =new StringBuilder();
-		sql.append(" SELECT 	hs.kpi_id ,hs.kpi_name,academic_year , ");
-		sql.append(" COUNT(approve_summary_id)AS CountKpi FROM pbp2.head_approve_summary  hs ");
+		sql.append(" SELECT 	hs.kpi_id ,ak.name,hs.academic_year , ");
+		sql.append(" COUNT(approve_summary_id)AS CountKpi FROM head_approve_summary  hs ");
 		sql.append(" INNER JOIN buckwauser bu ON hs.user_name = bu.USERNAME ");
+		sql.append("  LEFT JOIN academic_kpi ak ON hs.kpi_id = ak.academic_kpi_id  ");
+		
 		sql.append(" WHERE hs.academic_year = '"+academicYear+"' AND   hs.fac_name = '"+facName+"'   ");
 		sql.append(" AND   hs.work_type_code = '"+workTypeCode+"'  ");
-		sql.append(" GROUP BY hs.kpi_id   ,hs.academic_year,hs.kpi_name ORDER BY hs.kpi_name   ");
+		sql.append(" GROUP BY hs.kpi_id   ,hs.academic_year,ak.name ORDER BY ak.order_no  ASC  ");
 		System.out.println(sql);
+		
+		
+
+		     
 		//HeadApproveSummary  headApproveSummary   = this.jdbcTemplate.queryForList(sql.,	new AcademicYearEvaluateRoundMapper() );	
 		List<HeadApproveSummary> headApproveSummaryList = jdbcTemplate.query(sql.toString(), new RowMapper<HeadApproveSummary>() {
 
@@ -1962,7 +2008,7 @@ public class HeadDaoImpl implements HeadDao {
 				
 				headApproveSummaryModel.setKpi_id(rs.getInt("kpi_id"));
 				headApproveSummaryModel.setTotalKpi(rs.getInt("CountKpi"));
-				headApproveSummaryModel.setKpi_name(rs.getString("kpi_name"));
+				headApproveSummaryModel.setKpi_name(rs.getString("name"));
 				
 				return headApproveSummaryModel;
 			}
@@ -1989,13 +2035,20 @@ public class HeadDaoImpl implements HeadDao {
 			mark = "mark_5";
 		}
 		
-		sql.append(" SELECT 	hs.kpi_id ,hs.kpi_name,hs.academic_year , ");
-		sql.append(" SUM(bu."+mark+")AS CountKpi   FROM pbp2.head_approve_summary  hs ");
+		sql.append(" SELECT 	ak.order_no,hs.kpi_id ,ak.name,hs.academic_year , ");
+		sql.append(" SUM(bu."+mark+")AS CountKpi   FROM head_approve_summary  hs ");
 		sql.append(" INNER JOIN report_person bu ON hs.user_name = bu.USERNAME ");
+		sql.append(" LEFT JOIN academic_kpi ak ON hs.kpi_id = ak.academic_kpi_id ");
 		sql.append(" WHERE hs.academic_year = '"+academicYear+"' AND   hs.fac_name = '"+facName+"'   ");
 		sql.append(" AND   hs.work_type_code = '"+workTypeCode+"'  ");
-		sql.append(" GROUP BY hs.kpi_id   ,hs.academic_year,hs.kpi_name ");
+		sql.append(" GROUP BY hs.kpi_id   ,hs.academic_year,ak.name ,ak.order_no ORDER BY  ak.order_no ");
 		
+		
+		
+		
+		
+		
+		System.out.println(sql.toString());
 		//HeadApproveSummary  headApproveSummary   = this.jdbcTemplate.queryForList(sql.,	new AcademicYearEvaluateRoundMapper() );	
 		List<HeadApproveSummary> headApproveSummaryList = jdbcTemplate.query(sql.toString(), new RowMapper<HeadApproveSummary>() {
 
@@ -2005,7 +2058,7 @@ public class HeadDaoImpl implements HeadDao {
 				
 				headApproveSummaryModel.setKpi_id(rs.getInt("kpi_id"));
 				headApproveSummaryModel.setTotalKpi(rs.getInt("CountKpi"));
-				headApproveSummaryModel.setKpi_name(rs.getString("kpi_name"));
+				headApproveSummaryModel.setKpi_name(rs.getString("name"));
 				
 				return headApproveSummaryModel;
 			}

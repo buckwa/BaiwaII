@@ -35,5 +35,29 @@ public class AcademicYearDateEditValidator {
 	 
 	}
 
+	public void validateUpdate(AcademicYear  domain , Errors errors) {
+		 if (StringUtils.isBlank(domain.getStartDateStr())) {
+		 	errors.rejectValue("startDateStr", "required", "required");
+		 } 
+		 
+		 if (StringUtils.isBlank(domain.getEndDateStr())) {
+			 	errors.rejectValue("endDateStr", "required", "required");
+		  } 
+		 
+			try{
+				SimpleDateFormat dateTimeFormate = new SimpleDateFormat("yyyy-MM-dd",Locale.US);
+			 
+				Date startDate  = dateTimeFormate.parse(domain.getStartDateStr());
+				Date endDate  = dateTimeFormate.parse(domain.getEndDateStr()); 
+				domain.setStartDate(new Timestamp(startDate.getTime()));
+				domain.setEndDate(new Timestamp(endDate.getTime()));
+			}catch(Exception ex){
+				ex.printStackTrace();
+				 
+				 
+			}
+	 
+	}
+
 
 }

@@ -26,6 +26,15 @@ public class AcademicYear extends BaseDomain{
  
 	
 	
+	@Override
+	public String toString() {
+		return "AcademicYear [academicYearId=" + academicYearId + ", name=" + name + ", startDateStr=" + startDateStr
+				+ ", endDateStr=" + endDateStr + ", startDate=" + startDate + ", endDate=" + endDate
+				+ ", startDateThaiShort=" + startDateThaiShort + ", endDateThaiShort=" + endDateThaiShort + ", canEdit="
+				+ canEdit + ", semesterList=" + semesterList + "]";
+	}
+	
+	
 	public List<Semester> getSemesterList() {
 		return semesterList;
 	}

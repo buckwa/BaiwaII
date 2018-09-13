@@ -67,8 +67,8 @@ public class UserAttemptDao {
 	
 	public List<GrantedAuthority> findGrantedRoleByUserId(String username) {
 		String sql = "SELECT u.username , r.role_name FROM buckwauser u   "
-				+ " LEFT OUTER JOIN buckwausergroup  ug ON u.username = ug.username "
-				+ " LEFT OUTER JOIN buckwagroup  g ON ug.group_id = g.group_id  "
+				+ "  LEFT OUTER JOIN buckwausergroup  ug ON u.username = ug.username "
+				+ "  LEFT OUTER JOIN buckwagroup  g ON ug.group_id = g.group_id  "
 				+ "  LEFT OUTER JOIN buckwagrouprole  gr ON g.group_id = gr.group_id  "
 				+ "  LEFT OUTER JOIN buckwarole r   ON gr.role_id = r.role_id  "
 				+ "  WHERE u.username= ? " ;

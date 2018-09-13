@@ -260,7 +260,7 @@ public class AcademicKPIDaoImpl implements AcademicKPIDao {
 	
 	@Override
 	public AcademicKPIWrapper getByAcademicYearWorkTypeCodeFacultyCodeByinitApprove( String getByAcademicYear,String workTypeCode,String facultyCode ,String department_desc) {		 		
-		String sql =" SELECT kpi_id, kpi_name FROM pbp2.head_approve_summary  WHERE academic_year ='"+getByAcademicYear+ "' AND work_type_code='"+workTypeCode+"' AND dep_name='"+department_desc+"' GROUP BY kpi_name,kpi_id " ; 
+		String sql =" SELECT kpi_id, kpi_name FROM head_approve_summary  WHERE academic_year ='"+getByAcademicYear+ "' AND work_type_code='"+workTypeCode+"' AND dep_name='"+department_desc+"' GROUP BY kpi_name,kpi_id " ; 
 		logger.info("Sql:"+sql);
 		List<HeadApproveSummary> headApprove =null;
 		//HeadApproveSummary HeadApp = new HeadApproveSummary(); 
@@ -482,8 +482,11 @@ public class AcademicKPIDaoImpl implements AcademicKPIDao {
 		
 		List<AcademicKPIAttributeValue> academicKPIAttributeValueList =finalDomain.getAcademicKPIAttributeValueList();
 		for(final AcademicKPIAttributeValue tmp:academicKPIAttributeValueList){
+
+		try {
 			
-			jdbcTemplate.update(new PreparedStatementCreator() {  
+		
+			int result =jdbcTemplate.update(new PreparedStatementCreator() {  
 				public PreparedStatement createPreparedStatement(Connection connection)throws SQLException {  
 					PreparedStatement ps = connection.prepareStatement("" +						
 							"  insert into academic_kpi_attribute_value (kpi_user_mapping_id, name,value,academic_year,create_date ,from_source) values (?, ?,?,?,?,?  )" +
@@ -497,9 +500,17 @@ public class AcademicKPIDaoImpl implements AcademicKPIDao {
 					logger.info(" insert  academic_kpi_attribute_value  with academic_kpi_user_mapping_id: "+returnid+"  with attribute name:"+tmp.getName()+"  value:"+tmp.getValue());
 					return ps;  
 					}
-				}, 	keyHolder); 				
-	 
+				}, 	keyHolder); 	
 			
+
+		} catch (Exception e) {
+			// TODO: handle exception
+			String sql =" delete from academic_kpi_user_mapping where kpi_user_mapping_id ="+returnid+"" ; 
+
+			logger.info(" sql:"+sql);
+			this.jdbcTemplate.update(sql); 
+			return 0l;
+		}
 		} 
 		return returnid;
 		} else{
@@ -774,12 +785,13 @@ public class AcademicKPIDaoImpl implements AcademicKPIDao {
 		
 		this.jdbcTemplate.update(
 				"update    academic_kpi set name=?,mark=?,unit_code=? ,rule_code=? ,order_no=?,description=? ,"
-				+ " special_p1=?,   special_p2=?, special_p3=?, special_p4=?, total_student_from=?, total_student_to=?,from_reg=? where academic_kpi_id=? ",
+				+ " special_p1=?,   special_p2=?, special_p3=?, special_p4=?,special_p5=?,  total_student_from=?, total_student_to=?,from_reg=? where academic_kpi_id=? ",
 				domain.getName(), domain.getMark(),domain.getUnitCode(),domain.getMultiplyValue(),domain.getOrderNo(),domain.getDescription(),
 				 domain.getSpecialP1(),
 				 domain.getSpecialP2(),
 				 domain.getSpecialP3(),
 				 domain.getSpecialP4(),
+				 domain.getSpecialP5(),
 				 domain.getTotalStudentFrom(),
 				 domain.getTotalStudentTo(),
 				 domain.getFromRegis(),
@@ -825,6 +837,7 @@ public class AcademicKPIDaoImpl implements AcademicKPIDao {
 			domain.setSpecialP2(rs.getString("special_p2"));
 			domain.setSpecialP3(rs.getString("special_p3"));
 			domain.setSpecialP4(rs.getString("special_p4"));
+			domain.setSpecialP5(rs.getString("special_p5"));
 			domain.setTotalStudentFrom(rs.getString("total_student_from"));
 			domain.setTotalStudentTo(rs.getString("total_student_to"));
 			domain.setFromRegis(rs.getString("from_reg"));

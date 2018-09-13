@@ -45,9 +45,16 @@ public class TimeTableReport implements Serializable{
 	
 	private String remark;
 	
+	private String teachtimeStr;
 	
 	
-	
+
+
+
+
+
+
+
 	public String getRemark() {
 		return remark;
 	}
@@ -412,6 +419,33 @@ public String getThaiName() {
 
 	public void setThaiShortDateList(List<LovDetail> thaiShortDateList) {
 		this.thaiShortDateList = thaiShortDateList;
+	}
+
+
+	public String getTeachtimeStr() {
+		return teachtimeStr;
+	}
+
+
+	public void setTeachtimeStr(String teachtimeStr) {
+		this.teachtimeStr = teachtimeStr;
+	}
+
+
+	@Override
+	public String toString() {
+		return "TimeTableReport [timetableId=" + timetableId + ", subjectCode=" + subjectCode + ", subjectName="
+				+ subjectName + ", academicYear=" + academicYear + ", secNo=" + secNo + ", semester=" + semester
+				+ ", teacherName=" + teacherName + ", thaiName=" + thaiName + ", engName=" + engName + ", facultyId="
+				+ facultyId + ", deptId=" + deptId + ", teachTime1=" + teachTime1 + ", teachTime2=" + teachTime2
+				+ ", credit=" + credit + ", totalStudent=" + totalStudent + ", degree=" + degree + ", teachDay="
+				+ teachDay + ", teachDayStr=" + teachDayStr + ", degreeStr=" + degreeStr + ", teachTimeFromTo="
+				+ teachTimeFromTo + ", user=" + user + ", isTA=" + isTA + ", isProjectBase=" + isProjectBase
+				+ ", teachHrEdit=" + teachHrEdit + ", remark=" + remark + ", teachtimeStr=" + teachtimeStr
+				+ ", academicYearList=" + academicYearList + ", academicYearSelect=" + academicYearSelect
+				+ ", lecOrPrac=" + lecOrPrac + ", teachHr=" + teachHr + ", lectHr=" + lectHr + ", pracHr=" + pracHr
+				+ ", teacherId=" + teacherId + ", lecOrPracList=" + lecOrPracList + ", degreeLevelList="
+				+ degreeLevelList + ", thaiShortDateList=" + thaiShortDateList + "]";
 	}
 	
 	

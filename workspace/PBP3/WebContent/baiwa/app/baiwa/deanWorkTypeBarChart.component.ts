@@ -11,7 +11,10 @@ declare var jQuery: any;
 export class deanWorkTypeBarChart implements OnInit  {
 	     public json: any;
     public nameDepart: any;
-    public mean1: any;
+	public mean1: any;
+	public academicYearList :any;
+	public academicYear :any;
+	
     constructor(private http: Http) {
     }
     ngOnInit() {
@@ -26,22 +29,27 @@ export class deanWorkTypeBarChart implements OnInit  {
 
     public GetkendoSucess(response: any) {
         this.json = response.json(JSON.stringify(response._body));
-        this.nameDepart = this.json.facultyName;
+		this.nameDepart = this.json.facultyName;
+		
+        this.academicYear = this.json.currentAcademicYear;
+        this.academicYearList =this.json.academicYearList ;
+
+
         //this.mean1 = this.json.mean1;
-        this.getbarChart();
+		this.getbarChart(this.academicYear);
     }
 
     public GetDepartmentNameError(error: String) {
         console.log("GetDepartmentNameError.")
 
     }
-    getbarChart(){
+    getbarChart(academicYear: String){
 
         jQuery("#chart1").kendoChart({
                  dataSource: {
                      transport: {
                          read: {
-                         	 url: "../dean/getWorkTypeBarchart/1",
+                         	 url: "../dean/getWorkTypeBarchart/"+academicYear+"/1",
                              dataType: "json"
                          }
                      }
@@ -60,11 +68,7 @@ export class deanWorkTypeBarChart implements OnInit  {
         	                rotation: -90
         	            }
         	        },
-        	        valueAxis: {
-        	        	min: 0,
-        	        	max: 1000,
-        	        	majorUnit: 500
-       	        	},
+        	      
                     tooltip: {
                         visible: true,
                         template: "#= series.name #: #= value #"
@@ -78,7 +82,7 @@ export class deanWorkTypeBarChart implements OnInit  {
                 dataSource: {
                     transport: {
                         read: {
-                        	 url: "../dean/getWorkTypeBarchart/2",
+                        	 url: "../dean/getWorkTypeBarchart/"+academicYear+"/2",
                             dataType: "json"
                         }
                     }
@@ -97,11 +101,7 @@ export class deanWorkTypeBarChart implements OnInit  {
        	                rotation: -90
        	            }
        	        },
-       	     	valueAxis: {
-    	        	min: 0,
-    	        	max: 800,
-    	        	majorUnit: 100
-       	    	},
+       	     	
              tooltip: {
                  visible: true,
                  template: "#= series.name #: #= value #"
@@ -113,7 +113,7 @@ export class deanWorkTypeBarChart implements OnInit  {
                    dataSource: {
                        transport: {
                            read: {
-                           	 url: "../dean/getWorkTypeBarchart/3",
+                           	 url: "../dean/getWorkTypeBarchart/"+academicYear+"/3",
                                dataType: "json"
                            }
                        }
@@ -132,11 +132,7 @@ export class deanWorkTypeBarChart implements OnInit  {
           	                rotation: -90
           	            }
           	        },
-	          	    valueAxis: {
-        	        	min: 0,
-        	        	max: 800,
-        	        	majorUnit: 100
-          	    	},
+	          	  
                   tooltip: {
                       visible: true,
                       template: "#= series.name #: #= value #"
@@ -148,7 +144,7 @@ export class deanWorkTypeBarChart implements OnInit  {
                    dataSource: {
                        transport: {
                            read: {
-                           	 url: "../dean/getWorkTypeBarchart/4",
+                           	 url: "../dean/getWorkTypeBarchart/"+academicYear+"/4",
                                dataType: "json"
                            }
                        }
@@ -167,11 +163,7 @@ export class deanWorkTypeBarChart implements OnInit  {
           	                rotation: -90
           	            }
           	        },
-          	      	valueAxis: {
-        	        	min: 0,
-        	        	max: 800,
-        	        	majorUnit: 100
-          	    	},
+          	      	
                   tooltip: {
                       visible: true,
                       template: "#= series.name #: #= value #"
@@ -184,7 +176,7 @@ export class deanWorkTypeBarChart implements OnInit  {
                    dataSource: {
                        transport: {
                            read: {
-                           	 url: "../dean/getWorkTypeBarchart/5",
+                           	 url: "../dean/getWorkTypeBarchart/"+academicYear+"/5",
                                dataType: "json"
                            }
                        },
@@ -203,11 +195,7 @@ export class deanWorkTypeBarChart implements OnInit  {
           	                rotation: -90
           	            }
           	        },
-          	      	valueAxis: {
-        	        	min: 0,
-        	        	max: 800,
-        	        	majorUnit: 100
-          	    	},
+          	      
                   tooltip: {
                       visible: true,
                       template: "#= series.name #: #= value #"

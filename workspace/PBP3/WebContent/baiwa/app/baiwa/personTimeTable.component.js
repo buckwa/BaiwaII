@@ -31,7 +31,90 @@ var personTimeTable = (function () {
                 { "data": "degreeStr" },
                 { "data": "totalStudent" },
                 { "data": "secNo" },
-                { "data": "teachDayStr" },
+                {
+                    "data": "teachDayStr", "width": "20%",
+                    "render": function (data, type, full, meta) {
+                        //     console.log(full);
+                        //     // full.teachtimeStr
+                        // // var res =  full.teachtimeStr.split(",");
+                        // var result ="";
+                        // var resS = full.teachTime1.substring(0, 5);
+                        // var resE = full.teachTime2.substring(0, 5);
+                        // // var res =  full.teachtimeStr.split("<BR>");
+                        // result = data+" "+resS+"-"+resE+full.teachtimeStr;
+                        // return result;
+                        var result = "";
+                        var resultDisplay = "";
+                        // console.log(full);
+                        if (full.teachtimeStr == null) {
+                            result = "";
+                        }
+                        else {
+                            result = full.teachtimeStr;
+                        }
+                        var resS = full.teachTime1.substring(0, 5);
+                        var resE = full.teachTime2.substring(0, 5);
+                        var resSE = full.teachDay + " " + resS + "-" + resE;
+                        result = resSE + result;
+                        var resArray = result.split(",");
+                        resArray = resArray.sort();
+                        for (var i = 0; i < resArray.length; i++) {
+                            var arrayDisplay = resArray[i].split(" ");
+                            var resultDisDayTime = "";
+                            if (arrayDisplay[0] == "1") {
+                                resultDisDayTime = "อาทิตย์";
+                            }
+                            else if (arrayDisplay[0] == "2") {
+                                resultDisDayTime = "จันทร์";
+                            }
+                            else if (arrayDisplay[0] == "3") {
+                                resultDisDayTime = "อังคาร";
+                            }
+                            else if (arrayDisplay[0] == "4") {
+                                resultDisDayTime = "พุธ";
+                            }
+                            else if (arrayDisplay[0] == "5") {
+                                resultDisDayTime = "พฤหัส.";
+                            }
+                            else if (arrayDisplay[0] == "6") {
+                                resultDisDayTime = "ศุกร์";
+                            }
+                            else if (arrayDisplay[0] == "7") {
+                                resultDisDayTime = "เสาร์";
+                            }
+                            resArray[i] = resultDisDayTime + " " + arrayDisplay[1];
+                        }
+                        // console.log(resArray);
+                        // resultDisplay = resultDisplay + resArray[0] +"<BR>";
+                        if (resArray.length == 1) {
+                            resultDisplay = resultDisplay + resArray[0] + "<BR>";
+                        }
+                        else {
+                            for (var i = 0; i < resArray.length; i++) {
+                                // console.log("I :",i);
+                                if (i === resArray.length - 1) {
+                                    var arrayDisplayNew = resArray[i].split(" ");
+                                    resultDisplay = resultDisplay + resArray[i] + "<BR>";
+                                    break;
+                                }
+                                var arrayDisplay = resArray[i].split(" ");
+                                var arrayDisplayNew = resArray[i + 1].split(" ");
+                                // console.log(arrayDisplay[0]);
+                                // console.log(arrayDisplayNew[0]);
+                                // console.log(resArray[i]);
+                                // console.log(resArray[i+1]);
+                                if (arrayDisplay[0] == arrayDisplayNew[0]) {
+                                    resultDisplay = resultDisplay + resArray[i] + "  ";
+                                }
+                                else {
+                                    resultDisplay = resultDisplay + resArray[i] + "<BR>";
+                                }
+                            }
+                        }
+                        console.log(resultDisplay);
+                        return resultDisplay;
+                    }
+                },
                 { "data": "remark" }
             ]
         };
@@ -51,7 +134,92 @@ var personTimeTable = (function () {
                 { "data": "degreeStr" },
                 { "data": "totalStudent" },
                 { "data": "secNo" },
-                { "data": "teachDayStr" },
+                {
+                    "data": "teachDayStr", "width": "20%",
+                    "render": function (data, type, full, meta) {
+                        //     console.log(full);
+                        //     // full.teachtimeStr
+                        // // var res =  full.teachtimeStr.split(",");
+                        // var result ="";
+                        // var resS = full.teachTime1.substring(0, 5);
+                        // var resE = full.teachTime2.substring(0, 5);
+                        // // var res =  full.teachtimeStr.split("<BR>");
+                        // result = data+" "+resS+"-"+resE+full.teachtimeStr;
+                        // return result;
+                        var result = "";
+                        var resultDisplay = "";
+                        // console.log(full);
+                        if (full.teachtimeStr == null) {
+                            result = "";
+                        }
+                        else {
+                            result = full.teachtimeStr;
+                        }
+                        var resS = full.teachTime1.substring(0, 5);
+                        var resE = full.teachTime2.substring(0, 5);
+                        var resSE = full.teachDay + " " + resS + "-" + resE;
+                        result = resSE + result;
+                        var resArray = result.split(",");
+                        resArray = resArray.sort();
+                        for (var i = 0; i < resArray.length; i++) {
+                            var arrayDisplay = resArray[i].split(" ");
+                            var resultDisDayTime = "";
+                            if (arrayDisplay[0] == "1") {
+                                resultDisDayTime = "อาทิตย์";
+                            }
+                            else if (arrayDisplay[0] == "2") {
+                                resultDisDayTime = "จันทร์";
+                            }
+                            else if (arrayDisplay[0] == "3") {
+                                resultDisDayTime = "อังคาร";
+                            }
+                            else if (arrayDisplay[0] == "4") {
+                                resultDisDayTime = "พุธ";
+                            }
+                            else if (arrayDisplay[0] == "5") {
+                                resultDisDayTime = "พฤหัส.";
+                            }
+                            else if (arrayDisplay[0] == "6") {
+                                resultDisDayTime = "ศุกร์";
+                            }
+                            else if (arrayDisplay[0] == "7") {
+                                resultDisDayTime = "เสาร์";
+                            }
+                            resArray[i] = resultDisDayTime + " " + arrayDisplay[1];
+                        }
+                        // console.log(resArray);
+                        // resultDisplay = resultDisplay + resArray[0] +"<BR>";
+                        if (resArray.length == 1) {
+                            resultDisplay = resultDisplay + resArray[0] + "<BR>";
+                        }
+                        else {
+                            console.log("Head :", resArray.length);
+                            for (var i = 0; i < resArray.length; i++) {
+                                // console.log("I :",i);
+                                if (i === resArray.length - 1) {
+                                    var arrayDisplayNew = resArray[i].split(" ");
+                                    resultDisplay = resultDisplay + resArray[i] + "<BR>";
+                                    break;
+                                }
+                                var arrayDisplay = resArray[i].split(" ");
+                                var arrayDisplayNew = resArray[i + 1].split(" ");
+                                console.log(resArray[i + 1]);
+                                // console.log(arrayDisplay[0]);
+                                // console.log(arrayDisplayNew[0]);
+                                // console.log(resArray[i]);
+                                // console.log(resArray[i+1]);
+                                if (arrayDisplay[0] == arrayDisplayNew[0]) {
+                                    resultDisplay = resultDisplay + resArray[i] + "  ";
+                                }
+                                else {
+                                    resultDisplay = resultDisplay + resArray[i] + "<BR>";
+                                }
+                            }
+                        }
+                        console.log(resultDisplay);
+                        return resultDisplay;
+                    }
+                },
                 { "data": "remark" }
             ]
         };
@@ -71,6 +239,7 @@ var personTimeTable = (function () {
     };
     personTimeTable.prototype.getTimeTableSucess = function (response) {
         this.makeDataTable.data = response.json(JSON.stringify(response._body));
+        console.log(response);
         this.timetabletable.show();
     };
     personTimeTable.prototype.getTimeTableSucess2 = function (response) {

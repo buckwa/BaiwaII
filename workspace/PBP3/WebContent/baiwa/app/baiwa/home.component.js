@@ -115,6 +115,7 @@ var home = (function () {
         this.currentAcademicYear = year;
     };
     home.prototype.changeRound = function () {
+        // alert(this.evaluateRoundValue);
         this.GetRadarPlotNew(this.user.userName, this.currentAcademicYear, this.evaluateRoundValue);
     };
     home.prototype.GetRadarPlot = function () {
@@ -124,6 +125,7 @@ var home = (function () {
         var _this = this;
         var url = "../person/getRadarPlotNew/" + user + "/" + year + "/" + num;
         this.url = url;
+        console.log(this.url);
         this.http.get(url).subscribe(function (response) { return _this.GetRadarPlotSucess(response); }, function (error) { return _this.GetPersonError(error); }, function () { return console.log("editdone !"); });
     };
     home.prototype.GetRadarPlotSucess = function (response) {
@@ -262,6 +264,7 @@ var home = (function () {
         var _this = this;
         // var data = {'profileImg' : profileImg}
         var url = "../person/getImageFile/" + personID;
+        console.log("personID", personID);
         this.getImage(url).subscribe(function (imageData) {
             console.log("imageReturn :" + imageData.image);
             _this.tmpUrl = URL.createObjectURL(new Blob([imageData]));
@@ -295,6 +298,7 @@ var home = (function () {
     };
     home.prototype.GetMessageSucess = function (response) {
         this.messageList = response.json(JSON.stringify(response._body));
+        console.log("messageList", this.messageList);
     };
     home.prototype.countMessage = function () {
         var _this = this;

@@ -6,6 +6,18 @@
             ระดับคะแนน(เฉลี่ย)เปรียบเทียบแต่ละด้านในภาควิชา {{nameDepart}}
         </header>
         <br>
+        <div class="row text-right" style="    margin-bottom: 60px;" >
+                <div class="form-group">
+                        <label for="inputEmail3" class="col-md-1 control-label">ประจำปี :</label>
+                        <div class="col-md-3">
+                            <select class="form-control" [(ngModel)]="academicYear" (ngModelChange)="getCompare($event)" >
+                                 <option *ngFor="let item of academicYearList;" [value]="item.name" >{{item.name}}</option>
+                            </select>
+                        </div>
+                </div>
+        </div>
+
+
         <div class="row" style="padding:10px">
             <div class="col-sm-2"><input type="checkbox" [(ngModel)]="WorkTypeCompareReport.type1" name="type1" (change)="changeCheckBox()" />1:ด้านวิชาการ</div>
             <div class="col-sm-2"><input type="checkbox" [(ngModel)]="WorkTypeCompareReport.type2"  name="type2" (change)="changeCheckBox()" />2:งานพัฒนาวิชาการ</div>

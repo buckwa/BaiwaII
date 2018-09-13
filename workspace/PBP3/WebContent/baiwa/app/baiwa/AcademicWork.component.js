@@ -54,6 +54,7 @@ var AcademicWork = (function () {
     };
     AcademicWork.prototype.ngOnInit = function () {
         var _this = this;
+        console.log("5555");
         this.GetUserSession();
         this.uploader.onBuildItemForm = function (fileItem, form) {
             form.append('academicKPIId', _this.codeKpi);
@@ -86,12 +87,13 @@ var AcademicWork = (function () {
     AcademicWork.prototype.GetUserAcademicSucess = function (response) {
         this.academy = response.json(JSON.stringify(response._body));
         this.academyList = this.academy.pBPWorkTypeList;
+        console.log("  academyList ", this.academyList);
         //this.kpiuserList =this.academy.pBPWorkTypeList.academicKPIUserMappingList;
         this.kpiuserList = [];
         for (var i = 0; i < this.academy.pBPWorkTypeList.length; i++) {
             this.kpiuserList.push(this.academy.pBPWorkTypeList[i].academicKPIUserMappingList);
         }
-        console.log(this.kpiuserList);
+        console.log("this.kpiuserList", this.kpiuserList);
         this.commonService.unLoading();
         this.mapKpi();
     };
@@ -106,6 +108,7 @@ var AcademicWork = (function () {
         this.Model = response.json(JSON.stringify(response._body));
         this.pointKPI = this.Model.academicKPIUserMapping;
         this.pointLPIList = this.pointKPI.academicKPIAttributeValueList;
+        console.log("this.pointLPIList", this.pointLPIList);
         this.fileWork = this.pointKPI.academicKPIAttachFileList;
         if (this.fileWork.length == 0) {
             this.chFilework = true;

@@ -8,7 +8,7 @@
 
 				<div class="form-group row">
 					<label for="exampleSelect" class="col-sm-2 form-control-label">ปีการศึกษา</label>
-					<div class="col-sm-2">
+					<div class="col-sm-3">
 						<select id="SelectYearList" [(ngModel)]="currentAcademicYear" (ngModelChange)="changeRound()" class="form-control">
 							<option *ngFor="let a of profile.academicYearList " [value]="a.name" >{{a.name}}</option>
 						</select>
@@ -29,6 +29,7 @@
 		</section>
 		<!--.box-typical-->
 		<section class="box-typical">
+			<div class="container">
 			<header class="box-typical-header-sm">
 				คะแนนประจำปี
 
@@ -36,10 +37,9 @@
 			<div class="posts-slider">
 				<div class="slide">
 					<article class="post-announce">
-						<div id="KendoChart">
-
-						</div>
-
+							
+						<div id="KendoChart"></div>
+							
 						<div class="post-announce-date"></div>
 
 					</article>
@@ -48,6 +48,7 @@
 
 			</div>
 			<!--.posts-slider-->
+		</div>
 		</section>
 		<!--.box-typical-->
 
@@ -129,13 +130,22 @@
 
 
 			<div class="friends-list stripped" *ngFor="let item of messageList; let i = index ">
-				<article class="friends-list-item" *ngIf="i < 7  ">
+				<article class="friends-list-item" *ngIf="i < 7  " style="margin: -7px;">
 					<div class="user-card-row" >
 						<div class="tbl-row">
-							<div class="tbl-cell">
-								<span *ngIf="item.statusMessage !='0' "><p class="user-card-row-name "><a href="#/notificationsDetail/{{item.topicId}}">{{item.createBy}}</a> <span class="label label-danger" style="float:right;">ยังไม่ได้อ่าน</span> </p> </span>
+							<div class="tbl-cell" style="border-bottom: 1pt solid #d6c3c3; " >
+									<a href="#/notificationsDetail/{{item.topicId}}">{{item.createBy}}</a>
+								<span *ngIf="item.statusMessage !='0' ">
+								<p class="user-card-row-name "> <span class="label label-danger" style="float:right;">ยังไม่ได้อ่าน</span> </p> </span>
 								<!--<span *ngIf="item.statusMessage =='0' " ><p class="user-card-row-name "><a href="#/notificationsDetail/{{item.topicId}}">{{item.createBy}}</a> </p> </span>-->
-								<p  class="user-card-row-status"><a href="#/notificationsDetail/{{item.topicId}}">{{item.messageDetail | maxLength : 15 }}</a></p> 
+								<p  class="user-card-row-status" ><a href="#/notificationsDetail/{{item.topicId}}" style="
+									border-bottom: none;">{{item.messageDetail | maxLength : 15 }}</a>
+								</p> 
+								<br>
+								<label style="float: right;
+								font-size: 12px;    margin-top: -13px;">
+								{{item.createDateTimeStr}}
+								</label>
 							</div>
 							
 
@@ -243,54 +253,7 @@
 							</div>
 
 
-							<!--
-						<table class="table">
-							<thead>
-								<tr>
-									<th width="50%">ชื่อ</th>
-									<th>สถานะ</th>
-									<th>Progress</th>
-
-								</tr>
-							</thead>
-							<tbody>
-								<tr *ngFor="let item of uploader.queue">
-									<td><strong>{{ item?.file?.name }}</strong></td>
-									<td *ngIf="uploader.isHTML5" nowrap>{{ item?.file?.size/1024/1024 | number:'.2' }} MB
-
-									</td>
-									<td >
-										<img src="" imgPreview [image]="item?._file" />
-									</td>
-									<td class="text-center">
-										<span *ngIf="item.isSuccess"><i class="glyphicon glyphicon-ok"></i></span>
-										<span *ngIf="item.isCancel"><i class="glyphicon glyphicon-ban-circle"></i></span>
-										<span *ngIf="item.isError"><i class="glyphicon glyphicon-remove"></i></span>
-									</td>
-									<td nowrap>
-										<button type="button" class="btn btn-success btn-xs" (click)="item.upload()" [disabled]="item.isReady || item.isUploading || item.isSuccess || (item.file.type != 'image/png' && item.file.type !='image/jpeg') ">
-                            <span class="glyphicon glyphicon-upload"></span> 
-                        </button>
-										<button type="button" class="btn btn-warning btn-xs" (click)="item.cancel()" [disabled]="!item.isUploading">
-                            <span class="glyphicon glyphicon-ban-circle"></span> 
-                        </button>
-										<button type="button" class="btn btn-danger btn-xs" (click)="item.remove()">
-                            <span class="glyphicon glyphicon-trash"></span> 
-                        </button>
-									</td>
-								</tr>
-							</tbody>
-						</table> 
-
-						<div>
-
-							<button type="button" class="btn btn-success btn-s" (click)="uploader.uploadAll()" [disabled]="!uploader.getNotUploadedItems().length">
-                    <span class="glyphicon glyphicon-upload"></span> Upload
-                </button>
-							<button type="button" class="btn btn-danger btn-s" (click)="uploader.clearQueue()" [disabled]="!uploader.queue.length")">
-                    <span class="glyphicon glyphicon-trash"></span> Remove
-                </button>
-						</div> -->
+						
 							<div class="text-center">
 								<button type="button" class="btn btn-success btn-xs" (click)="UploadPicture(item)" [disabled]="item.isReady || item.isUploading || item.isSuccess || (item.file.type != 'image/png' && item.file.type !='image/jpeg') ">
                             <span class="glyphicon glyphicon-upload"></span> Upload

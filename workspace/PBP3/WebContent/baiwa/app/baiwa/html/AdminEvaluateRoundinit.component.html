@@ -7,12 +7,14 @@
                     <div class="form-group row">
                         <label for="exampleSelect" class="col-sm-4 form-control-label">ปีการศึกษา</label>
                         <div class="col-sm-6">
+                            
                             <select id="exampleSelect" class="form-control">
 									<option>2555</option>
 									<option>2556</option>
 									<option>2557</option>
 									<option>2558</option>
-								</select>
+                            </select>
+                            
                         </div>
                     </div>
                 </div>
@@ -20,32 +22,61 @@
         </header>
         <div class="card-block display-table" style="min-height: auto">
 <section class="card card-default">
-    <header class="card-header">รอบการประเมิน ประจำปี 2558</header>
+    <header class="card-header text-center">รอบการประเมิน ประจำปี 2560</header>
     <div class="card-block">
         <table id="table-edit" class="table table-bordered table-hover">
-            <thead>
+            <!-- <thead>
                 <tr>
-
+                    <td></td>
+                    <td></td>
                 </tr>
-            </thead>
+            </thead> -->
             <tbody>
-                <tr>
-                    <td>
-                        <div class="row">
-                            <div class="col-md-6">...</div>
+                <tr class="text-center">
+                    <td  >
+                        <div class="row"  >
+                            <div ><h4>{{AcademicYearTamp1.evaluateTypeDesc}}</h4></div>
                         </div>
 
                     </td>
                     <td>
                         <div class="row">
-                            <div class="col-md-6">...</div>
+                            <label >รอบ 1</label>
+                            <div >รอบ 1 {{AcademicYearTamp1.round1StartDateShortThaiStr}}   -   {{AcademicYearTamp1.round1EndDateShortThaiStr}}</div>
                         </div>
 
                     </td>
                     <td>
                         <div class="row">
-                            <div class="col-md-6">...</div>
+                            <label>รอบ 2</label>
+                            <div> {{AcademicYearTamp1.round2StartDateShortThaiStr}}   -   {{AcademicYearTamp1.round2EndDateShortThaiStr}}</div>
                         </div>
+                    </td>
+                    <td>
+                        <div class="row">
+                            <div class="col-md-1 col-md-offset-4">
+                                <a class="btn btn-inline btn-warning font-icon font-icon-cogwheel" href="#/AdminAcademicYeareditDateEvaluateRound" role="button"></a>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr class="text-center">
+                    <td >
+                        <div class="row">
+                            <div > <h4> {{AcademicYearTamp2.evaluateTypeDesc}} </h4></div>
+                        </div>
+
+                    </td>
+                    <td>
+                        <div class="row">
+                                <label>รอบ 1</label>
+                                <div> {{AcademicYearTamp2.round1StartDateShortThaiStr}}   -   {{AcademicYearTamp2.round1EndDateShortThaiStr}}</div>
+                        </div>
+
+                    </td>
+                    <td>
+                        
                     </td>
                     <td>
                         <div class="row">

@@ -107,7 +107,7 @@ export class AdminAcademicKPIedit implements OnInit {
 
         this.model = response.json(JSON.stringify(response._body));
         this.model = this.model.resObj;
-
+        console.log("this.model",this.model);
         this.academicUnitList = this.model.academicUnitList;
         this.academicKPIAttributeList = this.model.academicKPIAttributeList;
         //this.CreateAcademicAtti = this.academicKPIAttributeList;

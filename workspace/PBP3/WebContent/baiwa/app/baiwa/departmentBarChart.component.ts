@@ -9,28 +9,54 @@ declare var jQuery: any;
 })
 
 export class departmentBarChart implements OnInit  {
-	     public json: any;
+		 public json: any;
+		 public jsonUser: any;
     public nameDepart: any[];
     public mean1: any;
     public headDepart:any
 	public departmentname:string;
+
+	public academicYearList :any;
+	public academicYear :any;
+
     constructor(private http: Http) {
     }
     ngOnInit() {
-       this.getDepartment();
+	   this.getUserName();
+       
     }
      public getDepartment() {
         var url = "../dean/initDepartmentBarChart";
         return this.http.get(url).subscribe(response => this.GetkendoSucess(response),
             error => this.GetDepartmentNameError(error), () => console.log("DepartmentName !"));
     }
+    public getUserName() {
+        var url = "../person/getUserSession";
+        return this.http.get(url).subscribe(response => this.GetUserNameSucess(response),
+            error => this.GetDepartmentNameError(error), () => console.log("DepartmentName !"));
+	}
+	public GetUserNameSucess(response: any) {
+		this.jsonUser = response.json(JSON.stringify(response._body));
+		console.log("this.jsonUser",this.jsonUser);
+
+		this.academicYear = this.jsonUser.currentAcademicYear;
+		this.academicYearList =this.jsonUser.academicYearList ;
+		this.getDepartment();
+	}
+
+
 
     public GetkendoSucess(response: any) {
         this.json = response.json(JSON.stringify(response._body));
-        this.nameDepart = this.json.resObj.faculty;
+		this.nameDepart = this.json.resObj.faculty;
+		console.log("this.json",this.json);
+
+		
         //this.mean1 = this.json.mean1;
-		this.departmentname = this.nameDepart[0].departmentDesc
-		this.createChart(this.nameDepart[0].email);
+		// this.departmentname = this.nameDepart[0].departmentDesc
+
+		this.headDepart = this.jsonUser.departmentName;
+		this.createChart(this.headDepart,this.academicYear);
         
     }
 
@@ -39,18 +65,37 @@ export class departmentBarChart implements OnInit  {
 
     }
     changSelection(value:any){
-        //console.log("headDepart"+value);
-		var email = this.nameDepart[value].email;
-		this.departmentname = this.nameDepart[value].departmentDesc;
-        this.createChart(email);
+		console.log("headDepart"+this.headDepart ,"year"+this.academicYear);
 
-    }
-    createChart(value:any){
+
+        this.createChart(value,this.academicYear);
+
+	}
+	
+    changSelectionYear(year:any){
+        console.log("headDepart"+this.headDepart ,"year"+year);
+
+
+        this.createChart( this.headDepart,year);
+
+	}
+    createChart(value:any,academicYear: String){
+		
+
+
+		for (var i = 0; i < this.nameDepart.length; i++) { 
+			if(this.nameDepart[i].departmentDesc == value){
+				value= this.nameDepart[i].email;
+			}
+		}
+
+
+		console.log("this.nameDepart",this.nameDepart);
          jQuery("#chart").kendoChart({
                  dataSource: {
                      transport: {
                          read: {
-                         	 url: "../dean/getDepartmentBarchart/"+value+"/1",
+                         	 url: "../dean/getDepartmentBarchart/"+value+"/1/"+academicYear,
                              dataType: "json"
                          }
                      } 
@@ -78,11 +123,7 @@ export class departmentBarChart implements OnInit  {
         	                rotation: -90
         	            }
         	        },
-        	        valueAxis: {
-        	        	min: 0,
-        	        	max: 8000,
-        	        	majorUnit: 500
-        	        },
+        	      
                     tooltip: {
                         visible: true,
                         template: "#= series.name #: #= value #"
@@ -95,7 +136,7 @@ export class departmentBarChart implements OnInit  {
         		    dataSource: {
         		        transport: {
         		            read: {
-        		                url:    "../dean/getDepartmentBarchart/"+value+"/1",
+        		                url:    "../dean/getDepartmentBarchart/"+value+"/1/"+academicYear,
         		                dataType: "Json"
         		            }
         		        }

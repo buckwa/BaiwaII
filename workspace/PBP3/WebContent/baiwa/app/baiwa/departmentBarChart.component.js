@@ -15,35 +15,57 @@ var departmentBarChart = (function () {
         this.http = http;
     }
     departmentBarChart.prototype.ngOnInit = function () {
-        this.getDepartment();
+        this.getUserName();
     };
     departmentBarChart.prototype.getDepartment = function () {
         var _this = this;
         var url = "../dean/initDepartmentBarChart";
         return this.http.get(url).subscribe(function (response) { return _this.GetkendoSucess(response); }, function (error) { return _this.GetDepartmentNameError(error); }, function () { return console.log("DepartmentName !"); });
     };
+    departmentBarChart.prototype.getUserName = function () {
+        var _this = this;
+        var url = "../person/getUserSession";
+        return this.http.get(url).subscribe(function (response) { return _this.GetUserNameSucess(response); }, function (error) { return _this.GetDepartmentNameError(error); }, function () { return console.log("DepartmentName !"); });
+    };
+    departmentBarChart.prototype.GetUserNameSucess = function (response) {
+        this.jsonUser = response.json(JSON.stringify(response._body));
+        console.log("this.jsonUser", this.jsonUser);
+        this.academicYear = this.jsonUser.currentAcademicYear;
+        this.academicYearList = this.jsonUser.academicYearList;
+        this.getDepartment();
+    };
     departmentBarChart.prototype.GetkendoSucess = function (response) {
         this.json = response.json(JSON.stringify(response._body));
         this.nameDepart = this.json.resObj.faculty;
+        console.log("this.json", this.json);
         //this.mean1 = this.json.mean1;
-        this.departmentname = this.nameDepart[0].departmentDesc;
-        this.createChart(this.nameDepart[0].email);
+        // this.departmentname = this.nameDepart[0].departmentDesc
+        this.headDepart = this.jsonUser.departmentName;
+        this.createChart(this.headDepart, this.academicYear);
     };
     departmentBarChart.prototype.GetDepartmentNameError = function (error) {
         console.log("GetDepartmentNameError.");
     };
     departmentBarChart.prototype.changSelection = function (value) {
-        //console.log("headDepart"+value);
-        var email = this.nameDepart[value].email;
-        this.departmentname = this.nameDepart[value].departmentDesc;
-        this.createChart(email);
+        console.log("headDepart" + this.headDepart, "year" + this.academicYear);
+        this.createChart(value, this.academicYear);
     };
-    departmentBarChart.prototype.createChart = function (value) {
+    departmentBarChart.prototype.changSelectionYear = function (year) {
+        console.log("headDepart" + this.headDepart, "year" + year);
+        this.createChart(this.headDepart, year);
+    };
+    departmentBarChart.prototype.createChart = function (value, academicYear) {
+        for (var i = 0; i < this.nameDepart.length; i++) {
+            if (this.nameDepart[i].departmentDesc == value) {
+                value = this.nameDepart[i].email;
+            }
+        }
+        console.log("this.nameDepart", this.nameDepart);
         jQuery("#chart").kendoChart({
             dataSource: {
                 transport: {
                     read: {
-                        url: "../dean/getDepartmentBarchart/" + value + "/1",
+                        url: "../dean/getDepartmentBarchart/" + value + "/1/" + academicYear,
                         dataType: "json"
                     }
                 }
@@ -70,11 +92,6 @@ var departmentBarChart = (function () {
                     rotation: -90
                 }
             },
-            valueAxis: {
-                min: 0,
-                max: 8000,
-                majorUnit: 500
-            },
             tooltip: {
                 visible: true,
                 template: "#= series.name #: #= value #"
@@ -84,7 +101,7 @@ var departmentBarChart = (function () {
             dataSource: {
                 transport: {
                     read: {
-                        url: "../dean/getDepartmentBarchart/" + value + "/1",
+                        url: "../dean/getDepartmentBarchart/" + value + "/1/" + academicYear,
                         dataType: "Json"
                     }
                 }

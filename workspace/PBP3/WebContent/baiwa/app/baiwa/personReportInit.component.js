@@ -87,14 +87,6 @@ var personReportInit = (function () {
             categoryAxis: {
                 field: "axisName"
             },
-            valueAxis: {
-                labels: {
-                    format: "{0}",
-                    visible: true,
-                },
-                min: 0,
-                max: this.maxVal
-            },
             tooltip: {
                 visible: true,
                 template: "#= series.name #: #= value #"

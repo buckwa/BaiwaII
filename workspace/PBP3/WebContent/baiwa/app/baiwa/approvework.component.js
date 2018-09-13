@@ -12,12 +12,14 @@ var core_1 = require('@angular/core');
 var router_1 = require('@angular/router');
 var http_1 = require('@angular/http');
 var Common_service_1 = require('./../service/Common.service');
+var common_1 = require('@angular/common');
 var approvework = (function () {
-    function approvework(router, route, http, commonService) {
+    function approvework(router, route, http, commonService, _location) {
         this.router = router;
         this.route = route;
         this.http = http;
         this.commonService = commonService;
+        this._location = _location;
         this.pointKPI = this.setdefualtpoitkpi();
         this.academicKPI = this.setacademicKPIdefault();
         this.academicKPIUserMappingList = this.kpiusermappingList();
@@ -92,12 +94,14 @@ var approvework = (function () {
     approvework.prototype.getkpiworksucess = function (response) {
         var json = response.json(JSON.stringify(response._body));
         this.academicKPIUserMappingList = json.academicKPIUserMappingList;
+        console.log(this.academicKPIUserMappingList);
         this.name = this.academicKPIUserMappingList[0].name;
         //console.log("getkpimapping :" +this.academicKPIUserMappingList)
         this.commonService.unLoading();
     };
     approvework.prototype.blackpage = function () {
-        this.router.navigate(['/initApprove']);
+        // this.router.navigate(['/initApprove']);
+        this._location.back();
     };
     approvework.prototype.ClickGetPointKPI = function (Code, indexKPI) {
         var _this = this;
@@ -170,7 +174,7 @@ var approvework = (function () {
         core_1.Component({
             templateUrl: 'app/baiwa/html/approvework.component.html'
         }), 
-        __metadata('design:paramtypes', [router_1.Router, router_1.ActivatedRoute, http_1.Http, Common_service_1.CommonService])
+        __metadata('design:paramtypes', [router_1.Router, router_1.ActivatedRoute, http_1.Http, Common_service_1.CommonService, common_1.Location])
     ], approvework);
     return approvework;
 }());

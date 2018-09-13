@@ -13,6 +13,9 @@ export class deanBarChart implements OnInit  {
     public nameDepart: any;
     public mean1: any;
     public headDepart:any;
+    public academicYearList :any;
+    public academicYear :any;
+    
     
     constructor(private http: Http) {
     }
@@ -28,21 +31,27 @@ export class deanBarChart implements OnInit  {
 
     public GetkendoSucess(response: any) {
         this.json = response.json(JSON.stringify(response._body));
+        console.log(this.json);
+
+        this.academicYear = this.json.currentAcademicYear;
+        this.academicYearList =this.json.academicYearList ;
+
         this.nameDepart = this.json.facultyName;
         //this.mean1 = this.json.mean1;
-     this.getbarChart();
+       this.getbarChart(this.academicYear);
     }
 
     public GetDepartmentNameError(error: String) {
         console.log("GetDepartmentNameError.")
 
     }
-    getbarChart(){
+
+    getbarChart(academicYear: String){
          jQuery("#chart").kendoChart({
                  dataSource: {
                      transport: {
                          read: {
-                         	 url: "../dean/getBarchart",
+                         	 url: "../dean/getBarchart/"+academicYear,
                              dataType: "json"
                          }
                      }
@@ -61,11 +70,7 @@ export class deanBarChart implements OnInit  {
         	                rotation: -90
         	            }
         	        },
-        	        valueAxis: {
-        	        	min: 0,        	  
-        	        	max: 1050,
-        	        	majorUnit: 100
-        	        },
+        	       
                     tooltip: {
                         visible: true,
                         template: "#= series.name #: #= value #"
@@ -78,7 +83,7 @@ export class deanBarChart implements OnInit  {
         		    dataSource: {
         		        transport: {
         		            read: {
-        		                url:    "../dean/getBarchart",
+        		                url:    "../dean/getBarchart/"+academicYear,
         		                dataType: "Json"
         		            }
         		        }

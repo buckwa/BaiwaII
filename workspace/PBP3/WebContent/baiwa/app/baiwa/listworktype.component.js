@@ -145,6 +145,10 @@ var listworktype = (function () {
     };
     listworktype.prototype.GetUserSessionSucess = function (response) {
         this.user = response.json(JSON.stringify(response._body));
+        // console.log('USername',this.user);
+        // alert(this.user.userNameY);
+        this.facultyCode = this.user.facultyCode;
+        this.UserId = this.user.userName;
         this.currentAcademicYear = this.user.currentAcademicYear;
         this.GetPersonByAcadamy(this.user.userName, this.currentAcademicYear);
     };
@@ -169,6 +173,7 @@ var listworktype = (function () {
     listworktype.prototype.GetImportSucess = function (response) {
         this.inport5 = response.json(JSON.stringify(response._body));
         this.FormAddInput = this.inport5.academicKPIAttributeList;
+        console.log("this.FormAddInput ", this.FormAddInput);
     };
     listworktype.prototype.clickedSaveImport = function () {
         var _this = this;
@@ -194,15 +199,17 @@ var listworktype = (function () {
     };
     listworktype.prototype.savesucess = function (response) {
         this.academicKPIId = response.json(JSON.stringify(response._body));
-        console.log(this.academicKPIId);
-        //  if(this.academicKPIId.resObj=="0"){
-        //      alert("ไม่สามารถ บันทึกรายการได้ กรุณาติดต่อผู้ดูแลระบบ");
-        //  }else{}
-        this.academicKPIId = this.academicKPIId.resObj;
-        this.statusActiveUpload = true;
-        this.savealert = true;
-        this.valid = false;
-        this.ClickGetPointKPI(this.academicKPIId, this.mark);
+        console.log("academicKPIId", this.academicKPIId);
+        if (this.academicKPIId.resObj != null) {
+            this.academicKPIId = this.academicKPIId.resObj;
+            this.statusActiveUpload = true;
+            this.savealert = true;
+            this.valid = false;
+            this.ClickGetPointKPI(this.academicKPIId, this.mark);
+        }
+        else {
+            alert(" ไม่สามารถ บันทึกรายการได้ กรุณาตรวจสอบข้อมูลที่กรอก ");
+        }
     };
     listworktype.prototype.exitModal = function () {
         this.statusActiveUpload = false;

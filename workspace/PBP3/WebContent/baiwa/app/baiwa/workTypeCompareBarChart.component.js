@@ -26,10 +26,15 @@ var workTypeCompareBarChart = (function () {
             "type3": "",
             "type4": "",
             "type5": "",
+            "year": ""
         };
     };
-    workTypeCompareBarChart.prototype.getCompare = function () {
+    workTypeCompareBarChart.prototype.getCompare = function (academicYear) {
+        // alert(academicYear);
+        // this.WorkTypeCompareReportDefult().year = academicYear;
         var _this = this;
+        this.WorkTypeCompareReport.year = academicYear;
+        console.log(this.WorkTypeCompareReport);
         var url = "../dean/workTypeCompareBarChart";
         return this.http.post(url, this.WorkTypeCompareReport).subscribe(function (response) { return _this.GetComparesucess(response); }, function (error) { return _this.GetDepartmentNameError(error); }, function () { return console.log("DepartmentName !"); });
     };
@@ -42,9 +47,9 @@ var workTypeCompareBarChart = (function () {
     };
     workTypeCompareBarChart.prototype.changeCheckBox = function () {
         var _this = this;
-        console.log("changeCheckBok");
+        console.log("changeCheckBok", this.academicYear);
         window.setTimeout(function () {
-            _this.getCompare();
+            _this.getCompare(_this.academicYear);
         }, 600);
     };
     workTypeCompareBarChart.prototype.GetDepartmentNameError = function (error) {
@@ -107,8 +112,10 @@ var workTypeCompareBarChart = (function () {
     };
     workTypeCompareBarChart.prototype.GetkendoSucess = function (response) {
         this.json = response.json(JSON.stringify(response._body));
+        this.academicYear = this.json.currentAcademicYear;
+        this.academicYearList = this.json.academicYearList;
         this.nameDepart = this.json.facultyName;
-        this.getCompare();
+        this.getCompare(this.academicYear);
         //this.mean1 = this.json.mean1;
     };
     workTypeCompareBarChart = __decorate([

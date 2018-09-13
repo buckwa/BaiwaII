@@ -5,7 +5,7 @@ import { Router, ActivatedRoute,NavigationCancel  } from '@angular/router';
 import { URLSearchParams, Http} from '@angular/http';
 
 import {CommonService} from './../service/Common.service';
-
+import {Location} from '@angular/common';
 declare var jQuery: any;
 
 @Component({
@@ -32,7 +32,7 @@ export class approvework implements OnInit {
     public codeNew:any;
     public name;
 
-        constructor(private router: Router,private route: ActivatedRoute,private http:Http,private commonService: CommonService){
+        constructor(private router: Router,private route: ActivatedRoute,private http:Http,private commonService: CommonService,private _location: Location){
         this.pointKPI = this.setdefualtpoitkpi();
         this.academicKPI =this.setacademicKPIdefault();
         this.academicKPIUserMappingList = this.kpiusermappingList();
@@ -118,13 +118,16 @@ export class approvework implements OnInit {
     getkpiworksucess(response:any){
      var json = response.json(JSON.stringify(response._body));
         this.academicKPIUserMappingList = json.academicKPIUserMappingList;
+        console.log(this.academicKPIUserMappingList);
         this.name =this.academicKPIUserMappingList[0].name ;
         //console.log("getkpimapping :" +this.academicKPIUserMappingList)
         this.commonService.unLoading();
     }
     blackpage(){
         
-        this.router.navigate(['/initApprove']);
+        // this.router.navigate(['/initApprove']);
+        this._location.back();
+
     }
     public ClickGetPointKPI(Code: string,indexKPI:string) {
         this.indexKPI = indexKPI;

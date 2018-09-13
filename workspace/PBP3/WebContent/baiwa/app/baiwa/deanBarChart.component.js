@@ -24,19 +24,22 @@ var deanBarChart = (function () {
     };
     deanBarChart.prototype.GetkendoSucess = function (response) {
         this.json = response.json(JSON.stringify(response._body));
+        console.log(this.json);
+        this.academicYear = this.json.currentAcademicYear;
+        this.academicYearList = this.json.academicYearList;
         this.nameDepart = this.json.facultyName;
         //this.mean1 = this.json.mean1;
-        this.getbarChart();
+        this.getbarChart(this.academicYear);
     };
     deanBarChart.prototype.GetDepartmentNameError = function (error) {
         console.log("GetDepartmentNameError.");
     };
-    deanBarChart.prototype.getbarChart = function () {
+    deanBarChart.prototype.getbarChart = function (academicYear) {
         jQuery("#chart").kendoChart({
             dataSource: {
                 transport: {
                     read: {
-                        url: "../dean/getBarchart",
+                        url: "../dean/getBarchart/" + academicYear,
                         dataType: "json"
                     }
                 }
@@ -55,11 +58,6 @@ var deanBarChart = (function () {
                     rotation: -90
                 }
             },
-            valueAxis: {
-                min: 0,
-                max: 1050,
-                majorUnit: 100
-            },
             tooltip: {
                 visible: true,
                 template: "#= series.name #: #= value #"
@@ -69,7 +67,7 @@ var deanBarChart = (function () {
             dataSource: {
                 transport: {
                     read: {
-                        url: "../dean/getBarchart",
+                        url: "../dean/getBarchart/" + academicYear,
                         dataType: "Json"
                     }
                 }

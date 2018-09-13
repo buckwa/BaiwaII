@@ -40,10 +40,12 @@
                 <tbody>
                     <tr *ngFor="let item of academicPersonList; let i = index">
                         <td>
+                                <!-- {{item.employeeTypeNo}}  {{item.employeeType}} -->
                             <div class="text-center"><a [routerLink]="['/approveworkRead',item.email , 1,currentAcademicYear]">{{item.thaiName}}</a></div>
                         </td>
-                        <td [hidden]="item.employeeTypeNo == 1">พนักงาน</td>
-                        <td [hidden]="item.employeeTypeNo != 1">ราชการ</td>
+                       
+                        <td [hidden]="item.employeeType == 'ข้าราชการ' ">พนักงาน</td>
+                        <td [hidden]="item.employeeType != 'ข้าราชการ' ">ข้าราชการ</td>
                       
 
                     </tr>

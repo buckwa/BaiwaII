@@ -38,7 +38,8 @@ export class listworktype implements OnInit, AfterViewInit {
     public profile :any;
     public evaluateRoundValue :any;
     public fileWork: any[];
-
+    public facultyCode: any[];
+    public UserId: any[];
 
     constructor(private commonService: CommonService, private http: Http) {
         this.libPath = "/PBP3/baiwa/libs/";
@@ -192,6 +193,10 @@ export class listworktype implements OnInit, AfterViewInit {
     }
     public GetUserSessionSucess(response:any){
         this.user =response.json(JSON.stringify(response._body));
+        // console.log('USername',this.user);
+        // alert(this.user.userNameY);
+        this.facultyCode = this.user.facultyCode;
+        this.UserId = this.user.userName;
         this.currentAcademicYear =this.user.currentAcademicYear;
         this.GetPersonByAcadamy(this.user.userName, this.currentAcademicYear);
         
@@ -234,7 +239,7 @@ export class listworktype implements OnInit, AfterViewInit {
 
         this.inport5  =response.json(JSON.stringify(response._body));
         this.FormAddInput = this.inport5.academicKPIAttributeList;
-
+console.log("this.FormAddInput ",this.FormAddInput );
 
 
 
@@ -279,17 +284,18 @@ export class listworktype implements OnInit, AfterViewInit {
 
             this.academicKPIId = response.json(JSON.stringify(response._body));
             
-            console.log( this.academicKPIId);
+            console.log( "academicKPIId" ,this.academicKPIId);
             
-            //  if(this.academicKPIId.resObj=="0"){
-            //      alert("ไม่สามารถ บันทึกรายการได้ กรุณาติดต่อผู้ดูแลระบบ");
-            //  }else{}
-                 this.academicKPIId = this.academicKPIId.resObj;
+             if(this.academicKPIId.resObj!=null){
+                this.academicKPIId = this.academicKPIId.resObj;
                 this.statusActiveUpload = true;
                 this.savealert = true;
                 this.valid = false;
                 this.ClickGetPointKPI(this.academicKPIId, this.mark);
-       
+             }else{
+                
+                alert(" ไม่สามารถ บันทึกรายการได้ กรุณาตรวจสอบข้อมูลที่กรอก ");
+            }
 
 
            

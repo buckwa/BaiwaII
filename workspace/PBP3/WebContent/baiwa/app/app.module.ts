@@ -74,7 +74,7 @@ import { ReportKpi1 } from './baiwa/ReportKpi1.component';
 import { ReportKpi2 } from './baiwa/ReportKpi2.component';
 
 const routes: Routes = [
-
+    { path: '', redirectTo: '/home', pathMatch: 'full' },
     { path: 'home', component: home },
     { path: 'importwork', component: importwork },
     { path: 'ListByWorkType', component: listworktype },
@@ -135,7 +135,7 @@ const routes: Routes = [
     { path: 'ReportKpi2', component: ReportKpi2 },
     { path: 'approveworkRead/:email/:rond/:year', component: approveworkRead },
     { path: 'adminAcademicYearEdit/:year/:startDate/:endDate', component: AdminAcademicYearEditComponent },
-
+    { path: "**", redirectTo: '../logout.htm' }
 
     
 ];

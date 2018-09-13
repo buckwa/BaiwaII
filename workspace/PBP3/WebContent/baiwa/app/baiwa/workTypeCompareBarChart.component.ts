@@ -14,6 +14,11 @@ export class workTypeCompareBarChart implements OnInit {
     public mean1: any;
     public headDepart: any
     public WorkTypeCompareReport: any;
+
+    public academicYearList :any;
+    public academicYear :any;
+    
+
     constructor(private http: Http) {
         this.WorkTypeCompareReport = this.WorkTypeCompareReportDefult();
         this.WorkTypeCompareReport.type1 = true;
@@ -30,11 +35,16 @@ export class workTypeCompareBarChart implements OnInit {
             "type3": "",
             "type4": "",
             "type5": "",
-
+            "year" :""
         }
     }
 
-    public getCompare() {
+    public getCompare(academicYear:any) {
+// alert(academicYear);
+        // this.WorkTypeCompareReportDefult().year = academicYear;
+        
+        this.WorkTypeCompareReport.year = academicYear;
+        console.log(this.WorkTypeCompareReport);
         var url = "../dean/workTypeCompareBarChart";
         return this.http.post(url,this.WorkTypeCompareReport).subscribe(response => this.GetComparesucess(response),
             error => this.GetDepartmentNameError(error), () => console.log("DepartmentName !"));
@@ -49,9 +59,9 @@ export class workTypeCompareBarChart implements OnInit {
 
     }
     changeCheckBox(){
-        console.log("changeCheckBok");
+        console.log("changeCheckBok" ,this.academicYear);
          window.setTimeout(() => {
-           this.getCompare();
+           this.getCompare(this.academicYear);
         }, 600);
         
     }
@@ -118,8 +128,13 @@ export class workTypeCompareBarChart implements OnInit {
 
     public GetkendoSucess(response: any) {
         this.json = response.json(JSON.stringify(response._body));
+
+       this.academicYear = this.json.currentAcademicYear;
+       this.academicYearList =this.json.academicYearList 
+
+
         this.nameDepart = this.json.facultyName;
-        this.getCompare();
+        this.getCompare(this.academicYear);
         //this.mean1 = this.json.mean1;
         
     }

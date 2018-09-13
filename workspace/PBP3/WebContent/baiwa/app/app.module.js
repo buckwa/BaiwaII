@@ -76,6 +76,7 @@ var AdminAcademicYearEdit_component_1 = require('./baiwa/AdminAcademicYearEdit.c
 var ReportKpi1_component_1 = require('./baiwa/ReportKpi1.component');
 var ReportKpi2_component_1 = require('./baiwa/ReportKpi2.component');
 var routes = [
+    { path: '', redirectTo: '/home', pathMatch: 'full' },
     { path: 'home', component: home_component_1.home },
     { path: 'importwork', component: importwork_component_1.importwork },
     { path: 'ListByWorkType', component: listworktype_component_1.listworktype },
@@ -133,6 +134,7 @@ var routes = [
     { path: 'ReportKpi2', component: ReportKpi2_component_1.ReportKpi2 },
     { path: 'approveworkRead/:email/:rond/:year', component: approveworkRead_component_1.approveworkRead },
     { path: 'adminAcademicYearEdit/:year/:startDate/:endDate', component: AdminAcademicYearEdit_component_1.AdminAcademicYearEditComponent },
+    { path: "**", redirectTo: '../logout.htm' }
 ];
 var AppModule = (function () {
     function AppModule() {

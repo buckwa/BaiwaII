@@ -4,6 +4,17 @@
             ระดับคะแนน(เฉลี่ย)ในคณะ  {{nameDepart}}
         </header>
         <div class="card-block">
+                <div class="row text-right" style="    margin-bottom: 60px;" >
+                        <div class="form-group">
+                                <label for="inputEmail3" class="col-md-1 control-label">ประจำปี :</label>
+                                <div class="col-md-3">
+                                    <select class="form-control" [(ngModel)]="academicYear" (ngModelChange)="getbarChart($event)" >
+                                         <option *ngFor="let item of academicYearList;" [value]="item.name" >{{item.name}}</option>
+                                    </select>
+                                </div>
+                        </div>
+                </div>
+                
         <div id="chart"></div><br>
         <div id="grid"></div>  
 

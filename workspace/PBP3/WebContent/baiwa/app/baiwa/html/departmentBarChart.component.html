@@ -4,15 +4,41 @@
                         ระดับคะแนนในภาควิชา {{departmentname}}
                 </header>
                 <br>
-                <div class="row">
-                        <div class="col-sm-4"></div>
+
+                
+        
+                <!-- <div class="row">
+                        <div class="col-sm-4">
+                                </div>
                         <div class="col-sm-4">
                                 <select name="select" class="form-control" [(ngModel)]="headDepart" (ngModelChange)="changSelection($event)">
-			<option *ngFor="let a of nameDepart;let i = index " [value]="i" >{{a.departmentDesc}}</option>
+			                <option *ngFor="let a of nameDepart;let i = index " [value]="a.departmentDesc" >{{a.departmentDesc}}</option>
                                 </select>
                         </div>
                         <div class="col-sm-4"></div>
-                </div>
+                </div> -->
+
+
+                
+                <div class="row text-right" style="    margin-bottom: 60px;" >
+                                <div class="form-group">
+                                        <label for="inputEmail3" class="col-md-1 control-label">ภาควิชา :</label>
+                                        <div class="col-md-3">
+                                                <select name="select" class="form-control" [(ngModel)]="headDepart" (ngModelChange)="changSelection($event)">
+                                                        <option *ngFor="let a of nameDepart;let i = index " [value]="a.departmentDesc" >{{a.departmentDesc}}</option>
+                                                </select>
+                                        </div>
+                                </div>
+
+                                <div class="form-group">
+                                                <label for="inputEmail3" class="col-md-1 control-label">ประจำปี :</label>
+                                                <div class="col-md-3">
+                                                    <select class="form-control" [(ngModel)]="academicYear" (ngModelChange)="changSelectionYear($event)"    >
+                                                         <option *ngFor="let item of academicYearList;" [value]="item.name" >{{item.name}}</option>
+                                                    </select>
+                                                </div>
+                                        </div>
+                        </div>
 
                 <div id="chart"></div>
                 <br>

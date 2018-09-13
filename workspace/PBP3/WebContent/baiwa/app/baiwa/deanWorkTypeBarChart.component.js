@@ -25,18 +25,20 @@ var deanWorkTypeBarChart = (function () {
     deanWorkTypeBarChart.prototype.GetkendoSucess = function (response) {
         this.json = response.json(JSON.stringify(response._body));
         this.nameDepart = this.json.facultyName;
+        this.academicYear = this.json.currentAcademicYear;
+        this.academicYearList = this.json.academicYearList;
         //this.mean1 = this.json.mean1;
-        this.getbarChart();
+        this.getbarChart(this.academicYear);
     };
     deanWorkTypeBarChart.prototype.GetDepartmentNameError = function (error) {
         console.log("GetDepartmentNameError.");
     };
-    deanWorkTypeBarChart.prototype.getbarChart = function () {
+    deanWorkTypeBarChart.prototype.getbarChart = function (academicYear) {
         jQuery("#chart1").kendoChart({
             dataSource: {
                 transport: {
                     read: {
-                        url: "../dean/getWorkTypeBarchart/1",
+                        url: "../dean/getWorkTypeBarchart/" + academicYear + "/1",
                         dataType: "json"
                     }
                 }
@@ -55,11 +57,6 @@ var deanWorkTypeBarChart = (function () {
                     rotation: -90
                 }
             },
-            valueAxis: {
-                min: 0,
-                max: 1000,
-                majorUnit: 500
-            },
             tooltip: {
                 visible: true,
                 template: "#= series.name #: #= value #"
@@ -69,7 +66,7 @@ var deanWorkTypeBarChart = (function () {
             dataSource: {
                 transport: {
                     read: {
-                        url: "../dean/getWorkTypeBarchart/2",
+                        url: "../dean/getWorkTypeBarchart/" + academicYear + "/2",
                         dataType: "json"
                     }
                 }
@@ -88,11 +85,6 @@ var deanWorkTypeBarChart = (function () {
                     rotation: -90
                 }
             },
-            valueAxis: {
-                min: 0,
-                max: 800,
-                majorUnit: 100
-            },
             tooltip: {
                 visible: true,
                 template: "#= series.name #: #= value #"
@@ -102,7 +94,7 @@ var deanWorkTypeBarChart = (function () {
             dataSource: {
                 transport: {
                     read: {
-                        url: "../dean/getWorkTypeBarchart/3",
+                        url: "../dean/getWorkTypeBarchart/" + academicYear + "/3",
                         dataType: "json"
                     }
                 }
@@ -121,11 +113,6 @@ var deanWorkTypeBarChart = (function () {
                     rotation: -90
                 }
             },
-            valueAxis: {
-                min: 0,
-                max: 800,
-                majorUnit: 100
-            },
             tooltip: {
                 visible: true,
                 template: "#= series.name #: #= value #"
@@ -135,7 +122,7 @@ var deanWorkTypeBarChart = (function () {
             dataSource: {
                 transport: {
                     read: {
-                        url: "../dean/getWorkTypeBarchart/4",
+                        url: "../dean/getWorkTypeBarchart/" + academicYear + "/4",
                         dataType: "json"
                     }
                 }
@@ -154,11 +141,6 @@ var deanWorkTypeBarChart = (function () {
                     rotation: -90
                 }
             },
-            valueAxis: {
-                min: 0,
-                max: 800,
-                majorUnit: 100
-            },
             tooltip: {
                 visible: true,
                 template: "#= series.name #: #= value #"
@@ -168,7 +150,7 @@ var deanWorkTypeBarChart = (function () {
             dataSource: {
                 transport: {
                     read: {
-                        url: "../dean/getWorkTypeBarchart/5",
+                        url: "../dean/getWorkTypeBarchart/" + academicYear + "/5",
                         dataType: "json"
                     }
                 },
@@ -186,11 +168,6 @@ var deanWorkTypeBarChart = (function () {
                 labels: {
                     rotation: -90
                 }
-            },
-            valueAxis: {
-                min: 0,
-                max: 800,
-                majorUnit: 100
             },
             tooltip: {
                 visible: true,

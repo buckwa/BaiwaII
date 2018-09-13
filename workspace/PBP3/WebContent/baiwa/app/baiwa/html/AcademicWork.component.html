@@ -100,7 +100,7 @@
                         <tr width="100%" *ngFor="let item2 of kpiuserList[i]; let j = index ">
                             <td [attr.rowspan]="kpiuserList[i].length" style="vertical-align:top" *ngIf="j==0">&nbsp;{{i+1}}&nbsp;&nbsp;{{item1.name}}</td>
                             <td width="23%">
-                                <a href="#" data-toggle="modal" (click)="ClickGetPointKPI(item2.academicKPIAttributeValueList[0].academicKPIMappingId,item2.academicKPI.mark)"
+                                <a href="#" data-toggle="modal" style="    font-size: 12px;    " (click)="ClickGetPointKPI(item2.academicKPIAttributeValueList[0].academicKPIMappingId,item2.academicKPI.mark)"
                                     data-target="#myModal" data-backdrop="static" data-keyboard="false">{{item2.academicKPIAttributeValueList[0].value}}</a>
                             </td>
                             <td width="35%">{{item2.name}} {{item2.academicKPI.mark}} คะแนน / {{item2.academicKPI.unitDesc}}</td>
@@ -177,7 +177,7 @@
 
                                 </div>
 
-                               <div class="col-sm-9" *ngIf="!statusKpi && a.name != 'สัดส่วน(%)'  " >
+                               <div class="col-sm-9" *ngIf="!statusKpi && a.isCalculate != 'Y'  " >
 
                         <p class="form-control-static"  ><input type="text" [ngModelOptions]="{standalone: true}" name="{{a.name}}" [(ngModel)]="a.value"
                                             class="form-control" id="inputPassword" value="{{a.value}}" placeholder="{{a.name}}"
@@ -186,13 +186,22 @@
                                             
                                 </div>
 
-                                <div class="col-sm-9" *ngIf="!statusKpi && a.name == 'สัดส่วน(%)' " >
+                                <div class="col-sm-9" *ngIf="!statusKpi && a.name != 'สัดส่วน(%)'  && a.isCalculate == 'Y'  " >
             
-            <p class="form-control-static"><input type="number" [ngModelOptions]="{standalone: true}" name="{{a.name}}" max="100" min="0" [(ngModel)]="a.value" class="form-control" id="number" value="{{a.value}}"  name="number" placeholder="{{a.name}}" required="required" ></p>
+                                    <p class="form-control-static"><input type="number" [ngModelOptions]="{standalone: true}" name="{{a.name}}" [(ngModel)]="a.value" class="form-control" id="number" value="{{a.value}}"  name="number" placeholder="{{a.name}}" required="required" ></p>
+                                                    <small class="text-muted" style="color: #fa424a;" >* กรอกค่าตัวเลข</small>
+                        
+                                                                    
+                                </div>
+
+                                <div class="col-sm-9" *ngIf="!statusKpi && a.name == 'สัดส่วน(%)' && a.isCalculate == 'Y' " >
+            
+                            <p class="form-control-static"><input type="number" [ngModelOptions]="{standalone: true}" name="{{a.name}}" max="100" min="0" [(ngModel)]="a.value" class="form-control" id="number" value="{{a.value}}"  name="number" placeholder="{{a.name}}" required="required" ></p>
 							<small class="text-muted" style="color: #fa424a;" >* กรอกค่าตัวเลข</small>
 
                                             
                                 </div>
+
                             </div>
 
 

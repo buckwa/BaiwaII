@@ -15,7 +15,7 @@ export class ReportKpi2  {
     public user: any;
     public model: any;
     public currentAcademicYear: any;
-
+    public listData: any;
     public ModelSearch() {
         return {
             "workTypeCode": "",
@@ -39,6 +39,7 @@ export class ReportKpi2  {
 
     public getlistKPI() {
         //console.log("getlistKPI : Ready getlistByDepartment ");
+        
         var url = "../admin/pbp/academicKPI/init";
         this.http.get(url).subscribe(response => this.GetlistKPISucess(response),
             error => this.GetlistKPIJsonError(error), () => console.log(" Sent Success !"));
@@ -70,6 +71,9 @@ export class ReportKpi2  {
 
         console.log("RR 2");
         console.log(this.facultyList);
+        // var _this = this;
+       
+       
         this.createChart();
     }
     public GetlistKPIJsonError(error: any) {
@@ -99,27 +103,29 @@ export class ReportKpi2  {
 
     }
 
-    public createChart(){
-        var _this = this;
-         this.commonService.loading();
-        // setTimeout(function(){this.commonService.unLoading();  }, 15);
-        setTimeout(function () { 
-  
-            _this.commonService.unLoading();
+    public GetCreateChart() {
+        this.commonService.loading();
+        var url = "../dean/getReport2Barchart/"+this.searchAtti.academicYear+"/"+this.searchAtti.facultyName+"/"+this.searchAtti.workTypeCode+"";
+        return this.http.get(url).subscribe(response => this.GetCreateS(response),
+            error => this.GetCreateE(error), () => console.log("editdone !"));
             
-             }, 15000);
+    }
+    public GetCreateS(response: any) {
+         this.commonService.unLoading();
+        this.listData = response.json(JSON.stringify(response._body));
+        this.createChart();
+    }
+    public GetCreateE(error: String) {
+        console.log("GetCreateError.")
+    }
+    public createChart(){
+      
+        // setTimeout(function(){this.commonService.unLoading();  }, 15);
+
         console.log("../dean/getReport2Barchart/"+this.searchAtti.academicYear+"/"+this.searchAtti.facultyName+"/"+this.searchAtti.workTypeCode+"");
         jQuery("#chart").kendoChart({
-                dataSource: {
-                    transport: {
-                        read: {
-                             url: "../dean/getReport2Barchart/"+this.searchAtti.academicYear+"/"+this.searchAtti.facultyName+"/"+this.searchAtti.workTypeCode+"",
-                            dataType: "json",
-                            success: function (data) {
-                                alert("Ok");
-                            }
-                        }
-                    } 
+              	dataSource:{
+                    data: this.listData
                 },
                 chema: {
                     data: function(response) {

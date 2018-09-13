@@ -2,8 +2,9 @@
         <div class="box-typical box-typical-padding">
             <div class="col-lg-2 col-md-2"></div>
 
-            <div class="col-lg-8 col-md-8">
-                <p class="text-center">ตารางสอนประจำปีการศึกษา {{acdemicyear}}</p>
+            <div class="col-lg-8 col-md-8" style="border-bottom: 1pt solid #d6c3c3;">
+                    <h2 class="text-center" style="    MARGIN: 5px;"> <strong>ตารางสอนประจำปีการศึกษา {{acdemicyear}}</strong></h2>
+       
             </div>
 
             <div class="col-lg-2 col-md-2">
@@ -15,8 +16,8 @@
 
             </div>
             <br>
-                <hr>
-                <p class="text-center">ภาคเรียนที่ 1</p>
+                <br>
+                <h3 class="text-center" style="    MARGIN: 5px;"> <strong>ภาคเรียนที่ 1</strong></h3>
                 <table id="DTable" [jquery-datatable]="makeDataTable" #personTimeTable="DataTableDirect" class="display table table-bordered table-striped" cellspacing="0" style="width:100%;">
                     <thead>
                         <tr>
@@ -28,7 +29,7 @@
                             <th>ระดับ</th>
                             <th>จำนวนนักศึกษา</th>
                             <th>section</th>
-                            <th>วัน</th>
+                            <th>วัน-เวลา</th>
                             <th>หมายเหตุ</th>
                         </tr>
                     </thead>
@@ -38,7 +39,7 @@
                 </table>
                 <br>
 
-                <p class="text-center">ภาคเรียนที่ 2</p>
+                <h3 class="text-center" style="    MARGIN: 5px;"> <strong>ภาคเรียนที่ 2</strong></h3>
                 <table id="D2Table" [jquery-datatable]="makeDataTable2" #personTimeTable2="DataTableDirect" class="display table table-bordered table-striped" cellspacing="0" style="width:100%;">
                     <thead>
                         <tr>
@@ -50,7 +51,7 @@
                             <th>ระดับ</th>
                             <th>จำนวนนักศึกษา</th>
                             <th>section</th>
-                            <th>วัน</th>
+                            <th>วัน-เวลา</th>
                             <th>หมายเหตุ</th>
                         </tr>
                     </thead>

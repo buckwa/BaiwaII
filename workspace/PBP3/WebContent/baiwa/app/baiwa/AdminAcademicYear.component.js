@@ -33,6 +33,7 @@ var AdminAcademicYear = (function () {
             }
         ];
     }
+    ;
     AdminAcademicYear.prototype.ngOnInit = function () {
         this.adminAcademicYear();
     };
@@ -42,7 +43,7 @@ var AdminAcademicYear = (function () {
         return this.http.get(url).map(function (response) { return response.json(); }).subscribe(function (response) { return _this.adminAcademicYearSucess(response); }, function (error) { return _this.adminAcademicYearError(error); }, function () { return console.log("DepartmentName !"); });
     };
     AdminAcademicYear.prototype.adminAcademicYearSucess = function (response) {
-        console.log(response);
+        console.log("Result:", response);
         this.AcademicYearlist = response.resObj[1];
         console.log("sucsess !");
     };

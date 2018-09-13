@@ -84,11 +84,6 @@ var personReport = (function () {
                     rotation: -90
                 }
             },
-            valueAxis: {
-                min: 0,
-                max: 7000,
-                majorUnit: 1000
-            },
             tooltip: {
                 visible: true,
                 template: "#= series.name #: #= value #"

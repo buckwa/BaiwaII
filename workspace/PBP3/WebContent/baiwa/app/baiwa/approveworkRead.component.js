@@ -12,12 +12,14 @@ var core_1 = require('@angular/core');
 var router_1 = require('@angular/router');
 var http_1 = require('@angular/http');
 var Common_service_1 = require('./../service/Common.service');
+var common_1 = require('@angular/common');
 var approveworkRead = (function () {
-    function approveworkRead(router, route, http, commonService) {
+    function approveworkRead(router, route, http, commonService, _location) {
         this.router = router;
         this.route = route;
         this.http = http;
         this.commonService = commonService;
+        this._location = _location;
         this.pointKPI = this.setdefualtpoitkpi();
         this.academicKPI = this.setacademicKPIdefault();
         this.academicKPIUserMappingList = this.kpiusermappingList();
@@ -98,7 +100,7 @@ var approveworkRead = (function () {
         this.commonService.unLoading();
     };
     approveworkRead.prototype.blackpage = function () {
-        this.router.navigate(['/initApprove']);
+        this._location.back();
     };
     approveworkRead.prototype.ClickGetPointKPI = function (Code, indexKPI) {
         var _this = this;
@@ -171,7 +173,7 @@ var approveworkRead = (function () {
         core_1.Component({
             templateUrl: 'app/baiwa/html/approveworkRead.component.html'
         }), 
-        __metadata('design:paramtypes', [router_1.Router, router_1.ActivatedRoute, http_1.Http, Common_service_1.CommonService])
+        __metadata('design:paramtypes', [router_1.Router, router_1.ActivatedRoute, http_1.Http, Common_service_1.CommonService, common_1.Location])
     ], approveworkRead);
     return approveworkRead;
 }());

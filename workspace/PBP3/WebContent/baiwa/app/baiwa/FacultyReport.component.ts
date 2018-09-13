@@ -13,7 +13,8 @@ export class FacultyReport implements OnInit {
     public nameDepart: any;
     public mean1: any;
     public maxVal :any;
-
+    public academicYearList :any;
+    public academicYear :any;
     constructor(private http: Http) {
     }
     ngOnInit() {
@@ -28,6 +29,13 @@ export class FacultyReport implements OnInit {
 
     public GetkendoSucess(response: any) {
         this.json = response.json(JSON.stringify(response._body));
+
+        console.log(this.json);
+
+        this.academicYear = this.json.currentAcademicYear;
+        this.academicYearList =this.json.academicYearList ;
+       
+
         this.nameDepart = this.json.facultyName;
         //this.mean1 = this.json.mean1;
         var maxVal;
@@ -40,14 +48,15 @@ export class FacultyReport implements OnInit {
         }
         this.maxVal = maxVal;
 
-        this.getbarChart();
+        this.getbarChart(this.academicYear);
     }
 
     public GetDepartmentNameError(error: String) {
         console.log("GetDepartmentNameError.")
 
     }
-    getbarChart(){
+    getbarChart(academicYear: String){
+
         jQuery("#KendoChart").kendoChart({
                 title: {
                     text: "คะแนนภาพรวมระดับคณะ"
@@ -55,7 +64,7 @@ export class FacultyReport implements OnInit {
                 dataSource: {
                     transport: {
                         read: {
-                            url: "../dean/facultyReport",
+                            url: "../dean/facultyReport/"+academicYear,
                             dataType: "json"
                         }
                     } 
@@ -70,14 +79,7 @@ export class FacultyReport implements OnInit {
                 categoryAxis: {
                     field: "axisName"
                 },
-                valueAxis: {
-                    labels: {
-                    	format: "{0}",
-                        visible: true,
-                    },
-                    min: 0,
-                    max: this.maxVal 
-                },
+                
                 tooltip: {
                     visible: true,
                     template: "#= series.name #: #= value #"
@@ -91,7 +93,7 @@ export class FacultyReport implements OnInit {
        		    dataSource: {
        		        transport: {
        		            read: {
-       		                url:    "../dean/facultyReport",
+       		                url:    "../dean/facultyReport/"+academicYear,
        		                dataType: "Json"
        		            }
        		        }

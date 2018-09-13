@@ -1,10 +1,8 @@
 import { Component, ViewChild ,OnInit} from '@angular/core';
-
 import { Router, ActivatedRoute,NavigationCancel  } from '@angular/router';
-
 import { URLSearchParams, Http} from '@angular/http';
-
 import {CommonService} from './../service/Common.service';
+import {Location} from '@angular/common';
 
 declare var jQuery: any;
 
@@ -33,7 +31,7 @@ export class approveworkRead implements OnInit {
     public codeNew:any;
     public name;
 
-        constructor(private router: Router,private route: ActivatedRoute,private http:Http,private commonService: CommonService){
+        constructor(private router: Router,private route: ActivatedRoute,private http:Http,private commonService: CommonService,private _location: Location){
         this.pointKPI = this.setdefualtpoitkpi();
         this.academicKPI =this.setacademicKPIdefault();
         this.academicKPIUserMappingList = this.kpiusermappingList();
@@ -126,7 +124,7 @@ export class approveworkRead implements OnInit {
     }
     blackpage(){
         
-        this.router.navigate(['/initApprove']);
+        this._location.back();
     }
     public ClickGetPointKPI(Code: string,indexKPI:string) {
         this.indexKPI = indexKPI;

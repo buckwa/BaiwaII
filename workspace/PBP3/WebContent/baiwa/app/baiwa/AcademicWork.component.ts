@@ -75,6 +75,7 @@ export class AcademicWork implements OnInit, AfterViewInit {
 
 
     ngOnInit() {
+        console.log("5555");
         this.GetUserSession();
 
         this.uploader.onBuildItemForm = (fileItem: any, form: any) => {
@@ -110,7 +111,7 @@ export class AcademicWork implements OnInit, AfterViewInit {
     }
     public GetUserSessionError(error: String) {
         console.log("GetPersonError.")
-
+    
     }
 
 
@@ -127,12 +128,13 @@ export class AcademicWork implements OnInit, AfterViewInit {
     public GetUserAcademicSucess(response: any) {
         this.academy = response.json(JSON.stringify(response._body));
         this.academyList = this.academy.pBPWorkTypeList;
+        console.log("  academyList ",  this.academyList );
         //this.kpiuserList =this.academy.pBPWorkTypeList.academicKPIUserMappingList;
         this.kpiuserList = [];
         for (var i = 0; i < this.academy.pBPWorkTypeList.length; i++) {
             this.kpiuserList.push(this.academy.pBPWorkTypeList[i].academicKPIUserMappingList)
         }
-        console.log(this.kpiuserList);
+        console.log("this.kpiuserList",this.kpiuserList);
         this.commonService.unLoading();
         this.mapKpi();
     }
@@ -148,6 +150,7 @@ export class AcademicWork implements OnInit, AfterViewInit {
         this.Model = response.json(JSON.stringify(response._body));
         this.pointKPI = this.Model.academicKPIUserMapping;
         this.pointLPIList = this.pointKPI.academicKPIAttributeValueList;
+        console.log("this.pointLPIList",this.pointLPIList);
         this.fileWork = this.pointKPI.academicKPIAttachFileList;
         if (this.fileWork.length == 0) {
             this.chFilework = true;

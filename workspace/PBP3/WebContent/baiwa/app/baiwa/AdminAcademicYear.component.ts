@@ -26,6 +26,9 @@ export class AdminAcademicYear implements OnInit {
             "termendDate":"31 ก.ค. 2559"
         }
    ];
+
+    
+;
     constructor(private router: Router, private http: Http, private route: ActivatedRoute) {
 
     }
@@ -44,7 +47,7 @@ export class AdminAcademicYear implements OnInit {
     }
 
     public adminAcademicYearSucess(response: any) {
-        console.log(response);
+        console.log("Result:",response);
         this.AcademicYearlist = response.resObj[1];
         
         console.log("sucsess !");

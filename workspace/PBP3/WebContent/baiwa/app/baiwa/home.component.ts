@@ -155,9 +155,9 @@ export class home implements OnInit, AfterViewInit {
     }
 
     public changeRound() {
-
+       // alert(this.evaluateRoundValue);
         this.GetRadarPlotNew(this.user.userName, this.currentAcademicYear , this.evaluateRoundValue);
-
+        
     }
 
 
@@ -167,6 +167,7 @@ export class home implements OnInit, AfterViewInit {
     public GetRadarPlotNew(user: String, year: String, num: String) {
         var url = "../person/getRadarPlotNew/" + user + "/" + year + "/" + num;
         this.url = url;
+        console.log(this.url);
         this.http.get(url).subscribe(response => this.GetRadarPlotSucess(response),
             error => this.GetPersonError(error), () => console.log("editdone !")
         );
@@ -330,7 +331,7 @@ export class home implements OnInit, AfterViewInit {
     public getImageLocal(personID: String) {
         // var data = {'profileImg' : profileImg}
         let url = "../person/getImageFile/" + personID;
-
+console.log("personID",personID);
         this.getImage(url).subscribe(imageData => {
             console.log("imageReturn :" + imageData.image);
             this.tmpUrl = URL.createObjectURL(new Blob([imageData]));
@@ -373,8 +374,10 @@ export class home implements OnInit, AfterViewInit {
 
     }
     GetMessageSucess(response: any) {
+        
         this.messageList = response.json(JSON.stringify(response._body));
-
+        
+        console.log( "messageList",this.messageList);
     }
     countMessage() {
         var url = "../person/countMessage";

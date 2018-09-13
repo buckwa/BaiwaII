@@ -24,6 +24,9 @@ var FacultyReport = (function () {
     };
     FacultyReport.prototype.GetkendoSucess = function (response) {
         this.json = response.json(JSON.stringify(response._body));
+        console.log(this.json);
+        this.academicYear = this.json.currentAcademicYear;
+        this.academicYearList = this.json.academicYearList;
         this.nameDepart = this.json.facultyName;
         //this.mean1 = this.json.mean1;
         var maxVal;
@@ -36,12 +39,12 @@ var FacultyReport = (function () {
             }
         }
         this.maxVal = maxVal;
-        this.getbarChart();
+        this.getbarChart(this.academicYear);
     };
     FacultyReport.prototype.GetDepartmentNameError = function (error) {
         console.log("GetDepartmentNameError.");
     };
-    FacultyReport.prototype.getbarChart = function () {
+    FacultyReport.prototype.getbarChart = function (academicYear) {
         jQuery("#KendoChart").kendoChart({
             title: {
                 text: "คะแนนภาพรวมระดับคณะ"
@@ -49,7 +52,7 @@ var FacultyReport = (function () {
             dataSource: {
                 transport: {
                     read: {
-                        url: "../dean/facultyReport",
+                        url: "../dean/facultyReport/" + academicYear,
                         dataType: "json"
                     }
                 }
@@ -64,14 +67,6 @@ var FacultyReport = (function () {
             categoryAxis: {
                 field: "axisName"
             },
-            valueAxis: {
-                labels: {
-                    format: "{0}",
-                    visible: true,
-                },
-                min: 0,
-                max: this.maxVal
-            },
             tooltip: {
                 visible: true,
                 template: "#= series.name #: #= value #"
@@ -81,7 +76,7 @@ var FacultyReport = (function () {
             dataSource: {
                 transport: {
                     read: {
-                        url: "../dean/facultyReport",
+                        url: "../dean/facultyReport/" + academicYear,
                         dataType: "Json"
                     }
                 }

@@ -29,18 +29,23 @@
                 </thead>
                 <tbody>
                     <tr *ngFor="let item of academicPersonList; let i = index">
-                        <td>
+                        <!-- <td *ngIf="item.total == 0" >
+                            <div class="text-center">{{item.thaiName}}</div>
+                        </td> -->
+
+                        <td *ngIf="item.total != 0" >
                             <div class="text-center"><a [routerLink]="['/approvework',item.email , 1]">{{item.thaiName}}</a></div>
                         </td>
+
                         <!-- <td *ngIf="item.employeeTypeNo == 1" >พนักงาน</td> -->
-                        <td >{{item.employeeType}}</td>
-                        <td>
+                        <td *ngIf="item.total != 0"  >{{item.employeeType}}</td>
+                        <td *ngIf="item.total != 0" >
                             <div class="text-center">{{item.totalNotApprove}}</div>
                         </td>
-                        <td>
+                        <td *ngIf="item.total != 0" >
                             <div class="text-center">{{item.totalApproved}}</div>
                         </td>
-                        <td>
+                        <td *ngIf="item.total != 0" >
                             <div class="text-center">{{item.total}}</div>
                         </td>
 

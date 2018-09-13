@@ -80,6 +80,7 @@ ngOnInit() {
         var bodyJson;
         bodyJson = response.json(JSON.stringify(response._body));
         this.academicPersonList = bodyJson.department.academicPersonList;
+        console.log(this.academicPersonList);
         this.commonService.unLoading();
 
 

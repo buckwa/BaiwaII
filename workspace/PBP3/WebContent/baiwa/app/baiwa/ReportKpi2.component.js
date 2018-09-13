@@ -30,8 +30,8 @@ var ReportKpi2 = (function () {
     ReportKpi2.prototype.ngAfterViewInit = function () {
     };
     ReportKpi2.prototype.getlistKPI = function () {
-        var _this = this;
         //console.log("getlistKPI : Ready getlistByDepartment ");
+        var _this = this;
         var url = "../admin/pbp/academicKPI/init";
         this.http.get(url).subscribe(function (response) { return _this.GetlistKPISucess(response); }, function (error) { return _this.GetlistKPIJsonError(error); }, function () { return console.log(" Sent Success !"); });
     };
@@ -58,6 +58,7 @@ var ReportKpi2 = (function () {
         this.searchAtti.workTypeCode = this.model.workTypeCode;
         console.log("RR 2");
         console.log(this.facultyList);
+        // var _this = this;
         this.createChart();
     };
     ReportKpi2.prototype.GetlistKPIJsonError = function (error) {
@@ -77,25 +78,26 @@ var ReportKpi2 = (function () {
     ReportKpi2.prototype.GetPersonError = function (error) {
         console.log("GetPersonError.");
     };
-    ReportKpi2.prototype.createChart = function () {
+    ReportKpi2.prototype.GetCreateChart = function () {
         var _this = this;
         this.commonService.loading();
+        var url = "../dean/getReport2Barchart/" + this.searchAtti.academicYear + "/" + this.searchAtti.facultyName + "/" + this.searchAtti.workTypeCode + "";
+        return this.http.get(url).subscribe(function (response) { return _this.GetCreateS(response); }, function (error) { return _this.GetCreateE(error); }, function () { return console.log("editdone !"); });
+    };
+    ReportKpi2.prototype.GetCreateS = function (response) {
+        this.commonService.unLoading();
+        this.listData = response.json(JSON.stringify(response._body));
+        this.createChart();
+    };
+    ReportKpi2.prototype.GetCreateE = function (error) {
+        console.log("GetCreateError.");
+    };
+    ReportKpi2.prototype.createChart = function () {
         // setTimeout(function(){this.commonService.unLoading();  }, 15);
-        setTimeout(function () {
-            _this.commonService.unLoading();
-        }, 15000);
         console.log("../dean/getReport2Barchart/" + this.searchAtti.academicYear + "/" + this.searchAtti.facultyName + "/" + this.searchAtti.workTypeCode + "");
         jQuery("#chart").kendoChart({
             dataSource: {
-                transport: {
-                    read: {
-                        url: "../dean/getReport2Barchart/" + this.searchAtti.academicYear + "/" + this.searchAtti.facultyName + "/" + this.searchAtti.workTypeCode + "",
-                        dataType: "json",
-                        success: function (data) {
-                            alert("Ok");
-                        }
-                    }
-                }
+                data: this.listData
             },
             chema: {
                 data: function (response) {

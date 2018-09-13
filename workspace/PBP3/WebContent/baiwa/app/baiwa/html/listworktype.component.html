@@ -1,8 +1,9 @@
-	<header class="section-header" *ngIf=" false">
+	<header class="section-header" *ngIf="  true  ">
 				<div class="tbl">
 					<div class="tbl-row">
 						<div class="tbl-cell">
-							<h2>ระงับการนำเข้าผลงานชั่วคราวเพื่อให้ประธานสาขาอนุมัติผลงงาน</h2>
+							<h2>ระงับการนำเข้าผลงานเพื่อตรวจสอบและอนุมัติผลงานที่ได้ป้อนเข้ามาในระบบ</h2>
+							
 							
 						</div>
 						
@@ -25,7 +26,7 @@
 			</header>-->
 			
 			<!--*ngIf=" evaluateRoundValue != 'ข้าราชการ' "-->
-<div  *ngIf=" true">		
+<div  *ngIf="   false ">		
 			<header class="section-header" >
 				<div class="tbl">
 					<div class="tbl-row">
@@ -363,14 +364,21 @@
 						<label class="col-sm-3 form-control-label">{{a.name}}</label>
 						
 						<!--{{item.name}}-->
-						<div class="col-sm-9" *ngIf=" a.name != 'สัดส่วน(%)' " >
+						<div class="col-sm-9" *ngIf=" a.name != 'สัดส่วน(%)' && a.isCalculate != 'Y'  " >
 							<p class="form-control-static"><input type="text" [ngModelOptions]="{standalone: true}" name="{{a.name}}" [(ngModel)]="a.value" class="form-control"  value="{{a.value}}" placeholder="{{a.name}}" required="required" ></p>
 							<small class="text-muted" style="color: #fa424a;" >* </small>
 						</div>
-						<div class="col-sm-9" *ngIf=" a.name == 'สัดส่วน(%)' " >
+
+						<div class="col-sm-9" *ngIf=" a.name != 'สัดส่วน(%)' && a.isCalculate == 'Y' " >
+							<p class="form-control-static"><input type="number" [ngModelOptions]="{standalone: true}" name="{{a.name}}" [(ngModel)]="a.value" class="form-control"  value="{{a.value}}" placeholder="{{a.name}}" required="required" ></p>
+		
+							<small class="text-muted" style="color: #fa424a;" >* กรอกค่าตัวเลข</small>
+						</div>
+						<div class="col-sm-9" *ngIf=" a.name == 'สัดส่วน(%)' && a.isCalculate == 'Y'  " >
 								<p class="form-control-static"><input type="number" [ngModelOptions]="{standalone: true}" name="{{a.name}}" max="100" min="0" [(ngModel)]="a.value" class="form-control" id="number" value="{{a.value}}"  name="number" placeholder="{{a.name}}" required="required" ></p>
 							<small class="text-muted" style="color: #fa424a;" >* กรอกค่าตัวเลข</small>
 						</div>
+			
 						<!--{{item.number}}-->
 
 

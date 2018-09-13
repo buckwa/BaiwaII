@@ -23,7 +23,7 @@
 <base href="${contextLibs}">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-
+<script src="${contextLibs}libs/js/lib/jquery/jquery.min.js"></script>
 <%--     <link href="${contextLibs}libs/img/favicon.114x114.png" rel="apple-touch-icon" type="image/png" sizes="114x114">  --%>
 <%-- 	<link href="${contextLibs}libs/img/favicon.72x72.png" rel="apple-touch-icon" type="image/png" sizes="72x72">  --%>
 <%-- 	<link href="${contextLibs}libs/img/favicon.57x57.png" rel="apple-touch-icon" type="image/png">  --%>
@@ -49,10 +49,10 @@
 <script src="${contextLibs}node_modules/reflect-metadata/Reflect.js"></script>
 
 <!-- Dev -->
-<script src="${contextLibs}node_modules/core-js/client/shim.min.js"></script>
-<script src="${contextLibs}node_modules/zone.js/dist/zone.js"></script>
-<script src="${contextLibs}node_modules/systemjs/dist/system.src.js"></script>
-<script src="${contextLibs}systemjs.config.js"></script>
+<%-- <script src="${contextLibs}node_modules/core-js/client/shim.min.js"></script> --%>
+<%-- <script src="${contextLibs}node_modules/zone.js/dist/zone.js"></script> --%>
+<%-- <script src="${contextLibs}node_modules/systemjs/dist/system.src.js"></script> --%>
+<%-- <script src="${contextLibs}systemjs.config.js"></script> --%>
 
 
 <link rel="stylesheet" type="text/css"
@@ -67,13 +67,65 @@
 <script>
     
     
-    System.import('app').catch(function(err){ console.error("run App", err); });//Dev
+//     System.import('app').catch(function(err){ console.error("run App", err); });//Dev
     
     const messages = "";
     const LOV_MASTER = "";
     const PAGE_ROLE_LIST = "";
     const contextPath = '${contextPath}';
-    </script>
+</script>
+	
+
+
+	<script src="${contextLibs}libs/js/lib/tether/tether.min.js"></script>
+	<script src="${contextLibs}libs/js/lib/bootstrap/bootstrap.min.js"></script>
+	<script type="text/javascript"
+		src="${contextLibs}libs/js/lib/blockUI/jquery.blockUI.js"></script>
+	<script src="${contextLibs}libs/js/plugins.js"></script>
+	<script src="${contextLibs}libs/js/app.js"></script>
+	<script
+		src="${contextLibs}libs/js/lib/datatables-net/datatables.min.js"></script>
+	<script
+		src="${contextLibs}libs/js/lib/bootstrap-sweetalert/sweetalert.js"></script>
+	<script type="text/javascript"
+		src="${contextLibs}libs/editor1.5.6/js/dataTables.editor.js"></script>
+
+	<script
+		src="${contextLibs}libs/js/lib/clockpicker/bootstrap-clockpicker.min.js"></script>
+	<script
+		src="${contextLibs}libs/js/lib/clockpicker/bootstrap-clockpicker-init.js"></script>
+	<script
+		src="${contextLibs}libs/js/lib/daterangepicker/daterangepicker.js"></script>
+	<script
+		src="${contextLibs}libs/js/lib/bootstrap-select/bootstrap-select.min.js"></script>
+
+
+	<link rel="stylesheet"
+		href="${contextLibs}libs/kendo/styles/kendo.common.min.css">
+	<link rel="stylesheet"
+		href="${contextLibs}libs/kendo/styles/kendo.default.min.css">
+	<link rel="stylesheet"
+		href="${contextLibs}libs/kendo/styles/kendo.dataviz.min.css">
+	<link rel="stylesheet"
+		href="${contextLibs}libs/kendo/styles/kendo.dataviz.default.min.css">
+	<script type="text/javascript"
+		src="${contextLibs}libs/kendo/js/kendo.all.min.js"></script>
+	<script type="text/javascript"
+		src="${contextLibs}libs/kendo/js/angular.min.js"></script>
+
+	<script type="text/javascript">
+ 		$( document ).ready(function() {    
+		    $(window).scroll(function () {  
+		    	var scl =  $('body').scrollTop();
+		        if (scl < 50) {
+		           $('#tophiddenbar,.kk-footer').fadeIn();
+		        } else {
+		           $('#tophiddenbar,.kk-footer').fadeOut();
+		        }
+		        
+		    });
+		});
+ 	</script>
 </head>
 <!-- 3. Display the application -->
 <body>
@@ -295,19 +347,24 @@
 									<div class="dropdown-menu"
 										aria-labelledby="dd-header-form-builder">
 										<a class="dropdown-item" href="#/AdminAcademicYear"><span
-											class="font-icon font-icon-users"></span>ปีการศึกษา</a> <a
+											class="font-icon font-icon-users"></span>ปีการศึกษา</a> 
+											<!-- <a
 											class="dropdown-item" href="#/AdminEvaluateRoundinit"><span
-											class="font-icon font-icon-users"></span>รอบการประเมิน</a> <a
+											class="font-icon font-icon-users"></span>รอบการประเมิน</a> -->
+											 <a
 											class="dropdown-item" href="#/AdminFaculty"><span
 											class="font-icon font-icon-users"></span>หน่วยงาน</a> <a
 											class="dropdown-item" href="#/AdminChainOfCommandinit"><span
-											class="font-icon font-icon-users"></span>สายบังคับบัญชา</a> <a
-											class="dropdown-item" href="javascript:void(0);"><span
-											class="font-icon font-icon-users"></span>นำเข้าบุคลากร</a> <a
-											class="dropdown-item" href="#/AdminWorkUser"><span
-											class="font-icon font-icon-users"></span>ข้อมูลบุคลากร</a> <a
-											class="dropdown-item" href="javascript:void(0);"><span
-											class="font-icon font-icon-users"></span>ข้อความ</a>
+											class="font-icon font-icon-users"></span>สายบังคับบัญชา</a>
+											
+<!-- 											<a class="dropdown-item" href="javascript:void(0);"> -->
+<!-- 											<span class="font-icon font-icon-users"></span>นำเข้าบุคลากร</a>  -->
+											
+											<a class="dropdown-item" href="#/AdminWorkUser">
+											<span class="font-icon font-icon-users"></span>ข้อมูลบุคลากร</a> 
+											
+<!-- 											<a class="dropdown-item" href="javascript:void(0);"> -->
+<!-- 											<span class="font-icon font-icon-users"></span>ข้อความ</a> -->
 
 
 									</div>
@@ -317,41 +374,44 @@
 									<a class="dropdown-toggle" id="dd-header-form-builder"
 										data-target="#" href="" data-toggle="dropdown"
 										aria-haspopup="true" aria-expanded="false"> <span
-										class="font-icon"><i class="fa fa-university"></i>&nbsp;นำเข้าข้อมูลและคำนวณ
+										class="font-icon"><i class="fa fa-university"></i>&nbsp;ภาระงาน
 									</span>
 									</a>
 									<div class="dropdown-menu"
 										aria-labelledby="dd-header-form-builder">
-										<a class="dropdown-item" href="javascript:void(0);"><span
-											class="font-icon font-icon-users"></span>เกณฑ์คะแนน</a> <a
+<!-- 										<a class="dropdown-item" href="javascript:void(0);"><span -->
+<!-- 											class="font-icon font-icon-users"></span>เกณฑ์คะแนน</a>  -->
+											<!-- <a
 											class="dropdown-item" href="javascript:void(0);t"><span
-											class="font-icon font-icon-users"></span>หน่วยนับ</a> <a
+											class="font-icon font-icon-users"></span>หน่วยนับ</a>  -->
+											<!-- <a
 											class="dropdown-item" href="#/AdminpBPWorkTypeinit"><span
-											class="font-icon font-icon-users"></span>ประเภทภาระงาน</a> <a
+											class="font-icon font-icon-users"></span>ประเภทภาระงาน</a> -->
+											 <a
 											class="dropdown-item" href="#/AdminAcademicKPI/0/0/0"><span
 											class="font-icon font-icon-users"></span>ภาระงานประจำปี</a>
 									</div>
 								</div>
 
-								<div class="dropdown dropdown-typical">
-									<a class="dropdown-toggle" id="dd-header-form-builder"
-										data-target="#" href="" data-toggle="dropdown"
-										aria-haspopup="true" aria-expanded="false"> <span
-										class="font-icon"><i class="fa fa-university"></i>&nbsp;นำเข้าตารางสอน
-									</span>
-									</a>
-									<div class="dropdown-menu"
-										aria-labelledby="dd-header-form-builder">
-										<a class="dropdown-item" href="javascript:void(0);"><span
-											class="font-icon font-icon-users"></span> (Webservice)รายบุคล
-										</a> <a class="dropdown-item" href="javascript:void(0);"><span
-											class="font-icon font-icon-users"></span> หน่วยนับ </a> <a
-											class="dropdown-item" href="javascript:void(0);"><span
-											class="font-icon font-icon-users"></span>แก้ไขตารางสอน</a> <a
-											class="dropdown-item" href="javascript:void(0);"><span
-											class="font-icon font-icon-users"></span>คำนวณคะแนน</a>
-									</div>
-								</div>
+<!-- 								<div class="dropdown dropdown-typical"> -->
+<!-- 									<a class="dropdown-toggle" id="dd-header-form-builder" -->
+<!-- 										data-target="#" href="" data-toggle="dropdown" -->
+<!-- 										aria-haspopup="true" aria-expanded="false"> <span -->
+<!-- 										class="font-icon"><i class="fa fa-university"></i>&nbsp;นำเข้าตารางสอน -->
+<!-- 									</span> -->
+<!-- 									</a> -->
+<!-- 									<div class="dropdown-menu" -->
+<!-- 										aria-labelledby="dd-header-form-builder"> -->
+<!-- 										<a class="dropdown-item" href="javascript:void(0);"><span -->
+<!-- 											class="font-icon font-icon-users"></span> (Webservice)รายบุคล -->
+<!-- 										</a> <a class="dropdown-item" href="javascript:void(0);"><span -->
+<!-- 											class="font-icon font-icon-users"></span> หน่วยนับ </a> <a -->
+<!-- 											class="dropdown-item" href="javascript:void(0);"><span -->
+<!-- 											class="font-icon font-icon-users"></span>แก้ไขตารางสอน</a> <a -->
+<!-- 											class="dropdown-item" href="javascript:void(0);"><span -->
+<!-- 											class="font-icon font-icon-users"></span>คำนวณคะแนน</a> -->
+<!-- 									</div> -->
+<!-- 								</div> -->
 
 
 								<div class="dropdown dropdown-typical">
@@ -374,10 +434,10 @@
 											class="font-icon font-icon-users"></span>
 											จำนวนผลงานตามตัวชี้วัด</a>	
 											
-											 <a class="dropdown-item"
+											 <!-- <a class="dropdown-item"
 											href="javascript:void(0);"><span
 											class="font-icon font-icon-users"></span> หน่วยนับ Access Log
-										</a>
+										</a> -->
 									</div>
 								</div>
 
@@ -431,64 +491,15 @@
 	<div class="kk-footer">
 		<span> พัฒนาโดย คณะวิศวกรรมศาสตร์
 			สถาบันเทคโนโลยีพระจอมเกล้าเจ้าคุณทหารลาดกระบัง.</span> &nbsp;&nbsp;&nbsp; <span>
-			(หากมีข้อสงสัยในการใช้งาน สอบถามได้ที่ 3278 คุณ นิสากร สีนวลแตง)</span>
+			(หากมีข้อสงสัยในการใช้งาน สอบถามได้ที่  3272 คุณเมธิน)</span>
 	</div>
 
 
 
-	<script src="${contextLibs}libs/js/lib/jquery/jquery.min.js"></script>
-	<script src="${contextLibs}libs/js/lib/tether/tether.min.js"></script>
-	<script src="${contextLibs}libs/js/lib/bootstrap/bootstrap.min.js"></script>
-	<script type="text/javascript"
-		src="${contextLibs}libs/js/lib/blockUI/jquery.blockUI.js"></script>
-	<script src="${contextLibs}libs/js/plugins.js"></script>
-	<script src="${contextLibs}libs/js/app.js"></script>
-	<script
-		src="${contextLibs}libs/js/lib/datatables-net/datatables.min.js"></script>
-	<script
-		src="${contextLibs}libs/js/lib/bootstrap-sweetalert/sweetalert.js"></script>
-	<script type="text/javascript"
-		src="${contextLibs}libs/editor1.5.6/js/dataTables.editor.js"></script>
-
-	<script
-		src="${contextLibs}libs/js/lib/clockpicker/bootstrap-clockpicker.min.js"></script>
-	<script
-		src="${contextLibs}libs/js/lib/clockpicker/bootstrap-clockpicker-init.js"></script>
-	<script
-		src="${contextLibs}libs/js/lib/daterangepicker/daterangepicker.js"></script>
-	<script
-		src="${contextLibs}libs/js/lib/bootstrap-select/bootstrap-select.min.js"></script>
 
 
-	<link rel="stylesheet"
-		href="${contextLibs}libs/kendo/styles/kendo.common.min.css">
-	<link rel="stylesheet"
-		href="${contextLibs}libs/kendo/styles/kendo.default.min.css">
-	<link rel="stylesheet"
-		href="${contextLibs}libs/kendo/styles/kendo.dataviz.min.css">
-	<link rel="stylesheet"
-		href="${contextLibs}libs/kendo/styles/kendo.dataviz.default.min.css">
-	<script type="text/javascript"
-		src="${contextLibs}libs/kendo/js/kendo.all.min.js"></script>
-	<script type="text/javascript"
-		src="${contextLibs}libs/kendo/js/angular.min.js"></script>
-
-	<script type="text/javascript">
- 		$( document ).ready(function() {    
-		    $(window).scroll(function () {  
-		    	var scl =  $('body').scrollTop();
-		        if (scl < 50) {
-		           $('#tophiddenbar,.kk-footer').fadeIn();
-		        } else {
-		           $('#tophiddenbar,.kk-footer').fadeOut();
-		        }
-		        
-		    });
-		});
- 	</script>
-
-<%-- 		<script src="${contextLibs}dist/shim.min.js"></script> --%>
-<%-- 		<script src="${contextLibs}dist/zone.js"></script> --%>
-<%-- 		<script src="${contextLibs}dist/bundle.min.js"></script> --%>
+		<script src="${contextLibs}dist/shim.min.js"></script>
+		<script src="${contextLibs}dist/zone.js"></script>
+		<script src="${contextLibs}dist/bundle.min.js"></script>
 </body>
 </html>
